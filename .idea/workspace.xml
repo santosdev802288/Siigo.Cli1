@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab494bd6-3ab3-4312-b172-abece44ea483" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generators/cicd/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generators/cicd/templates/.docker/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generators/cicd/templates/.docker/chart/.helmignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generators/cicd/templates/.docker/chart/Chart.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generators/cicd/templates/.docker/chart/values.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generators/cicd/templates/.docker/envs/prod.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generators/cicd/templates/.docker/envs/qa.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/generators/cicd/templates/azure-pipelines.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,12 +31,13 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/generators" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/generators" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -41,7 +49,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1607541894382</updated>
-      <workItem from="1607541896214" duration="215000" />
+      <workItem from="1607541896214" duration="475000" />
     </task>
     <servers />
   </component>
