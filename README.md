@@ -47,14 +47,14 @@ Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_use
  2. Clone the repository created in the previous step. 
  3. Run the commands in the root of the project.
 
-## ⚡ Generators
+## ⚡ Docs
 
  - [NodeJs](#‍👩‍🏫-nodejs)
    * [new project](#1.-new-project)
    * [basic module](#2.-new-basic-module)
  - [.Net Core](#👨‍🏫-.net-core)
    * [new project](#1.-new-net-core-project)
-   * [create commands and queries](#2-cqrs)
+   * [create commands and queries](#2.-cqrs)
  - [CICD](#🚀-cicd)
  - [Api Gateway](#🔱-api-gateway)
  - [Rollback or delete microservices in kubernetes](#😳-rollback-or-delete-microservices)
