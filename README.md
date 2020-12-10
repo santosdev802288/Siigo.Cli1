@@ -250,7 +250,7 @@ Run *_yo siigo:gateway --help_* to see the configuration description, data type 
       -pn,    --pipeline-name  # Pipeline name in azure devops.                                                                                                 Default: Siigo.Gateway.Configuration CICD
       -f,     --folder         # Name of the folder that will contain the pipeline.                                                                             Default: Siigo.Gateway.Configuration
       -e,     --environment    # Environment that has access to the cluster. https://dev.azure.com/SiigoDevOps/Siigo/_environments                              Default: aks
-      -cv,    --chart-version  # Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Chart/tags                                 Default: 0.0.3
+      -cv,    --chart-version  # Siigo helm chart version. Visit https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags                                 Default: 0.1.0
               --project-name   # Used in Helm chart name, tag docker image and sonar. Each project name is prefixed with api-gateway.
       -ns,    --namespace-k8s  # Namespace in kubernetes configured in the environment.
               --port           # Port to expose the api gateway in the ingress controller. Confirm with architecture team if that port that you need its open.
@@ -310,7 +310,7 @@ Run *_yo siigo:cicd --help_* to see the configuration description, data type and
       -pn,    --pipeline-name  # Pipeline name in azure devops.                                                                                      Default: Siigo.Microservice.Prueba CICD
       -f,     --folder         # Name of the folder that will contain the pipeline.                                                                  Default: Siigo.Microservice.Prueba
       -e,     --environment    # Environment that has access to the cluster. https://dev.azure.com/SiigoDevOps/Siigo/_environments                   Default: aks
-      -cv,    --chart-version  # Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Chart/tags                      Default: 0.0.7
+      -cv,    --chart-version  # Siigo helm chart version. Visit https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags                      Default: 0.1.0
       -d,     --dll            # Project which the microservice starts. (Siigo.{Name}.Api). If --type is set to 'node', this value will be ignored.  Default: null
               --project-name   # Used in Helm chart name, docker image and sonar.
       -ns,    --namespace-k8s  # Namespace in kubernetes configured in the environment.
@@ -325,11 +325,11 @@ Run *_yo siigo:cicd --help_* to see the configuration description, data type and
 
 ### Customize pipeline
 
-If you need to configure your pipeline that was generated, you can check out the following [documentation](https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Pipeline?path=%2Fnetcore).
+If you need to configure your pipeline that was generated, you can check out the following [documentation](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Pipeline).
 
 ### Customize chart
 
-[Helm](https://helm.sh/) templates offer built-in objects. One of the built-in objects is [Values](https://helm.sh/docs/chart_template_guide/values_files/). This object provides access to values passed into the [chart](https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Chart). To  customize the values by default you can modify the environment files in the **_.docker/envs_** folder of your project.
+[Helm](https://helm.sh/) templates offer built-in objects. One of the built-in objects is [Values](https://helm.sh/docs/chart_template_guide/values_files/). This object provides access to values passed into the [chart](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart). To  customize the values by default you can modify the environment files in the **_.docker/envs_** folder of your project.
 
 ## 😳 Rollback or delete microservices
 

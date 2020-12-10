@@ -67,7 +67,7 @@ module.exports = class extends Generator {
         this.option("chart-version", {
             type: String,
             required: true,
-            description: "Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Chart/tags",
+            description: "Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags",
             default: 'null',
             alias: 'cv'
         });
@@ -125,7 +125,7 @@ module.exports = class extends Generator {
             throw new Error("--dll is required or it should not be empty.\n " + message)
 
         if ((this.options['chart-version'] === 'null' || this.options['chart-version'] === 'true'))
-            throw new Error("--chart-version is required or it should not be empty. Visit https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Chart/tags \n " + message)
+            throw new Error("--chart-version is required or it should not be empty. Visit https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags \n " + message)
 
         const {organization, project, environment, folder, type} = this.options
         const namespace = this.options['namespace-k8s']
