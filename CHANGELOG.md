@@ -1,3 +1,14 @@
+## 2.0.1 (2020-12-10)
+
+
+### Features
+
+* **env:** add env to work with security context ([2c14815](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commits/2c14815a7888c2a1c33e1481b4044fc2f361b929))
+* **package:** version 2.0.1 ([601c1f9](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commits/601c1f9ea1aca7b79c69e50aa102401592239d1b))
+* **scripts:** add bash installers ([822ca6a](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commits/822ca6af4e7bddf57523607857ea4a1ff1759b05))
+
+
+
 # 2.0.0 (2020-12-09)
 
 
