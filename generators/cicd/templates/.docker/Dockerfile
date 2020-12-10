@@ -33,6 +33,7 @@ WORKDIR $APP_HOME
 
 RUN adduser --disabled-password --gecos "" app -u 1000
 ENV ASPNETCORE_URLS=http://*:5000
+ENV COMPlus_EnableDiagnostics=0
 
 ARG ENV
 ENV ASPNETCORE_ENVIRONMENT ${ENV:-Development}
@@ -58,6 +59,7 @@ RUN npm run sonar
 
 FROM node:13.0.1-alpine as run
 
+ENV COMPlus_EnableDiagnostics=0
 WORKDIR /usr/src/app
 USER root
 COPY --from=build /usr/src/app .
