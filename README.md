@@ -54,10 +54,12 @@ Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_use
    * [basic module](#2.-new-basic-module)
  - [.Net Core](#👨‍🏫-.net-core)
    * [new project](#1.-new-net-core-project)
-   * [create commands and queries](#2.-CQRS)
+   * [create commands and queries](#2-cqrs)
  - [CICD](#🚀-cicd)
  - [Api Gateway](#🔱-api-gateway)
-
+ - [Rollback and delete microservices in kubernetes](#😳-did-something-go-wrong-do-you-need-to-do-rollback-?)
+ - [Contribute](#ℹ️-contributing)
+   
 ## ‍👩‍🏫 NodeJS
 
 ### 1. New project
@@ -155,11 +157,11 @@ This command helps automating the creation of microservices with a minimal confi
 Create a new microservice with a custom personal token.
 Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_usersSettings/tokens) and replace it in {YOUR_TOKEN}.
  
-    yo siigo:code --personal-token {YOUR_TOKEN}
+    yo siigo:core --personal-token {YOUR_TOKEN}
 
 Create a new microservice with a [personal access token](https://dev.azure.com/SiigoDevOps/_usersSettings/tokens) and custom name. By default, --name is the name of root folder. 
     
-    yo siigo:code --personal-token {YOUR_TOKEN} --name PaymentMethods
+    yo siigo:core --personal-token {YOUR_TOKEN} --name PaymentMethods
 
 #### Example 
 In the following [example](https://assetsdoc.blob.core.windows.net/assets/core.svg) you can see how to create a microservice in .Net Core with a newly cloned repository.
@@ -329,11 +331,11 @@ If you need to configure your pipeline that was generated, you can check out the
 
 [Helm](https://helm.sh/) templates offer built-in objects. One of the built-in objects is [Values](https://helm.sh/docs/chart_template_guide/values_files/). This object provides access to values passed into the [chart](https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Chart). To  customize the values by default you can modify the environment files in the **_.docker/envs_** folder of your project.
 
-### Did something go wrong?
+## 😳 Did something go wrong? Do you need to do Rollback ?
 
 If for some reason the deployment process failed, and you need to try it again, you can use the following [pipeline](https://dev.azure.com/SiigoDevOps/Siigo/_build?definitionScope=%5CHelm) to do rollback or delete the helm chart deployed in kubernetes.
 
-## Contributing
+## ℹ️ Contributing
 
 ### Requirements
 To contribute to the project and make a pull request you must follow these requirements: 
