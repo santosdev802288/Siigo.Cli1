@@ -255,7 +255,7 @@ Run *_yo siigo:gateway --help_* to see the configuration description, data type 
 
 
 ### Did something go wrong?
-If for some reason the deployment process failed, and you need to try it again, you can use the following [tool]() to clean the helm chart in kubernetes. The unique parameter needed is the value passed in *__--project-name__* flag.
+If for some reason the deployment process failed, and you need to try it again, you can use the following [pipeline](https://dev.azure.com/SiigoDevOps/Siigo/_build?definitionScope=%5CHelm) to do rollback or delete of the helm chart deployed in kubernetes.
 
 ## 🚀 CICD
 
@@ -331,7 +331,7 @@ If you need to configure your pipeline that was generated, you can check out the
 
 ### Did something go wrong?
 
-If for some reason the deployment process failed, and you need to try it again, you can use the following [tool]() to clean the helm chart in kubernetes.
+If for some reason the deployment process failed, and you need to try it again, you can use the following [pipeline](https://dev.azure.com/SiigoDevOps/Siigo/_build?definitionScope=%5CHelm) to do rollback or delete the helm chart deployed in kubernetes.
 
 ## Contributing
 
