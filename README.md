@@ -57,7 +57,7 @@ Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_use
    * [create commands and queries](#2-cqrs)
  - [CICD](#🚀-cicd)
  - [Api Gateway](#🔱-api-gateway)
- - [Rollback and delete microservices in kubernetes](#😳-did-something-go-wrong-do-you-need-to-do-rollback-?)
+ - [Rollback or delete microservices in kubernetes](#😳-rollback-or-delete-microservices)
  - [Contribute](#ℹ️-contributing)
    
 ## ‍👩‍🏫 NodeJS
@@ -331,7 +331,7 @@ If you need to configure your pipeline that was generated, you can check out the
 
 [Helm](https://helm.sh/) templates offer built-in objects. One of the built-in objects is [Values](https://helm.sh/docs/chart_template_guide/values_files/). This object provides access to values passed into the [chart](https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Chart). To  customize the values by default you can modify the environment files in the **_.docker/envs_** folder of your project.
 
-## 😳 Did something go wrong? Do you need to do Rollback ?
+## 😳 Rollback or delete microservices
 
 If for some reason the deployment process failed, and you need to try it again, you can use the following [pipeline](https://dev.azure.com/SiigoDevOps/Siigo/_build?definitionScope=%5CHelm) to do rollback or delete the helm chart deployed in kubernetes.
 
