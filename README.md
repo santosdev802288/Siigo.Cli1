@@ -200,7 +200,7 @@ Create queries and commands with their handlers quickly in your project.
 
 Create a new command or query
     
-    yo siigo:crqs
+    yo siigo:core-crqs
 
 #### Example 
 In the following [example](https://assetsdoc.blob.core.windows.net/assets/cqrs.svg) you can see how to create a command and a query.
