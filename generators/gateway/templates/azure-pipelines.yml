@@ -8,8 +8,7 @@ resources:
   repositories:
     - repository: Pipelines
       type: git
-      name: "Architecture/Siigo.Pipeline"
-      ref: "refs/heads/dev"
+      name: "Siigo/Siigo.Pipeline"
 
 extends:
   template: gateway/gateway-pipeline.yaml@Pipelines
