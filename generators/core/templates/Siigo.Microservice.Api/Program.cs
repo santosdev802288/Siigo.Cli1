@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using System.Net;
 using System;
+using Steeltoe.Extensions.Configuration.ConfigServer;
 
 namespace Siigo.<%= config.nameCapitalize %>.Api
 {
@@ -26,7 +27,8 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
                 var env = hostingContext.HostingEnvironment;
                 config.SetBasePath(Directory.GetCurrentDirectory() + "/Configuration")
                               .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                              .AddJsonFile(ConfigMapFileProvider.FromRelativePath("/Configuration"), $"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+                              .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                              .AddConfigServer();
                 var builtConfig = config.Build();
                 if (!String.IsNullOrWhiteSpace(builtConfig["KeyVault:UrlKeyVault"]) && !String.IsNullOrWhiteSpace(builtConfig["KeyVault:APPID"]) && !String.IsNullOrWhiteSpace(builtConfig["KeyVault:APPSECRET"])) {
                     config.AddAzureKeyVault($"{builtConfig["KeyVault:UrlKeyVault"]}", builtConfig["KeyVault:APPID"], builtConfig["KeyVault:APPSECRET"]);

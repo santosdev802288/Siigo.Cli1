@@ -19,6 +19,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Serilog.Exceptions;
 using Siigo.<%= config.nameCapitalize %>.Api.Infrastructure.AutofacModules;
 using Siigo.<%= config.nameCapitalize %>.Api.Infrastructure.Extensions;
 using Siigo.<%= config.nameCapitalize %>.Api.SeedWork;
@@ -40,6 +41,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Siigo.Core.Filter;
 using Siigo.Core.Manager;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Serilog.Formatting.Json;
 
 
 namespace Siigo.<%= config.nameCapitalize %>.Api
@@ -56,6 +58,9 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
             _configuration = configuration;
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
+                .WriteTo.Console(new JsonFormatter())
+                .Enrich.WithExceptionDetails()
+                .Filter.ByExcluding("RequestPath = '/health' and StatusCode = 200")
                 .CreateLogger();
 
             Log.Information("Starting up" + env.EnvironmentName);
@@ -72,7 +77,7 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
                 return new ControlProvider(controlConnectionService);
             });
 
-             services.AddScoped((ctx) =>
+            services.AddScoped((ctx) =>
             {
                 ITenantConnectionService tenantConnectionService = ctx.GetService<ITenantConnectionService>();
                 IHttpContextAccessor httpContextService = ctx.GetService<IHttpContextAccessor>();
@@ -91,11 +96,13 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme);
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddValidatorsFromAssemblyContaining(typeof(Startup));
-            
+
+            services.Configure<ConfigServerData>(_configuration);
+
             // Configure Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Siigo.<%= config.nameCapitalize %> API", Version = "V1"});
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Siigo.<%= config.nameCapitalize %> API", Version = "V1" });
                 //First we define the security scheme
                 c.AddSecurityDefinition("Bearer", //Name the security scheme
                     new OpenApiSecurityScheme
@@ -121,7 +128,7 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
-            
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             // Si se produce el envio de un evento, configurar y retirar el comentario la siguiente linea
             // services.AddSingleton(BuildMessageBus);
@@ -134,7 +141,7 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
             container.Populate(services);
             ConfigureModelBindingExceptionHandling(services);
         }
-        
+
         private IMessageBus BuildMessageBus(IServiceProvider serviceProvider)
         {
             var tracingEngine = serviceProvider.GetService<ITracingEngine>();
@@ -145,7 +152,7 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
 
             var onMessageArrived = tracingEngine.OnMessageArrived(new Dictionary<string, object>
             {
-               // {"siigo", "tech"}
+                // {"siigo", "tech"}
             });
             return MessageBusBuilder
                 .Create()
@@ -173,7 +180,8 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
                 //         };
                 //     });
                 // })
-                .AttachEvents(events => {
+                .AttachEvents(events =>
+                {
                     events.OnMessageProduced = onMessageProduced;
                     events.OnMessageArrived = onMessageArrived;
                 })
@@ -203,34 +211,38 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors("CorsPolicy");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             // Si se necesita Https, agregar en la siguiente linea el certificado
             // app.UseHttpsRedirection();
-            app.ConfigureExceptionHandler(_configuration);
             app.UseRouting();
-            app.UseSerilogRequestLogging(opts => {
+
+            app.UseCors("CorsPolicy");
+
+            app.UseSerilogRequestLogging(opts =>
+            {
                 opts.EnrichDiagnosticContext = LogHelper.EnrichFromRequest;
                 opts.GetLevel = LogHelper.ExcludeHealthChecks; // Use the custom level
             });
-            app.UseSerilogRequestLogging();
+
+            app.ConfigureExceptionHandler(_configuration);
+
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapHealthChecks("/health");
             });
-            
+
             // Use swagger Doc
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Siigo.<%= config.nameCapitalize %> Template API Example");
             });
-            
+
             app.ApplicationServices.GetService<IMessageBus>();
 
         }
@@ -260,8 +272,8 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
                 .AddMvc()
                 .AddJsonOptions(options =>
                 {
-                    options.JsonSerializerOptions.DictionaryKeyPolicy =     SnakeCaseNamingPolicy.Instance;
-                    options.JsonSerializerOptions.PropertyNamingPolicy =    SnakeCaseNamingPolicy.Instance;
+                    options.JsonSerializerOptions.DictionaryKeyPolicy = SnakeCaseNamingPolicy.Instance;
+                    options.JsonSerializerOptions.PropertyNamingPolicy = SnakeCaseNamingPolicy.Instance;
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddControllersAsServices();
@@ -316,7 +328,7 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
             return services;
         }
     }
-    
+
     /// <summary>
     ///  Configure Snake case default json response in APIs
     /// </summary>
@@ -330,7 +342,7 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
             return name.ToSnakeCase();
         }
     }
-    
+
     /// <summary>
     /// Util Extensions to write fields in json response (snakeCase)
     /// </summary>
@@ -341,5 +353,5 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
             return string.Concat(str.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x.ToString() : x.ToString())).ToLower();
         }
     }
-    
+
 }
