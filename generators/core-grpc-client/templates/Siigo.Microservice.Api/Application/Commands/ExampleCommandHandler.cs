@@ -1,0 +1,29 @@
+using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
+using Siigo.<%= config.nameCapitalize %>.Domain.AggregateModel.ExampleAggregate;
+
+namespace Siigo.<%= config.nameCapitalize %>.Api.Application.Commands
+{
+    /// <summary>
+    /// Handler which processes the command when
+    /// customer executes cancel order from app
+    /// </summary>
+    public class ExampleCommandHandler : IRequestHandler<ExampleCommand, string>
+    {
+        private readonly IExampleRepository _exampleRepository;
+
+        // Add any injected repository/helper/util 
+        // or any class needed to handle the command
+        public ExampleCommandHandler(IExampleRepository exampleRepository)
+        {
+            _exampleRepository = exampleRepository;
+        }
+
+        public async Task<string> Handle(ExampleCommand request, CancellationToken cancellationToken)
+        {
+            var example = await _exampleRepository.Create(request.ExampleId);
+            return $"Repository id {example.Id}";
+        }
+    }
+}
