@@ -50,8 +50,7 @@ namespace Siigo.<%= config.nameCapitalize %>.Api.Infrastructure.AutofacModules
                 .RegisterType<ExampleRepository>()
                 .As<IExampleRepository>()
                 .SingleInstance();
-            
-            builder.RegisterType<Logger>().As<ILogger>().InstancePerLifetimeScope();
+
         }
     }
 }
