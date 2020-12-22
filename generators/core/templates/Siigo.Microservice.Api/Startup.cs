@@ -42,6 +42,7 @@ using Siigo.Core.Filter;
 using Siigo.Core.Manager;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Serilog.Formatting.Json;
+using Microsoft.Extensions.Logging;
 
 
 namespace Siigo.<%= config.nameCapitalize %>.Api
@@ -209,7 +210,7 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -244,6 +245,7 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
             });
 
             app.ApplicationServices.GetService<IMessageBus>();
+            loggerFactory.AddSerilog();
 
         }
 
