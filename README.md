@@ -50,7 +50,7 @@ Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_use
 ## ⚡ Docs
 
  - [NodeJs](#‍👩‍🏫-nodejs)
-   * [new project](#1.-new-project)
+   * [new project](#1-new-project)
    * [basic module](#2.-new-basic-module)
  - [.Net Core](#👨‍🏫-.net-core)
    * [new project](#1.-new-net-core-project)
