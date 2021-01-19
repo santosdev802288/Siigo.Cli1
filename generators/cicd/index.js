@@ -168,9 +168,6 @@ module.exports = class extends Generator {
 
     writing() {
 
-        shell.rm("-rf" , ".docker")
-        shell.rm("azure-pipelines.yml")
-
         this.registerTransformStream([
             rename( (path) => {
                 path.dirname = path.dirname.replace(/(chart)/g, this.appConfig.name)

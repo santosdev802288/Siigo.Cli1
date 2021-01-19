@@ -134,9 +134,6 @@ module.exports = class extends Generator {
 
   writing() {
 
-    shell.rm("-rf" , ".docker")
-    shell.rm("azure-pipelines.yml")
-
     this.registerTransformStream([
       rename((path) => {
         path.dirname = path.dirname.replace(
@@ -147,10 +144,6 @@ module.exports = class extends Generator {
     ]);
 
     this.fs.copyTpl(this.templatePath(''), this.destinationPath('.'), {
-      config: this.appConfig,
-    });
-
-    this.fs.copyTpl(this.templatePath('.*'), this.destinationPath('.'), {
       config: this.appConfig,
     });
 
