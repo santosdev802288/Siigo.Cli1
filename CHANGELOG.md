@@ -1,3 +1,11 @@
+## 2.0.2 (2021-01-19)
+
+
+### Bug Fixes
+
+* **cmd:** remove commands to remove folders ([b143656](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commits/b143656761748ba43c481692a17ffc737ab6e718))
+
+
 ## 2.0.1 (2020-12-10)
 
 
