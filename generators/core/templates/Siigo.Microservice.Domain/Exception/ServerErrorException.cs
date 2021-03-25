@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace Siigo.<%= config.nameCapitalize %>.Domain.Exception
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Exception
 {
     public class ServerErrorException : System.Exception
     {

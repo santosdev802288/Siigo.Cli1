@@ -1,6 +1,6 @@
-using Siigo.<%= config.nameCapitalize %>.Domain.Exception;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Exception;
 
-namespace Siigo.<%= config.nameCapitalize %>.Infrastructure.Extensions
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Extensions
 {
     /// <summary>
     /// 

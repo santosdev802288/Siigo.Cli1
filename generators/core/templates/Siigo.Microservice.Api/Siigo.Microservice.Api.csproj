@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Siigo.<%= config.nameCapitalize %>.Api</RootNamespace>
+    <RootNamespace><%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api</RootNamespace>
     <UserSecretsId>b2c5843a-21fe-4727-a62f-64242a31ef44</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <SonarQubeExclude>false</SonarQubeExclude>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Siigo.<%= config.nameCapitalize %>' ">
+  <PropertyGroup Condition=" '$(RunConfiguration)' == '<%= config.projectPrefix %>.<%= config.nameCapitalize %>' ">
     <StartAction>Project</StartAction>
     <LaunchUrl>swagger</LaunchUrl>
     <ApplicationURL>https://localhost:5001;http://localhost:5000</ApplicationURL>
@@ -69,8 +69,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Siigo.<%= config.nameCapitalize %>.Domain\Siigo.<%= config.nameCapitalize %>.Domain.csproj" />
-    <ProjectReference Include="..\Siigo.<%= config.nameCapitalize %>.Infrastructure\Siigo.<%= config.nameCapitalize %>.Infrastructure.csproj" />
+    <ProjectReference Include="..\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.csproj" />
+    <ProjectReference Include="..\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

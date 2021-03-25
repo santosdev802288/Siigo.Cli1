@@ -1,8 +1,8 @@
-using Siigo.<%= config.nameCapitalize %>.Api.SeedWork;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.SeedWork;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Siigo.<%= config.nameCapitalize %>.Api.Test.SeedWork
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Test.SeedWork
 {
     public class InvalidRequestExceptionTests
     {
