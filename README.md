@@ -55,6 +55,8 @@ Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_use
  - [.Net Core](#👨‍🏫-.net-core)
    * [new project](#1.-new-net-core-project)
    * [create commands and queries](#2.-CQRS)
+ - [.Net 5 grpc client](#👨‍🏫-.net-5-grpc-client)
+ - [.Net 5 grpc server](#👨‍🏫-.net-5-grpc-server)
  - [CICD](#🚀-cicd)
  - [Api Gateway](#🔱-api-gateway)
 
@@ -190,7 +192,6 @@ In the following [example](https://assetsdoc.blob.core.windows.net/assets/core.s
             --ask-answered    # Show prompts for already configured options                                  Default: false
             --name            # Project name                                                                 Default: MyMicro
             --personal-token  # Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens
-
 ### 2. CQRS
 Create queries and commands with their handlers quickly in your project.
 
@@ -202,6 +203,95 @@ Create a new command or query
 
 #### Example 
 In the following [example](https://assetsdoc.blob.core.windows.net/assets/cqrs.svg) you can see how to create a command and a query.
+
+## 👨‍🏫 .Net 5 grpc client
+
+### 1. New net core project
+This command helps automating the creation of microservices with a minimal configuration in it based on .Net 5 and gRPC client mode.
+
+#### Using
+
+Create a new microservice with a custom personal token.
+Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_usersSettings/tokens) and replace it in {YOUR_TOKEN}.
+ 
+    yo siigo:code-grpc-client --personal-token {YOUR_TOKEN}
+
+Create a new microservice with a [personal access token](https://dev.azure.com/SiigoDevOps/_usersSettings/tokens) and custom name. By default, --name is the name of root folder. 
+    
+    yo siigo:code-grpc-client --personal-token {YOUR_TOKEN} --name PaymentMethods
+
+#### Example 
+In the following [example](https://assetsdoc.blob.core.windows.net/assets/core.svg) you can see how to create a microservice in .Net Core with a newly cloned repository.
+
+
+#### Flags and description
+
+    $ yo siigo:core-grpc-client --help 
+    
+         _-----_     
+        |       |    ╭──────────────────────────╮
+        |--(o)--|    │   Siigo Generator .Net   │
+       `---------´   │     5.0 grpc Client.     │
+        ( _´U`_ )    ╰──────────────────────────╯
+        /___A___\   /
+         |  ~  |     
+       __'.___.'__   
+     ´   `  |° ´ Y ` 
+    
+    Usage:
+      yo siigo:core-grpc-client [options]
+    
+    Options:
+      -h,   --help            # Print the generator's options and usage
+            --skip-cache      # Do not remember prompt answers                                               Default: false
+            --skip-install    # Do not automatically install dependencies                                    Default: false
+            --force-install   # Fail on install dependencies error                                           Default: false
+            --ask-answered    # Show prompts for already configured options                                  Default: false
+            --name            # Project name                                                                 Default: MyMicro
+            --personal-token  # Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens
+
+
+## 👨‍🏫 .Net 5 grpc server
+
+### 1. New net core project
+This command helps automating the creation of microservices with a minimal configuration in it based on .Net 5 and gRPC client mode.
+
+#### Using
+
+Create a new microservice with a custom personal token.
+Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_usersSettings/tokens) and replace it in {YOUR_TOKEN}.
+ 
+    yo siigo:code-grpc-server --personal-token {YOUR_TOKEN}
+
+Create a new microservice with a [personal access token](https://dev.azure.com/SiigoDevOps/_usersSettings/tokens) and custom name. By default, --name is the name of root folder. 
+    
+    yo siigo:code-grpc-server --personal-token {YOUR_TOKEN} --name PaymentMethods
+
+#### Flags and description
+
+    $ yo siigo:core-grpc-server --help 
+    
+         _-----_     
+        |       |    ╭──────────────────────────╮
+        |--(o)--|    │   Siigo Generator .Net   │
+       `---------´   │     5.0 grpc Server.     │
+        ( _´U`_ )    ╰──────────────────────────╯
+        /___A___\   /
+         |  ~  |     
+       __'.___.'__   
+     ´   `  |° ´ Y ` 
+    
+    Usage:
+      yo siigo:core-grpc-client [options]
+    
+    Options:
+      -h,   --help            # Print the generator's options and usage
+            --skip-cache      # Do not remember prompt answers                                               Default: false
+            --skip-install    # Do not automatically install dependencies                                    Default: false
+            --force-install   # Fail on install dependencies error                                           Default: false
+            --ask-answered    # Show prompts for already configured options                                  Default: false
+            --name            # Project name                                                                 Default: MyMicro
+            --personal-token  # Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens
 
 
 ## 🔱 Api Gateway
@@ -248,11 +338,11 @@ Run *_yo siigo:gateway --help_* to see the configuration description, data type 
       -pn,    --pipeline-name  # Pipeline name in azure devops.                                                                                                 Default: Siigo.Gateway.Configuration CICD
       -f,     --folder         # Name of the folder that will contain the pipeline.                                                                             Default: Siigo.Gateway.Configuration
       -e,     --environment    # Environment that has access to the cluster. https://dev.azure.com/SiigoDevOps/Siigo/_environments                              Default: aks
-      -cv,    --chart-version  # Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Chart/tags                                 Default: 0.0.3
+      -cv,    --chart-version  # Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Chart/tags                                 Default: 0.2.2
               --project-name   # Used in Helm chart name, tag docker image and sonar. Each project name is prefixed with api-gateway.
       -ns,    --namespace-k8s  # Namespace in kubernetes configured in the environment.
               --port           # Port to expose the api gateway in the ingress controller. Confirm with architecture team if that port that you need its open.
-
+              --cicd           # Enable the commands to create the CI/CD process in Azure DevOps                                                                Default: yes
 
 ### Did something go wrong?
 If for some reason the deployment process failed, and you need to try it again, you can use the following [tool]() to clean the helm chart in kubernetes. The unique parameter needed is the value passed in *__--project-name__* flag.

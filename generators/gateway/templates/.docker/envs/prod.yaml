@@ -30,10 +30,61 @@ siigo-chart:
     repository: #argument in pipeline
     pullPolicy: IfNotPresent
 
+
+  # container ports expose by dockerfile. By default exposed port is <%= config.port %>
+  ports: []
+    #- containerPort: 10000
+    #  name: grpc
+    #  protocol: TCP
+
+    #- containerPort: 11000
+    #  name: http
+    #  protocol: TCP
+
   service:
     type: ClusterIP
-    port: <%= config.port %>
-    targetPort: <%= config.port %>
+    ports:
+      - port: <%= config.port %>
+        targetPort: <%= config.port %>
+        protocol: TCP
+        name: http
+      #- name: grpc
+      #  port: 10000
+      #  protocol: TCP
+      #  targetPort: 10000
+
+  livenessProbe:
+    # Sometimes, you have to deal with legacy applications that might require an additional startup time on their first initialization.
+    # In such cases, it can be tricky to set up liveness probe parameters without compromising the fast response to deadlocks that motivated such a probe.
+    # The trick is to set up a startup probe with the same command, HTTP or TCP check, with a failureThreshold * periodSeconds long enough to cover the worse case startup time.
+
+    # Thanks to the startup probe, the application will have a maximum of 1 minutes (6 * 10 = 60s) to finish its startup.
+    failureThreshold: 6
+    httpGet:
+      path: /health
+      port: http ## service.port
+      scheme: HTTP
+    periodSeconds: 10 # The periodSeconds field specifies that the kubelet should perform a liveness probe every 10 seconds
+    successThreshold: 1 # The initialDelaySeconds field tells the kubelet that it should wait 5 seconds before performing the first probe.
+    timeoutSeconds: 5 # Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1.
+    initialDelaySeconds: 5 # Number of seconds after the container has started before liveness or readiness probes are initiated. Defaults to 0 seconds.
+
+
+  readinessProbe:
+    # Sometimes, you have to deal with legacy applications that might require an additional startup time on their first initialization.
+    # In such cases, it can be tricky to set up liveness probe parameters without compromising the fast response to deadlocks that motivated such a probe.
+    # The trick is to set up a startup probe with the same command, HTTP or TCP check, with a failureThreshold * periodSeconds long enough to cover the worse case startup time.
+
+    # Thanks to the startup probe, the application will have a maximum of 1 minutes (6 * 10 = 60s) to finish its startup.
+    failureThreshold: 6
+    httpGet:
+      path: /health
+      port: http ## service.port
+      scheme: HTTP
+    periodSeconds: 10 # The periodSeconds field specifies that the kubelet should perform a liveness probe every 10 seconds
+    successThreshold: 1 # The initialDelaySeconds field tells the kubelet that it should wait 5 seconds before performing the first probe.
+    timeoutSeconds: 5 # Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1.
+    initialDelaySeconds: 5 # Number of seconds after the container has started before liveness or readiness probes are initiated. Defaults to 0 seconds.
 
   hpa:
     maxReplicas: 2

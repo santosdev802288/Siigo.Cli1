@@ -1,5 +1,21 @@
-# 2.0.0 (2020-12-09)
 
+# 2.0.4 (2021-04-06)
+
+### Features
+
+* The parameter cicd was added in the gateway generator
+* The README.md was updated
+
+
+# 2.0.1 (2020-12-22)
+
+### Features
+
+* Added the gRPC client and server template in .Net 5
+* The .Net core template was upgraded to .Net 5
+
+
+# 2.0.0 (2020-12-09)
 
 ### Features
 
