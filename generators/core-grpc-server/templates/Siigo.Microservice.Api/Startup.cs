@@ -156,6 +156,8 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
             {
                 // {"siigo", "tech"}
             });
+            var kafkaProducerConfig = _configuration.GetSection("kafka:producerConfig");
+            var kafkaConsumerConfig = _configuration.GetSection("kafka:consumerConfig");
             return MessageBusBuilder
                 .Create()
                 .WithSerializer(new JsonMessageSerializer())
@@ -163,16 +165,16 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
                 {
                     ProducerConfig = (config) =>
                     {
-                        config.LingerMs = Double.Parse(_configuration.GetSection("kafka").GetSection("producerConfig").GetSection("LingerMs").Value);
-                        config.SocketNagleDisable = bool.Parse(_configuration.GetSection("kafka").GetSection("producerConfig").GetSection("socket.nagle.disable").Value);
+                        config.LingerMs = Double.Parse(kafkaProducerConfig.GetSection("LingerMs").Value);
+                        config.SocketNagleDisable = bool.Parse(kafkaProducerConfig.GetSection("socket.nagle.disable").Value);
                     },
                     ConsumerConfig = (config) =>
                     {
-                        config.FetchErrorBackoffMs = Int32.Parse(_configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("fetch.error.backoff.ms").Value);
-                        config.StatisticsIntervalMs = Int32.Parse(_configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("statistics.interval.ms").Value);
-                        config.SocketNagleDisable = bool.Parse(_configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("socket.nagle.disable").Value);
-                        config.SessionTimeoutMs = Int32.Parse(_configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("SessionTimeoutMs").Value);
-                        config.MaxPollIntervalMs = Int32.Parse(_configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("MaxPollIntervalMs").Value);
+                        config.FetchErrorBackoffMs = Int32.Parse(kafkaConsumerConfig.GetSection("fetch.error.backoff.ms").Value);
+                        config.StatisticsIntervalMs = Int32.Parse(kafkaConsumerConfig.GetSection("statistics.interval.ms").Value);
+                        config.SocketNagleDisable = bool.Parse(kafkaConsumerConfig.GetSection("socket.nagle.disable").Value);
+                        config.SessionTimeoutMs = Int32.Parse(kafkaConsumerConfig.GetSection("SessionTimeoutMs").Value);
+                        config.MaxPollIntervalMs = Int32.Parse(kafkaConsumerConfig.GetSection("MaxPollIntervalMs").Value);
                     }
                 })
                 // Si se produce el envio de un evento, configurar y retirar los comentarios de las siguientes lineas
