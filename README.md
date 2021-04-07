@@ -398,12 +398,13 @@ Run *_yo siigo:cicd --help_* to see the configuration description, data type and
       -pn,    --pipeline-name  # Pipeline name in azure devops.                                                                                      Default: Siigo.Microservice.Prueba CICD
       -f,     --folder         # Name of the folder that will contain the pipeline.                                                                  Default: Siigo.Microservice.Prueba
       -e,     --environment    # Environment that has access to the cluster. https://dev.azure.com/SiigoDevOps/Siigo/_environments                   Default: aks
-      -cv,    --chart-version  # Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Chart/tags                      Default: 0.0.7
+      -cv,    --chart-version  # Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Chart/tags                      Default: 0.2.2
       -d,     --dll            # Project which the microservice starts. (Siigo.{Name}.Api). If --type is set to 'node', this value will be ignored.  Default: null
               --project-name   # Used in Helm chart name, docker image and sonar.
       -ns,    --namespace-k8s  # Namespace in kubernetes configured in the environment.
       -st,    --sonar-token    # Sonar token to publish metrics. If --type is set to 'node', this value will be ignored.                             Default: null
-      -t,     --type           # Project type. (node, netcore)                                                                                       Default: netcore                                                                    Default: null
+      -t,     --type           # Project type. (node, netcore or net5)                                                                               Default: net5 
+      
 > **⚠️ WARNING**: If you set --environment option, remember: you only need pass
 >the name without the prefix of the environment(qa, dev, prod). Example 'qa aks' is aks and 'prod aks chile' is aks chile.  
   

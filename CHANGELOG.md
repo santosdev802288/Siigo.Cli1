@@ -17,6 +17,7 @@
 
 * Added the gRPC client and server template in .Net 5
 * The .Net core template was upgraded to .Net 5
+* SpringCloudConfig is added to manage the configuration in the .Net templates
 
 
 # 2.0.0 (2020-12-09)

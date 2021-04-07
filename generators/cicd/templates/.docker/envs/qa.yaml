@@ -18,33 +18,73 @@ siigo-chart:
     repository: #argument in pipeline
     pullPolicy: IfNotPresent
 
+  # container ports expose by dockerfile. By default exposed port is 5000
+  ports: []
+    #- containerPort: 5000
+    #  name: grpc
+    #  protocol: TCP
+
+    #- containerPort: 11000
+    #  name: http
+    #  protocol: TCP
+
   service:
     type: ClusterIP
-    port: 5000
+    ports:
+      - port: 5000
+        targetPort: 5000
+        protocol: TCP
+        name: http
+      #- name: grpc
+      #  port: 10000
+      #  protocol: TCP
+      #  targetPort: 10000
 
-  <% if(config.type == 'netcore') { %>
+  <% if(config.type == 'netcore' || config.type == 'net5') { %>
   livenessProbe:
+    failureThreshold: 6
     httpGet:
       path: /health
       port: http ## service.port
-  
+      scheme: HTTP
+    periodSeconds: 10 # The periodSeconds field specifies that the kubelet should perform a liveness probe every 10 seconds
+    successThreshold: 1 # The initialDelaySeconds field tells the kubelet that it should wait 5 seconds before performing the first probe.
+    timeoutSeconds: 5 # Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1.
+    initialDelaySeconds: 5 # Number of seconds after the container has started before liveness or readiness probes are initiated. Defaults to 0 seconds.
+
   readinessProbe:
+    failureThreshold: 6
     httpGet:
       path: /health
       port: http ## service.port
-  
+      scheme: HTTP
+    periodSeconds: 10 # The periodSeconds field specifies that the kubelet should perform a liveness probe every 10 seconds
+    successThreshold: 1 # The initialDelaySeconds field tells the kubelet that it should wait 5 seconds before performing the first probe.
+    timeoutSeconds: 5 # Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1.
+    initialDelaySeconds: 5 # Number of seconds after the container has started before liveness or readiness probes are initiated. Defaults to 0 seconds.
   <% } else { %> # probes nodejs
 
   livenessProbe:
+    failureThreshold: 6
     httpGet:
       path: /api/health
       port: http ## service.port
-  
+      scheme: HTTP
+    periodSeconds: 10 # The periodSeconds field specifies that the kubelet should perform a liveness probe every 10 seconds
+    successThreshold: 1 # The initialDelaySeconds field tells the kubelet that it should wait 5 seconds before performing the first probe.
+    timeoutSeconds: 5 # Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1.
+    initialDelaySeconds: 5 # Number of seconds after the container has started before liveness or readiness probes are initiated. Defaults to 0 seconds.
+
   readinessProbe:
+    failureThreshold: 6
     httpGet:
       path: /api/health
       port: http ## service.port
-  
+      scheme: HTTP
+    periodSeconds: 10 # The periodSeconds field specifies that the kubelet should perform a liveness probe every 10 seconds
+    successThreshold: 1 # The initialDelaySeconds field tells the kubelet that it should wait 5 seconds before performing the first probe.
+    timeoutSeconds: 5 # Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1.
+    initialDelaySeconds: 5 # Number of seconds after the container has started before liveness or readiness probes are initiated. Defaults to 0 seconds.
   <% } %>
   
   hpa:

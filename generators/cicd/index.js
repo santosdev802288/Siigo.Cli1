@@ -66,9 +66,9 @@ module.exports = class extends Generator {
 
         this.option("chart-version", {
             type: String,
-            required: true,
+            required: false,
             description: "Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Chart/tags",
-            default: 'null',
+            default: '0.2.2',
             alias: 'cv'
         });
 
@@ -105,9 +105,9 @@ module.exports = class extends Generator {
         this.option("type", {
             type: String,
             required: true,
-            description: "Project type. (node, netcore)",
+            description: "Project type. (node, netcore or net5)",
             alias: 't',
-            default: 'netcore'
+            default: 'net5'
         });
     }
 

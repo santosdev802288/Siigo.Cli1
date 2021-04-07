@@ -11,7 +11,7 @@ resources:
       name: "Siigo/Siigo.Pipeline"
 
 extends:
-  <% if(config.type == 'netcore') { %>
+  <% if(config.type == 'netcore' || config.type == 'net5') { %>
   template: netcore/netcore-pipeline.yaml@Pipelines
   <% } else { %> 
   template: node/node-pipeline.yaml@Pipelines
