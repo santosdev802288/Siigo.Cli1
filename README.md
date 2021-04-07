@@ -157,11 +157,11 @@ This command helps automating the creation of microservices with a minimal confi
 Create a new microservice with a custom personal token.
 Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_usersSettings/tokens) and replace it in {YOUR_TOKEN}.
  
-    yo siigo:code --personal-token {YOUR_TOKEN}
+    yo siigo:core --personal-token {YOUR_TOKEN}
 
 Create a new microservice with a [personal access token](https://dev.azure.com/SiigoDevOps/_usersSettings/tokens) and custom name. By default, --name is the name of root folder. 
     
-    yo siigo:code --personal-token {YOUR_TOKEN} --name PaymentMethods
+    yo siigo:core --personal-token {YOUR_TOKEN} --name PaymentMethods
 
 #### Example 
 In the following [example](https://assetsdoc.blob.core.windows.net/assets/core.svg) you can see how to create a microservice in .Net Core with a newly cloned repository.
@@ -214,11 +214,11 @@ This command helps automating the creation of microservices with a minimal confi
 Create a new microservice with a custom personal token.
 Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_usersSettings/tokens) and replace it in {YOUR_TOKEN}.
  
-    yo siigo:code-grpc-client --personal-token {YOUR_TOKEN}
+    yo siigo:core-grpc-client --personal-token {YOUR_TOKEN}
 
 Create a new microservice with a [personal access token](https://dev.azure.com/SiigoDevOps/_usersSettings/tokens) and custom name. By default, --name is the name of root folder. 
     
-    yo siigo:code-grpc-client --personal-token {YOUR_TOKEN} --name PaymentMethods
+    yo siigo:core-grpc-client --personal-token {YOUR_TOKEN} --name PaymentMethods
 
 #### Example 
 In the following [example](https://assetsdoc.blob.core.windows.net/assets/core.svg) you can see how to create a microservice in .Net Core with a newly cloned repository.
@@ -261,11 +261,11 @@ This command helps automating the creation of microservices with a minimal confi
 Create a new microservice with a custom personal token.
 Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_usersSettings/tokens) and replace it in {YOUR_TOKEN}.
  
-    yo siigo:code-grpc-server --personal-token {YOUR_TOKEN}
+    yo siigo:core-grpc-server --personal-token {YOUR_TOKEN}
 
 Create a new microservice with a [personal access token](https://dev.azure.com/SiigoDevOps/_usersSettings/tokens) and custom name. By default, --name is the name of root folder. 
     
-    yo siigo:code-grpc-server --personal-token {YOUR_TOKEN} --name PaymentMethods
+    yo siigo:core-grpc-server --personal-token {YOUR_TOKEN} --name PaymentMethods
 
 #### Flags and description
 

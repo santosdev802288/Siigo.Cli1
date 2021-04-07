@@ -4,6 +4,10 @@
 ### Features
 
 * The parameter cicd was added in the gateway generator
+* Library updated in .Net templates SlimMessageBus Version="1.3.0"
+* Library updated in .Net templates SlimMessageBus.Host.AspNetCore Version="1.4.0"
+* Library updated in .Net templates SlimMessageBus.Host.Kafka Version="1.11.0"
+* Library updated in .Net templates SlimMessageBus.Host.Serialization.Json Version="1.4.0"
 * The README.md was updated
 
 

@@ -159,12 +159,18 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
                 .WithSerializer(new JsonMessageSerializer())
                 .WithProviderKafka(new KafkaMessageBusSettings(_configuration.GetSection("kafka").GetSection("brokerUrl").Value)
                 {
-                    ConsumerConfigFactory = group => new Dictionary<string, object>
+                    ProducerConfig = (config) =>
                     {
-                        {"socket.blocking.max.ms", _configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("socket.blocking.max.ms").Value},
-                        {"fetch.error.backoff.ms", _configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("fetch.error.backoff.ms").Value},
-                        {"statistics.interval.ms", _configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("statistics.interval.ms").Value},
-                        {"socket.nagle.disable",   _configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("socket.nagle.disable").Value}
+                        config.LingerMs = Double.Parse(_configuration.GetSection("kafka").GetSection("producerConfig").GetSection("LingerMs").Value);
+                        config.SocketNagleDisable = bool.Parse(_configuration.GetSection("kafka").GetSection("producerConfig").GetSection("socket.nagle.disable").Value);
+                    },
+                    ConsumerConfig = (config) =>
+                    {
+                        config.FetchErrorBackoffMs = Int32.Parse(_configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("fetch.error.backoff.ms").Value);
+                        config.StatisticsIntervalMs = Int32.Parse(_configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("statistics.interval.ms").Value);
+                        config.SocketNagleDisable = bool.Parse(_configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("socket.nagle.disable").Value);
+                        config.SessionTimeoutMs = Int32.Parse(_configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("SessionTimeoutMs").Value);
+                        config.MaxPollIntervalMs = Int32.Parse(_configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("MaxPollIntervalMs").Value);
                     }
                 })
                 // Si se produce el envio de un evento, configurar y retirar los comentarios de las siguientes lineas
@@ -270,13 +276,15 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
             // Add framework services.
             services
                 .AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddControllersAsServices();
+                /*  Enable this if you want to force SnakeCase 
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.DictionaryKeyPolicy = SnakeCaseNamingPolicy.Instance;
                     options.JsonSerializerOptions.PropertyNamingPolicy = SnakeCaseNamingPolicy.Instance;
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                .AddControllersAsServices();
+                });
+                */
 
             services.AddApiVersioning(config =>
             {
@@ -308,7 +316,8 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
                     builder => builder
                         .AllowAnyMethod()
                         .AllowAnyHeader()
-                        .AllowCredentials());
+                        .AllowCredentials()); // Disable this line to local development
+                        //.AllowAnyOrigin()); // Enable this line to local development
             });
 
             return services;
