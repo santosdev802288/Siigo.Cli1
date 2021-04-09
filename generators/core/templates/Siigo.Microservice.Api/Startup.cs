@@ -20,6 +20,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Exceptions;
+using Siigo.NetCoreLibrary.DistributedCache.Redis;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastructure.AutofacModules;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastructure.Extensions;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.SeedWork;
@@ -155,17 +156,25 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api
         {
             // {"siigo", "tech"}
         });
+        var kafkaProducerConfig = _configuration.GetSection("kafka:producerConfig");
+        var kafkaConsumerConfig = _configuration.GetSection("kafka:consumerConfig");
         return MessageBusBuilder
             .Create()
             .WithSerializer(new JsonMessageSerializer())
             .WithProviderKafka(new KafkaMessageBusSettings(_configuration.GetSection("kafka").GetSection("brokerUrl").Value)
             {
-                ConsumerConfigFactory = group => new Dictionary<string, object>
+                ProducerConfig = (config) =>
                 {
-                        {"socket.blocking.max.ms", _configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("socket.blocking.max.ms").Value},
-                        {"fetch.error.backoff.ms", _configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("fetch.error.backoff.ms").Value},
-                        {"statistics.interval.ms", _configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("statistics.interval.ms").Value},
-                        {"socket.nagle.disable",   _configuration.GetSection("kafka").GetSection("consumerConfig").GetSection("socket.nagle.disable").Value}
+                    config.LingerMs = Double.Parse(kafkaProducerConfig.GetSection("LingerMs").Value);
+                    config.SocketNagleDisable = bool.Parse(kafkaProducerConfig.GetSection("socket.nagle.disable").Value);
+                },
+                ConsumerConfig = (config) =>
+                {
+                    config.FetchErrorBackoffMs = Int32.Parse(kafkaConsumerConfig.GetSection("fetch.error.backoff.ms").Value);
+                    config.StatisticsIntervalMs = Int32.Parse(kafkaConsumerConfig.GetSection("statistics.interval.ms").Value);
+                    config.SocketNagleDisable = bool.Parse(kafkaConsumerConfig.GetSection("socket.nagle.disable").Value);
+                    config.SessionTimeoutMs = Int32.Parse(kafkaConsumerConfig.GetSection("SessionTimeoutMs").Value);
+                    config.MaxPollIntervalMs = Int32.Parse(kafkaConsumerConfig.GetSection("MaxPollIntervalMs").Value);
                 }
             })
             // Si se produce el envio de un evento, configurar y retirar los comentarios de las siguientes lineas
@@ -272,13 +281,15 @@ static class CustomExtensionsMethods
         // Add framework services.
         services
             .AddMvc()
-            .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.DictionaryKeyPolicy = SnakeCaseNamingPolicy.Instance;
-                options.JsonSerializerOptions.PropertyNamingPolicy = SnakeCaseNamingPolicy.Instance;
-            })
             .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
             .AddControllersAsServices();
+        /*  Enable this if you want to force SnakeCase 
+        .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.DictionaryKeyPolicy = SnakeCaseNamingPolicy.Instance;
+            options.JsonSerializerOptions.PropertyNamingPolicy = SnakeCaseNamingPolicy.Instance;
+        });
+        */
 
         services.AddApiVersioning(config =>
         {
@@ -299,10 +310,7 @@ static class CustomExtensionsMethods
         services.AddLocalization();
 
         // Redis configuration
-        services.AddDistributedRedisCache(option =>
-        {
-            option.Configuration = configuration["RedisConnection"];
-        });
+        services.AddRedisCache(configuration);
 
         services.AddCors(options =>
         {
@@ -310,7 +318,8 @@ static class CustomExtensionsMethods
                 builder => builder
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .AllowCredentials());
+                    .AllowCredentials()); // Disable this line to local development
+                                          //.AllowAnyOrigin()); // Enable this line to local development
         });
 
         return services;

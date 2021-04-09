@@ -24,10 +24,9 @@ namespace <%= config.projectPrefix %>.Extensions.Tests.Security
     }
 
     [Fact]
-    public void OnAuthorizationOk()
+    public async Task OnAuthorizationOk()
     {
-        Action act = () => _authorizeFilter.OnAuthorizationAsync(new AuthorizationFilterContext(null, null));
-        Assert.Throws<ArgumentNullException>(act);
+        await Assert.ThrowsAsync<NullReferenceException>(() => _authorizeFilter.OnAuthorizationAsync(new AuthorizationFilterContext(null, null)));
     }
 
 }
