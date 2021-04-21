@@ -3,7 +3,7 @@
 # Siigo CLI  
 <br>
 
-![logo](https://pdsiigowebsite.azurewebsites.net/wp-content/uploads/2019/05/Logo-Siigo.png)
+![logo](https://www.siigo.com/wp-content/uploads/2019/05/Logo-Siigo.png)
 
 <br>
 
