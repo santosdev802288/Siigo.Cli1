@@ -57,8 +57,8 @@ module.exports = class extends Generator {
     this.option("chart-version", {
       type: String,
       required: false,
-      description: "Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Chart/tags",
-      default: '0.2.2',
+      description: "Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags",
+      default: 'null',
       alias: 'cv'
     });
 
@@ -80,13 +80,6 @@ module.exports = class extends Generator {
       required: true,
       description: "Port to expose the api gateway in the ingress controller. Confirm with architecture team if that port that you need its open.",
       default: null
-    });
-
-    this.option("cicd", {
-      type: String,
-      required: false,
-      description: "Enable the commands to create the CI/CD process in Azure DevOps",
-      default: `yes`
     });
 
   }
@@ -115,7 +108,6 @@ module.exports = class extends Generator {
       pipelineName: this.options['pipeline-name'],
       name: this.options['project-name'],
       chartVersion: this.options['chart-version'],
-      cicd: this.options['cicd']
     };
 
     const json = JSON.stringify(this.appConfig, false, '\t')
@@ -142,9 +134,6 @@ module.exports = class extends Generator {
 
   writing() {
 
-    shell.rm("-rf" , ".docker")
-    shell.rm("azure-pipelines.yml")
-
     this.registerTransformStream([
       rename((path) => {
         path.dirname = path.dirname.replace(
@@ -158,10 +147,6 @@ module.exports = class extends Generator {
       config: this.appConfig,
     });
 
-    this.fs.copyTpl(this.templatePath('.*'), this.destinationPath('.'), {
-      config: this.appConfig,
-    });
-
     this.fs.copyTpl(
       this.templatePath('.docker'),
       this.destinationPath('.docker'),
@@ -170,28 +155,26 @@ module.exports = class extends Generator {
   }
 
   install() {
-    if (this.options['cicd'].toLowerCase() == 'yes' || this.options['cicd'].toLowerCase() == 'y') {
-      this.spawnCommandSync('git', ['checkout', '-b', 'cicd']);
-      this.spawnCommandSync('git', ['add', '-A']);
-      this.spawnCommandSync('git', ['commit', '-m', 'cicd configuration']);
-      this.spawnCommandSync('git', ['push', 'origin', 'cicd']);
+    this.spawnCommandSync('git', ['checkout', '-b', 'cicd']);
+    this.spawnCommandSync('git', ['add', '-A']);
+    this.spawnCommandSync('git', ['commit', '-m', 'cicd configuration']);
+    this.spawnCommandSync('git', ['push', 'origin', 'cicd']);
 
-      this.spawnCommandSync('az', ['login']);
-      this.spawnCommandSync('az', ['extension', 'add', '--name', 'azure-devops']);
-      spawn(
-        `az devops configure --defaults organization='${this.appConfig.organization}' project='${this.appConfig.project}'`
-      );
-      this.spawnCommandSync('az', [
-        'pipelines',
-        'create',
-        '--name',
-        this.appConfig.pipelineName,
-        '--yml-path',
-        'azure-pipelines.yml',
-        '--folder-path',
-        this.appConfig.folder,
-      ]);
-    }
+    this.spawnCommandSync('az', ['login']);
+    this.spawnCommandSync('az', ['extension', 'add', '--name', 'azure-devops']);
+    spawn(
+      `az devops configure --defaults organization='${this.appConfig.organization}' project='${this.appConfig.project}'`
+    );
+    this.spawnCommandSync('az', [
+      'pipelines',
+      'create',
+      '--name',
+      this.appConfig.pipelineName,
+      '--yml-path',
+      'azure-pipelines.yml',
+      '--folder-path',
+      this.appConfig.folder,
+    ]);
   }
 
   end() {

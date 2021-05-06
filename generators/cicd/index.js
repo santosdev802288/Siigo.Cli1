@@ -66,9 +66,9 @@ module.exports = class extends Generator {
 
         this.option("chart-version", {
             type: String,
-            required: false,
-            description: "Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Chart/tags",
-            default: '0.2.2',
+            required: true,
+            description: "Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags",
+            default: 'null',
             alias: 'cv'
         });
 
@@ -105,9 +105,9 @@ module.exports = class extends Generator {
         this.option("type", {
             type: String,
             required: true,
-            description: "Project type. (node, netcore or net5)",
+            description: "Project type. (node, netcore)",
             alias: 't',
-            default: 'net5'
+            default: 'netcore'
         });
     }
 
@@ -125,7 +125,7 @@ module.exports = class extends Generator {
             throw new Error("--dll is required or it should not be empty.\n " + message)
 
         if ((this.options['chart-version'] === 'null' || this.options['chart-version'] === 'true'))
-            throw new Error("--chart-version is required or it should not be empty. Visit https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Chart/tags \n " + message)
+            throw new Error("--chart-version is required or it should not be empty. Visit https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags \n " + message)
 
         const {organization, project, environment, folder, type} = this.options
         const namespace = this.options['namespace-k8s']
@@ -167,9 +167,6 @@ module.exports = class extends Generator {
 
 
     writing() {
-
-        shell.rm("-rf" , ".docker")
-        shell.rm("azure-pipelines.yml")
 
         this.registerTransformStream([
             rename( (path) => {

@@ -2,6 +2,8 @@ FROM devopsfaith/krakend:1.1.1
 
 USER root
 
+ENV COMPlus_EnableDiagnostics=0
+
 RUN apt-get update
 RUN apt-get install vim -y
 RUN apt-get install nmap -y
