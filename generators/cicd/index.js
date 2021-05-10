@@ -120,7 +120,7 @@ module.exports = class extends Generator {
         this.option("owner", {
             type: String,
             required: true,
-            description: "Owner tag (whos execute the deployment).",
+            description: "Owner tag (whos execute the deployment test).",
             alias: 'ow'
         });
     }

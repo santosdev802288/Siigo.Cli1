@@ -403,7 +403,7 @@ Run *_yo siigo:cicd --help_* to see the configuration description, data type and
               --project-name   # Used in Helm chart name, docker image and sonar.
       -ns,    --namespace-k8s  # Namespace in kubernetes configured in the environment.
       -st,    --sonar-token    # Sonar token to publish metrics. If --type is set to 'node', this value will be ignored.                             Default: null
-      -t,     --type           # Project type. (node, netcore or net5)                                                                               Default: net5 
+      -t,     --type           # Project type. (node, netcore or net5)                                                                               Default: net5
       
 > **⚠️ WARNING**: If you set --environment option, remember: you only need pass
 >the name without the prefix of the environment(qa, dev, prod). Example 'qa aks' is aks and 'prod aks chile' is aks chile.  

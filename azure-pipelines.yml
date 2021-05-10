@@ -1,0 +1,20 @@
+trigger:
+  - dev
+  - develop
+  - master
+  - cicd
+
+resources:
+  repositories:
+    - repository: Pipelines
+      type: git
+      name: "Siigo/Siigo.Pipeline"
+
+extends:
+  
+  template: netcore/netcore-pipeline.yaml@Pipelines
+   
+  parameters:
+    projectName: ms-myproduct
+    environment: aks
+    namespace: siigo-catalog
