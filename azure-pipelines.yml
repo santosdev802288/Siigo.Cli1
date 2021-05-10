@@ -17,4 +17,4 @@ extends:
   parameters:
     projectName: ms-myproduct
     environment: aks
-    namespace: siigo-catalog
+    namespace: siigo-test
