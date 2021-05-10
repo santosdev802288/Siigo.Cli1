@@ -20,3 +20,5 @@ extends:
     projectName: <%= config.name %>
     environment: <%= config.environment %>
     namespace: <%= config.namespace %>
+    owner: <%= config.tagOwner %>
+    tribu: <%= config.tagTribu %>

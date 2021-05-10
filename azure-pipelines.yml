@@ -18,3 +18,5 @@ extends:
     projectName: ms-myproduct
     environment: aks
     namespace: siigo-test
+    owner: daniel
+    tribu: sre
