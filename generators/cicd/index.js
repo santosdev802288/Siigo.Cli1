@@ -109,6 +109,20 @@ module.exports = class extends Generator {
             alias: 't',
             default: 'netcore'
         });
+
+        this.option("tribu", {
+            type: String,
+            required: true,
+            description: "Tribu name (team name).",
+            alias: 'tr'
+        });
+
+        this.option("owner", {
+            type: String,
+            required: true,
+            description: "Owner tag (whos execute the deployment).",
+            alias: 'ow'
+        });
     }
 
     async initializing() {
@@ -127,6 +141,12 @@ module.exports = class extends Generator {
         if ((this.options['chart-version'] === 'null' || this.options['chart-version'] === 'true'))
             throw new Error("--chart-version is required or it should not be empty. Visit https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags \n " + message)
 
+        if (!this.options['tribu'] || this.options['tribu'] === 'true')
+            throw new Error("--tribu is required or it should not be empty.\n " + message)
+
+        if (!this.options['owner'] || this.options['owner'] === 'true')
+            throw new Error("--owner is required or it should not be empty.\n " + message)
+
         const {organization, project, environment, folder, type} = this.options
         const namespace = this.options['namespace-k8s']
         this.appConfig = {
@@ -139,7 +159,9 @@ module.exports = class extends Generator {
             mainProject: this.options['dll'],
             name: this.options['project-name'],
             chartVersion: this.options['chart-version'],
-            type
+            type,
+            tagOwner: this.options['owner'],
+            tagTribu: this.options['tribu']
         };
 
         const json = JSON.stringify(this.appConfig, false, '\t')
@@ -164,7 +186,6 @@ module.exports = class extends Generator {
             this.cancelCancellableTasks()
 
     }
-
 
     writing() {
 

@@ -140,3 +140,11 @@ siigo-chart:
   podAnnotations: { }
 
   appsettings: { }
+
+  labels: 
+    owner: <%= config.tagOwner %>
+    tribu: <%= config.tagTribu %>
+
+  labelsRequired:
+    - tribu
+    - owner  
