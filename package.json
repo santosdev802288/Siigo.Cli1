@@ -1,0 +1,55 @@
+{
+  "name": "generator-siigo",
+  "version": "2.0.5",
+  "description": "generator archetype siigo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli"
+  },
+  "author": "Juan David Correa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli"
+  },
+  "homepage": "https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli#readme",
+  "keywords": [
+    "yeoman-generator",
+    "angular",
+    "component",
+    "javascript",
+    "builder",
+    "scaffold",
+    "generator",
+    "s9s"
+  ],
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "decamelize": "^3.2.0",
+    "gulp-rename": "1.2.2",
+    "json-colorizer": "^2.2.2",
+    "replace-in-file": "^4.2.0",
+    "shelljs": "^0.8.4",
+    "svg-term-cli": "^2.1.1",
+    "update-notifier": "^4.0.0",
+    "uppercamelcase": "^3.0.0",
+    "yeoman-generator": "^4.2.0",
+    "yosay": "^2.0.2"
+  },
+  "devDependencies": {
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.0.2"
+  },
+  "files": [
+    "generators",
+    "utils"
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

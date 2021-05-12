@@ -1,0 +1,22 @@
+trigger:
+  - dev
+  - develop
+  - master
+  - cicd
+
+resources:
+  repositories:
+    - repository: Pipelines
+      type: git
+      name: "Siigo/Siigo.Pipeline"
+
+extends:
+  <% if(config.type == 'netcore' || config.type == 'net5') { %>
+  template: netcore/netcore-pipeline.yaml@Pipelines
+  <% } else { %> 
+  template: node/node-pipeline.yaml@Pipelines
+  <% } %> 
+  parameters:
+    projectName: <%= config.name %>
+    environment: <%= config.environment %>
+    namespace: <%= config.namespace %>

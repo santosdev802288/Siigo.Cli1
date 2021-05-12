@@ -1,0 +1,18 @@
+trigger:
+  - dev
+  - develop
+  - master
+  - cicd
+
+resources:
+  repositories:
+    - repository: Pipelines
+      type: git
+      name: "Siigo/Siigo.Pipeline"
+
+extends:
+  template: gateway/gateway-pipeline.yaml@Pipelines
+  parameters:
+    projectName: api-gateway-<%= config.name %>
+    environment: <%= config.environment %>
+    namespace: <%= config.namespace %>

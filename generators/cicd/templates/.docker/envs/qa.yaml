@@ -1,0 +1,142 @@
+# Default values for aks.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+siigo-chart:
+
+  # can be Development, Production, Testing, Local
+  env: Testing
+
+  envs:
+    ASPNETCORE_ENVIRONMENT: Testing
+
+  secrets: { }
+
+  replicaCount: 2
+
+  image:
+    repository: #argument in pipeline
+    pullPolicy: IfNotPresent
+
+  # container ports expose by dockerfile. By default exposed port is 5000
+  ports: []
+    #- containerPort: 5000
+    #  name: grpc
+    #  protocol: TCP
+
+    #- containerPort: 11000
+    #  name: http
+    #  protocol: TCP
+
+  service:
+    type: ClusterIP
+    ports:
+      - port: 5000
+        targetPort: 5000
+        protocol: TCP
+        name: http
+      #- name: grpc
+      #  port: 10000
+      #  protocol: TCP
+      #  targetPort: 10000
+
+  <% if(config.type == 'netcore' || config.type == 'net5') { %>
+  livenessProbe:
+    failureThreshold: 6
+    httpGet:
+      path: /health
+      port: http ## service.port
+      scheme: HTTP
+    periodSeconds: 10 # The periodSeconds field specifies that the kubelet should perform a liveness probe every 10 seconds
+    successThreshold: 1 # The initialDelaySeconds field tells the kubelet that it should wait 5 seconds before performing the first probe.
+    timeoutSeconds: 5 # Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1.
+    initialDelaySeconds: 5 # Number of seconds after the container has started before liveness or readiness probes are initiated. Defaults to 0 seconds.
+
+  readinessProbe:
+    failureThreshold: 6
+    httpGet:
+      path: /health
+      port: http ## service.port
+      scheme: HTTP
+    periodSeconds: 10 # The periodSeconds field specifies that the kubelet should perform a liveness probe every 10 seconds
+    successThreshold: 1 # The initialDelaySeconds field tells the kubelet that it should wait 5 seconds before performing the first probe.
+    timeoutSeconds: 5 # Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1.
+    initialDelaySeconds: 5 # Number of seconds after the container has started before liveness or readiness probes are initiated. Defaults to 0 seconds.
+  <% } else { %> # probes nodejs
+
+  livenessProbe:
+    failureThreshold: 6
+    httpGet:
+      path: /api/health
+      port: http ## service.port
+      scheme: HTTP
+    periodSeconds: 10 # The periodSeconds field specifies that the kubelet should perform a liveness probe every 10 seconds
+    successThreshold: 1 # The initialDelaySeconds field tells the kubelet that it should wait 5 seconds before performing the first probe.
+    timeoutSeconds: 5 # Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1.
+    initialDelaySeconds: 5 # Number of seconds after the container has started before liveness or readiness probes are initiated. Defaults to 0 seconds.
+
+  readinessProbe:
+    failureThreshold: 6
+    httpGet:
+      path: /api/health
+      port: http ## service.port
+      scheme: HTTP
+    periodSeconds: 10 # The periodSeconds field specifies that the kubelet should perform a liveness probe every 10 seconds
+    successThreshold: 1 # The initialDelaySeconds field tells the kubelet that it should wait 5 seconds before performing the first probe.
+    timeoutSeconds: 5 # Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1.
+    initialDelaySeconds: 5 # Number of seconds after the container has started before liveness or readiness probes are initiated. Defaults to 0 seconds.
+  <% } %>
+  
+  hpa:
+    maxReplicas: 2
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 70
+
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+
+  podSecurityContext: { }
+  # fsGroup: 2000
+
+  securityContext: { }
+    # capabilities:
+    #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+  nodeSelector: { }
+
+  tolerations: [ ]
+
+  affinity: { }
+
+  podDisruptionBugets:
+    minAvailable: 50%
+
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+
+  outlierDetection: { }
+    #baseEjectionTime: 120.000s
+    #consecutiveErrors: 2
+  #interval: 1.000s
+  #maxEjectionPercent: 100
+
+  podAnnotations: { }
+
+  appsettings: { }
