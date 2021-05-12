@@ -1,6 +1,5 @@
-###### README.md
-
 # Siigo CLI  
+
 <br>
 
 ![logo](https://pdsiigowebsite.azurewebsites.net/wp-content/uploads/2019/05/Logo-Siigo.png)
@@ -21,6 +20,43 @@
 
 <span style="font-size:2em;">☠️</span> | Before to start to use this CLI , it's important to follow the instructions. If you have some errors during the Siiglo ClI installation process or when you're using it, read those exceptions carefully, they can give you a lot of information about how to fix them. 
 :---: | :---
+
+- [Siigo CLI](#siigo-cli)
+  - [🛠️ Requirements](#️-requirements)
+  - [⚙️ Installation MacOs and Linux](#️-installation-macos-and-linux)
+  - [🕵✋️ Installation Windows Power Shell](#️-installation-windows-power-shell)
+  - [👷 Work flow](#-work-flow)
+  - [⚡ Generators](#-generators)
+  - [‍👩‍🏫 NodeJS](#-nodejs)
+    - [1. New project](#1-new-project)
+    - [Using](#using)
+  - [👨‍🏫 .Net Core](#-net-core)
+    - [1. New net core project](#1-new-net-core-project)
+    - [2. CQRS](#2-cqrs)
+  - [👨‍🏫 .Net 5 grpc client](#-net-5-grpc-client)
+    - [1. New net core project](#1-new-net-core-project-1)
+  - [👨‍🏫 .Net 5 grpc server](#-net-5-grpc-server)
+    - [1. New net core project](#1-new-net-core-project-2)
+  - [🔱 Api Gateway](#-api-gateway)
+    - [Motivation](#motivation)
+    - [Using](#using-1)
+    - [Example](#example)
+    - [Flags and description](#flags-and-description)
+    - [Did something go wrong?](#did-something-go-wrong)
+  - [🚀 CICD](#-cicd)
+    - [Motivation](#motivation-1)
+    - [Using](#using-2)
+    - [Example .Net Core](#example-net-core)
+    - [Example NodeJS](#example-nodejs)
+    - [Flags and description](#flags-and-description-1)
+    - [Default values](#default-values)
+    - [Customize pipeline](#customize-pipeline)
+    - [Customize chart](#customize-chart)
+    - [Did something go wrong?](#did-something-go-wrong-1)
+  - [Contributing](#contributing)
+    - [Requirements](#requirements)
+    - [Build](#build)
+  - [📚 TODO](#-todo)
 
 ## 🛠️ Requirements
 - [Node](https://nodejs.org/en/download/)   
