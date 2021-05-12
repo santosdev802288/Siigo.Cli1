@@ -88,7 +88,7 @@ COPY --from=build-env --chown=app:app /app/out $APP_HOME
 EXPOSE 5000
 
 USER 1000
-ENTRYPOINT ["dotnet", "Siigo.Prueba.Api.dll"]
+ENTRYPOINT ["dotnet", "<%= config.mainProject %>.dll"]
 
 
 <% } else if (config.type == 'node') { %> 
