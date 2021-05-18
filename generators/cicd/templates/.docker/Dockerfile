@@ -56,6 +56,14 @@ WORKDIR /app
 RUN dotnet tool install -g dotnet-references --version 0.0.7
 ENV PATH="${PATH}:/root/.dotnet/tools"
 
+# Install ASP.NET Core runtime
+ENV ASPNETCORE_VERSION 3.0.0
+RUN curl -SL --output aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNETCORE_VERSION/aspnetcore-runtime-$ASPNETCORE_VERSION-linux-musl-x64.tar.gz \
+  && mkdir -p /usr/share/dotnet \
+  && tar -zxf aspnetcore.tar.gz -C /usr/share/dotnet \
+  && rm aspnetcore.tar.gz \
+  && ln -sf /usr/share/dotnet/dotnet /usr/bin/dotnet
+
 COPY *.sln ./
 COPY **/*.csproj ./
 COPY **/**/*.csproj ./
