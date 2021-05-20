@@ -8,6 +8,10 @@ const colorize = require('json-colorizer');
 const shell = require("shelljs")
 const req = require("../../utils/required-tools")
 
+const upgradeFile = require('../../utils/upgrade')
+const readTribesFile = require('../../utils/readTribes')
+const autocomplete = require('../../utils/autocomplete')
+
 module.exports = class extends Generator {
 
     constructor(args, opt) {
@@ -64,6 +68,15 @@ module.exports = class extends Generator {
             alias: 'e'
         });
 
+        this.option("owner", {
+            type: String,
+            required: false,
+            description: "Owner tag (whos execute the deployment test).",
+            default: 'SiigoCli',
+            alias: 'ow'
+        });
+
+        // required
         this.option("chart-version", {
             type: String,
             required: true,
@@ -72,7 +85,6 @@ module.exports = class extends Generator {
             alias: 'cv'
         });
 
-        // required
         this.option("dll", {
             type: String,
             required: !paths,
@@ -110,22 +122,26 @@ module.exports = class extends Generator {
             default: 'netcore'
         });
 
-        this.option("tribu", {
-            type: String,
-            required: true,
-            description: "Tribu name (team name).",
-            alias: 'tr'
-        });
-
-        this.option("owner", {
-            type: String,
-            required: true,
-            description: "Owner tag (whos execute the deployment test).",
-            alias: 'ow'
-        });
     }
 
     async initializing() {
+
+        this.upgrade = await this.prompt([
+            {
+                type: "confirm",
+                name: "ok",
+                message: "Do you want to upgrade the tribes.json file?"
+            }
+        ]);
+
+        if (this.upgrade.ok){
+            console.log('\nUpgrading tribes.json file...');
+            await upgradeFile("assets/", "tribes", "tribes.json")
+            console.log('\nUpgrade Complete!!');
+        }
+
+        const tribes = readTribesFile('assets/tribes.json')
+        const select_tribe = await autocomplete(tribes);
 
         const message = "For more information execute yo siigo:cicd --help"
 
@@ -141,12 +157,6 @@ module.exports = class extends Generator {
         if ((this.options['chart-version'] === 'null' || this.options['chart-version'] === 'true'))
             throw new Error("--chart-version is required or it should not be empty. Visit https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags \n " + message)
 
-        if (!this.options['tribu'] || this.options['tribu'] === 'true')
-            throw new Error("--tribu is required or it should not be empty.\n " + message)
-
-        if (!this.options['owner'] || this.options['owner'] === 'true')
-            throw new Error("--owner is required or it should not be empty.\n " + message)
-
         const {organization, project, environment, folder, type} = this.options
         const namespace = this.options['namespace-k8s']
         this.appConfig = {
@@ -161,7 +171,7 @@ module.exports = class extends Generator {
             chartVersion: this.options['chart-version'],
             type,
             tagOwner: this.options['owner'],
-            tagTribu: this.options['tribu']
+            tagTribu: select_tribe.tribe
         };
 
         const json = JSON.stringify(this.appConfig, false, '\t')
@@ -220,7 +230,7 @@ module.exports = class extends Generator {
         spawn(`az devops configure --defaults organization='${this.appConfig.organization}' project='${this.appConfig.project}'` );
         this.spawnCommandSync('az', ['pipelines','create','--name', this.appConfig.pipelineName, '--yml-path', 'azure-pipelines.yml', '--folder-path',this.appConfig.folder]);
     }
-    
+
     end(){
         this.log(yosay(`Enjoy! Dont forget merge cicd branch in dev.`))
     }

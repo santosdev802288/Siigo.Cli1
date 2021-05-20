@@ -27,10 +27,15 @@
     "s9s"
   ],
   "dependencies": {
+    "@azure/storage-blob": "^12.5.0",
     "chalk": "^3.0.0",
     "decamelize": "^3.2.0",
     "gulp-rename": "1.2.2",
+    "inquirer": "^8.0.0",
+    "inquirer-autocomplete-prompt": "^1.3.0",
     "json-colorizer": "^2.2.2",
+    "jsonfile": "^6.1.0",
+    "lodash": "^4.17.21",
     "replace-in-file": "^4.2.0",
     "shelljs": "^0.8.4",
     "svg-term-cli": "^2.1.1",
@@ -41,7 +46,8 @@
   },
   "devDependencies": {
     "commitizen": "^4.0.3",
-    "cz-conventional-changelog": "^3.0.2"
+    "cz-conventional-changelog": "^3.0.2",
+    "fuzzy": "^0.1.3"
   },
   "files": [
     "generators",

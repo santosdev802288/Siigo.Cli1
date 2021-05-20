@@ -74,8 +74,13 @@ siigo-chart:
 
   appsettings: { }
 
-  labels: {}
+   labels:
+      tags:
+        datadoghq:
+          com: {}
 
-  labelsRequired:
-    - tribu
-    - owner 
+    requiredLabels:
+      tags:
+        datadoghq:
+          com:
+            - tribu
