@@ -12,7 +12,7 @@ inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'))
  * @param tribes
  */
 const autocomplete = async (tribes) => {
-    await inquirer.prompt([
+    const tribe = await inquirer.prompt([
         {
             type: 'autocomplete',
             name: 'tribe',
@@ -44,11 +44,11 @@ const autocomplete = async (tribes) => {
                 return valid ? true : msg;
             },
         },
-    ])
-        .then(function (answers) {
-            console.log(answers)
+    ]).then(function (answers) {
             return answers
         });
+
+    return tribe
 }
 
 module.exports = autocomplete
