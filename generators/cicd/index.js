@@ -8,6 +8,10 @@ const colorize = require('json-colorizer');
 const shell = require("shelljs")
 const req = require("../../utils/required-tools")
 
+const upgradeFile = require('../../utils/upgrade')
+const readTribesFile = require('../../utils/readTribes')
+const autocomplete = require('../../utils/autocomplete')
+
 module.exports = class extends Generator {
 
     constructor(args, opt) {
@@ -64,6 +68,15 @@ module.exports = class extends Generator {
             alias: 'e'
         });
 
+        this.option("owner", {
+            type: String,
+            required: false,
+            description: "Owner tag (whos execute the deployment test).",
+            default: 'SiigoCli',
+            alias: 'ow'
+        });
+
+        // required
         this.option("chart-version", {
             type: String,
             required: true,
@@ -72,7 +85,6 @@ module.exports = class extends Generator {
             alias: 'cv'
         });
 
-        // required
         this.option("dll", {
             type: String,
             required: !paths,
@@ -109,9 +121,27 @@ module.exports = class extends Generator {
             alias: 't',
             default: 'netcore'
         });
+
     }
 
     async initializing() {
+
+        this.upgrade = await this.prompt([
+            {
+                type: "confirm",
+                name: "ok",
+                message: "Do you want to upgrade the tribes.j109833son file?"
+            }
+        ]);
+
+        if (this.upgrade.ok){
+            console.log('\nUpgrading tribes.json file...');
+            await upgradeFile("assets/", "tribes", "tribes.json")
+            console.log('\nUpgrade Complete!!');
+        }
+
+        const tribes = readTribesFile('tribes.json')
+        const select_tribe = await autocomplete(tribes);
 
         const message = "For more information execute yo siigo:cicd --help"
 
@@ -139,18 +169,20 @@ module.exports = class extends Generator {
             mainProject: this.options['dll'],
             name: this.options['project-name'],
             chartVersion: this.options['chart-version'],
-            type
+            type,
+            tagOwner: this.options['owner'],
+            tagTribu: select_tribe.tribe
         };
 
         const json = JSON.stringify(this.appConfig, false, '\t')
         this.log(colorize(json, {
-                pretty: true,
-                colors: {
-                    STRING_KEY: 'green',
-                    STRING_LITERAL: 'magenta.bold',
-                    NUMBER_LITERAL: '#FF0000'
-                }
-            }))
+            pretty: true,
+            colors: {
+                STRING_KEY: 'green',
+                STRING_LITERAL: 'magenta.bold',
+                NUMBER_LITERAL: '#FF0000'
+            }
+        }))
 
         this.answers = await this.prompt([
             {
@@ -164,7 +196,6 @@ module.exports = class extends Generator {
             this.cancelCancellableTasks()
 
     }
-
 
     writing() {
 
@@ -193,13 +224,13 @@ module.exports = class extends Generator {
         this.spawnCommandSync('git', ['add','-A']);
         this.spawnCommandSync('git', ['commit','-m','cicd configuration']);
         this.spawnCommandSync('git', ['push','origin','cicd']);
-        
+
         this.spawnCommandSync('az', ['login']);
         this.spawnCommandSync('az', ['extension','add','--name', 'azure-devops']);
         spawn(`az devops configure --defaults organization='${this.appConfig.organization}' project='${this.appConfig.project}'` );
         this.spawnCommandSync('az', ['pipelines','create','--name', this.appConfig.pipelineName, '--yml-path', 'azure-pipelines.yml', '--folder-path',this.appConfig.folder]);
     }
-    
+
     end(){
         this.log(yosay(`Enjoy! Dont forget merge cicd branch in dev.`))
     }
