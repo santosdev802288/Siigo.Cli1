@@ -140,7 +140,7 @@ module.exports = class extends Generator {
             console.log('\nUpgrade Complete!!');
         }
 
-        const tribes = readTribesFile('assets/tribes.json')
+        const tribes = readTribesFile('tribes.json')
         const select_tribe = await autocomplete(tribes);
 
         const message = "For more information execute yo siigo:cicd --help"

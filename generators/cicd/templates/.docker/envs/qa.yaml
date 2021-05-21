@@ -146,7 +146,7 @@ siigo-chart:
         datadoghq:
           com:
             tribu: <%= config.tagTribu %>
-            tribu: <%= config.tagOwner %>
+            owner: <%= config.tagOwner %>
 
     requiredLabels:
       tags:
