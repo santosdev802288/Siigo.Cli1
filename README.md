@@ -23,7 +23,7 @@
 :---: | :---
 
 ## 🛠️ Requirements
-- [Node](https://nodejs.org/en/download/)   
+- [Node]: >= [12.22.1] (https://nodejs.org/en/download/)   
 - [Node package manager](https://docs.npmjs.com/cli/install)
 - [Git](https://git-scm.com/downloads)
 - [Azure cli](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
