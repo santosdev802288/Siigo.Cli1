@@ -1,6 +1,6 @@
 using System.IO;
 using Autofac.Extensions.DependencyInjection;
-using Siigo.<%= config.nameCapitalize %>.Api.SeedWork;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.SeedWork;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -9,7 +9,7 @@ using System.Net;
 using System;
 using Steeltoe.Extensions.Configuration.ConfigServer;
 
-namespace Siigo.<%= config.nameCapitalize %>.Api
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api
 {
     public static class Program
 {

@@ -1,4 +1,4 @@
-namespace Siigo.<%= config.nameCapitalize %>.Api.Application.Model
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Model
 {
     public interface IContract
     {

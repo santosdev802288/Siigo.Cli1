@@ -2,11 +2,11 @@ using System.Net;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Siigo.<%= config.nameCapitalize %>.Api.Application.Commands;
-using Siigo.<%= config.nameCapitalize %>.Api.Application.Queries;
-using Siigo.<%= config.nameCapitalize %>.Service.Client;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Commands;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Queries;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Service.Client;
 
-namespace Siigo.<%= config.nameCapitalize %>.Api.Controllers.v1
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Controllers.v1
 {
 
     [ApiController()]

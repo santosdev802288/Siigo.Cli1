@@ -1,9 +1,9 @@
 using System;
-using Siigo.<%= config.nameCapitalize %>.Domain.Exception;
-using Siigo.<%= config.nameCapitalize %>.Infrastructure.Extensions;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Exception;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Extensions;
 using Xunit;
 
-namespace Siigo.<%= config.nameCapitalize %>.Infrastructure.Test.Extensions
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Test.Extensions
 {
     public class ClassExtensionsTest
     {

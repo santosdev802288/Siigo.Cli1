@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
-using Siigo.<%= config.nameCapitalize %>.Domain.AggregateModel.ExampleAggregate;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.AggregateModel.ExampleAggregate;
 
-namespace Siigo.<%= config.nameCapitalize %>.Service.Services
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Service.Services
 {
     public class ExampleService : Example.ExampleBase
     {

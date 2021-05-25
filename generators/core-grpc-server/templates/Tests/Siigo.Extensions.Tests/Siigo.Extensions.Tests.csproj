@@ -20,6 +20,6 @@
   </ItemGroup>
 
    <ItemGroup>
-    <ProjectReference Include="..\..\Siigo.<%= config.nameCapitalize %>.Api\Siigo.<%= config.nameCapitalize %>.Api.csproj" />
+    <ProjectReference Include="..\..\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.csproj" />
   </ItemGroup>
 </Project>

@@ -2,14 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Siigo.<%= config.nameCapitalize %>.Api</RootNamespace>
+    <RootNamespace><%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api</RootNamespace>
     <UserSecretsId>b2c5843a-21fe-4727-a62f-64242a31ef44</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <SonarQubeExclude>false</SonarQubeExclude>
+    <ServerGarbageCollection>false</ServerGarbageCollection>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Siigo.<%= config.nameCapitalize %>' ">
+  <PropertyGroup Condition=" '$(RunConfiguration)' == '<%= config.projectPrefix %>.<%= config.nameCapitalize %>' ">
     <StartAction>Project</StartAction>
     <LaunchUrl>swagger</LaunchUrl>
     <ApplicationURL>https://localhost:5001;http://localhost:5000</ApplicationURL>
@@ -57,7 +58,7 @@
     <PackageReference Include="SlimMessageBus.Host.Kafka" Version="1.11.0" />
     <PackageReference Include="SlimMessageBus.Host.Serialization.Json" Version="1.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
-    <PackageReference Include="librdkafka.redist" Version="1.6.1" />
+    <PackageReference Include="librdkafka.redist" Version="1.5.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.0.0" />
 
     <PackageReference Include="Grpc.AspNetCore" Version="2.32.0" />
@@ -65,9 +66,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Siigo.<%= config.nameCapitalize %>.Domain\Siigo.<%= config.nameCapitalize %>.Domain.csproj" />
-    <ProjectReference Include="..\Siigo.<%= config.nameCapitalize %>.Infrastructure\Siigo.<%= config.nameCapitalize %>.Infrastructure.csproj" />
-    <ProjectReference Include="..\Siigo.<%= config.nameCapitalize %>.Service\Siigo.<%= config.nameCapitalize %>.Service.csproj" />
+    <ProjectReference Include="..\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.csproj" />
+    <ProjectReference Include="..\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.csproj" />
+    <ProjectReference Include="..\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Service\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Service.csproj" />
   </ItemGroup>
 
 </Project>

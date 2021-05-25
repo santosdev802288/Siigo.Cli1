@@ -1,11 +1,11 @@
 ﻿using System.Reflection;
 using Autofac;
 using MediatR;
-using Siigo.<%= config.nameCapitalize %>.Api.SeedWork;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.SeedWork;
 
 using Module = Autofac.Module;
 
-namespace Siigo.<%= config.nameCapitalize %>.Api.Infrastructure.AutofacModules
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastructure.AutofacModules
 {
     /// <summary>
     /// Register all necessary dependencies for the MediatR library

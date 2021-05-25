@@ -7,6 +7,7 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <SonarQubeExclude>false</SonarQubeExclude>
+    <ServerGarbageCollection>false</ServerGarbageCollection>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == '<%= config.projectPrefix %>.<%= config.nameCapitalize %>' ">
@@ -63,7 +64,7 @@
     <PackageReference Include="SlimMessageBus.Host.Kafka" Version="1.11.0" />
     <PackageReference Include="SlimMessageBus.Host.Serialization.Json" Version="1.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
-    <PackageReference Include="librdkafka.redist" Version="1.6.1" />
+    <PackageReference Include="librdkafka.redist" Version="1.5.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.0.0" />
 
   </ItemGroup>
