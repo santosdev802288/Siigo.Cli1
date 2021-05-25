@@ -1,9 +1,11 @@
 {
   "name": "generator-siigo",
-  "version": "2.0.5",
+  "version": "2.1.0",
   "description": "generator archetype siigo",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint \"{generators,test}/**/*.js\"",
+    "release": "standard-version --skip.commit --skip.tag",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -46,7 +48,8 @@
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0"
+    "eslint-plugin-promise": "^5.1.0",
+    "standard-version": "^9.3.0"
   },
   "files": [
     "generators",
