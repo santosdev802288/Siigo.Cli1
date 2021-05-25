@@ -1,26 +1,32 @@
+## 2.0.3 (2021-01-19)
 
-# 2.0.4 (2021-04-06)
+
+### Bug Fixes
+
+* **cmd:** remove commands to remove folders ([b143656](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commits/b143656761748ba43c481692a17ffc737ab6e718))
+* **files:** remove dot files ([6819a62](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commits/6819a622742cceeb11ab4e77e3934dbb8f06ce26))
+
+## 2.0.2 (2021-01-19)
+
+
+### Bug Fixes
+
+* **cmd:** remove commands to remove folders ([b143656](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commits/b143656761748ba43c481692a17ffc737ab6e718))
+
+
+## 2.0.1 (2020-12-10)
+
 
 ### Features
 
-* The parameter cicd was added in the gateway generator
-* Library updated in .Net templates SlimMessageBus Version="1.3.0"
-* Library updated in .Net templates SlimMessageBus.Host.AspNetCore Version="1.4.0"
-* Library updated in .Net templates SlimMessageBus.Host.Kafka Version="1.11.0"
-* Library updated in .Net templates SlimMessageBus.Host.Serialization.Json Version="1.4.0"
-* The README.md was updated
+* **env:** add env to work with security context ([2c14815](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commits/2c14815a7888c2a1c33e1481b4044fc2f361b929))
+* **package:** version 2.0.1 ([601c1f9](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commits/601c1f9ea1aca7b79c69e50aa102401592239d1b))
+* **scripts:** add bash installers ([822ca6a](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commits/822ca6af4e7bddf57523607857ea4a1ff1759b05))
 
-
-# 2.0.1 (2020-12-22)
-
-### Features
-
-* Added the gRPC client and server template in .Net 5
-* The .Net core template was upgraded to .Net 5
-* SpringCloudConfig is added to manage the configuration in the .Net templates
 
 
 # 2.0.0 (2020-12-09)
+
 
 ### Features
 

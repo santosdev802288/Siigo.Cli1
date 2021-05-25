@@ -1,4 +1,5 @@
 <% if (config.type == 'netcore') { %>
+
 ARG VERSION=3.1-alpine3.10
 
 FROM mcr.microsoft.com/dotnet/core/sdk:$VERSION AS build-env
@@ -42,16 +43,17 @@ EXPOSE 5000
 USER 1000
 ENTRYPOINT ["dotnet", "<%= config.mainProject %>.dll"]
 
-<% } else { %>
 
-<% if (config.type == 'net5') { %>
-ARG VERSION=5.0-alpine3.12
+<% } else if (config.type == 'net5') { %>
+# NetCore 5 template Dockerfile
 
-FROM mcr.microsoft.com/dotnet/sdk:$VERSION AS build-env
+ARG VERSION=5.0-alpine
+
+FROM mcr.microsoft.com/dotnet/sdk:${VERSION} AS build-env5
 
 WORKDIR /app
 
-RUN dotnet tool install -g dotnet-references --version 0.0.6
+RUN dotnet tool install -g dotnet-references --version 0.0.7
 ENV PATH="${PATH}:/root/.dotnet/tools"
 
 # Install ASP.NET Core runtime
@@ -79,7 +81,7 @@ RUN dotnet publish \
   --no-restore
 
 #----------------
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:${VERSION} AS runtime5
 
 ENV APP_HOME=/app
 WORKDIR $APP_HOME
@@ -96,7 +98,9 @@ EXPOSE 5000
 USER 1000
 ENTRYPOINT ["dotnet", "<%= config.mainProject %>.dll"]
 
-<% } else { %>
+
+<% } else if (config.type == 'node') { %>
+    
 FROM node:13 as build
 
 WORKDIR /usr/src/app
@@ -111,6 +115,7 @@ RUN npm run sonar
 
 FROM node:13.0.1-alpine as run
 
+ENV COMPlus_EnableDiagnostics=0
 WORKDIR /usr/src/app
 USER root
 COPY --from=build /usr/src/app .
@@ -125,5 +130,6 @@ USER 1100
 EXPOSE 5000
 CMD [ "pm2-runtime", "dist/main.js" ]
 
-<% } %>
+<% } else { %>
+# Unkwon type. Unable to generate Dockerfile content
 <% } %>
