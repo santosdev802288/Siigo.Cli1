@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ab494bd6-3ab3-4312-b172-abece44ea483" name="Default Changelist" comment="">
+    <list default="true" id="ab494bd6-3ab3-4312-b172-abece44ea483" name="Default Changelist" comment=":rocket: SRE-109833: Creates implementation for receive tribe and owner tags  in the cicd component">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.npmrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/Install.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/tribes.json" beforeDir="false" afterPath="$PROJECT_DIR$/generators/cicd/templates/.docker/assets/tribes.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/generators/cicd/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/generators/cicd/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generators/cicd/templates/.docker/chart/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/generators/cicd/templates/.docker/chart/values.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/autocomplete.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/autocomplete.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/readTribes.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/readTribes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/upgrade.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/upgrade.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +22,14 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="KubernetesApiPersistence">
     <option name="context" value="Devk8sCluster-admin" />
@@ -47,6 +55,27 @@
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/generators" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/generators/cicd/templates/.docker" />
+      <recent name="$PROJECT_DIR$/generators/cicd/templates" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="OPA_TEST_RUN_CONFIGURATION" factoryName="Opa configuration factory">
+      <option name="addtionalargs" value="" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -75,5 +104,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value=":rocket: SRE-109833: Creates implementation for receive tribe and owner tags  in the cicd component" />
+    <option name="LAST_COMMIT_MESSAGE" value=":rocket: SRE-109833: Creates implementation for receive tribe and owner tags  in the cicd component" />
   </component>
 </project>

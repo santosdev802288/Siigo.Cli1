@@ -14,13 +14,11 @@ const readTribesFile = (filePath) =>{
             obj.forEach(element =>{
                 element.tribes.forEach(tribe => {
                     tribe.groups.forEach(group =>{
-                        select_tribes.push(tribe.name+"-"+group.group_name)
+                        select_tribes.push(tribe.name+"_"+group.group_name)
                     })
                 })
             })
         })
-        .catch(error => console.error(error))
-
     return select_tribes
 }
 

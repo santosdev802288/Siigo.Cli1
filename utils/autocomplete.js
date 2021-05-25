@@ -12,7 +12,7 @@ inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'))
  * @param tribes
  */
 const autocomplete = async (tribes) => {
-    const tribe = await inquirer.prompt([
+    return await inquirer.prompt([
         {
             type: 'autocomplete',
             name: 'tribe',
@@ -20,7 +20,7 @@ const autocomplete = async (tribes) => {
             message: 'What is your Tribe?',
             searchText: 'We are searching the internet for you!',
             emptyText: 'Nothing found!',
-            source: function searchFood(answers, input) {
+            source: function searchTribes(answers, input) {
                 input = input || '';
                 return new Promise(function (resolve) {
                     setTimeout(function () {
@@ -45,10 +45,8 @@ const autocomplete = async (tribes) => {
             },
         },
     ]).then(function (answers) {
-            return answers
-        });
-
-    return tribe
+        return answers
+    })
 }
 
 module.exports = autocomplete

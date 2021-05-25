@@ -78,8 +78,8 @@ siigo-chart:
     tags:
       datadoghq:
         com:
-          tribu: <%= config.tagTribu %>
-          owner: <%= config.tagOwner %>
+          tribu: ALIADOS_TEAM_SQ1
+          owner: orte126062
 
   requiredLabels:
     tags:

@@ -126,21 +126,29 @@ module.exports = class extends Generator {
 
     async initializing() {
 
-        this.upgrade = await this.prompt([
-            {
-                type: "confirm",
-                name: "ok",
-                message: "Do you want to upgrade the tribes.json file?"
-            }
-        ]);
+        let tribes = readTribesFile('tribes.json')
 
-        if (this.upgrade.ok){
-            console.log('\nUpgrading tribes.json file...');
-            await upgradeFile("assets/", "tribes", "tribes.json")
-            console.log('\nUpgrade Complete!!');
+        if (typeof tribes !== 'undefined' && tribes.length > 0) {
+            this.upgrade = await this.prompt([
+                {
+                    type: "confirm",
+                    name: "ok",
+                    message: "Do you want to upgrade the tribes.json file?"
+                }
+            ]);
+
+            if (this.upgrade.ok){
+                console.log('\nUpgrading tribes.json file...');
+                await upgradeFile("", "tribes", "tribes.json")
+                console.log('\nUpgrade Complete!!');
+            }
+        }
+        else {
+            await upgradeFile("", "tribes", "tribes.json").then(r => {
+                tribes = readTribesFile('tribes.json')
+            })
         }
 
-        const tribes = readTribesFile('tribes.json')
         const select_tribe = await autocomplete(tribes);
 
         const message = "For more information execute yo siigo:cicd --help"
