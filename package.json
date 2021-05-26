@@ -1,9 +1,11 @@
 {
   "name": "generator-siigo",
-  "version": "2.0.5",
+  "version": "2.1.0",
   "description": "generator archetype siigo",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint \"{generators,test}/**/*.js\"",
+    "release": "standard-version --skip.commit --skip.tag",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,6 +29,7 @@
     "s9s"
   ],
   "dependencies": {
+    "@nodesiigo/siigosay": "^1.0.0",
     "chalk": "^3.0.0",
     "decamelize": "^3.2.0",
     "gulp-rename": "1.2.2",
@@ -36,12 +39,18 @@
     "svg-term-cli": "^2.1.1",
     "update-notifier": "^4.0.0",
     "uppercamelcase": "^3.0.0",
-    "yeoman-generator": "^4.2.0",
+    "yeoman-generator": "~4.13.0",
     "yosay": "^2.0.2"
   },
   "devDependencies": {
-    "commitizen": "^4.0.3",
-    "cz-conventional-changelog": "^3.0.2"
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.27.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "standard-version": "^9.3.0"
   },
   "files": [
     "generators",

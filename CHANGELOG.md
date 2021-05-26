@@ -1,3 +1,19 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## 2.1.0 (2021-05-25)
+
+
+### Features
+
+* **netcore:** create a checksum file ([4819ebc](https://dev.azure.com///commit/4819ebcf093d2f8613826de9cf96cb153aaf3180))
+
+
+### Bug Fixes
+
+* update npmrc token ([e69aee6](https://dev.azure.com///commit/e69aee6c04803258eef993ff0ef014d0b46ba35a))
+
 ## 2.0.3 (2021-01-19)
 
 
