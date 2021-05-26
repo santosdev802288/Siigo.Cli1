@@ -1,4 +1,4 @@
-namespace Siigo.<%= config.nameCapitalize %>.Api.SeedWork
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.SeedWork
 {
     public class ConfigServerData
     {

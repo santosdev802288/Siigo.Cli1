@@ -15,10 +15,11 @@ module.exports = class extends Generator {
         this.log(yosay(`Siigo Generator .Net Core.`))
 
         const prefixRepo = "Siigo.Microservice."
+        const eSiigoPrefixRepo = "ESiigo.Microservice."
         const currentPath = path.basename(process.cwd())
 
-        if(!currentPath.startsWith(prefixRepo))
-            throw new Error(`The name project should starts with ${prefixRepo}`)
+        if(!currentPath.startsWith(prefixRepo) && !currentPath.startsWith(eSiigoPrefixRepo))
+            throw new Error(`The name project should starts with ${prefixRepo} or ${eSiigoPrefixRepo}`)
 
         const [ name, ..._ ] = currentPath.split(".").reverse()
 
@@ -32,6 +33,13 @@ module.exports = class extends Generator {
         this.option("personal-token", {
             required: true,
             description: "Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens",
+            type: String
+        })
+
+        this.option("project-prefix", {
+            required: false,
+            description: "Use this option to replace the prefix Siigo in the file names",
+            default:"Siigo",
             type: String
         })
     }
@@ -53,6 +61,7 @@ module.exports = class extends Generator {
         this.appConfig.name = this.options['name']
         this.appConfig.token = this.options['personal-token']
         this.appConfig.nameCapitalize = capitalize(this.appConfig.name)
+        this.appConfig.projectPrefix = this.options['project-prefix']
     }
 
     writing() {
@@ -60,13 +69,12 @@ module.exports = class extends Generator {
         this.registerTransformStream([
             rename((path) => {
                 const prefixChart = "ms-"
-
                 path.dirname = path.dirname.includes(prefixChart) ?
                     path.dirname.replace(/(Microservice)/g, this.appConfig.name) :
                     path.dirname.replace(/(Microservice)/g, capitalize(this.appConfig.name))
-
                 path.basename = path.basename.replace(/(Microservice)/g, capitalize(this.appConfig.name))
-
+                path.dirname = path.dirname.replace(/(Siigo)/g,this.appConfig.projectPrefix)
+                path.basename = path.basename.replace(/(Siigo)/g, this.appConfig.projectPrefix )
             })
         ]);
 

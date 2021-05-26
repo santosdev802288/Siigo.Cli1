@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Siigo.<%= config.nameCapitalize %>.Infrastructure.Caching
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Caching
 {
     public class MemoryCacheStore : ICacheStore
     {

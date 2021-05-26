@@ -1,16 +1,16 @@
 ﻿using Autofac;
 using Microsoft.Extensions.Configuration;
-using Siigo.<%= config.nameCapitalize %>.Infrastructure;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure;
 using Serilog;
 using Serilog.Core;
 using Siigo.Core.Interface;
 using Siigo.Core.Provider;
-using Siigo.<%= config.nameCapitalize %>.Domain.AggregateModel.ExampleAggregate;
-using Siigo.<%= config.nameCapitalize %>.Infrastructure.Finder;
-using Siigo.<%= config.nameCapitalize %>.Infrastructure.Repository;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.AggregateModel.ExampleAggregate;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Finder;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Repository;
 
 
-namespace Siigo.<%= config.nameCapitalize %>.Api.Infrastructure.AutofacModules
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastructure.AutofacModules
 {
     /// <summary>
     /// Register all infrastructure related objects

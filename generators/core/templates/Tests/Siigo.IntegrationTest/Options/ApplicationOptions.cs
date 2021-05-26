@@ -1,4 +1,4 @@
-namespace Siigo.IntegrationTest.Options
+namespace <%= config.projectPrefix %>.IntegrationTest.Options
 {
     public class ApplicationOptions
     {

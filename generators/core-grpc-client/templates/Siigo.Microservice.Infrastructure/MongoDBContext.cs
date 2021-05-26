@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using Siigo.Core.Domain.SeedWork;
 
-namespace Siigo.<%= config.nameCapitalize %>.Infrastructure
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure
 {
     public class MongoDBContext : IUnitOfWork
     {

@@ -20,13 +20,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Exceptions;
-using Siigo.<%= config.nameCapitalize %>.Api.Infrastructure.AutofacModules;
-using Siigo.<%= config.nameCapitalize %>.Api.Infrastructure.Extensions;
-using Siigo.<%= config.nameCapitalize %>.Api.SeedWork;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastructure.AutofacModules;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastructure.Extensions;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.SeedWork;
 using Siigo.Core.Infraestructure.AutofacModules;
 using Siigo.Core.Interface;
 using Siigo.Core.Provider;
-using Siigo.<%= config.nameCapitalize %>.Infrastructure;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure;
 using SlimMessageBus;
 using SlimMessageBus.Host.AspNetCore;
 using SlimMessageBus.Host.Config;
@@ -35,7 +35,7 @@ using SlimMessageBus.Host.Kafka.Configs;
 using SlimMessageBus.Host.Serialization.Json;
 using Siigo.Core.Trace;
 using Siigo.Core.Trace.abstracts;
-using Siigo.<%= config.nameCapitalize %>.Domain.Exception;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Exception;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Siigo.Core.Filter;
@@ -44,7 +44,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Serilog.Formatting.Json;
 
 
-namespace Siigo.<%= config.nameCapitalize %>.Api
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api
 {
     public class Startup
     {
@@ -102,7 +102,7 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
             // Configure Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Siigo.<%= config.nameCapitalize %> API", Version = "V1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "<%= config.projectPrefix %>.<%= config.nameCapitalize %> API", Version = "V1" });
                 //First we define the security scheme
                 c.AddSecurityDefinition("Bearer", //Name the security scheme
                     new OpenApiSecurityScheme
@@ -248,7 +248,7 @@ namespace Siigo.<%= config.nameCapitalize %>.Api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Siigo.<%= config.nameCapitalize %> Template API Example");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "<%= config.projectPrefix %>.<%= config.nameCapitalize %> Template API Example");
             });
 
             app.ApplicationServices.GetService<IMessageBus>();

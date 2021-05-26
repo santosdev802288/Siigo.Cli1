@@ -2,7 +2,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 
-namespace Siigo.<%= config.nameCapitalize %>.Api.SeedWork
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.SeedWork
 {
 
     [Serializable]

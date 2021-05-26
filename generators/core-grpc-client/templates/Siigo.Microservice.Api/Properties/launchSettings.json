@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "local"
       }
     },
-    "Siigo.<%= config.nameCapitalize %>": {
+    "<%= config.projectPrefix %>.<%= config.nameCapitalize %>": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

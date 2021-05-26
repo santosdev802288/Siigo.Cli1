@@ -2,7 +2,7 @@ using System;
 using System.Runtime.Serialization;
 using Microsoft.AspNetCore.Http;
 
-namespace Siigo.<%= config.nameCapitalize %>.Domain.Exception
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Exception
 {
     [Serializable]
     public sealed class TimeoutException : ClientErrorException

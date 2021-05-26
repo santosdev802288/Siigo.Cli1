@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Http;
-using Siigo.<%= config.nameCapitalize %>.Domain.Exception;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Exception;
 using Xunit;
 
-namespace Siigo.<%= config.nameCapitalize %>.Domain.Test.Exception
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Test.Exception
 {
     public class BusinessConflictExceptionTest
     {

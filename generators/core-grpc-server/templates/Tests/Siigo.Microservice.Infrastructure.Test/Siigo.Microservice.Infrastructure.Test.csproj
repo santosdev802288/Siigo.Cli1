@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Siigo.<%= config.nameCapitalize %>.Infrastructure\Siigo.<%= config.nameCapitalize %>.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 using Microsoft.AspNetCore.Http;
 using Serilog;
 
-namespace Siigo.<%= config.nameCapitalize %>.Domain.Exception
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Exception
 {
     [Serializable]
     public sealed class UnauthorizedException : ClientErrorException

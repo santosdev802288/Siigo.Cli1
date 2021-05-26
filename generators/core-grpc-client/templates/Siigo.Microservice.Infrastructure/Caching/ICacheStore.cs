@@ -1,6 +1,6 @@
 using System;
 
-namespace Siigo.<%= config.nameCapitalize %>.Infrastructure.Caching
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Caching
 {
     public interface ICacheStore
     {

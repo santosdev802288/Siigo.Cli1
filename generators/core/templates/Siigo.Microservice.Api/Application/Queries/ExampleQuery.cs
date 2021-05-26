@@ -1,7 +1,7 @@
 using MediatR;
-using Siigo.<%= config.nameCapitalize %>.Api.Application.Model;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Model;
 
-namespace Siigo.<%= config.nameCapitalize %>.Api.Application.Queries
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Queries
 {
     /// <summary>
     /// We handle the query objects like the command and command handlers
