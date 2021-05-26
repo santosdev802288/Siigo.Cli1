@@ -68,7 +68,7 @@ module.exports = class extends Generator {
             type: String,
             required: true,
             description: "Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags",
-            default: 'null',
+            default: '0.2.15',
             alias: 'cv'
         });
 
