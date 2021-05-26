@@ -1,11 +1,22 @@
 #!/bin/bash
 
-if [ "x${TOKEN}" = "x" ] ; then
-  printf "Unable to get personal access token. Set TOKEN env var and re-run. For example: export TOKEN=jtj4aa5b55oh3ahsj7rgpfage53ut2g7rs6msgedw4ekmy5mdtpq"
-  exit 1;
+FILESIIGO=$HOME/.siigo
+if test -f "$FILESIIGO"; then
+  TOKEN=$(grep "tkn=" "$FILESIIGO" | tr -d '\n')
+  TOKEN="${TOKEN:4}"
+  tokenOutput=$(grep "tkn64=" "$FILESIIGO" | tr -d '\n' )
+  tokenOutput="${tokenOutput:6}"
+else
+  if [ "x${TOKEN}" = "x" ] ; then
+    printf "Unable to get personal access token. Set TOKEN env var and re-run. For example: export TOKEN=jtj4aa5b55oh3ahsj7rgpfage53ut2g7rs6msgedw4ekmy5mdtpq"
+    exit 1;
+  fi
+  tokenOutput=$(node -e "b64=Buffer.from('$TOKEN'.trim()).toString('base64');console.log(b64);process.exit();") 
+  {
+    echo "tknAzure='$TOKEN'"
+    echo "tkn64Azure='$tokenOutput'"
+  } >> $FILESIIGO
 fi
-
-tokenOutput=$(node -e "b64=Buffer.from('$TOKEN'.trim()).toString('base64');console.log(b64);process.exit();")
 
 cd "$HOME" || exit
 
