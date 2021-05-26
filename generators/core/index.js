@@ -1,13 +1,53 @@
-const Generator = require('yeoman-generator/lib');
+const crypto = require('crypto')
+const fs = require('fs')
+const rename = require('gulp-rename')
+const os = require('os')
+const path = require('path')
+const Generator = require('yeoman-generator/lib')
 const yosay = require('yosay')
+
 const capitalize = require('../../utils/capitalize')
-const rename = require('gulp-rename');
-const verifyNewVersion = require("../../utils/notification");
-const path = require('path');
-const spawn = require('child_process').exec;
+const verifyNewVersion = require('../../utils/notification')
+
+function findFiles (directory) {
+    let fileList = []
+    const files = fs.readdirSync(directory)
+
+    files.forEach(file => {
+        const fromPath = path.join(directory, file)
+
+        const stat = fs.statSync(fromPath)
+        if (stat.isFile()) {
+            fileList.push(fromPath)
+        } else if (stat.isDirectory()) {
+            fileList = fileList.concat(findFiles(fromPath))
+        }
+    })
+    return fileList
+}
+
+function getChecksums (directory) {
+    const checksums = []
+    const fileList = findFiles(directory)
+
+    fileList.forEach(filepath => {
+        const hash = crypto.createHash('sha256')
+        const input = fs.readFileSync(filepath)
+
+        hash.update(input)
+        checksums.push(hash.digest('hex'))
+    })
+
+    let content = ''
+    fileList.forEach((value, index) => {
+        content += `${checksums[index]}  ${path.relative(directory, value)}${os.EOL}`
+    })
+
+    return content
+}
+
 
 module.exports = class extends Generator {
-
     constructor(args, opt) {
         verifyNewVersion()
         super(args, opt)
@@ -55,7 +95,7 @@ module.exports = class extends Generator {
         this.appConfig.nameCapitalize = capitalize(this.appConfig.name)
     }
 
-    writing() {
+    async writing() {
 
         this.registerTransformStream([
             rename((path) => {
@@ -82,9 +122,13 @@ module.exports = class extends Generator {
             {config: this.appConfig}
         );
 
+        const checksums = getChecksums(this.destinationPath())
+
+        this.fs.write(path.join(this.destinationPath(), 'checksums.sha256'), checksums)
     }
 
     end() {
         this.log(yosay(`Project Created!!`));
     }
+
 };
