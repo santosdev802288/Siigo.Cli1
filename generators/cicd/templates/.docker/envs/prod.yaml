@@ -100,3 +100,18 @@ siigo-chart:
   podAnnotations: { }
 
   appsettings: { }
+
+  labels:
+    owner: "CloudNative"
+    tribu: "A-Team"
+    tags:
+      datadoghq:
+        com:
+          tribu: A_TEAM_CN
+          owner: CloudNative
+
+    requiredLabels:
+      tags:
+        datadoghq:
+          com:
+            - tribu
