@@ -113,7 +113,7 @@ module.exports = class extends Generator {
         } 
         this.appConfig = {}
         this.appConfig.name = this.options['name']
-        this.appConfig.token = tokenConf;ls
+        this.appConfig.token = tokenConf;
         this.appConfig.nameCapitalize = capitalize(this.appConfig.name)
     }
 
