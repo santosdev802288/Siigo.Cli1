@@ -5,8 +5,7 @@ const os = require('os')
 const path = require('path')
 const Generator = require('yeoman-generator/lib')
 const {siigosay, siigoerror} = require('@nodesiigo/siigosay')
-const {tknSiigo,tkn64Siigo,userSiigo,pathHome} = require('../../utils/siigoFile');
-const shell = require("shelljs")
+const {tknSiigo,wizardsiigofile} = require('../../utils/siigoFile');
 
 const capitalize = require('../../utils/capitalize')
 const verifyNewVersion = require('../../utils/notification')
@@ -80,40 +79,11 @@ module.exports = class extends Generator {
     }
 
     async prompting() {
-        let tokenConf = "";
-        if(tknSiigo== "pending"){
-            this.answers = await this.prompt([
-                {
-                    type    : 'input',
-                    name    : 'personaltkn',
-                    message : 'Please enter your personal-token:',
-                },
-                {
-                    type    : 'input',
-                    name    : 'usersiigo',
-                    message : 'Please enter siigo user:',
-                }
-            ]);
-            tokenConf=this.answers.personaltkn;
-            shell.touch(pathHome);
-            shell.exec(`echo tkn=${this.answers.personaltkn} >> ${pathHome}`)
-            let b64 =Buffer.from(this.answers.personaltkn.trim()).toString('base64')
-            shell.exec(`echo tkn64=${b64} >> ${pathHome}`)
-            shell.exec(`echo user=${this.answers.usersiigo} >> ${pathHome}`)
-        }else{
-            tokenConf=tknSiigo;
-            if(userSiigo== "pending"){
-                this.answers = await this.prompt([{
-                    type    : 'input',
-                    name    : 'usersiigo',
-                    message : 'Please enter siigo user:',
-                }]);
-                shell.exec(`echo user=${this.answers.usersiigo} >> ${pathHome}`)
-            }
-        } 
+        let tknf = tknSiigo;
+        if(tknSiigo =="pending") tknf = await wizardsiigofile();
         this.appConfig = {}
         this.appConfig.name = this.options['name']
-        this.appConfig.token = tokenConf;
+        this.appConfig.token = tknf;
         this.appConfig.nameCapitalize = capitalize(this.appConfig.name)
     }
 

@@ -31,9 +31,11 @@
   "dependencies": {
     "@nodesiigo/siigosay": "^1.0.0",
     "chalk": "^3.0.0",
+    "colors": "^1.4.0",
     "decamelize": "^3.2.0",
     "gulp-rename": "1.2.2",
     "json-colorizer": "^2.2.2",
+    "prompt": "^1.1.0",
     "replace-in-file": "^4.2.0",
     "shelljs": "^0.8.4",
     "svg-term-cli": "^2.1.1",

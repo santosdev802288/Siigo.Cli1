@@ -11,10 +11,19 @@ else
     printf "Unable to get personal access token. Set TOKEN env var and re-run. For example: export TOKEN=jtj4aa5b55oh3ahsj7rgpfage53ut2g7rs6msgedw4ekmy5mdtpq"
     exit 1;
   fi
+
+  if ! [ -x "$(command -v json)" ] ; then
+    npm install -g json  
+  fi
+  
+  infoazure=$(az account show | json user.name)
+  echo $infoazure 
+
   tokenOutput=$(node -e "b64=Buffer.from('$TOKEN'.trim()).toString('base64');console.log(b64);process.exit();") 
   {
-    echo "tknAzure='$TOKEN'"
-    echo "tkn64Azure='$tokenOutput'"
+    echo "tkn='$TOKEN'"
+    echo "tkn64='$tokenOutput'"
+    echo "user='$infoazure'"
   } >> $FILESIIGO
 fi
 
@@ -35,3 +44,5 @@ cd "$HOME" || exit
 
 npm install --global yo
 npm i -g generator-siigo
+
+
