@@ -95,6 +95,9 @@ ENV CORECLR_PROFILER={846F5F1C-F9AE-4B07-969E-05C26BC060D8}
 ENV CORECLR_PROFILER_PATH=/opt/datadog/Datadog.Trace.ClrProfiler.Native.so
 ENV DD_DOTNET_TRACER_HOME=/opt/datadog
 ENV DD_INTEGRATIONS=/opt/datadog/integrations.json
+ENV DD_RUNTIME_METRICS_ENABLED=true
+ENV DD_TRACE_ENABLED=true
+ENV DD_LOGS_INJECTION=true
 
 RUN adduser --disabled-password --gecos "" app -u 1000
 ENV ASPNETCORE_URLS=http://*:5000
