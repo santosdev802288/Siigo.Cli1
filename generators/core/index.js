@@ -4,7 +4,9 @@ const rename = require('gulp-rename')
 const os = require('os')
 const path = require('path')
 const Generator = require('yeoman-generator/lib')
-const yosay = require('yosay')
+const {siigosay, siigoerror} = require('@nodesiigo/siigosay')
+const {tknSiigo,tkn64Siigo,userSiigo,pathHome} = require('../../utils/siigoFile');
+const shell = require("shelljs")
 
 const capitalize = require('../../utils/capitalize')
 const verifyNewVersion = require('../../utils/notification')
@@ -52,7 +54,7 @@ module.exports = class extends Generator {
         verifyNewVersion()
         super(args, opt)
 
-        this.log(yosay(`Siigo Generator .Net Core.`))
+        this.log(siigosay(`Siigo Generator .Net Core.`))
 
         const prefixRepo = "Siigo.Microservice."
         const currentPath = path.basename(process.cwd())
@@ -68,30 +70,50 @@ module.exports = class extends Generator {
             default: name,
             type: String
         })
-
-        this.option("personal-token", {
-            required: true,
-            description: "Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens",
-            type: String
-        })
     }
 
     initializing() {
-
-        const message = "For more information execute yo siigo:core --help"
-
-        if (!this.options['personal-token'] || this.options['personal-token'] === 'true')
-            throw new Error("--personal-token is required or it should not be empty.\n " + message)
 
         if (this.options['name'] === 'true' || !this.options['name'] )
             throw new Error("--name is required or it should not be empty.\n " + message)
 
     }
 
-    prompting() {
+    async prompting() {
+        let tokenConf = "";
+        if(tknSiigo== "pending"){
+            this.answers = await this.prompt([
+                {
+                    type    : 'input',
+                    name    : 'personaltkn',
+                    message : 'Please enter your personal-token:',
+                },
+                {
+                    type    : 'input',
+                    name    : 'usersiigo',
+                    message : 'Please enter siigo user:',
+                }
+            ]);
+            tokenConf=this.answers.personaltkn;
+            shell.touch(pathHome);
+            shell.exec(`echo tkn=${this.answers.personaltkn} >> ${pathHome}`)
+            let b64 =Buffer.from(this.answers.personaltkn.trim()).toString('base64')
+            shell.exec(`echo tkn64=${b64} >> ${pathHome}`)
+            shell.exec(`echo user=${this.answers.usersiigo} >> ${pathHome}`)
+        }else{
+            tokenConf=tknSiigo;
+            if(userSiigo== "pending"){
+                this.answers = await this.prompt([{
+                    type    : 'input',
+                    name    : 'usersiigo',
+                    message : 'Please enter siigo user:',
+                }]);
+                shell.exec(`echo user=${this.answers.usersiigo} >> ${pathHome}`)
+            }
+        } 
         this.appConfig = {}
         this.appConfig.name = this.options['name']
-        this.appConfig.token = this.options['personal-token']
+        this.appConfig.token = tokenConf;ls
         this.appConfig.nameCapitalize = capitalize(this.appConfig.name)
     }
 
@@ -128,7 +150,7 @@ module.exports = class extends Generator {
     }
 
     end() {
-        this.log(yosay(`Project Created!!`));
+        this.log(siigosay(`Project Created!!`));
     }
 
 };
