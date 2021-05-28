@@ -4,7 +4,8 @@ const rename = require('gulp-rename')
 const os = require('os')
 const path = require('path')
 const Generator = require('yeoman-generator/lib')
-const yosay = require('yosay')
+const {siigosay} = require('@nodesiigo/siigosay')
+const {tknSiigo,wizardsiigofile} = require('../../utils/siigoFile');
 
 const capitalize = require('../../utils/capitalize')
 const verifyNewVersion = require('../../utils/notification')
@@ -52,7 +53,7 @@ module.exports = class extends Generator {
         verifyNewVersion()
         super(args, opt)
 
-        this.log(yosay(`Siigo Generator .Net Core.`))
+        this.log(siigosay(`Siigo Generator .Net Core.`))
 
         const prefixRepo = "Siigo.Microservice."
         const currentPath = path.basename(process.cwd())
@@ -60,18 +61,17 @@ module.exports = class extends Generator {
         if(!currentPath.startsWith(prefixRepo))
             throw new Error(`The name project should starts with ${prefixRepo}`)
 
-        const [ name, ..._ ] = currentPath.split(".").reverse()
+        const name = currentPath.split(".").reverse()[0]
 
         this.option("name", {
             required: false,
             description: "Project name",
             default: name,
             type: String
-        })
-
-        this.option("personal-token", {
-            required: true,
-            description: "Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens",
+        }) 
+        this.option("token", {
+            required: false,
+            description: "Personal name",
             type: String
         })
     }
@@ -80,18 +80,18 @@ module.exports = class extends Generator {
 
         const message = "For more information execute yo siigo:core --help"
 
-        if (!this.options['personal-token'] || this.options['personal-token'] === 'true')
-            throw new Error("--personal-token is required or it should not be empty.\n " + message)
-
         if (this.options['name'] === 'true' || !this.options['name'] )
             throw new Error("--name is required or it should not be empty.\n " + message)
 
     }
 
-    prompting() {
+    async prompting() {
+        let tknf = tknSiigo;
+        let updatetoken = this.options['token']
+        if(tknSiigo =="pending" || updatetoken != undefined ) tknf = await wizardsiigofile(updatetoken);
         this.appConfig = {}
         this.appConfig.name = this.options['name']
-        this.appConfig.token = this.options['personal-token']
+        this.appConfig.token = tknf;
         this.appConfig.nameCapitalize = capitalize(this.appConfig.name)
     }
 
@@ -128,7 +128,7 @@ module.exports = class extends Generator {
     }
 
     end() {
-        this.log(yosay(`Project Created!!`));
+        this.log(siigosay(`Project Created!!`));
     }
 
 };
