@@ -4,7 +4,7 @@ const rename = require('gulp-rename')
 const os = require('os')
 const path = require('path')
 const Generator = require('yeoman-generator/lib')
-const {siigosay, siigoerror} = require('@nodesiigo/siigosay')
+const {siigosay} = require('@nodesiigo/siigosay')
 const {tknSiigo,wizardsiigofile} = require('../../utils/siigoFile');
 
 const capitalize = require('../../utils/capitalize')
@@ -68,10 +68,17 @@ module.exports = class extends Generator {
             description: "Project name",
             default: name,
             type: String
+        }) 
+        this.option("token", {
+            required: false,
+            description: "Personal name",
+            type: String
         })
     }
 
     initializing() {
+
+        const message = "For more information execute yo siigo:core --help"
 
         if (this.options['name'] === 'true' || !this.options['name'] )
             throw new Error("--name is required or it should not be empty.\n " + message)
@@ -80,7 +87,8 @@ module.exports = class extends Generator {
 
     async prompting() {
         let tknf = tknSiigo;
-        if(tknSiigo =="pending") tknf = await wizardsiigofile();
+        let updatetoken = this.options['token']
+        if(tknSiigo =="pending" || updatetoken != undefined ) tknf = await wizardsiigofile(updatetoken);
         this.appConfig = {}
         this.appConfig.name = this.options['name']
         this.appConfig.token = tknf;

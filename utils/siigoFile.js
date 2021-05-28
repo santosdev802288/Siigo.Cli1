@@ -5,16 +5,23 @@ const pathHome = `${root}.siigo`;
 const prompt = require('prompt');
 var colors = require("colors/safe");
 
-async function wizardsiigofile() {
-    prompt.message = colors.green("siigo.cli")
-    this.answers = await prompt.get(['personaltkn']);
+async function wizardsiigofile(updatetoken) {
+    let token = ""
+    if(updatetoken != undefined){
+        token = updatetoken;
+        shell.rm(pathHome)
+    }else{
+        prompt.message = colors.green("siigo.cli")
+        this.answers = await prompt.get(['personaltkn']);
+        token = this.answers.personaltkn;
+    }
     shell.touch(pathHome);
-    shell.exec(`echo tkn=${this.answers.personaltkn} >> ${pathHome}`)
-    let b64 =Buffer.from(this.answers.personaltkn.trim()).toString('base64')
+    shell.exec(`echo tkn=${token} >> ${pathHome}`)
+    let b64 =Buffer.from(token.trim()).toString('base64')
     shell.exec(`echo tkn64=${b64} >> ${pathHome}`)
     const resUser  = shell.exec('az account show | json user.name', {silent:true}).stdout
     shell.exec(`echo user=${resUser.replace("\n","")} >> ${pathHome}`)
-    return this.answers.personaltkn;
+    return token;
 }
 
 function getParameter(parameter) {
