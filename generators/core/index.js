@@ -61,7 +61,7 @@ module.exports = class extends Generator {
         if(!currentPath.startsWith(prefixRepo))
             throw new Error(`The name project should starts with ${prefixRepo}`)
 
-        const [ name, ..._ ] = currentPath.split(".").reverse()
+        const name = currentPath.split(".").reverse()[0]
 
         this.option("name", {
             required: false,

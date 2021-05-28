@@ -1,7 +1,8 @@
 const shell = require("shelljs")
 const os = require("os");
-const root = (os.platform == "win32") ? process.cwd().split(path.sep)[0] : "~/"
-const pathHome = `${root}.siigo`;
+const path = require('path')
+const root = (os.homedir())
+const pathHome = path.join(root, '.siigo');
 const prompt = require('prompt');
 var colors = require("colors/safe");
 
@@ -31,7 +32,7 @@ function getParameter(parameter) {
         let listPar = shell.cat(pathHome).split("\n")
         listPar.forEach(ele => {if (ele.includes(parameter+"=")){ temp=ele}});
         let resul = temp.replace(parameter+"=","")
-        if(resul=="\n" || resul=="") { resul = "pending" };
+        if(resul=="\n" || resul=="") { resul = "pending" }
         return resul;
     }else{
         return "pending";
