@@ -4,9 +4,10 @@
   "description": "generator archetype siigo",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint \"{generators,test}/**/*.js\"",
+    "lint": "eslint \"**{utils,generators,test}/**/*.js\"",
     "release": "standard-version --skip.commit --skip.tag",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -52,6 +53,7 @@
     "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
+    "husky": "^5.1.0",
     "standard-version": "^9.3.0"
   },
   "files": [
@@ -61,6 +63,11 @@
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
     }
   }
 }

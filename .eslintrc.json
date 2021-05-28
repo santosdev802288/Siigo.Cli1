@@ -5,7 +5,6 @@
         "es2021": true
     },
     "extends": [
-        "standard",
         "eslint:recommended"
     ],
     "parserOptions": {
@@ -13,6 +12,5 @@
     },
     "ignorePatterns": ["**/templates/*.js"],
     "rules": {
-        "indent": ["error", 4]
     }
 }
