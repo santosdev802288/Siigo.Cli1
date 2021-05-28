@@ -140,7 +140,7 @@ siigo-chart:
   podAnnotations: { }
 
   appsettings: { }
-
+  
   labels:
     owner: "CloudNative"
     tribu: "A-Team"
