@@ -6,7 +6,7 @@ using Siigo.Core.Filter;
 using Siigo.Core.Manager;
 using Xunit;
 
-namespace Siigo.Extensions.Tests.Security
+namespace <%= config.projectPrefix %>.Extensions.Tests.Security
 {
     public class AuthorizeFilterTest
     {
@@ -20,14 +20,13 @@ namespace Siigo.Extensions.Tests.Security
         {
             _iConfiguration = new Mock<IConfiguration>();
             _tokenManager = new Mock<ITokenManager>();
-            _authorizeFilter = new AuthorizeFilter(_tokenManager.Object, _iConfiguration.Object, new []{""});
+            _authorizeFilter = new AuthorizeFilter(_tokenManager.Object, _iConfiguration.Object, new[] {""});
         }
 
         [Fact]
-        public void OnAuthorizationOk()
+        public async Task OnAuthorizationOk()
         {
-            Action act = () => _authorizeFilter.OnAuthorizationAsync(new AuthorizationFilterContext(null,null));
-            Assert.Throws<ArgumentNullException>(act);
+            await Assert.ThrowsAsync<NullReferenceException>(() => _authorizeFilter.OnAuthorizationAsync(new AuthorizationFilterContext(null, null)));
         }
         
     }

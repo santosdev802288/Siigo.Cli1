@@ -1,7 +1,7 @@
 using FluentValidation;
 using MediatR;
 
-namespace Siigo.<%= config.nameCapitalize %>.Api.Application.Commands
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Commands
 {
     /// <summary>
     /// A command has all the data needed to service a request

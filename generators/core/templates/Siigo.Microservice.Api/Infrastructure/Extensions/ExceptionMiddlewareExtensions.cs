@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Serilog;
-using Siigo.<%= config.nameCapitalize %>.Api.SeedWork;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.SeedWork;
 using Siigo.<%= config.nameCapitalize %>.Domain.Exception;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Siigo.<%= config.nameCapitalize %>.Api.Infrastructure.Extensions
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastructure.Extensions
 {
     /// <summary>
     ///  Handler Main Application Exceptions

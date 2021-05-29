@@ -2,10 +2,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mapster;
 using MediatR;
-using Siigo.<%= config.nameCapitalize %>.Api.Application.Model;
-using Siigo.<%= config.nameCapitalize %>.Domain.AggregateModel.ExampleAggregate;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Model;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.AggregateModel.ExampleAggregate;
 
-namespace Siigo.<%= config.nameCapitalize %>.Api.Application.Queries
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Queries
 {
     // Siigo.<%= config.nameCapitalize %>.Apis Architecture comment
     // Creating queries independent of the domain model, the aggregates boundaries and 

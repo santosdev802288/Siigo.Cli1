@@ -5,10 +5,10 @@ using Serilog;
 using Siigo.Core.Filter;
 using Siigo.Core.Manager;
 using Siigo.Core.Models;
-using Siigo.<%= config.nameCapitalize %>.Domain.Exception;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Exception;
 
 
-namespace Siigo.<%= config.nameCapitalize %>.Api.Filter
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Filter
 {
     /// <summary>
     /// File to get token info

@@ -1,7 +1,7 @@
 using Siigo.Core.Models;
 using Xunit;
 
-namespace Siigo.Extensions.Tests.Provider.Models
+namespace <%= config.projectPrefix %>.Extensions.Tests.Provider.Models
 {
     public class LoginConnectionTest
     {

@@ -1,10 +1,10 @@
 using Newtonsoft.Json;
-using Siigo.<%= config.nameCapitalize %>.Api.Application.Model;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Siigo.<%= config.nameCapitalize %>.Api.SeedWork
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.SeedWork
 {
     /// POCO Error Details ViewModel for errors
     public class ErrorResponse : IContract

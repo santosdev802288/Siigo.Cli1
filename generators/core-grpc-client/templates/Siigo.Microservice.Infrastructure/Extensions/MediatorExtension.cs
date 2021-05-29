@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Siigo.Core.Domain.SeedWork;
 
-namespace Siigo.<%= config.nameCapitalize %>.Infrastructure.Extensions
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Extensions
 {
     /// <summary>
     /// Used to publish all events stored in the entity's domain event list

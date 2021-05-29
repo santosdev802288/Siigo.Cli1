@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 
-namespace Siigo.<%= config.nameCapitalize %>.Api.SeedWork
+namespace  <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.SeedWork
 {
     public class RequestValidationBehavior<TRequest, TResponse> :
         IPipelineBehavior<TRequest, TResponse>  where TRequest : IRequest<TResponse> 
