@@ -7,7 +7,7 @@ using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.AggregateM
 
 namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Queries
 {
-    // Siigo.<%= config.nameCapitalize %>.Apis Architecture comment
+    // <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Apis Architecture comment
     // Creating queries independent of the domain model, the aggregates boundaries and 
     // constraints are completely ignored gives freedom to query any table and column you might need. 
     // This approach provides great flexibility and productivity for the developers creating or updating the queries.
