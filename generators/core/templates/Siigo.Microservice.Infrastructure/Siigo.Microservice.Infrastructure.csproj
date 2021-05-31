@@ -22,4 +22,9 @@
     <ProjectReference Include="..\Siigo.<%= config.nameCapitalize %>.Domain\Siigo.<%= config.nameCapitalize %>.Domain.csproj" />
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <!-- Install format tool: "dotnet tool install -g dotnet-format" -->
+    <Exec Command="dotnet format --check --verbosity minimal" />
+  </Target>
+
 </Project>
