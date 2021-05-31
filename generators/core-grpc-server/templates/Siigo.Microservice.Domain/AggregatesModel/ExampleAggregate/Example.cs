@@ -1,6 +1,6 @@
 using Siigo.Core.Domain.SeedWork;
 
-namespace Siigo.<%= config.nameCapitalize %>.Domain.AggregateModel.ExampleAggregate
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.AggregateModel.ExampleAggregate
 {
     public class Example: IAggregateRoot, IDto
     {

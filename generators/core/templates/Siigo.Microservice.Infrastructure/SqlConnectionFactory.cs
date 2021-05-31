@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using DataAbstractions.Dapper;
 
-namespace Siigo.<%= config.nameCapitalize %>.Infrastructure
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure
 {
     public class SqlConnectionFactory : ISqlConnectionFactory, IDisposable
     {

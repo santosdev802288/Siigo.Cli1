@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Siigo.<%= config.nameCapitalize %>.Domain.AggregateModel.ExampleAggregate;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.AggregateModel.ExampleAggregate;
 
-namespace Siigo.<%= config.nameCapitalize %>.Infrastructure.Finder
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Finder
 {
     public class ExampleFinder: IExampleFinder
     {

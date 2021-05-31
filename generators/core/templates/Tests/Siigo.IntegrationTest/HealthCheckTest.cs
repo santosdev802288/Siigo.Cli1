@@ -1,11 +1,11 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Siigo.IntegrationTest.Fixtures;
-using Siigo.<%= config.nameCapitalize %>.Api;
+using <%= config.projectPrefix %>.IntegrationTest.Fixtures;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api;
 using Xunit;
 
-namespace Siigo.IntegrationTest
+namespace <%= config.projectPrefix %>.IntegrationTest
 {
     public class HealthCheckTest : IClassFixture<CustomWebApplicationFactory<Startup>>
     {

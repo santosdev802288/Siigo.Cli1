@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "Siigo.<%= config.nameCapitalize %>.Service.Client";
+option csharp_namespace = "<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Service.Client";
 
 package example;
 

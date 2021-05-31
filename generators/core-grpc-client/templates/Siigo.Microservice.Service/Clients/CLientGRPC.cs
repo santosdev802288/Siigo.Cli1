@@ -4,7 +4,7 @@ using Mapster;
 using Grpc.Core;
 using Grpc.Net.Client;
 
-namespace Siigo.<%= config.nameCapitalize %>.Service.Client
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Service.Client
 {
     public class CLientGRPC
     {

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Serilog;
 using Serilog.Events;
 
-namespace Siigo.<%= config.nameCapitalize %>.Api.SeedWork
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.SeedWork
 {
     public class LogHelper
     {

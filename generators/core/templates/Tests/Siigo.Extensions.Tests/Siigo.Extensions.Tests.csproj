@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Siigo.Core.Database" Version="0.1.0" />
-    <PackageReference Include="ArchetypeProviderLibrary" Version="0.1.0" />
+    <PackageReference Include="ArchetypeProviderLibrary" Version="0.1.3" />
     <PackageReference Include="ArchetypeSecurityLibrary" Version="0.1.0" />
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
@@ -20,6 +20,6 @@
   </ItemGroup>
 
    <ItemGroup>
-    <ProjectReference Include="..\..\Siigo.<%= config.nameCapitalize %>.Api\Siigo.<%= config.nameCapitalize %>.Api.csproj" />
+    <ProjectReference Include="..\..\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.csproj" />
   </ItemGroup>
 </Project>

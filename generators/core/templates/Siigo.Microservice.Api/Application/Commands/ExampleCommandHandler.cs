@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Siigo.<%= config.nameCapitalize %>.Domain.AggregateModel.ExampleAggregate;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.AggregateModel.ExampleAggregate;
 
-namespace Siigo.<%= config.nameCapitalize %>.Api.Application.Commands
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Commands
 {
     /// <summary>
     /// Handler which processes the command when

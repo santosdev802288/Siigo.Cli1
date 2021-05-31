@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Storage;
 using Siigo.Core.Domain.SeedWork;
-using Siigo.<%= config.nameCapitalize %>.Infrastructure.Extensions;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Extensions;
 using System;
 using System.Data;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Siigo.<%= config.nameCapitalize %>.Infrastructure
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure
 {
     public class SqlServerDbContext : DbContext, IUnitOfWork
     {
