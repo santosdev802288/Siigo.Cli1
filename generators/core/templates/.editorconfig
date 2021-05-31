@@ -12,18 +12,18 @@ indent_style = space
 tab_width = 4
 
 # New line preferences
-# end_of_line = crlf
-insert_final_newline = false
+# end_of_line = lf
+insert_final_newline = true
 
 #### .NET Coding Conventions ####
 
-# Show style as error on Visual Studio
+# Show style as error on IDE
 dotnet_analyzer_diagnostic.category-Style.severity = error
 #dotnet_analyzer_diagnostic.category-CodeQuality.severity = warning
 
 # Organize usings
 dotnet_separate_import_directive_groups = false
-dotnet_sort_system_directives_first = false
+dotnet_sort_system_directives_first = true
 file_header_template = unset
 
 # this. and Me. preferences
