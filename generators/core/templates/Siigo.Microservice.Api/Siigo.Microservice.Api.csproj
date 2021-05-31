@@ -10,7 +10,7 @@
     <ServerGarbageCollection>false</ServerGarbageCollection>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(RunConfiguration)' == '<%= config.projectPrefix %>.iigo.<%= config.nameCapitalize %>' ">
+  <PropertyGroup Condition=" '$(RunConfiguration)' == '<%= config.projectPrefix %>.<%= config.nameCapitalize %>' ">
     <StartAction>Project</StartAction>
     <LaunchUrl>swagger</LaunchUrl>
     <ApplicationURL>https://localhost:5001;http://localhost:5000</ApplicationURL>

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.SeedWork;
-using Siigo.<%= config.nameCapitalize %>.Domain.Exception;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Exception;
 using System.Collections.Generic;
 using System.Linq;
 
