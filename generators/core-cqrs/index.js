@@ -36,7 +36,7 @@ module.exports = class extends Generator {
             }
         ]).then(res => {
             this.appConfig = {}
-            this.appConfig.name = capitalize(!!paths.length ? paths[0] : null,)
+            this.appConfig.name = capitalize(paths.length ? paths[0] : null,)
             this.appConfig.type = res.type
             this.appConfig.name_cq = capitalize(res.name_cq)
         })

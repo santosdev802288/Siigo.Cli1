@@ -1,5 +1,4 @@
 const Generator = require('yeoman-generator/lib');
-const yosay = require('yosay')
 const {siigosay, siigoerror} = require('@nodesiigo/siigosay')
 const capitalize = require('../../utils/capitalize')
 const verifyNewVersion = require("../../utils/notification");

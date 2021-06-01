@@ -1,7 +1,7 @@
 {
   "name": "generator-siigo",
-  "version": "2.1.0",
-  "description": "generator archetype siigo",
+  "version": "3.0.0",
+  "description": "Generator archetype siigo",
   "main": "index.js",
   "scripts": {
     "lint": "eslint \"{generators,test,utils}/**/*.js\"",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli"
+    "url": "https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Cli.V2"
   },
-  "author": "Juan David Correa",
-  "license": "ISC",
+  "author": "Arquitectura Cloud Native",
+  "license": "COPYRIGHT",
   "bugs": {
-    "url": "https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli"
+    "url": "https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Cli.V2"
   },
-  "homepage": "https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli#readme",
+  "homepage": "https://dev.azure.com/SiigoDevOps/Architecture/_git/Siigo.Cli.V2#readme",
   "keywords": [
     "yeoman-generator",
     "angular",
@@ -39,7 +39,6 @@
     "prompt": "^1.1.0",
     "replace-in-file": "^4.2.0",
     "shelljs": "^0.8.4",
-    "svg-term-cli": "^2.1.1",
     "update-notifier": "^4.0.0",
     "uppercamelcase": "^3.0.0",
     "yeoman-generator": "~4.13.0",

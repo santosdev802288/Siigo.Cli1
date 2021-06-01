@@ -12,7 +12,7 @@ var fileList = []
  *  The inner params causes the function to return just the name of the children directory
  */
 function ls(dir, inner) {
-    let files = fs.readdirSync(dir).forEach(file => {
+    fs.readdirSync(dir).forEach(file => {
         if (fs.statSync(path.join(dir, file)).isDirectory()) {
             fileList.push(path.join(dir, file))
             ls(path.join(dir, file))
