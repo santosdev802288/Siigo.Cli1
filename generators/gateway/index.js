@@ -4,7 +4,6 @@ const yosay = require('yosay');
 const rename = require('gulp-rename');
 const spawn = require('child_process').exec;
 const colorize = require('json-colorizer');
-const shell = require("shelljs")
 
 module.exports = class extends Generator {
   constructor(args, opt) {

@@ -12,7 +12,7 @@ var fileList = []
  *  The inner params causes the function to return just the name of the children directory
  */
 function walkFilesSync(dir, inner) {
-    let files = fs.readdirSync(dir).forEach(file => {
+    fs.readdirSync(dir).forEach(file => {
         fs.statSync(path.join(dir, file)).isDirectory() ?
             walkFilesSync(path.join(dir, file)) :
             fileList.push(file)

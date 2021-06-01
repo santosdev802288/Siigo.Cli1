@@ -4,7 +4,6 @@ const capitalize = require('../../utils/capitalize')
 const rename = require('gulp-rename');
 const verifyNewVersion = require("../../utils/notification");
 const path = require('path');
-const spawn = require('child_process').exec;
 
 module.exports = class extends Generator {
 
@@ -21,7 +20,7 @@ module.exports = class extends Generator {
         if(!currentPath.startsWith(prefixRepo) && !currentPath.startsWith(eSiigoPrefixRepo))
             throw new Error(`The name project should starts with ${prefixRepo} or ${eSiigoPrefixRepo}`)
 
-        const [ name, ..._ ] = currentPath.split(".").reverse()
+        const name = currentPath.split(".").reverse()[0]
 
         this.option("name", {
             required: false,

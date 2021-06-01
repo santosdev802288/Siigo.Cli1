@@ -5,7 +5,6 @@ const yosay = require('yosay')
 const rename = require('gulp-rename');
 const spawn = require('child_process').exec;
 const colorize = require('json-colorizer');
-const shell = require("shelljs")
 const req = require("../../utils/required-tools")
 
 module.exports = class extends Generator {
@@ -77,7 +76,7 @@ module.exports = class extends Generator {
             type: String,
             required: !paths,
             description: "Project which the microservice starts. (Siigo.{Name}.Api). If --type is set to 'node', this value will be ignored.",
-            default: !!paths.length ? paths[0] : null,
+            default: paths.length ? paths[0] : null,
             alias: 'd'
         });
 
