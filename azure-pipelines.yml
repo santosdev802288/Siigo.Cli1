@@ -5,6 +5,19 @@
 
 trigger:
 - master
+- dev
+
+variables:
+  isMain: ${{ eq(variables['Build.SourceBranchName'], 'master') }}
+  registry: 'https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/'
+
+  # Production variables
+  ${{ if eq(variables.isMain, true) }}: # only works if you have a main branch
+    tag: latest
+  
+  # Other env variables
+  ${{ if eq(variables.isMain, false) }}:
+    tag: beta
 
 pool:
   vmImage: ubuntu-latest
@@ -19,8 +32,13 @@ steps:
     npm ci
   displayName: 'npm install'
 
+- ${{ if eq(variables.isMain, false) }}:
+  - script: |
+      npm version --no-git-tag-version --preid "$(Build.SourceBranchName)$(Build.BuildNumber)" prerelease
+    displayName: 'npm version'
+
 - script: |
-    npm publish --registry=https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/
+    npm publish --tag ${{variables.tag}} --registry=${{variables.registry}}
   displayName: 'npm publish'
 
 
