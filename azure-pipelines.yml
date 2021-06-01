@@ -29,6 +29,10 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    npm audit --production --registry=https://registry.npmjs.org/ 
+  displayName: 'npm audit'
+
+- script: |
     npm ci
   displayName: 'npm install'
 
