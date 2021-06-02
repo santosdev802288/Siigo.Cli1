@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Moq;
 using Siigo.Core.Filter;
 using Siigo.Core.Manager;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace <%= config.projectPrefix %>.Extensions.Tests.Security

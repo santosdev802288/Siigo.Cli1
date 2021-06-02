@@ -14,4 +14,9 @@
     <PackageReference Include="Siigo.Core.Database" Version="0.1.0" />
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <!-- Install format tool: "dotnet tool install -g dotnet-format" -->
+    <Exec Command="dotnet format --check --verbosity minimal" />
+  </Target>
+
 </Project>
