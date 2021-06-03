@@ -1,16 +1,13 @@
 const Generator = require('yeoman-generator/lib');
-const yosay = require('yosay')
 const capitalize = require('../../utils/capitalize')
-const verifyNewVersion = require("../../utils/notification");
 const rename = require('gulp-rename');
+const {siigosay} = require('@nodesiigo/siigosay')
 
 module.exports = class extends Generator {
 
     constructor(args, opt) {
-        verifyNewVersion()
         super(args, opt)
-
-        this.log(yosay(`Siigo generator Nest module.`))
+        this.log(siigosay(`Siigo generator Nest module.`))
         this.argument("name", { required: true })
     }
 
@@ -32,33 +29,8 @@ module.exports = class extends Generator {
 
     install() {
 
-        this.log(yosay(`
+        this.log(siigosay(`
             Import in your AppModule
         `))
     }
-
-    /*
-        if (this.options['skip-install']) {
-            this.log(chalk.green(`
-        To install dependencies, run
-        ${chalk.white('$')} cd ${this.appConfig.identifier}/
-        ${chalk.white('$')} npm install
-      `))
-        } else {
-            if (this.options['yarn']) {
-                this.installDependencies({
-                    yarn: true,
-                    bower: false,
-                    npm: false,
-                })
-            } else {
-                this.installDependencies({
-                    npm: true,
-                    yarn: false,
-                    bower: false,
-                })
-
-            }
-        }
-    }*/
 };

@@ -1,17 +1,14 @@
 const Generator = require('yeoman-generator/lib');
-const yosay = require('yosay')
 const capitalize = require('../../utils/capitalize')
 const rename = require('gulp-rename');
-const verifyNewVersion = require("../../utils/notification");
 const path = require('path');
-
+const {siigosay} = require('@nodesiigo/siigosay')
 module.exports = class extends Generator {
 
     constructor(args, opt) {
-        verifyNewVersion()
         super(args, opt)
 
-        this.log(yosay(`Siigo Generator .Net 5.0 grpc Server.`))
+        this.log(siigosay(`Siigo Generator .Net 5.0 grpc Server.`))
 
         const prefixRepo = "Siigo.Microservice."
         const eSiigoPrefixRepo = "ESiigo.Microservice."
@@ -93,6 +90,6 @@ module.exports = class extends Generator {
     }
 
     end() {
-        this.log(yosay(`Project Created!!`));
+        this.log(siigosay(`Project Created!!`));
     }
 };

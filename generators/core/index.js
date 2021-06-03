@@ -6,9 +6,7 @@ const path = require('path')
 const Generator = require('yeoman-generator/lib')
 const {siigosay} = require('@nodesiigo/siigosay')
 const {tknSiigo,wizardsiigofile} = require('../../utils/siigoFile');
-
 const capitalize = require('../../utils/capitalize')
-const verifyNewVersion = require('../../utils/notification')
 
 function findFiles (directory) {
     let fileList = []
@@ -50,9 +48,7 @@ function getChecksums (directory) {
 
 module.exports = class extends Generator {
     constructor(args, opt) {
-        verifyNewVersion()
         super(args, opt)
-
         this.log(siigosay(`Siigo Generator .Net Core.`))
 
         const prefixRepo = "Siigo.Microservice."
@@ -72,7 +68,7 @@ module.exports = class extends Generator {
         }) 
         this.option("token", {
             required: false,
-            description: "Personal name",
+            description: "Personal token",
             type: String
         })
         this.option("project-prefix", {

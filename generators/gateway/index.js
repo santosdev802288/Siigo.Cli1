@@ -1,15 +1,15 @@
 const path = require('path');
 const Generator = require('yeoman-generator/lib');
-const yosay = require('yosay');
 const rename = require('gulp-rename');
 const spawn = require('child_process').exec;
 const colorize = require('json-colorizer');
+const {siigosay} = require('@nodesiigo/siigosay')
 
 module.exports = class extends Generator {
   constructor(args, opt) {
     super(args, opt);
 
-    this.log(yosay(`Siigo Generator Api Gateway.`))
+    this.log(siigosay(`Siigo Generator Api Gateway.`))
     const currentPath = path.basename(process.cwd())
 
     // optionals
@@ -177,6 +177,6 @@ module.exports = class extends Generator {
   }
 
   end() {
-    this.log(yosay(`Gateway Created!!`));
+    this.log(siigosay(`Gateway Created!!`));
   }
 };

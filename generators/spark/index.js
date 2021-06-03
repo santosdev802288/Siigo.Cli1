@@ -1,11 +1,9 @@
 const Generator = require('yeoman-generator/lib');
 const {siigosay, siigoerror} = require('@nodesiigo/siigosay')
 const capitalize = require('../../utils/capitalize')
-const verifyNewVersion = require("../../utils/notification");
 const rename = require('gulp-rename');
 module.exports = class extends Generator {
     constructor(args, opt) {
-        verifyNewVersion()
         super(args, opt)
         this.log(siigosay(`Siigo generator Spark module.`))
     }
