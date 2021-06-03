@@ -1,3 +1,4 @@
+const verifyNewVersion = require("../../utils/notification");
 const os = require('os')
 const Generator = require('yeoman-generator/lib');
 const path = require('path');
@@ -9,7 +10,8 @@ const {siigosay} = require('@nodesiigo/siigosay')
 module.exports = class extends Generator {
     constructor(args, opt) {
         
-        req()        
+        req()
+        verifyNewVersion()        
         super(args, opt)
 
         this.log(siigosay(`Siigo Generator NodeJS.`))

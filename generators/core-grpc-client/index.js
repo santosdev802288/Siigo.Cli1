@@ -2,10 +2,12 @@ const Generator = require('yeoman-generator/lib');
 const capitalize = require('../../utils/capitalize')
 const rename = require('gulp-rename');
 const path = require('path');
+const verifyNewVersion = require("../../utils/notification");
 const {siigosay} = require('@nodesiigo/siigosay')
 module.exports = class extends Generator {
 
     constructor(args, opt) {
+        verifyNewVersion()
         super(args, opt)
 
         this.log(siigosay(`Siigo Generator .Net 5.0 grpc Client.`))
