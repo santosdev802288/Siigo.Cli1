@@ -11,6 +11,7 @@ const req = require("../../utils/required-tools")
 const upgradeFile = require('../../utils/upgrade')
 const readTribesFile = require('../../utils/readTribes')
 const autocomplete = require('../../utils/autocomplete')
+const createFile = require('../../utils/createTribeDir')
 
 module.exports = class extends Generator {
 
@@ -126,9 +127,11 @@ module.exports = class extends Generator {
 
     async initializing() {
 
-        let tribes = readTribesFile('tribes.json')
+        const tribePath = './tribes/'
 
-        if (typeof tribes !== 'undefined' && tribes.length > 0) {
+        this.tribes = await readTribesFile(tribePath.concat('tribes.json'))
+
+        if (typeof this.tribes !== 'undefined' && this.tribes.length > 0) {
             this.upgrade = await this.prompt([
                 {
                     type: "confirm",
@@ -137,19 +140,17 @@ module.exports = class extends Generator {
                 }
             ]);
 
-            if (this.upgrade.ok){
-                console.log('\nUpgrading tribes.json file...');
-                await upgradeFile("", "tribes", "tribes.json")
-                console.log('\nUpgrade Complete!!');
+            if (this.upgrade.ok) {
+                console.log('\nUpgrading tribes.json file...')
+                await upgradeFile(tribePath, "tribes", "tribes.json")
+                console.log('\nUpgrade Complete!!')
             }
-        }
-        else {
-            await upgradeFile("", "tribes", "tribes.json").then(r => {
-                tribes = readTribesFile('tribes.json')
-            })
+        } else {
+            await createFile(tribePath)
+            this.tribes = await readTribesFile(tribePath.concat('tribes.json'))
         }
 
-        const select_tribe = await autocomplete(tribes);
+        const select_tribe = await autocomplete(this.tribes)
 
         const message = "For more information execute yo siigo:cicd --help"
 

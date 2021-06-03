@@ -350,6 +350,7 @@ If for some reason the deployment process failed, and you need to try it again, 
 ## 🚀 CICD
 
 CI/CD is one of the best practices for devops teams to implement. It is also an agile methodology best practice, as it enables software development teams to focus on meeting business requirements, code quality, and security because deployment steps are automated.
+> **📝 NOTE**: You have to set the connection string to connect to the azure container in the following environment variable before you can use the CI/CD Option: export AZURE_STORAGE_CONNECTION_STRING={YOUR_STRING_CONNECTION}
 
 ### Motivation
 Automating the configuration of continuous integration and continuous delivery in environments with Kubernetes, Istio and Azure Devops.
@@ -363,6 +364,15 @@ Using default values and set minimum required parameters
 Using --e to configure the environment with aliases and --dll to configure the main project dll
     
     yo siigo:cicd --project-name ms-myproduct --ns 'siigo-catalog' --e 'aks' --dll Siigo.MyProductService.Api
+
+Using --owner to set the deployer in the environment 
+
+    yo siigo:cicd --project-name ms-myproduct --ns 'siigo-catalog' --e 'aks' --dll Siigo.MyProductService.Api --owner oval801152
+
+> **⚠️ WARNING**: You have to select your tribe from a given list of tribes as in the following [example](https://assetsdoc.blob.core.windows.net/tribes/siigo_cli_cicd.svg). 
+> If you already have the tribes.json file, Siigo.Cli will ask you if do you want to upgrade it and download the latest version of the file to a specific local path.
+> otherwise, Siigo.Cli will download it and create a 'tribes' folder with the information file.
+
 
 ### Example .Net Core
 In the following [example](https://assetsdoc.blob.core.windows.net/assets/cicd.svg) you can see how to integrate your .net core microservice with Kubernetes.
@@ -404,6 +414,7 @@ Run *_yo siigo:cicd --help_* to see the configuration description, data type and
       -ns,    --namespace-k8s  # Namespace in kubernetes configured in the environment.
       -st,    --sonar-token    # Sonar token to publish metrics. If --type is set to 'node', this value will be ignored.                             Default: null
       -t,     --type           # Project type. (node, netcore or net5)                                                                               Default: net5
+              --owner          # Name of the user that create the new microservice
       
 > **⚠️ WARNING**: If you set --environment option, remember: you only need pass
 >the name without the prefix of the environment(qa, dev, prod). Example 'qa aks' is aks and 'prod aks chile' is aks chile.  
