@@ -1,18 +1,57 @@
-const Generator = require('yeoman-generator/lib');
-const yosay = require('yosay')
-const capitalize = require('../../utils/capitalize')
-const rename = require('gulp-rename');
+const crypto = require('crypto')
+const fs = require('fs')
+const rename = require('gulp-rename')
 const verifyNewVersion = require("../../utils/notification");
-const path = require('path');
-const spawn = require('child_process').exec;
+const os = require('os')
+const path = require('path')
+const Generator = require('yeoman-generator/lib')
+const {siigosay} = require('@nodesiigo/siigosay')
+const {tknSiigo,wizardsiigofile} = require('../../utils/siigoFile');
+const capitalize = require('../../utils/capitalize')
+
+function findFiles (directory) {
+    let fileList = []
+    const files = fs.readdirSync(directory)
+
+    files.forEach(file => {
+        const fromPath = path.join(directory, file)
+
+        const stat = fs.statSync(fromPath)
+        if (stat.isFile()) {
+            fileList.push(fromPath)
+        } else if (stat.isDirectory()) {
+            fileList = fileList.concat(findFiles(fromPath))
+        }
+    })
+    return fileList
+}
+
+function getChecksums (directory) {
+    const checksums = []
+    const fileList = findFiles(directory)
+
+    fileList.forEach(filepath => {
+        const hash = crypto.createHash('sha256')
+        const input = fs.readFileSync(filepath)
+
+        hash.update(input)
+        checksums.push(hash.digest('hex'))
+    })
+
+    let content = ''
+    fileList.forEach((value, index) => {
+        content += `${checksums[index]}  ${path.relative(directory, value)}${os.EOL}`
+    })
+
+    return content
+}
+
 
 module.exports = class extends Generator {
-
     constructor(args, opt) {
         verifyNewVersion()
         super(args, opt)
-
-        this.log(yosay(`Siigo Generator .Net Core.`))
+        this.log(siigosay(`Siigo Generator .Net Core.`))
 
         const prefixRepo = "Siigo.Microservice."
         const eSiigoPrefixRepo = "ESiigo.Microservice."
@@ -21,7 +60,7 @@ module.exports = class extends Generator {
         if(!currentPath.startsWith(prefixRepo) && !currentPath.startsWith(eSiigoPrefixRepo))
             throw new Error(`The name project should starts with ${prefixRepo} or ${eSiigoPrefixRepo}`)
 
-        const [ name, ..._ ] = currentPath.split(".").reverse()
+        const name = currentPath.split(".").reverse()[0]
 
         this.option("name", {
             required: false,
@@ -30,9 +69,9 @@ module.exports = class extends Generator {
             type: String
         })
 
-        this.option("personal-token", {
-            required: true,
-            description: "Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens",
+        this.option("token", {
+            required: false,
+            description: "Personal token. Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens",
             type: String
         })
 
@@ -48,23 +87,23 @@ module.exports = class extends Generator {
 
         const message = "For more information execute yo siigo:core --help"
 
-        if (!this.options['personal-token'] || this.options['personal-token'] === 'true')
-            throw new Error("--personal-token is required or it should not be empty.\n " + message)
-
         if (this.options['name'] === 'true' || !this.options['name'] )
             throw new Error("--name is required or it should not be empty.\n " + message)
 
     }
 
-    prompting() {
+    async prompting() {
+        let tknf = tknSiigo;
+        let updatetoken = this.options['token']
+        if(tknSiigo =="pending" || updatetoken != undefined ) tknf = await wizardsiigofile(updatetoken);
         this.appConfig = {}
         this.appConfig.name = this.options['name']
-        this.appConfig.token = this.options['personal-token']
+        this.appConfig.token = tknf;
         this.appConfig.nameCapitalize = capitalize(this.appConfig.name)
         this.appConfig.projectPrefix = this.options['project-prefix']
     }
 
-    writing() {
+    async writing() {
 
         this.registerTransformStream([
             rename((path) => {
@@ -90,9 +129,13 @@ module.exports = class extends Generator {
             {config: this.appConfig}
         );
 
+        const checksums = getChecksums(this.destinationPath())
+
+        this.fs.write(path.join(this.destinationPath(), 'checksums.sha256'), checksums)
     }
 
     end() {
-        this.log(yosay(`Project Created!!`));
+        this.log(siigosay(`Project Created!!`));
     }
+
 };

@@ -1,6 +1,5 @@
-###### README.md
-
 # Siigo CLI  
+
 <br>
 
 ![logo](https://pdsiigowebsite.azurewebsites.net/wp-content/uploads/2019/05/Logo-Siigo.png)

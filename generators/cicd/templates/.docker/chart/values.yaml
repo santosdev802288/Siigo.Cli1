@@ -74,3 +74,15 @@ siigo-chart:
 
   appsettings: { }
 
+  labels:
+    tags:
+      datadoghq:
+        com:
+          tribu: <%= config.tagTribu %>
+          owner: <%= config.tagOwner %>
+
+  requiredLabels:
+    tags:
+      datadoghq:
+        com:
+          - tribu

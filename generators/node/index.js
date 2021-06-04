@@ -1,21 +1,20 @@
 const verifyNewVersion = require("../../utils/notification");
 const os = require('os')
 const Generator = require('yeoman-generator/lib');
-const yosay = require('yosay')
 const path = require('path');
 const colorize = require('json-colorizer');
 const shell = require("shelljs")
 const req = require("../../utils/required-tools")
+const {siigosay} = require('@nodesiigo/siigosay')
 
 module.exports = class extends Generator {
     constructor(args, opt) {
         
         req()
-        verifyNewVersion()
-        
+        verifyNewVersion()        
         super(args, opt)
 
-        this.log(yosay(`Siigo Generator NodeJS.`))
+        this.log(siigosay(`Siigo Generator NodeJS.`))
         const currentPath = path.basename(process.cwd())
 
         // optionals
@@ -112,6 +111,6 @@ module.exports = class extends Generator {
     }
 
     end() {
-        this.log(yosay(`Enjoy!!`))
+        this.log(siigosay(`Enjoy!!`))
     }
 };
