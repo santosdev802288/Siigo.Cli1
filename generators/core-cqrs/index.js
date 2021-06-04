@@ -1,10 +1,9 @@
 const Generator = require('yeoman-generator/lib');
-const yosay = require('yosay')
 const capitalize = require("../../utils/capitalize")
 const rename = require('gulp-rename');
-const verifyNewVersion = require("../../utils/notification");
 const getDirectoriesRecursive = require("../../utils/walkProjects")
-
+const verifyNewVersion = require("../../utils/notification");
+const {siigosay} = require('@nodesiigo/siigosay')
 
 module.exports = class extends Generator {
 
@@ -14,7 +13,7 @@ module.exports = class extends Generator {
     }
 
     initializing() {
-        this.log(yosay(`Siigo .Net Core CQRS.`))
+        this.log(siigosay(`Siigo .Net Core CQRS.`))
     }
 
     prompting() {

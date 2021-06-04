@@ -1,14 +1,13 @@
 const crypto = require('crypto')
 const fs = require('fs')
 const rename = require('gulp-rename')
+const verifyNewVersion = require("../../utils/notification");
 const os = require('os')
 const path = require('path')
 const Generator = require('yeoman-generator/lib')
 const {siigosay} = require('@nodesiigo/siigosay')
 const {tknSiigo,wizardsiigofile} = require('../../utils/siigoFile');
-
 const capitalize = require('../../utils/capitalize')
-const verifyNewVersion = require('../../utils/notification')
 
 function findFiles (directory) {
     let fileList = []
@@ -52,7 +51,6 @@ module.exports = class extends Generator {
     constructor(args, opt) {
         verifyNewVersion()
         super(args, opt)
-
         this.log(siigosay(`Siigo Generator .Net Core.`))
 
         const prefixRepo = "Siigo.Microservice."
@@ -73,7 +71,7 @@ module.exports = class extends Generator {
 
         this.option("token", {
             required: false,
-            description: "Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens",
+            description: "Personal token. Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens",
             type: String
         })
 

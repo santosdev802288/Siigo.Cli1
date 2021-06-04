@@ -1,12 +1,16 @@
 const getDirectoriesRecursive = require("../../utils/walkProjects")
 const path = require('path')
 const Generator = require('yeoman-generator/lib');
-const yosay = require('yosay')
 const rename = require('gulp-rename');
 const spawn = require('child_process').exec;
 const colorize = require('json-colorizer');
 const req = require("../../utils/required-tools")
+const {siigosay} = require('@nodesiigo/siigosay')
 
+const upgradeFile = require('../../utils/upgrade')
+const readTribesFile = require('../../utils/readTribes')
+const autocomplete = require('../../utils/autocomplete')
+const createFile = require('../../utils/createTribeDir')
 module.exports = class extends Generator {
 
     constructor(args, opt) {
@@ -14,7 +18,7 @@ module.exports = class extends Generator {
 
         req()
 
-        this.log(yosay(`Siigo Generator CICD.`))
+        this.log(siigosay(`Siigo Generator CICD.`))
 
         const currentPath = path.basename(process.cwd())
 
@@ -63,11 +67,19 @@ module.exports = class extends Generator {
             alias: 'e'
         });
 
+        this.option("owner", {
+            type: String,
+            required: false,
+            description: "Owner tag (whos execute the deployment test).",
+            default: 'SiigoCli',
+            alias: 'ow'
+        });
+
         this.option("chart-version", {
             type: String,
             required: true,
             description: "Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags",
-            default: '0.2.15',
+            default: '0.2.16',
             alias: 'cv'
         });
 
@@ -111,6 +123,30 @@ module.exports = class extends Generator {
     }
 
     async initializing() {
+        const tribePath = './tribes/'
+
+        this.tribes = await readTribesFile(tribePath.concat('tribes.json'))
+
+        if (typeof this.tribes !== 'undefined' && this.tribes.length > 0) {
+            this.upgrade = await this.prompt([
+                {
+                    type: "confirm",
+                    name: "ok",
+                    message: "Do you want to upgrade the tribes.json file?"
+                }
+            ]);
+
+            if (this.upgrade.ok) {
+                console.log('\nUpgrading tribes.json file...')
+                await upgradeFile(tribePath, "tribes", "tribes.json")
+                console.log('\nUpgrade Complete!!')
+            }
+        } else {
+            await createFile(tribePath)
+            this.tribes = await readTribesFile(tribePath.concat('tribes.json'))
+        }
+
+        const select_tribe = await autocomplete(this.tribes)
 
         const message = "For more information execute yo siigo:cicd --help"
 
@@ -138,7 +174,9 @@ module.exports = class extends Generator {
             mainProject: this.options['dll'],
             name: this.options['project-name'],
             chartVersion: this.options['chart-version'],
-            type
+            type,
+            tagOwner: this.options['owner'],
+            tagTribu: select_tribe.tribe
         };
 
         const json = JSON.stringify(this.appConfig, false, '\t')
@@ -200,6 +238,6 @@ module.exports = class extends Generator {
     }
     
     end(){
-        this.log(yosay(`Enjoy! Dont forget merge cicd branch in dev.`))
+        this.log(siigosay(`Enjoy! Dont forget merge cicd branch in dev.`))
     }
 };
