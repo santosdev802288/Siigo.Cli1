@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  app:
+    ports:
+      - "11000:11000"
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile.dev
+      args:
+        # replace for your personal access token
+        - devops_token=kib3wbzqlhoe5pc4aqdziifdkoddi7yxkbxt76aabymbly4yv5aq
+    volumes:
+    - ./:$HOME/app
+    privileged: true
+    stdin_open: true
+    tty: true
+    working_dir: $HOME/app
+    entrypoint: make all
