@@ -41,13 +41,6 @@ module.exports = class extends Generator {
             alias: 'a'
         });
 
-        this.option("skip-install", {
-            type: String,
-            required: false,
-            default: false,
-            description: 'Avoid Installing dependencies automatically.'
-        });
-
         this.option("token", {
             required: true,
             description: "Personal token. Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens",
