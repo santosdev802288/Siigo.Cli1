@@ -49,7 +49,7 @@ module.exports = class extends Generator {
             alias: 'a'
         });
 
-        this.option("token", {
+        this.option("personal-token", {
             required: true,
             description: "Personal token. Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens",
             type: String
@@ -61,7 +61,7 @@ module.exports = class extends Generator {
 
         const message = "For more information execute yo siigo:core --help"
 
-        if (this.options['token'] === 'true' || !this.options['token'] )
+        if (this.options['personal-token'] === 'true' || !this.options['personal-token'] )
             throw new Error("--token is required or it should not be empty.\n " + message)
 
         const {description, author} = this.options
@@ -69,7 +69,7 @@ module.exports = class extends Generator {
             description,
             author,
             name: this.options['project-name'],
-            token: this.options['token'],
+            token: this.options['personal-token'],
         };
 
         const json = JSON.stringify(this.appConfig, false, '\t')
