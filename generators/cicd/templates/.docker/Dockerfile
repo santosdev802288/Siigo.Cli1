@@ -81,7 +81,7 @@ RUN dotnet publish \
   --no-restore
 
 #----------------
-FROM mcr.microsoft.com/dotnet/aspnet:${VERSION} AS runtime5
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS runtime5
 
 ENV APP_HOME=/app
 WORKDIR $APP_HOME
@@ -113,7 +113,7 @@ ENV COMPlus_EnableDiagnostics=0
 
 ARG ENV
 ENV ASPNETCORE_ENVIRONMENT ${ENV:-Development}
-COPY --from=build-env --chown=app:app /app/out $APP_HOME
+COPY --from=build-env5 --chown=app:app /app/out $APP_HOME
 EXPOSE 5000
 
 USER 1000

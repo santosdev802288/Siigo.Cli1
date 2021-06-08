@@ -12,7 +12,7 @@ function verifyNewVersion() {
     notifier.notify({isGlobal: true});
 
     // Stop if a new version is available
-    if (['latest', 'major', 'minor'].includes(notifier.update?.type) ) {
+    if (['major', 'minor'].includes(notifier.update?.type) ) {
         throw new Error(`Update to the last version of ${pkg.name}`)
     }
 }
