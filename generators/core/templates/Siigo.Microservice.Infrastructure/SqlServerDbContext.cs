@@ -30,10 +30,6 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructur
             Debug.WriteLine($"ProductContext::ctor ->{GetHashCode()}");
         }
 
-        private SqlServerDbContext(DbContextOptions<SqlServerDbContext> options) : base(options)
-        {
-        }
-
         public IDbContextTransaction GetCurrentTransaction() => _currentTransaction;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

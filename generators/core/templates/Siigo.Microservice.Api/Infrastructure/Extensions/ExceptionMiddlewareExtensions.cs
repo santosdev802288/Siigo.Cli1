@@ -1,4 +1,3 @@
-using Confluent.Kafka;
 using System;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
@@ -21,20 +20,20 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastru
         public static void ConfigureExceptionHandler(this IApplicationBuilder app,
             IConfiguration configuration)
         {
-            app.UseExceptionHandler(appError =>
+            _ = app.UseExceptionHandler(appError =>
             {
                 appError.Run(async context =>
                 {
                     context.Response.ContentType = "application/json";
-                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                    IExceptionHandlerFeature contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if (contextFeature != null)
                     {
                         string appName = configuration["AppName"];
-                        var errorDetails = GetErrorDetails(contextFeature, appName);
+                        ErrorResponse errorDetails = GetErrorDetails(contextFeature, appName);
                         context.Response.StatusCode = errorDetails.Status;
-                        var codes = errorDetails.Errors[0].Code;
-                        var messages = errorDetails.Errors[0].Message;
-                        var details = errorDetails.Errors[0].Detail;
+                        string codes = errorDetails.Errors[0].Code;
+                        string messages = errorDetails.Errors[0].Message;
+                        string details = errorDetails.Errors[0].Detail;
 
                         if (errorDetails.Errors.Count > 1)
                         {
@@ -42,7 +41,7 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastru
                             messages = string.Join('|', errorDetails.Errors.Select(error => error.Message));
                             details = string.Join('|', errorDetails.Errors.Select(error => error.Detail));
                         }
-                        
+
                         Log.Error("{appName} {timeStamp} {statusCode} {message} {exception} {detail}",
                             appName, DateTime.UtcNow, codes, messages,
                             contextFeature.Error, details);
@@ -52,7 +51,7 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastru
                 });
             });
         }
-        
+
         /// <summary>
         /// Mapping Exceptions to ErrorDetails viewModel output 
         /// </summary>
@@ -166,7 +165,7 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastru
             };
         }
 
-        private static String GetErrorsCode(string message)
+        private static string GetErrorsCode(string message)
         {
             string codes = "";
             string[] errors = message.Split("\r\n -- ");

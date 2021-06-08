@@ -1,8 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Mapster;
 using MediatR;
-using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Model;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.AggregateModel.ExampleAggregate;
 
 namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Queries
@@ -24,10 +22,10 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Applicati
         {
             // use your finder
             // map response with Mapster
-            
-            var example = await _exampleFinder.FindByIdAsync(request.Id);
-            return "Finder Id -> " + request.Id;
+
+            Example example = await _exampleFinder.FindByIdAsync(request.Id);
+            return "Finder Id -> " + example.Id;
         }
-        
+
     }
 }

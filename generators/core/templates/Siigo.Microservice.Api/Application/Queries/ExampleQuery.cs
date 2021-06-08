@@ -1,5 +1,4 @@
 using MediatR;
-using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Model;
 
 namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Queries
 {

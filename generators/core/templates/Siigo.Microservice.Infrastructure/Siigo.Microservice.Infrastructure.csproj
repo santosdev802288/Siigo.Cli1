@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,8 +24,9 @@
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <!-- Install format tool: "dotnet tool install -g dotnet-format" -->
-    <Exec Command="dotnet format --check --verbosity minimal" />
+    <!-- Check deprecated or vulnerable dependencies -->
+    <Exec Command="dotnet list package --deprecated" />
+    <Exec Command="dotnet list package --vulnerable" />
   </Target>
 
 </Project>

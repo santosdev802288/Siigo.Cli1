@@ -24,7 +24,7 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Applicati
         {
             public ExampleCommandValidator()
             {
-                RuleFor(m => m.ExampleId).GreaterThan(0)
+                _ = RuleFor(m => m.ExampleId).GreaterThan(0)
                     .WithMessage("ExampleId  must be greater than 0}");
             }
         }

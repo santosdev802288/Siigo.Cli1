@@ -10,11 +10,8 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructur
 {
     public class MongoDBContext : IUnitOfWork
     {
-        private readonly IMediator _mediator;
-
         public MongoDBContext(IConfiguration configuration, IMediator mediator)
         {
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             var mongoClient = new MongoClient(configuration.GetSection("BookstoreDatabaseSettings").GetSection("ConnectionString").Value);
             var database = mongoClient.GetDatabase(configuration.GetSection("BookstoreDatabaseSettings").GetSection("DatabaseName").Value);
         }

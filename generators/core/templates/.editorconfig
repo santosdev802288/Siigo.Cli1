@@ -17,9 +17,11 @@ insert_final_newline = true
 
 #### .NET Coding Conventions ####
 
-# Show style as error on IDE
-dotnet_analyzer_diagnostic.category-Style.severity = error
-#dotnet_analyzer_diagnostic.category-CodeQuality.severity = warning
+# Show incorrect style as error on IDE
+dotnet_analyzer_diagnostic.category-CodeQuality.severity = error
+dotnet_analyzer_diagnostic.category-Style.severity = warning
+dotnet_analyzer_diagnostic.category-performance.severity = warning
+dotnet_analyzer_diagnostic.severity = suggestion
 
 # Organize usings
 dotnet_separate_import_directive_groups = false
@@ -84,7 +86,7 @@ csharp_style_expression_bodied_constructors = false:silent
 csharp_style_expression_bodied_indexers = true:silent
 csharp_style_expression_bodied_lambdas = true:silent
 csharp_style_expression_bodied_local_functions = false:silent
-csharp_style_expression_bodied_methods = false:silent
+csharp_style_expression_bodied_methods = when_on_single_line:silent
 csharp_style_expression_bodied_operators = false:silent
 csharp_style_expression_bodied_properties = true:silent
 
@@ -140,7 +142,7 @@ csharp_indent_labels = one_less_than_current
 csharp_indent_switch_labels = true
 
 # Space preferences
-csharp_space_after_cast = false
+csharp_space_after_cast = true
 csharp_space_after_colon_in_inheritance_clause = true
 csharp_space_after_comma = true
 csharp_space_after_dot = false
