@@ -22,9 +22,4 @@
     <ProjectReference Include="..\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.csproj" />
   </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <!-- Install format tool: "dotnet tool install -g dotnet-format" -->
-    <Exec Command="dotnet format --check --verbosity minimal" />
-  </Target>
-
 </Project>
