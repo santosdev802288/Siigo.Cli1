@@ -21,6 +21,10 @@
 <span style="font-size:2em;">☠️</span> | Before to start to use this CLI , it's important to follow the instructions. If you have some errors during the Siiglo ClI installation process or when you're using it, read those exceptions carefully, they can give you a lot of information about how to fix them. 
 :---: | :---
 
+  
+### 
+    The defaults values are taken from the folder where the ClI is running.
+
 ## 🛠️ Requirements
 - [Node](https://nodejs.org/en/download/)   
 - [Node package manager](https://docs.npmjs.com/cli/install)
@@ -48,7 +52,7 @@ Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_use
 
 ## ⚡ Generators
 
- - [Golang](#‍🔥-Golang)
+ - [Golang](#🔥-golang)
    * [new project](#1.-new-project)
  - [NodeJs](#‍👩‍🏫-nodejs)
    * [new project](#1.-new-project)
@@ -451,10 +455,7 @@ Run *_yo siigo:cicd --help_* to see the configuration description, data type and
       
 > **⚠️ WARNING**: If you set --environment option, remember: you only need pass
 >the name without the prefix of the environment(qa, dev, prod). Example 'qa aks' is aks and 'prod aks chile' is aks chile.  
-  
-### Default values
-    
-    The defaults values are taken from the folder where the ClI is running.
+
 
 ### Customize pipeline
 
