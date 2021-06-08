@@ -95,7 +95,6 @@ module.exports = class extends Generator {
             this.cancelCancellableTasks()
     }
 
-
     writing() {
 
         this.fs.copyTpl(
