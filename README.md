@@ -48,7 +48,7 @@ Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_use
 
 ## ⚡ Generators
 
- - [Golang](#‍👩‍🏫-Golang)
+ - [Golang](#‍🔥-Golang)
    * [new project](#1.-new-project)
  - [NodeJs](#‍👩‍🏫-nodejs)
    * [new project](#1.-new-project)
@@ -56,12 +56,12 @@ Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_use
  - [.Net Core](#👨‍🏫-.net-core)
    * [new project](#1.-new-net-core-project)
    * [create commands and queries](#2.-CQRS)
- - [.Net 5 grpc client](#👨‍🏫-.net-5-grpc-client)
- - [.Net 5 grpc server](#👨‍🏫-.net-5-grpc-server)
+ - [.Net 5 grpc client](#🗿-.net-5-grpc-client)
+ - [.Net 5 grpc server](#💪-.net-5-grpc-server)
  - [CICD](#🚀-cicd)
  - [Api Gateway](#🔱-api-gateway)
 
-## ‍👩‍🏫 Golang
+## 🔥 Golang
 
 ### 1. New project
 This command helps automating the creation of microservices with a minimal configuration in it.
@@ -248,7 +248,7 @@ Create a new command or query
 #### Example 
 In the following [example](https://assetsdoc.blob.core.windows.net/assets/cqrs.svg) you can see how to create a command and a query.
 
-## 👨‍🏫 .Net 5 grpc client
+## 🗿 .Net 5 grpc client
 
 ### 1. New net core project
 This command helps automating the creation of microservices with a minimal configuration in it based on .Net 5 and gRPC client mode.
@@ -295,7 +295,7 @@ In the following [example](https://assetsdoc.blob.core.windows.net/assets/core.s
             --personal-token  # Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens
 
 
-## 👨‍🏫 .Net 5 grpc server
+## 💪 .Net 5 grpc server
 
 ### 1. New net core project
 This command helps automating the creation of microservices with a minimal configuration in it based on .Net 5 and gRPC client mode.
