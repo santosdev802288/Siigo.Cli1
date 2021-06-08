@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	example "siigo.com/bolt/proto"
+	example "siigo.com/<%= config.name %>/proto"
 
 	mock "github.com/stretchr/testify/mock"
 )

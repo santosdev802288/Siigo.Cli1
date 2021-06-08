@@ -11,10 +11,10 @@ import (
 	_ "go.uber.org/automaxprocs"
 	"go.uber.org/fx"
 	"os"
-	"siigo.com/bolt/src/api"
-	"siigo.com/bolt/src/boot"
-	"siigo.com/bolt/src/config"
-	"siigo.com/bolt/src/fxmodule"
+	"siigo.com/<%= config.name %>/src/api"
+	"siigo.com/<%= config.name %>/src/boot"
+	"siigo.com/<%= config.name %>/src/config"
+	"siigo.com/<%= config.name %>/src/fxmodule"
 )
 
 func main() {

@@ -10,7 +10,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"gopkg.in/mgo.v2/bson"
-	proto "siigo.com/bolt/proto"
+	proto "siigo.com/<%= config.name %>/proto"
 
 	"time"
 )

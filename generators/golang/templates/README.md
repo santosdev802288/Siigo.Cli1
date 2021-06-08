@@ -293,8 +293,8 @@ import (
 	"context"
 	"dev.azure.com/SiigoDevOps/Siigo/_git/go-cqrs.git/cqrs"
 	"dev.azure.com/SiigoDevOps/Siigo/_git/go-cqrs.git/cqrs/uuid"
-	pb "siigo.com/bolt/proto"
-	"siigo.com/bolt/src/application/command"
+	pb "siigo.com/<%= config.name %>/proto"
+	"siigo.com/<%= config.name %>/src/application/command"
 )
 
 

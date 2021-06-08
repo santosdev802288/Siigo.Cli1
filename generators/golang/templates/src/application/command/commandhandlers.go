@@ -9,8 +9,8 @@ import (
 	_ "bytes"
 	"dev.azure.com/SiigoDevOps/Siigo/_git/go-cqrs.git/cqrs"
 	log "github.com/sirupsen/logrus"
-	"siigo.com/bolt/src/domain/service/greeterservice"
-	"siigo.com/bolt/src/infrastructure/repository"
+	"siigo.com/<%= config.name %>/src/domain/service/greeterservice"
+	"siigo.com/<%= config.name %>/src/infrastructure/repository"
 )
 
 /**************** GREETER COMMAND HANDLER  ******************/

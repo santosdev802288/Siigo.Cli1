@@ -8,9 +8,9 @@ package fxmodule
 import (
 	"dev.azure.com/SiigoDevOps/Siigo/_git/go-cqrs.git/cqrs"
 	"go.uber.org/fx"
-	"siigo.com/bolt/src/application/command"
-	"siigo.com/bolt/src/application/query"
-	"siigo.com/bolt/src/domain/service/greeterservice"
+	"siigo.com/<%= config.name %>/src/application/command"
+	"siigo.com/<%= config.name %>/src/application/query"
+	"siigo.com/<%= config.name %>/src/domain/service/greeterservice"
 )
 
 // Application Module Commands And Queries

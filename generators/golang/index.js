@@ -3,7 +3,6 @@ const os = require('os')
 const Generator = require('yeoman-generator/lib');
 const path = require('path');
 const colorize = require('json-colorizer');
-const shell = require("shelljs")
 const req = require("../../utils/required-tools")
 const {siigosay} = require('@nodesiigo/siigosay')
 
@@ -15,14 +14,23 @@ module.exports = class extends Generator {
         super(args, opt)
 
         this.log(siigosay(`Siigo Generator Golang.`))
+
+        const prefixRepo = "Siigo.Microservice."
+        const eSiigoPrefixRepo = "ESiigo.Microservice."
+
         const currentPath = path.basename(process.cwd())
+
+        if(!currentPath.startsWith(prefixRepo) && !currentPath.startsWith(eSiigoPrefixRepo))
+            throw new Error(`The name project should starts with ${prefixRepo} or ${eSiigoPrefixRepo}`)
+
+        const name = currentPath.split(".").reverse()[0]
 
         // optionals
         this.option("project-name", {
             type: String,
             required: false,
             description: "Name project.",
-            default: currentPath,
+            default: name.toLowerCase(),
             alias: 'pn'
         });
 
@@ -90,17 +98,21 @@ module.exports = class extends Generator {
 
     writing() {
 
-        this.fs.copy(
+        this.fs.copyTpl(
             this.templatePath(""),
             this.destinationPath("."),
             {config: this.appConfig}
         );
 
-        const homedir = require('os').homedir();
+        this.fs.copy(
+            this.templatePath(".third_party"),
+            this.destinationPath("third_party"),
+            {config: this.appConfig}
+        );
 
         this.fs.copyTpl(
             this.templatePath(".gitconfig"),
-            this.destinationPath(homedir + "/.gitconfig"),
+            this.destinationPath(require('os').homedir() + "/.gitconfig"),
             {config: this.appConfig}
         );
 

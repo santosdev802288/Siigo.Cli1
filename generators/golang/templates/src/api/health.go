@@ -7,7 +7,7 @@ package api
 
 import (
 	"context"
-	pb "siigo.com/bolt/proto"
+	pb "siigo.com/<%= config.name %>/proto"
 )
 
 func (b *Controller) Health(ctx context.Context, r *pb.HealthRequest) (*pb.HealthResponse, error) {

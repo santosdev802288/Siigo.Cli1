@@ -1,4 +1,4 @@
-module siigo.com/bolt
+module siigo.com/<%= config.name %>
 
 go 1.16
 

@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/go-multierror"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	pb "siigo.com/bolt/proto"
+	pb "siigo.com/<%= config.name %>/proto"
 )
 
 func (b *Controller) Error(ctx context.Context, request *pb.HealthRequest) (*pb.HealthResponse, error) {

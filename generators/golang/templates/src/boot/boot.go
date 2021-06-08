@@ -19,9 +19,9 @@ import (
 	"io/ioutil"
 	"net"
 	"os"
-	"siigo.com/bolt/internal/gateway"
-	pb "siigo.com/bolt/proto"
-	"siigo.com/bolt/src/api"
+	"siigo.com/<%= config.name %>/internal/gateway"
+	pb "siigo.com/<%= config.name %>/proto"
+	"siigo.com/<%= config.name %>/src/api"
 )
 
 // CreateGrpcServer Create server.Server Instance
@@ -103,7 +103,7 @@ func StartHttpServer(serverMux *runtime.ServeMux) {
 
 	log.Info("Starting HTTP Server ...")
 
-	goFigure := figure.NewFigure("Siigo Bolt Microservice", "", true)
+	goFigure := figure.NewFigure("Siigo <%= config.name %>  microservice", "", true)
 	goFigure.Print()
 	gateway.RunServerMux(serverMux)
 }

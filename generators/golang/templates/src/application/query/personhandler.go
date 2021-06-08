@@ -8,7 +8,7 @@ package query
 import (
 	"dev.azure.com/SiigoDevOps/Siigo/_git/go-cqrs.git/cqrs"
 	log "github.com/sirupsen/logrus"
-	"siigo.com/bolt/src/infrastructure/finder"
+	"siigo.com/<%= config.name %>/src/infrastructure/finder"
 )
 
 // FruitQueryHandlers provides methods for processing query related

@@ -5,7 +5,7 @@ package mocks
 import (
 	context "context"
 
-	example "siigo.com/bolt/proto"
+	example "siigo.com/<%= config.name %>/proto"
 
 	grpc "google.golang.org/grpc"
 

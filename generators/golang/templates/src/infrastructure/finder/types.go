@@ -8,7 +8,7 @@ package finder
 import (
 	"context"
 	"go.mongodb.org/mongo-driver/mongo"
-	proto "siigo.com/bolt/proto"
+	proto "siigo.com/<%= config.name %>/proto"
 )
 
 type IPersonFinder interface {

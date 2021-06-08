@@ -2,8 +2,8 @@
 package command
 
 import (
-	siigo "siigo.com/bolt/proto"
-	"siigo.com/bolt/src/application/command"
+	siigo "siigo.com/<%= config.name %>/proto"
+	"siigo.com/<%= config.name %>/src/application/command"
 )
 
 func NewCreatePersonCommand() *command.CreatePersonCommand {

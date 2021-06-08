@@ -5,7 +5,7 @@
 
 package command
 
-import siigo "siigo.com/bolt/proto"
+import siigo "siigo.com/<%= config.name %>/proto"
 
 // GreeterCommand
 type GreeterCommand struct {

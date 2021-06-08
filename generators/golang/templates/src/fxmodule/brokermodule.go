@@ -6,9 +6,9 @@ import (
 	"go.uber.org/fx"
 	"gopkg.in/confluentinc/confluent-kafka-go.v1/kafka"
 
-	"siigo.com/bolt/src/application/consumer"
-	"siigo.com/bolt/src/application/producer"
-	"siigo.com/bolt/src/config"
+	"siigo.com/<%= config.name %>/src/application/consumer"
+	"siigo.com/<%= config.name %>/src/application/producer"
+	"siigo.com/<%= config.name %>/src/config"
 )
 
 // BrokerModule Create FX Broker Kafka Module

@@ -1,7 +1,7 @@
 package query
 
 import (
-	"siigo.com/bolt/src/application/query"
+	"siigo.com/<%= config.name %>/src/application/query"
 )
 
 func NewFindAllQueryPerson() *query.FindAllPersonQuery {

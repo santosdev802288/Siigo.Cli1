@@ -12,7 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gopkg.in/mgo.v2/bson"
-	siigo "siigo.com/bolt/proto"
+	siigo "siigo.com/<%= config.name %>/proto"
 	"time"
 )
 

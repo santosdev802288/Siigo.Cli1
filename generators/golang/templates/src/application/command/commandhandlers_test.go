@@ -9,10 +9,10 @@ import (
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	mocksCommands "siigo.com/bolt/mocks/src/application/command"
-	mocksCqrs "siigo.com/bolt/mocks/src/cqrs"
-	mocksRepository "siigo.com/bolt/mocks/src/infrastructure/repository"
-	"siigo.com/bolt/src/application/command"
+	mocksCommands "siigo.com/<%= config.name %>/mocks/src/application/command"
+	mocksCqrs "siigo.com/<%= config.name %>/mocks/src/cqrs"
+	mocksRepository "siigo.com/<%= config.name %>/mocks/src/infrastructure/repository"
+	"siigo.com/<%= config.name %>/src/application/command"
 	"testing"
 )
 

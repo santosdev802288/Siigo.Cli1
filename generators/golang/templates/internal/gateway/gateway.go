@@ -13,7 +13,7 @@ import (
 	"mime"
 	"net/http"
 	"os"
-	"siigo.com/bolt/third_party"
+	"siigo.com/<%= config.name %>/third_party"
 	"strings"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"

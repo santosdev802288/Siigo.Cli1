@@ -9,11 +9,11 @@ import (
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	mocksQueries "siigo.com/bolt/mocks/src/application/query"
-	mocksCqrs "siigo.com/bolt/mocks/src/cqrs"
-	mocksFinder "siigo.com/bolt/mocks/src/infrastructure/finder"
-	siigo "siigo.com/bolt/proto"
-	"siigo.com/bolt/src/application/query"
+	mocksQueries "siigo.com/<%= config.name %>/mocks/src/application/query"
+	mocksCqrs "siigo.com/<%= config.name %>/mocks/src/cqrs"
+	mocksFinder "siigo.com/<%= config.name %>/mocks/src/infrastructure/finder"
+	siigo "siigo.com/<%= config.name %>/proto"
+	"siigo.com/<%= config.name %>/src/application/query"
 	"testing"
 )
 

@@ -10,7 +10,7 @@ package services;
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
-option go_package = "siigo.com/bolt/proto;example";
+option go_package = "siigo.com/<%= config.name %>/proto;example";
 
 message GreetingRequest {
   string name = 1;

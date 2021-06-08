@@ -10,9 +10,9 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.uber.org/fx"
-	"siigo.com/bolt/src/config"
-	"siigo.com/bolt/src/infrastructure/finder"
-	"siigo.com/bolt/src/infrastructure/repository"
+	"siigo.com/<%= config.name %>/src/config"
+	"siigo.com/<%= config.name %>/src/infrastructure/finder"
+	"siigo.com/<%= config.name %>/src/infrastructure/repository"
 	"time"
 )
 

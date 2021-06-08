@@ -1,5 +1,5 @@
 version: v1beta1
-name: buf.build/siigo/bolt
+name: buf.build/siigo/<%= config.name %>
 build:
   roots:
     - proto

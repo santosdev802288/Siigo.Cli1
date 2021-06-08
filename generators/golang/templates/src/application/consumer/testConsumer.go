@@ -5,7 +5,7 @@ import (
 	"dev.azure.com/SiigoDevOps/Siigo/_git/go-cqrs.git/cqrs/uuid"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/confluentinc/confluent-kafka-go.v1/kafka"
-	"siigo.com/bolt/src/application/command"
+	"siigo.com/<%= config.name %>/src/application/command"
 )
 
 // Consumer test-topic

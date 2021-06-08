@@ -12,9 +12,9 @@ import (
 	"github.com/go-playground/validator/v10"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	pb "siigo.com/bolt/proto"
-	"siigo.com/bolt/src/application/command"
-	"siigo.com/bolt/src/application/query"
+	pb "siigo.com/<%= config.name %>/proto"
+	"siigo.com/<%= config.name %>/src/application/command"
+	"siigo.com/<%= config.name %>/src/application/query"
 )
 
 // POST Person
