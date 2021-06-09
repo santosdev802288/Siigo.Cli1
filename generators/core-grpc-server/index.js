@@ -64,7 +64,7 @@ module.exports = class extends Generator {
 
     writing() {
 
-        this.registerTransformStream([
+        this.queueTransformStream([
             rename((path) => {
                 const prefixChart = "ms-"
                 path.dirname = path.dirname.includes(prefixChart) ?

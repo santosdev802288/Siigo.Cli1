@@ -166,7 +166,7 @@ module.exports = class extends Generator {
 
     writing() {
 
-        this.registerTransformStream([
+        this.queueTransformStream([
             rename( (path) => {
                 path.dirname = path.dirname.replace(/(chart)/g, this.appConfig.name)
                 path.basename = path.basename.replace(/(chart)/g, this.appConfig.name)

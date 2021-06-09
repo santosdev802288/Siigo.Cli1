@@ -133,7 +133,7 @@ module.exports = class extends Generator {
 
   writing() {
 
-    this.registerTransformStream([
+    this.queueTransformStream([
       rename((path) => {
         path.dirname = path.dirname.replace(
           'project_name',
