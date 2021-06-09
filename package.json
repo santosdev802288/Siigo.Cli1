@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint \"{generators,test,utils}/**/*.js\"",
-    "release": "standard-version --skip.commit --skip.tag --header \"# Changelog\nAll notable changes to this project.\"",
+    "release": "standard-version --skip.commit --skip.tag --header \"# Changelog\n\nAll notable changes to this project.\n\"",
     "test": "echo \"Error: no test specified\" && exit 0",
     "prepare": "husky install"
   },
