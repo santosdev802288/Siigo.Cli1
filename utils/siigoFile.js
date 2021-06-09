@@ -4,11 +4,11 @@ const path = require('path')
 const root = (os.homedir())
 const pathHome = path.join(root, '.siigo');
 const prompt = require('prompt');
-var colors = require("colors/safe");
+const colors = require("colors/safe");
 
 async function wizardsiigofile(updatetoken) {
     let token = ""
-    if(updatetoken != undefined){
+    if(updatetoken !== undefined){
         token = updatetoken;
         shell.rm(pathHome)
     }else{
