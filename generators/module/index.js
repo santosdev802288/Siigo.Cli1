@@ -16,7 +16,7 @@ module.exports = class extends Generator {
     writing() {
         let name = this.options['name']
 
-        this.registerTransformStream([
+        this.queueTransformStream([
             rename((path) => {
                 path.basename = path.basename.replace(/(user)/g, name.toLowerCase())
             }),

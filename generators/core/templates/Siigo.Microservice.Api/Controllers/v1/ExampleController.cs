@@ -7,7 +7,7 @@ using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Q
 
 namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Controllers.v1
 {
-    
+
     [ApiController()]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("1.0")]
@@ -22,12 +22,10 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Controlle
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
-        public async Task<string> ExampleQuery(int id)
-            => await this._mediator.Send(new ExampleQuery(id));
-        
+        public async Task<string> ExampleQuery(int id) => await _mediator.Send(new ExampleQuery(id));
+
         [HttpPost("{id}")]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.Created)]
-        public async Task<string> ExampleCommand(int id)
-            => await this._mediator.Send(new ExampleCommand(id));
+        public async Task<string> ExampleCommand(int id) => await _mediator.Send(new ExampleCommand(id));
     }
 }

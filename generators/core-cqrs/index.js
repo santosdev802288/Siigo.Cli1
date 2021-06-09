@@ -46,7 +46,7 @@ module.exports = class extends Generator {
 
         switch (this.appConfig.type) {
             case 'command':
-                this.registerTransformStream([
+                this.queueTransformStream([
                     rename((path) => {
                         path.basename = path.basename.replace(/(CreateProduct)/g, capitalize(this.appConfig.name_cq))
                         path.dirname = path.dirname.replace(/(CreateProduct)/g, capitalize(this.appConfig.name_cq))
@@ -61,7 +61,7 @@ module.exports = class extends Generator {
                 break
 
             case 'query':
-                this.registerTransformStream([
+                this.queueTransformStream([
                     rename((path) => {
                         path.basename = path.basename.replace(/(GetProductDetails)/g, capitalize(this.appConfig.name_cq))
                         path.dirname = path.dirname.replace(/(GetProductDetails)/g, capitalize(this.appConfig.name_cq))

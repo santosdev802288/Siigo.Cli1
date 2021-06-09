@@ -15,17 +15,17 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastru
         protected override void Load(ContainerBuilder builder)
         {
             // Parte de esto lo podemos ignorar si registramos con IServiceCollection.AddMediatR(...)
-            builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly)
+            _ = builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly)
                 .AsImplementedInterfaces();
 
-            builder.Register<ServiceFactory>(context =>
+            _ = builder.Register<ServiceFactory>(context =>
             {
-                var componentContext = context.Resolve<IComponentContext>();
-                return t => { object o; return componentContext.TryResolve(t, out o) ? o : null; };
+                IComponentContext componentContext = context.Resolve<IComponentContext>();
+                return t => { return componentContext.TryResolve(t, out object o) ? o : null; };
             });
-            
+
             // Add Command Validations
-            builder.RegisterGeneric(typeof(RequestValidationBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+            _ = builder.RegisterGeneric(typeof(RequestValidationBehavior<,>)).As(typeof(IPipelineBehavior<,>));
 
         }
     }

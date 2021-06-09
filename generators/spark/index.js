@@ -18,7 +18,7 @@ module.exports = class extends Generator {
             let pname = tempName[0]+"."+tempName[2]+".Sync";
             let name = tempName[2];
     
-            this.registerTransformStream([
+            this.queueTransformStream([
                 rename((path) => {
                     path.basename = path.basename.replace(/(MsTemplate)/g, name)
                 }),
