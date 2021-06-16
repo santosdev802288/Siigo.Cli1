@@ -6,7 +6,7 @@ const os = require('os')
 const path = require('path')
 const Generator = require('yeoman-generator/lib')
 const {siigosay} = require('@nodesiigo/siigosay')
-const {tknSiigo,wizardsiigofile} = require('../../utils/siigoFile');
+const {tokenSiigo,wizardsiigofile} = require('../../utils/siigoFile');
 const capitalize = require('../../utils/capitalize')
 
 function findFiles (directory) {
@@ -93,12 +93,12 @@ module.exports = class extends Generator {
     }
 
     async prompting() {
-        let tknf = tknSiigo;
+        let tokenf = tokenSiigo;
         let updatetoken = this.options['token']
-        if(tknSiigo =="pending" || updatetoken != undefined ) tknf = await wizardsiigofile(updatetoken);
+        if(tokenSiigo =="pending" || updatetoken != undefined ) tokenf = await wizardsiigofile(updatetoken);
         this.appConfig = {}
         this.appConfig.name = this.options['name']
-        this.appConfig.token = tknf.replace(" \n","");
+        this.appConfig.token = tokenf.replace(" \n","");
         this.appConfig.nameCapitalize = capitalize(this.appConfig.name)
         this.appConfig.projectPrefix = this.options['project-prefix']
     }

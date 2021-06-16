@@ -1,9 +1,11 @@
 const Generator = require('yeoman-generator/lib');
-const {getParameter,setParameter} = require('../../utils/siigoFile');
+const {getParameter,setParameter,setTribeAndNameByUser} = require('../../utils/siigoFile');
 const colorize = require('json-colorizer');
 const {siigosay} = require('@nodesiigo/siigosay');
 const {readTribesFile} = require('../../utils/readTribes')
 const autocomplete = require('../../utils/autocomplete')
+
+
 
 module.exports = class extends Generator {
 
@@ -11,20 +13,7 @@ module.exports = class extends Generator {
         super(args, opt)
     }
 
-    async initializing() {
-        const tokenSiigo = await getParameter("token")
-        const token64 = await getParameter("token64")
-        const user = await getParameter("user")
-        const name = await getParameter("name")
-        const tribe = await getParameter("tribe")
-        const json = {
-            token: tokenSiigo,
-            token64: token64,
-            user: user,
-            name: name,
-            tribe: tribe,
-        }
-        
+    showInformation(json){
         this.log(colorize(json, {
             pretty: true,
             colors: {
@@ -33,6 +22,23 @@ module.exports = class extends Generator {
                 NUMBER_LITERAL: '#FF0000'
             }
         }))
+    }
+    async getAllParameters(parameters){
+        let objParameters ={}
+        parameters.forEach(async element => {
+            objParameters[element] = await getParameter(element)
+        })
+        return objParameters
+    }
+    async initializing() {
+        const parameters = ["token","token64","user","name","tribe"] 
+        const objParameters = await this.getAllParameters(parameters)
+        if(objParameters.name == "pending" || objParameters.tribe == "pending" ) {
+           let {name,tribe} = await setTribeAndNameByUser(objParameters.user)
+           objParameters.name = name
+           objParameters.tribe = tribe
+           this.showInformation(objParameters)
+        }else this.showInformation(objParameters)
     }
 
     async prompting() {
@@ -50,7 +56,7 @@ module.exports = class extends Generator {
                     type: 'list',
                     name: 'type',
                     message: 'What do you want to update?',
-                    choices: ['token',"tribe"]
+                    choices: ['token',"tribe","name",]
                 }
             ]);
             switch(response.type){
@@ -59,18 +65,28 @@ module.exports = class extends Generator {
                     let res  = await this.prompt([
                         {
                             type: 'string',
-                            name: 'token',
+                            name: response.type,
                             message: 'Typing your personal token: ',
                         }
                     ]);
-                    setParameter("token",res.token)
+                    setParameter(response.type,res.token)
                     break
                 }
                 case "tribe":{
-                    const tribePath = './tribes/'
-                    this.tribes = await readTribesFile(tribePath.concat('tribes.json'))
+                    this.tribes = await readTribesFile()
                     const select_tribe = await autocomplete(this.tribes)
-                    setParameter("tribe",select_tribe.tribe)
+                    setParameter(response.type,select_tribe.tribe)
+                    break
+                }
+                case "name":{
+                    let res  = await this.prompt([
+                        {
+                            type: 'string',
+                            name: response.type,
+                            message: 'Typing your name: ',
+                        }
+                    ]);
+                    setParameter(response.type,res.name)
                     break
                 }
             }

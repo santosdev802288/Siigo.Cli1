@@ -1,58 +1,55 @@
-const shell = require("shelljs")
-const os = require("os")
-const path = require('path')
-const root = (os.homedir())
-const pathHome = path.join(root, '.siigo')
-const prompt = require('prompt')
-var colors = require("colors/safe")
-const {tribeByUser } = require('./readTribes')
-
-async function wizardsiigofile(updatetoken) {
-    let token = ""
-    if(updatetoken != undefined){
-        token = updatetoken
-        shell.rm(pathHome)
-    }else{
-        prompt.message = colors.green("siigo.cli")
-        this.answers = await prompt.get(['personaltoken'])
-        token = this.answers.personaltoken
+const info_tribes = require("../tribes/tribes.json")
+/**
+ *
+ * @param {string} filePath
+ * @description Reads a given tribes JSON file and returns an array
+ * with information about the name and group of the obtained tribes
+ */
+const readTribesFile = async () =>{
+    let select_tribes = []
+    if (info_tribes != null && info_tribes.length > 0) {
+        info_tribes.forEach(element => {
+            element.tribes.forEach(tribe => {
+                tribe.groups.forEach(group => {
+                    select_tribes.push(tribe.name + "_" + group.group_name)
+                })
+            })
+        })
     }
-    shell.touch(pathHome)
-    shell.exec(`echo token=${token} >> ${pathHome}`)
-    let b64 =Buffer.from(token.trim()).toString('base64')
-    shell.exec(`echo token64=${b64} >> ${pathHome}`)
-    let resUser  = shell.exec('az account show | json user.name', {silent:true}).stdout
-    resUser = resUser.replace("\n","")
-    shell.exec(`echo user=${resUser} >> ${pathHome}`)
-    const tribePath = './tribes/'  
-    const {tribe, name}  = await tribeByUser(resUser,tribePath.concat('tribes.json'))
-    shell.exec(`echo name=${name} >> ${pathHome}`)
-    shell.exec(`echo tribe=${tribe} >> ${pathHome}`)
-    return token
+    return select_tribes
 }
 
-async function getParameter(parameter) {
-    let temp = ""
-    if(os.platform == "win32") shell.cp("~/.siigo",".siigo")
-    if (shell.test('-f', pathHome)) {
-        let listPar = shell.cat(pathHome).split("\n")
-        listPar.forEach(ele => {if (ele.includes(parameter+"=")){ temp=ele}})
-        let resul = temp.replace(parameter+"=","")
-        if(resul=="\n" || resul=="") { resul = "pending" }
-        return resul;
-    }else {
-        return "pending"
-    }
+/**
+ *
+ * @param {string} userSiigo
+
+ * @description Return tribe by User of siiigo
+ * 
+ */
+
+const tribeByUser = async (userSiigo) => {
+    let tribe = "pendiente"
+    let name = userSiigo
+    info_tribes.forEach(ele=>{
+        ele.tribes.forEach(ele2 =>{
+            ele2.groups.forEach(ele3 =>{
+                ele3.members.forEach(ele4 => {
+                    if(ele4.lead.user == userSiigo ) {
+                        tribe = ele2.name
+                        name = ele4.lead.name
+                    }else {
+                        ele4.team.forEach(ele5 => {
+                            if(ele5.user == userSiigo) {
+                                tribe = ele2.name
+                                name = ele5.name
+                            }
+                        })
+                    }
+                } )
+            })
+        })
+    })
+    return {tribe, name}
 }
-async function setParameter(parameter,value) {
-    if(os.platform == "win32") shell.cp("~/.siigo",".siigo")
-    if (shell.test('-f', pathHome)) {
-        shell.exec(`sed -i -e 's/${parameter}=.*/${parameter}=${value}/g' ~/.siigo`)
-    }
-}
-const tokenSiigo =  getParameter("token") 
-const token64Siigo =  getParameter("token64") 
-const userSiigo = getParameter("user") 
-const nameDev = getParameter("name") 
-const tribeSiigo = getParameter("tribe") 
-module.exports = { tokenSiigo,token64Siigo,userSiigo,nameDev,tribeSiigo,pathHome,wizardsiigofile,getParameter,setParameter }
+
+module.exports = {readTribesFile,tribeByUser}

@@ -244,6 +244,32 @@
     "vp": "FERNANDO GUTIERREZ",
     "tribes" : [
       {
+        "name": "ARQUITECTURA",
+        "groups": [
+          {
+            "group_name": "Cloud Native",
+            "members": [
+              {
+                "lead": {
+                  "name": "Miguel Oswaldo Velasquez Fragiel",
+                  "user": "vela801415@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Francisco Javier Anacona Campo",
+                    "user": "anac800776@siigo.com"
+                  },
+                  {
+                    "name": "Juan Sebastian Navarro Avila",
+                    "user": "nava801192@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
         "name": "NOMINA",
         "groups": [
           {
@@ -412,7 +438,7 @@
                   "name": "DIEGO ANDRES MONTOYA BLANDON",
                   "user": "mont801257@siigo.com"
                 },
-                "members": [
+                "team": [
                   {
                     "name": "Miller Padilla Mallory Muñoz",
                     "user": "padi111572@siigo.com"
@@ -444,7 +470,7 @@
                   "name": "CARLOS JAVIER MENDEZ VERA",
                   "user": "mend110124@siigo.com"
                 },
-                "members": [
+                "team": [
                   {
                     "name": "Jhony Alexander Alzate",
                     "user": "alza801298@siigo.com"
@@ -658,7 +684,7 @@
                   "name": "DAVID FELIPE PENAGOS MOSQUERA",
                   "user": "pena110109@siigo.com"
                 },
-                "members": [
+                "team": [
                   {
                     "name": "Luis Felipe Roa Rosero",
                     "user": "roar111743@siigo.com"
@@ -680,7 +706,7 @@
                   "name": "JAIRO ANDRES MENDIETA REYES",
                   "user": "mend112186@siigo.com"
                 },
-                "members": [
+                "team": [
                   {
                     "name": "Geraldine Claros Rios",
                     "user": "clar801067@siigo.com"

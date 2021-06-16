@@ -2,9 +2,9 @@
 
 FILESIIGO=$HOME/.siigo
 if test -f "$FILESIIGO"; then
-  TOKEN=$(grep "tkn=" "$FILESIIGO" | tr -d '\n')
+  TOKEN=$(grep "token=" "$FILESIIGO" | tr -d '\n')
   TOKEN="${TOKEN:4}"
-  tokenOutput=$(grep "tkn64=" "$FILESIIGO" | tr -d '\n' )
+  tokenOutput=$(grep "token64=" "$FILESIIGO" | tr -d '\n' )
   tokenOutput="${tokenOutput:6}"
 else
   if [ "x${TOKEN}" = "x" ] ; then
@@ -21,8 +21,8 @@ else
 
   tokenOutput=$(node -e "b64=Buffer.from('$TOKEN'.trim()).toString('base64');console.log(b64);process.exit();") 
   {
-    echo "tkn='$TOKEN'"
-    echo "tkn64='$tokenOutput'"
+    echo "token='$TOKEN'"
+    echo "token64='$tokenOutput'"
     echo "user='$infoazure'"
   } >> $FILESIIGO
 fi
@@ -50,4 +50,4 @@ echo "Install Yeoman"
 npm list -g yo@^4.0.0 || npm install --global yo@^4.0.0
 
 echo "Install Siigo generator"
-npm i -g generator-siigo@beta
+npm i -g generator-siigo
