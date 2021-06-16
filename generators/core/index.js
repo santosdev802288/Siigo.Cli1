@@ -98,7 +98,7 @@ module.exports = class extends Generator {
         if(tknSiigo =="pending" || updatetoken != undefined ) tknf = await wizardsiigofile(updatetoken);
         this.appConfig = {}
         this.appConfig.name = this.options['name']
-        this.appConfig.token = tknf;
+        this.appConfig.token = tknf.replace(" \n","");
         this.appConfig.nameCapitalize = capitalize(this.appConfig.name)
         this.appConfig.projectPrefix = this.options['project-prefix']
     }

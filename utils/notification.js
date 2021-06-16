@@ -12,7 +12,8 @@ function verifyNewVersion() {
     notifier.notify({isGlobal: true});
 
     // Stop if a new version is available
-    if (['major', 'minor'].includes(notifier.update?.type) ) {
+    let type = notifier.update != null ? notifier.update.type: undefined;
+    if (['major', 'minor'].includes(type)) {
         throw new Error(`Update to the last version of ${pkg.name}`)
     }
 }
