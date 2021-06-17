@@ -1,6 +1,6 @@
 {
   "name": "generator-siigo",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "generator archetype siigo",
   "main": "index.js",
   "scripts": {
