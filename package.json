@@ -36,6 +36,7 @@
     "decamelize": "^3.2.0",
     "fuzzy": "^0.1.3",
     "gulp-rename": "1.2.2",
+    "inquirer": "^8.1.1",
     "inquirer-autocomplete-prompt": "^1.3.0",
     "json-colorizer": "^2.2.2",
     "jsonfile": "^6.1.0",
@@ -62,16 +63,12 @@
   },
   "files": [
     "generators",
-    "utils"
+    "utils",
+    "tribes"
   ],
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint"
     }
   }
 }
