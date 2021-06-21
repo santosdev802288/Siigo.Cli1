@@ -1,2 +1,0 @@
-[url "https://pat:<%= config.token %>@dev.azure.com"]
-    insteadOf = dev.azure.com
