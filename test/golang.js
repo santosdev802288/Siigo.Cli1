@@ -16,7 +16,11 @@ describe('siigo:bolt', () => {
             .withPrompts({ ready: true })   // Mock the prompt answers
             .then(() => {
                 // assert something about the generator
-                assert.ok('.gitignore');
+                assert.file('.air.toml');
+                assert.file('.gitignore');
+                assert.file('.golangci.yml');
+
+                assert.file('third_party/embed.go')
             });
     });
 });

@@ -99,8 +99,8 @@ module.exports = class extends Generator {
         
         this.fs.copyTpl(
             this.templatePath(""),
-            this.destinationPath("."),
-            {config: this.appConfig}
+            this.destinationRoot(),
+            {config: this.appConfig},
         );
 
         this.fs.copy(
@@ -109,12 +109,17 @@ module.exports = class extends Generator {
             {config: this.appConfig}
         );
 
+        this.fs.move(
+            this.destinationPath('_gitignore'),
+            this.destinationPath('.gitignore')
+        );
+        
+        // Copy all dotfiles
         this.fs.copy(
             this.templatePath(".dots/.*"),
-            this.destinationPath("."),
+            this.destinationRoot(),
             {config: this.appConfig}
         );
-
     }
 
     install() {
