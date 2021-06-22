@@ -96,7 +96,7 @@ module.exports = class extends Generator {
     }
 
     writing() {
-
+        
         this.fs.copyTpl(
             this.templatePath(""),
             this.destinationPath("."),
@@ -109,14 +109,8 @@ module.exports = class extends Generator {
             {config: this.appConfig}
         );
 
-        this.fs.copyTpl(
-            this.templatePath(".gitconfig"),
-            this.destinationPath(require('os').homedir() + "/.gitconfig"),
-            {config: this.appConfig}
-        );
-
         this.fs.copy(
-            this.templatePath(".dots/*"),
+            this.templatePath(".dots/.*"),
             this.destinationPath("."),
             {config: this.appConfig}
         );

@@ -6,6 +6,8 @@ const colorize = require('json-colorizer');
 const shell = require("shelljs")
 const req = require("../../utils/required-tools")
 const {siigosay} = require('@nodesiigo/siigosay')
+const _extend = require("lodash/extend")
+_extend(Generator.prototype, require("yeoman-generator/lib/actions/install"))
 
 module.exports = class extends Generator {
     constructor(args, opt) {
