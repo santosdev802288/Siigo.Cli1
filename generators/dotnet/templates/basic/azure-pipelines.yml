@@ -1,0 +1,21 @@
+trigger:
+  - dev
+  - sandbox
+  - master
+
+resources:
+  repositories:
+    - repository: Pipelines
+      type: git
+      name: "Siigo/Siigo.Pipeline"
+      ref: refs/heads/poc-dev
+      
+extends:
+  
+  template: netcore/netcore-pipeline.yaml@Pipelines
+   
+  parameters:
+    projectName: ms-<%= config.nameCapitalize %>
+    environment: aks
+    namespace: siigo-cross
+        
