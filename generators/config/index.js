@@ -33,12 +33,12 @@ module.exports = class extends Generator {
     async initializing() {
         const parameters = ["token","token64","user","name","tribe"] 
         const objParameters = await this.getAllParameters(parameters)
-        if(objParameters.name == "pending" || objParameters.tribe == "pending" ) {
-           let {name,tribe} = await setTribeAndNameByUser(objParameters.user)
-           objParameters.name = name
-           objParameters.tribe = tribe
-           this.showInformation(objParameters)
-        }else this.showInformation(objParameters)
+        if (objParameters.name == "pending" || objParameters.tribe == "pending") {
+            let { name, tribe } = await setTribeAndNameByUser(objParameters.user)
+            objParameters.name = name
+            objParameters.tribe = tribe
+            this.showInformation(objParameters)
+        } else this.showInformation(objParameters)
     }
 
     async prompting() {
@@ -59,34 +59,33 @@ module.exports = class extends Generator {
                     choices: ['token',"tribe","name",]
                 }
             ]);
-            switch(response.type){
-                case "token":
-                {
-                    let res  = await this.prompt([
+            switch (response.type) {
+                case "token": {
+                    let res = await this.prompt([
                         {
                             type: 'string',
                             name: response.type,
                             message: 'Typing your personal token: ',
                         }
                     ]);
-                    setParameter(response.type,res.token)
+                    setParameter(response.type, res.token)
                     break
                 }
-                case "tribe":{
+                case "tribe": {
                     this.tribes = await readTribesFile()
                     const select_tribe = await autocomplete(this.tribes)
-                    setParameter(response.type,select_tribe.tribe)
+                    setParameter(response.type, select_tribe.tribe)
                     break
                 }
-                case "name":{
-                    let res  = await this.prompt([
+                case "name": {
+                    let res = await this.prompt([
                         {
                             type: 'string',
                             name: response.type,
                             message: 'Typing your name: ',
                         }
                     ]);
-                    setParameter(response.type,res.name)
+                    setParameter(response.type, res.name)
                     break
                 }
             }
