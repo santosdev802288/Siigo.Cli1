@@ -1,19 +1,16 @@
-const verifyNewVersion = require("../../utils/notification");
 const os = require('os')
 const Generator = require('yeoman-generator/lib');
 const path = require('path');
 const colorize = require('json-colorizer');
 const shell = require("shelljs")
-const req = require("../../utils/required-tools")
 const {siigosay} = require('@nodesiigo/siigosay')
 const _extend = require("lodash/extend")
+
+
 _extend(Generator.prototype, require("yeoman-generator/lib/actions/install"))
 
 module.exports = class extends Generator {
-    constructor(args, opt) {
-        
-        req()
-        verifyNewVersion()        
+    constructor(args, opt) {        
         super(args, opt)
 
         this.log(siigosay(`Siigo Generator NodeJS.`))
@@ -53,6 +50,8 @@ module.exports = class extends Generator {
     }
 
     async initializing(){
+        this.composeWith(require.resolve('../base'));
+
         const {description, author} = this.options
         this.appConfig = {
             description,

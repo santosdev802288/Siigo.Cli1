@@ -28,7 +28,7 @@ async function wizardsiigofile(updatetoken) {
     return token
 }
 
-async function getParameter(parameter) {
+function getParameter(parameter) {
     let temp = ""
     if(os.platform == "win32") shell.cp("~/.siigo",".siigo")
     if (shell.test('-f', pathHome)) {
@@ -58,5 +58,6 @@ const tokenSiigo =  getParameter("token")
 const token64Siigo =  getParameter("token64") 
 const userSiigo = getParameter("user") 
 const nameDev = getParameter("name") 
-const tribeSiigo = getParameter("tribe") 
+const tribeSiigo = getParameter("tribe")
+
 module.exports = { tokenSiigo,token64Siigo,userSiigo,nameDev,tribeSiigo,pathHome,wizardsiigofile,getParameter,setParameter,setTribeAndNameByUser }

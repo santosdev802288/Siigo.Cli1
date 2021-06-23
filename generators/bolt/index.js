@@ -1,16 +1,12 @@
-const verifyNewVersion = require("../../utils/notification");
 const os = require('os')
 const Generator = require('yeoman-generator/lib');
 const path = require('path');
 const colorize = require('json-colorizer');
-const req = require("../../utils/required-tools")
 const {siigosay} = require('@nodesiigo/siigosay')
+
 
 module.exports = class extends Generator {
     constructor(args, opt) {
-        
-        req()
-        verifyNewVersion()        
         super(args, opt)
 
         this.log(siigosay(`Siigo Generator Golang.`))
@@ -58,6 +54,8 @@ module.exports = class extends Generator {
     }
 
     async initializing(){
+
+        this.composeWith(require.resolve('../base'));
 
         const message = "For more information execute yo siigo:core --help"
 
@@ -108,11 +106,6 @@ module.exports = class extends Generator {
             this.destinationPath("third_party"),
             {config: this.appConfig}
         );
-
-        this.fs.move(
-            this.destinationPath('_gitignore'),
-            this.destinationPath('.gitignore')
-        );
         
         // Update .gitconfig
         const templateGitConfig = this.templatePath(".user/.gitconfig");
@@ -134,10 +127,6 @@ module.exports = class extends Generator {
             this.destinationRoot(),
             {config: this.appConfig}
         );
-    }
-
-    install() {
-
     }
 
     end() {

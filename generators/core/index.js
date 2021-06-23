@@ -1,13 +1,13 @@
 const crypto = require('crypto')
 const fs = require('fs')
 const rename = require('gulp-rename')
-const verifyNewVersion = require("../../utils/notification");
 const os = require('os')
 const path = require('path')
 const Generator = require('yeoman-generator/lib')
 const {siigosay} = require('@nodesiigo/siigosay')
 const {tokenSiigo,wizardsiigofile} = require('../../utils/siigoFile');
 const capitalize = require('../../utils/capitalize')
+
 
 function findFiles (directory) {
     let fileList = []
@@ -49,7 +49,6 @@ function getChecksums (directory) {
 
 module.exports = class extends Generator {
     constructor(args, opt) {
-        verifyNewVersion()
         super(args, opt)
         this.log(siigosay(`Siigo Generator .Net Core.`))
 
@@ -84,6 +83,7 @@ module.exports = class extends Generator {
     }
 
     initializing() {
+        this.composeWith(require.resolve('../base'));
 
         const message = "For more information execute yo siigo:core --help"
 

@@ -14,7 +14,8 @@ function verifyNewVersion() {
     // Stop if a new version is available
     let type = notifier.update != null ? notifier.update.type: undefined;
     if (['major', 'minor'].includes(type)) {
-        throw new Error(`Update to the last version of ${pkg.name}`)
+        console.error(`Error. Update to the last version of ${pkg.name}`)
+        process.exit(1)
     }
 }
 
