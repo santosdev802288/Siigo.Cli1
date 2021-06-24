@@ -4,15 +4,15 @@ const fs = require('fs')
 const path = require('path')
 const os = require('os')
 
-const GENERATOR_FOLDER = '../generators/bolt'
+const GENERATOR_FOLDER = '../generators/core'
 const GENERATOR = require(GENERATOR_FOLDER)
-const NAMESPACE = 'siigo:bolt'
+const NAMESPACE = 'siigo:core'
 
 describe(NAMESPACE, () => {
 
     it('Generates a project', () => {
 
-        const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.Bolt'))
+        const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.Core'))
 
         return helpers.run(GENERATOR, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
             .inDir(dir)
@@ -20,11 +20,7 @@ describe(NAMESPACE, () => {
             .withPrompts({ ready: true })   // Mock the prompt answers
             .then(() => {
                 // assert something about the generator
-                assert.file('.air.toml');
                 assert.file('.gitignore');
-                assert.file('.golangci.yml');
-
-                assert.file('third_party/embed.go')
             });
     });
 });

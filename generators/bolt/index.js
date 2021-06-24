@@ -1,16 +1,12 @@
-const verifyNewVersion = require("../../utils/notification");
 const os = require('os')
 const Generator = require('yeoman-generator/lib');
 const path = require('path');
 const colorize = require('json-colorizer');
-const req = require("../../utils/required-tools")
 const {siigosay} = require('@nodesiigo/siigosay')
+
 
 module.exports = class extends Generator {
     constructor(args, opt) {
-        
-        req()
-        verifyNewVersion()        
         super(args, opt)
 
         this.log(siigosay(`Siigo Generator Golang.`))
@@ -59,6 +55,8 @@ module.exports = class extends Generator {
 
     async initializing(){
 
+        this.composeWith(require.resolve('../base'));
+
         const message = "For more information execute yo siigo:core --help"
 
         if (this.options['personal-token'] === 'true' || !this.options['personal-token'] )
@@ -99,8 +97,8 @@ module.exports = class extends Generator {
         
         this.fs.copyTpl(
             this.templatePath(""),
-            this.destinationPath("."),
-            {config: this.appConfig}
+            this.destinationRoot(),
+            {config: this.appConfig},
         );
 
         this.fs.copy(
@@ -108,17 +106,27 @@ module.exports = class extends Generator {
             this.destinationPath("third_party"),
             {config: this.appConfig}
         );
+        
+        // Update .gitconfig
+        const templateGitConfig = this.templatePath(".user/.gitconfig");
+        const userGitConfig = this.destinationPath(path.join(os.homedir(), ".gitconfig"))
 
+        if (this.fs.exists(userGitConfig)) {
+            const gitConfig = this.fs.read(userGitConfig)
+            if (!gitConfig.includes('insteadOf = https://dev.azure.com/SiigoDevOps')){
+                const templateContent = this.fs.read(templateGitConfig)
+                this.fs.appendTpl(userGitConfig, templateContent, {config: this.appConfig})
+            }
+        } else {
+            this.fs.copyTpl(templateGitConfig, userGitConfig, {config: this.appConfig});
+        }
+        
+        // Copy all dotfiles
         this.fs.copy(
             this.templatePath(".dots/.*"),
-            this.destinationPath("."),
+            this.destinationRoot(),
             {config: this.appConfig}
         );
-
-    }
-
-    install() {
-
     }
 
     end() {

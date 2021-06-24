@@ -181,13 +181,13 @@ module.exports = class extends Generator {
 
         const json = JSON.stringify(this.appConfig, false, '\t')
         this.log(colorize(json, {
-                pretty: true,
-                colors: {
-                    STRING_KEY: 'green',
-                    STRING_LITERAL: 'magenta.bold',
-                    NUMBER_LITERAL: '#FF0000'
-                }
-            }))
+            pretty: true,
+            colors: {
+                STRING_KEY: 'green',
+                STRING_LITERAL: 'magenta.bold',
+                NUMBER_LITERAL: '#FF0000'
+            }
+        }))
 
         this.answers = await this.prompt([
             {

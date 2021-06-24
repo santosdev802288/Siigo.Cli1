@@ -13,10 +13,10 @@ const upgradeFile = async (filePath, containerName, blobName) => {
     const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
 
     blobServiceClient.getContainerClient(containerName).getBlockBlobClient(blobName).
-    downloadToFile(filePath.concat(blobName)).catch(error => {
-        console.error(error)
-        upgraded = false
-    });
+        downloadToFile(filePath.concat(blobName)).catch(error => {
+            console.error(error)
+            upgraded = false
+        });
     return upgraded
 }
 
