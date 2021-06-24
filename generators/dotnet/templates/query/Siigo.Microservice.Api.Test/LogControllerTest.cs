@@ -6,6 +6,7 @@ using Siigo.LogTest.Api.Models.Logger;
 using System;
 
 using Xunit;
+using System.Collections.Generic;
 
 namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Test
 {
@@ -13,38 +14,33 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Test
     {
         #region Private Fields
 
-        private static LogEntry _logEntryResult = null;
-
         #endregion Private Fields
 
         #region Public Methods
 
-        [Fact]
-        public void WriteLog_Success()
+       [Fact]
+        public void ListEmun_Success()
         {
             // Arrange
-            _logEntryResult = null;
-            var _logEntry = new PostLogEntry { Message = "Test Message", Level = LogEntryLevel.Information, Context = "Test.Context" };
-            var _controller = new LogController(GetLogServiceMoq());
+            var _listEmun = new List<string>() { "Trace", "Debug", "Information", "Warning", "Error", "Critial" };
+            var _controller = new LogController(GetEmunServiceLogs());
 
             // Act
-            _controller.WriteLog(_logEntry).Wait();
+            var _listResult = _controller.ReadLogEntryLevel();
 
             // Assert
-            Assert.Equal(_logEntry, _logEntryResult);
+            Assert.Equal(_listEmun, _listResult);
         }
 
         #endregion Public Methods
 
         #region Private Methods
 
-        private static ILoggerServiceCommand GetLogServiceMoq()
+        private static ILoggerServiceQuery GetEmunServiceLogs()
         {
-            var _mock = new Mock<ILoggerServiceCommand>();
+            var _mock = new Mock<ILoggerServiceQuery>();
 
-            _mock.Setup(m => m.WriteLog(It.IsAny<PostLogEntry>())).Returns((LogEntry entry) => new Action(() =>
-                _logEntryResult = entry
-            ));
+            _mock.Setup(m => m.ReadLogEntryLevel()).Returns(new List<string>() { "Trace", "Debug", "Information", "Warning", "Error", "Critial" } );
 
             return _mock.Object;
         }
