@@ -65,7 +65,7 @@ module.exports = class extends Generator {
         const currentPath = path.basename(process.cwd())
 
         if(!currentPath.startsWith(prefixRepo) && !currentPath.startsWith(eSiigoPrefixRepo))
-        throw new Error(`The name project should starts with ${prefixRepo} or ${eSiigoPrefixRepo}`)
+            throw new Error(`The name project should starts with ${prefixRepo} or ${eSiigoPrefixRepo}`)
 
         const name = currentPath.split(".").reverse()[0]
         this.option("name", {
@@ -119,8 +119,8 @@ module.exports = class extends Generator {
             rename((path) => {
                 const prefixChart = "ms-"
                 path.dirname = path.dirname.includes(prefixChart) ?
-                path.dirname.replace(/(Microservice)/g, this.appConfig.name) :
-                path.dirname.replace(/(Microservice)/g, capitalize(this.appConfig.name))
+                    path.dirname.replace(/(Microservice)/g, this.appConfig.name) :
+                    path.dirname.replace(/(Microservice)/g, capitalize(this.appConfig.name))
                 path.basename = path.basename.replace(/(Microservice)/g, capitalize(this.appConfig.name))
                 path.dirname = path.dirname.replace(/(Siigo)/g,this.appConfig.projectPrefix)
                 path.basename = path.basename.replace(/(Siigo)/g, this.appConfig.projectPrefix )
