@@ -4,12 +4,14 @@ const path = require('path');
 const colorize = require('json-colorizer');
 const shell = require("shelljs")
 const {siigosay} = require('@nodesiigo/siigosay')
+
+const MicroserviceGenerator = require('../../utils/generator/microservice')
+
 const _extend = require("lodash/extend")
-
-
 _extend(Generator.prototype, require("yeoman-generator/lib/actions/install"))
 
-module.exports = class extends Generator {
+
+class NodeMSGenerator extends MicroserviceGenerator {
     constructor(args, opt) {        
         super(args, opt)
 
@@ -50,7 +52,6 @@ module.exports = class extends Generator {
     }
 
     async initializing(){
-        this.composeWith(require.resolve('../base'));
 
         const {description, author} = this.options
         this.appConfig = {
@@ -58,7 +59,9 @@ module.exports = class extends Generator {
             author,
             name: this.options['project-name']
         };
+    }
 
+    async _doPrompting() {
         const json = JSON.stringify(this.appConfig, false, '\t')
 
         this.log(colorize(json, {
@@ -83,7 +86,7 @@ module.exports = class extends Generator {
     }
 
 
-    writing() {
+    _doWriting() {
 
         this.fs.copyTpl(
             this.templatePath(""),
@@ -114,4 +117,8 @@ module.exports = class extends Generator {
     end() {
         this.log(siigosay(`Enjoy!!`))
     }
-};
+}
+
+MicroserviceGenerator.yeomanInheritance(NodeMSGenerator)
+
+module.exports = NodeMSGenerator
