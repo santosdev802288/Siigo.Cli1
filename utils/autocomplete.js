@@ -11,8 +11,8 @@ inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'))
  * @description Creates a new prompt to select a tribe given an array
  * @param tribes
  */
-const autocomplete = async (tribes) => {
-    return await inquirer.prompt([
+const autocomplete = (tribes) => {
+    return inquirer.prompt([
         {
             type: 'autocomplete',
             name: 'tribe',
