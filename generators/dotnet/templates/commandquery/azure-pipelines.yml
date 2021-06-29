@@ -15,7 +15,7 @@ extends:
   template: netcore/netcore-pipeline.yaml@Pipelines
    
   parameters:
-    projectName: ms-logger
+    projectName: ms-<%= config.nameCapitalize %>
     environment: aks
     namespace: siigo-cross
         

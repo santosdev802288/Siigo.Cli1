@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Service";
+
+package example;
+
+service Example {
+  rpc ExampleGetId (ExampleRequest) returns (ExampleReply);
+}
+
+message ExampleRequest {
+  int32 id = 1;
+}
+
+message ExampleReply {
+  string message = 1;
+}

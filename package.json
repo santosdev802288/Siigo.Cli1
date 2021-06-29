@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint \"{generators,test,utils}/**/*.js\"",
     "release": "standard-version --skip.commit --skip.tag --header \"# Changelog\n\nAll notable changes to this project.\n\"",
-    "test": "mocha",
+    "test": "mocha --timeout 15000",
     "test:debug": "mocha --inspect-brk",
     "coverage": "nyc --reporter lcov --reporter text --report-dir .nyc_output npm run test",
     "prepare": "husky install"

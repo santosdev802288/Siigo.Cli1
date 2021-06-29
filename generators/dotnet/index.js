@@ -97,7 +97,7 @@ module.exports = class extends Generator {
                 type: 'list',
                 name: 'type',
                 message: 'what do you want to generate?',
-                choices: ['basic', 'command','query','command+query']
+                choices: ['basic', 'command','query','command+query','grpc-server','grpc-client']
             }
         ]);
         let tokenf = objParameters.token;
