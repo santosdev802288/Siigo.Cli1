@@ -1,70 +1,21 @@
-const crypto = require('crypto')
-const fs = require('fs')
 const rename = require('gulp-rename')
-const os = require('os')
 const path = require('path')
-const Generator = require('yeoman-generator/lib')
 const {siigosay} = require('@nodesiigo/siigosay')
 const {tokenSiigo,wizardsiigofile} = require('../../utils/siigoFile');
 const capitalize = require('../../utils/capitalize')
+const getChecksums = require('../../utils/checksum')
+const MicroserviceGenerator = require('../../utils/generator/microservice')
 
 
-function findFiles (directory) {
-    let fileList = []
-    const files = fs.readdirSync(directory)
+class CoreMSGenerator extends MicroserviceGenerator {
 
-    files.forEach(file => {
-        const fromPath = path.join(directory, file)
-
-        const stat = fs.statSync(fromPath)
-        if (stat.isFile()) {
-            fileList.push(fromPath)
-        } else if (stat.isDirectory()) {
-            fileList = fileList.concat(findFiles(fromPath))
-        }
-    })
-    return fileList
-}
-
-function getChecksums (directory) {
-    const checksums = []
-    const fileList = findFiles(directory)
-
-    fileList.forEach(filepath => {
-        const hash = crypto.createHash('sha256')
-        const input = fs.readFileSync(filepath)
-
-        hash.update(input)
-        checksums.push(hash.digest('hex'))
-    })
-
-    let content = ''
-    fileList.forEach((value, index) => {
-        content += `${checksums[index]}  ${path.relative(directory, value)}${os.EOL}`
-    })
-
-    return content
-}
-
-
-module.exports = class extends Generator {
     constructor(args, opt) {
         super(args, opt)
-        this.log(siigosay(`Siigo Generator .Net Core.`))
-
-        const prefixRepo = "Siigo.Microservice."
-        const eSiigoPrefixRepo = "ESiigo.Microservice."
-        const currentPath = path.basename(process.cwd())
-
-        if(!currentPath.startsWith(prefixRepo) && !currentPath.startsWith(eSiigoPrefixRepo))
-            throw new Error(`The name project should starts with ${prefixRepo} or ${eSiigoPrefixRepo}`)
-
-        const name = currentPath.split(".").reverse()[0]
 
         this.option("name", {
-            required: false,
+            required: this.createPrefix,
             description: "Project name",
-            default: name,
+            default: this.defaultName,
             type: String
         })
 
@@ -83,7 +34,7 @@ module.exports = class extends Generator {
     }
 
     initializing() {
-        this.composeWith(require.resolve('../base'));
+        this.log(siigosay(`Siigo Generator .Net Core.`))
 
         const message = "For more information execute yo siigo:core --help"
 
@@ -92,18 +43,22 @@ module.exports = class extends Generator {
 
     }
 
-    async prompting() {
+    async _doPrompting() {
         let tokenf = tokenSiigo;
         let updatetoken = this.options['token']
-        if(tokenSiigo =="pending" || updatetoken != undefined ) tokenf = await wizardsiigofile(updatetoken);
-        this.appConfig = {}
-        this.appConfig.name = this.options['name']
-        this.appConfig.token = tokenf.replace(" \n","");
-        this.appConfig.nameCapitalize = capitalize(this.appConfig.name)
-        this.appConfig.projectPrefix = this.options['project-prefix']
+        if(tokenSiigo == "pending" || updatetoken != null ) tokenf = await wizardsiigofile(updatetoken);
+
+        // Save config
+        this.appConfig = {
+            name: this.options['name'],
+            token: tokenf.replace(" \n",""),
+            nameCapitalize: capitalize(this.options.name),
+            projectPrefix: this.options['project-prefix'],
+        }
+        
     }
 
-    async writing() {
+    _doWriting() {
 
         this.queueTransformStream([
             rename((path) => {
@@ -129,8 +84,11 @@ module.exports = class extends Generator {
             {config: this.appConfig}
         );
 
-        const checksums = getChecksums(this.destinationPath())
+        
+    }
 
+    install() {
+        const checksums = getChecksums(this.destinationPath())
         this.fs.write(path.join(this.destinationPath(), 'checksums.sha256'), checksums)
     }
 
@@ -138,4 +96,8 @@ module.exports = class extends Generator {
         this.log(siigosay(`Project Created!!`));
     }
 
-};
+}
+
+MicroserviceGenerator.yeomanInheritance(CoreMSGenerator)
+
+module.exports = CoreMSGenerator

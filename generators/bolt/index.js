@@ -1,32 +1,20 @@
 const os = require('os')
-const Generator = require('yeoman-generator/lib');
 const path = require('path');
 const colorize = require('json-colorizer');
 const {siigosay} = require('@nodesiigo/siigosay')
+const MicroserviceGenerator = require('../../utils/generator/microservice')
 
 
-module.exports = class extends Generator {
+class GolangMSGenerator extends MicroserviceGenerator {
     constructor(args, opt) {
         super(args, opt)
-
-        this.log(siigosay(`Siigo Generator Golang.`))
-
-        const prefixRepo = "Siigo.Microservice."
-        const eSiigoPrefixRepo = "ESiigo.Microservice."
-
-        const currentPath = path.basename(process.cwd())
-
-        if(!currentPath.startsWith(prefixRepo) && !currentPath.startsWith(eSiigoPrefixRepo))
-            throw new Error(`The name project should starts with ${prefixRepo} or ${eSiigoPrefixRepo}`)
-
-        const name = currentPath.split(".").reverse()[0]
 
         // optionals
         this.option("project-name", {
             type: String,
             required: false,
             description: "Name project.",
-            default: name.toLowerCase(),
+            default: this.defaultName,
             alias: 'pn'
         });
 
@@ -54,22 +42,25 @@ module.exports = class extends Generator {
     }
 
     async initializing(){
+        this.log(siigosay(`Siigo Generator Golang.`))
 
-        this.composeWith(require.resolve('../base'));
+        const message = "For more information execute yo siigo:bolt --help";
 
-        const message = "For more information execute yo siigo:core --help"
-
-        if (this.options['personal-token'] === 'true' || !this.options['personal-token'] )
-            throw new Error("--token is required or it should not be empty.\n " + message)
+        ['personal-token', 'project-name'].forEach(option => {
+            if (this.options[option] === 'true' || !this.options[option])
+                throw new Error(`${option} is required or it should not be empty.\n ${message}`)
+        });
 
         const {description, author} = this.options
         this.appConfig = {
             description,
             author,
-            name: this.options['project-name'],
+            name: this.options['project-name'].toLowerCase(),
             token: this.options['personal-token'],
         };
+    }
 
+    async _doPrompting() {
         const json = JSON.stringify(this.appConfig, false, '\t')
 
         this.log(colorize(json, {
@@ -80,7 +71,7 @@ module.exports = class extends Generator {
                 NUMBER_LITERAL: '#FF0000'
             }
         }))
-
+        
         this.answers = await this.prompt([
             {
                 type: "confirm",
@@ -93,7 +84,7 @@ module.exports = class extends Generator {
             this.cancelCancellableTasks()
     }
 
-    writing() {
+    _doWriting() {
         
         this.fs.copyTpl(
             this.templatePath(""),
@@ -132,4 +123,8 @@ module.exports = class extends Generator {
     end() {
         this.log(siigosay(`Execute 'make all' and Enjoy!!`))
     }
-};
+}
+
+MicroserviceGenerator.yeomanInheritance(GolangMSGenerator)
+
+module.exports = GolangMSGenerator
