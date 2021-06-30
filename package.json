@@ -43,6 +43,7 @@
     "json-colorizer": "^2.2.2",
     "jsonfile": "^6.1.0",
     "lodash": "^4.17.21",
+    "node-fetch": "^2.6.1",
     "prompt": "^1.1.0",
     "replace-in-file": "^4.2.0",
     "shelljs": "^0.8.4",

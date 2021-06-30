@@ -45,6 +45,11 @@ async function setParameter(parameter,value) {
     if(os.platform == "win32") shell.cp("~/.siigo",".siigo")
     if (shell.test('-f', pathHome)) {
         shell.exec(`sed -i -e 's/${parameter}=.*/${parameter}=${value}/g' ~/.siigo`)
+        if(parameter=="token") {
+            let b64 =Buffer.from(value.trim()).toString('base64')
+            console.log(b64);
+            shell.exec(`sed -i -e 's/${parameter+"64"}=.*/${parameter+"64"}=${b64}/g' ~/.siigo`)
+        }
     }
 }
 
