@@ -1,9 +1,10 @@
 const Generator = require('yeoman-generator/lib');
-const {getParameter} = require('../../utils/siigoFile');
+const {getParameter,wizardsiigofile} = require('../../utils/siigoFile');
 const colorize = require('json-colorizer');
 const {siigosay} = require('@nodesiigo/siigosay');
 const {getProjects,createRepository} = require('../../utils/gitmanager')
 const path = require('path')
+const shell = require("shelljs")
 
 const prefixRepo = "Siigo.Microservice."
 const eSiigoPrefixRepo = "ESiigo.Microservice."
@@ -31,7 +32,8 @@ module.exports = class extends Generator {
             console.log("This folder is not Siigo".red);
             this.cancelCancellableTasks() 
         }else{
-            const token = await getParameter("token")
+            let token = await getParameter("token")
+            token = (token == "pending" )? await wizardsiigofile(): token
             const projects = await getProjects(token)
             const nameProjects = Object.keys(projects)
             let response  = await this.prompt([
@@ -54,6 +56,8 @@ module.exports = class extends Generator {
                 const remoteUrl = await createRepository(token, currentPath, projects[response.project])
                 this.log(siigosay(`Your repository has been created`));
                 this.showInformation({remoteUrl: remoteUrl})
+                shell.exec(`git init`) 
+                shell.exec(`git remote add origin ${remoteUrl}`) 
             }else this.cancelCancellableTasks()
         }
     }
