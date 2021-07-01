@@ -5,7 +5,13 @@ const {siigosay} = require('@nodesiigo/siigosay');
 const {readTribesFile} = require('../../utils/readTribes')
 const autocomplete = require('../../utils/autocomplete')
 
-
+async function getAllParameters(parameters){
+    let objParameters ={}
+    parameters.forEach(async element => {
+        objParameters[element] = await getParameter(element)
+    })
+    return objParameters
+}
 
 module.exports = class extends Generator {
 
@@ -23,16 +29,10 @@ module.exports = class extends Generator {
             }
         }))
     }
-    async getAllParameters(parameters){
-        let objParameters ={}
-        parameters.forEach(async element => {
-            objParameters[element] = await getParameter(element)
-        })
-        return objParameters
-    }
+ 
     async initializing() {
         const parameters = ["token","token64","user","name","tribe"] 
-        const objParameters = await this.getAllParameters(parameters)
+        const objParameters = await getAllParameters(parameters)
         if (objParameters.name == "pending" || objParameters.tribe == "pending") {
             let { name, tribe } = await setTribeAndNameByUser(objParameters.user)
             objParameters.name = name
