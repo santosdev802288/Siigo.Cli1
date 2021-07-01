@@ -8,7 +8,7 @@ const req = require("../../utils/required-tools")
 const {siigosay} = require('@nodesiigo/siigosay')
 
 const upgradeFile = require('../../utils/upgrade')
-const readTribesFile = require('../../utils/readTribes')
+const {readTribesFile} = require('../../utils/readTribes')
 const autocomplete = require('../../utils/autocomplete')
 const createFile = require('../../utils/createTribeDir')
 module.exports = class extends Generator {
@@ -17,8 +17,6 @@ module.exports = class extends Generator {
         super(args, opt)
 
         req()
-
-        this.log(siigosay(`Siigo Generator CICD.`))
 
         const currentPath = path.basename(process.cwd())
 
@@ -116,17 +114,20 @@ module.exports = class extends Generator {
         this.option("type", {
             type: String,
             required: true,
-            description: "Project type. (node, netcore)",
+            description: "Project type. (node, netcore, golang)",
             alias: 't',
             default: 'netcore'
         });
     }
 
     async initializing() {
+        this.log(siigosay(`Siigo Generator CICD.`))
+    }
+
+    async prompting() {
         const tribePath = './tribes/'
 
         this.tribes = await readTribesFile(tribePath.concat('tribes.json'))
-
         if (typeof this.tribes !== 'undefined' && this.tribes.length > 0) {
             this.upgrade = await this.prompt([
                 {
@@ -199,13 +200,12 @@ module.exports = class extends Generator {
 
         if (!this.answers.ready)
             this.cancelCancellableTasks()
-
     }
 
 
     writing() {
 
-        this.registerTransformStream([
+        this.queueTransformStream([
             rename( (path) => {
                 path.dirname = path.dirname.replace(/(chart)/g, this.appConfig.name)
                 path.basename = path.basename.replace(/(chart)/g, this.appConfig.name)
@@ -223,6 +223,15 @@ module.exports = class extends Generator {
             this.destinationPath("."),
             { config: this.appConfig }
         );
+
+        // Copy based on type
+        if (this.options['type'] === 'golang'){
+            this.fs.copyTpl(
+                this.templatePath('.golang/.docker'),
+                this.destinationPath('.docker'),
+                { config: this.appConfig }
+            );
+        }
     }
 
     install() {

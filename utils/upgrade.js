@@ -9,14 +9,19 @@ const { BlobServiceClient } = require('@azure/storage-blob');
  */
 const upgradeFile = async (filePath, containerName, blobName) => {
     let upgraded = true
-    const AZURE_STORAGE_CONNECTION_STRING = process.env.AZURE_STORAGE_CONNECTION_STRING;
-    const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
+    try {
+        const azureStoreConnectionString = process.env.AZURE_STORAGE_CONNECTION_STRING;
+        const blobServiceClient = BlobServiceClient.fromConnectionString(azureStoreConnectionString);
 
-    blobServiceClient.getContainerClient(containerName).getBlockBlobClient(blobName).
-        downloadToFile(filePath.concat(blobName)).catch(error => {
-            console.error(error)
-            upgraded = false
-        });
+        blobServiceClient.getContainerClient(containerName).getBlockBlobClient(blobName).
+            downloadToFile(filePath.concat(blobName)).catch(error => {
+                console.error(error)
+                upgraded = false
+            });
+    } catch (error) {
+        console.log(error)
+    }
+    
     return upgraded
 }
 

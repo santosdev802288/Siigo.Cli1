@@ -32,6 +32,7 @@
     "s9s"
   ],
   "dependencies": {
+    "@azure/storage-blob": "^12.6.0",
     "@nodesiigo/siigosay": "^1.0.0",
     "chalk": "^3.0.0",
     "colors": "^1.4.0",
