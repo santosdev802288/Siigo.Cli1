@@ -114,7 +114,7 @@ module.exports = class extends Generator {
         this.option("type", {
             type: String,
             required: true,
-            description: "Project type. (node, netcore)",
+            description: "Project type. (node, netcore, golang)",
             alias: 't',
             default: 'netcore'
         });
@@ -205,7 +205,7 @@ module.exports = class extends Generator {
 
     writing() {
 
-        this.registerTransformStream([
+        this.queueTransformStream([
             rename( (path) => {
                 path.dirname = path.dirname.replace(/(chart)/g, this.appConfig.name)
                 path.basename = path.basename.replace(/(chart)/g, this.appConfig.name)
@@ -223,6 +223,15 @@ module.exports = class extends Generator {
             this.destinationPath("."),
             { config: this.appConfig }
         );
+
+        // Copy based on type
+        if (this.options['type'] === 'golang'){
+            this.fs.copyTpl(
+                this.templatePath('.golang/.docker'),
+                this.destinationPath('.docker'),
+                { config: this.appConfig }
+            );
+        }
     }
 
     install() {

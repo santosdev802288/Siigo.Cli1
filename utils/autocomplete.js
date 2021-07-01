@@ -16,8 +16,8 @@ const autocomplete = (tribes) => {
         {
             type: 'autocomplete',
             name: 'tribe',
-            suggestOnly: true,
-            message: 'What is your Tribe?',
+            suggestOnly: false,
+            message: 'Write your Tribe?',
             searchText: 'We are searching the internet for you!',
             emptyText: 'Nothing found!',
             source: function searchTribes(answers, input) {
@@ -34,12 +34,12 @@ const autocomplete = (tribes) => {
                 });
             },
             pageSize: 4,
-            validate: function (val) {
+            validate: function (choice) {
                 let valid;
 
                 const msg = 'You must type a valid Tribe!';
 
-                valid = val && tribes.includes(val)
+                valid = choice && tribes.includes(choice.value)
 
                 return valid ? true : msg;
             },
