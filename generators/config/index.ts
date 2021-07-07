@@ -1,28 +1,34 @@
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Generator'... Remove this comment to see the full error message
-const Generator = require('yeoman-generator/lib');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getParamet... Remove this comment to see the full error message
-const { getParameter, setParameter, setTribeAndNameByUser } = require('../../utils/siigoFile');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'colorize'.
-const colorize = require('json-colorizer');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'siigosay'.
-const { siigosay } = require('@nodesiigo/siigosay');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'readTribes... Remove this comment to see the full error message
-const { readTribesFile } = require('../../utils/readTribes');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'autocomple... Remove this comment to see the full error message
-const autocomplete = require('../../utils/autocomplete');
-async function getAllParameters(parameters: any) {
-    let objParameters = {};
+import Generator = require('yeoman-generator');
+import { getParameter, setParameter, setTribeAndNameByUser } from '../../utils/siigoFile'
+import colorize from 'json-colorizer'
+import { siigosay } from '@nodesiigo/siigosay'
+import { readTribesFile } from '../../utils/readTribes'
+import { autocomplete } from '../../utils/autocomplete'
+
+interface ObjectParameters {
+    token?: string;
+    name?: string;
+    tribe?: string;
+    user?: string;
+}
+
+async function getAllParameters(parameters: any): Promise<ObjectParameters> {
+    let objParameters: ObjectParameters = {};
     parameters.forEach(async (element: any) => {
         // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         objParameters[element] = await getParameter(element);
     });
     return objParameters;
 }
+
 module.exports = class extends Generator {
+    validationToken: any;
+    answers: any;
+    tribes: any;
+
     constructor(args: any, opt: any) {
         super(args, opt);
         this.option("token", {
-            required: false,
             description: "Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens",
             type: String
         });
@@ -43,7 +49,7 @@ module.exports = class extends Generator {
         const objParameters = await getAllParameters(parameters)
         if(objParameters.token !="pending"){
             if (objParameters.name == "pending" || objParameters.tribe == "pending") {
-                let { name, tribe } = await setTribeAndNameByUser(objParameters.user)
+                let { name, tribe } = await setTribeAndNameByUser(objParameters.user) || {}
                 objParameters.name = name
                 objParameters.tribe = tribe
                 this.showInformation(objParameters)

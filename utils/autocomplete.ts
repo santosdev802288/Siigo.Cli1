@@ -12,8 +12,7 @@ inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'))
  * @description Creates a new prompt to select a tribe given an array
  * @param tribes
  */
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'autocomple... Remove this comment to see the full error message
-const autocomplete = (tribes: any) => {
+export function autocomplete (tribes: any) {
     return inquirer.prompt([
         {
             type: 'autocomplete',
@@ -50,5 +49,3 @@ const autocomplete = (tribes: any) => {
         return answers
     });
 }
-
-module.exports = autocomplete
