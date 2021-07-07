@@ -9,14 +9,25 @@ const {tribeByUser } = require('./readTribes')
 
 async function wizardsiigofile(updatetoken) {
     let token = ""
-    if(updatetoken != undefined){
+    if(updatetoken != null){
         token = updatetoken
-        shell.rm(pathHome)
+        if (shell.test('-f', pathHome)) shell.rm(pathHome)
+        setSiigofile(token)
+        return token
     }else{
-        prompt.message = colors.green("siigo.cli")
-        this.answers = await prompt.get(['personaltoken'])
-        token = this.answers.personaltoken
+        token = await typingToken()
+        return token
     }
+}
+
+async function typingToken(){
+    prompt.message = colors.green("siigo.cli")
+    this.answers = await prompt.get(['personaltoken'])
+    setSiigofile(this.answers.personaltoken)
+    return this.answers.personaltoken
+}
+
+function setSiigofile(token){
     shell.touch(pathHome)
     shell.exec(`echo token=${token} >> ${pathHome}`)
     let b64 =Buffer.from(token.trim()).toString('base64')
@@ -25,13 +36,12 @@ async function wizardsiigofile(updatetoken) {
     resUser = resUser.replace("\n","").replace(" \r","")
     shell.exec(`echo user=${resUser} >> ${pathHome}`) 
     setTribeAndNameByUser(resUser);
-    return token
 }
 
-function getParameter(parameter) {
+async function getParameter(parameter) {
     let temp = ""
-    if(os.platform == "win32") shell.cp("~/.siigo",".siigo")
     if (shell.test('-f', pathHome)) {
+        if(os.platform == "win32") shell.cp("~/.siigo",".siigo")
         let listPar = shell.cat(pathHome).split("\n")
         listPar.forEach(ele => {if (ele.includes(parameter+"=")){ temp=ele}})
         let resul = temp.replace(parameter+"=","")
@@ -44,25 +54,27 @@ function getParameter(parameter) {
 async function setParameter(parameter,value) {
     if(os.platform == "win32") shell.cp("~/.siigo",".siigo")
     if (shell.test('-f', pathHome)) {
-        shell.exec(`sed -i -e 's/${parameter}=.*/${parameter}=${value}/g' ~/.siigo`)
+        shell.exec(`sed -i -e 's/${parameter}=.*/${parameter}=${value}/g' ${pathHome}`)
         if(parameter=="token") {
             let b64 =Buffer.from(value.trim()).toString('base64')
-            console.log(b64);
-            shell.exec(`sed -i -e 's/${parameter+"64"}=.*/${parameter+"64"}=${b64}/g' ~/.siigo`)
+            shell.exec(`sed -i -e 's/${parameter+"64"}=.*/${parameter+"64"}=${b64}/g' ${pathHome}`)
         }
     }
 }
 
 async function setTribeAndNameByUser(resUser){
     const {tribe, name}  = await tribeByUser(resUser)
-    shell.exec(`echo name=${name} >> ${pathHome}`)
-    shell.exec(`echo tribe=${tribe} >> ${pathHome}`)
-    return {tribe, name}
+    if (shell.test('-f', pathHome)) {
+        if(shell.exec(`grep -q "name=" ${pathHome} ; echo $?`, {silent:true}).code == 0){
+            shell.exec(`sed -i -e 's/name=.*/name=${name}/g' ${pathHome}`)
+            shell.exec(`sed -i -e 's/tribe=.*/tribe=${tribe}/g' ${pathHome}`)
+        }else{
+            shell.exec(`echo name=${name} >> ${pathHome}`)
+            shell.exec(`echo tribe=${tribe} >> ${pathHome}`)
+        }
+        if(os.platform == "win32") shell.cp("~/.siigo",".siigo")
+        return {tribe, name}
+    }
 }
-const tokenSiigo =  getParameter("token") 
-const token64Siigo =  getParameter("token64") 
-const userSiigo = getParameter("user") 
-const nameDev = getParameter("name") 
-const tribeSiigo = getParameter("tribe")
 
-module.exports = { tokenSiigo,token64Siigo,userSiigo,nameDev,tribeSiigo,pathHome,wizardsiigofile,getParameter,setParameter,setTribeAndNameByUser }
+module.exports = {pathHome,wizardsiigofile,getParameter,setParameter,setTribeAndNameByUser }

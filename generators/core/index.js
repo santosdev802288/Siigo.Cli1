@@ -1,7 +1,7 @@
 const rename = require('gulp-rename')
 const path = require('path')
 const {siigosay} = require('@nodesiigo/siigosay')
-const {tokenSiigo,wizardsiigofile} = require('../../utils/siigoFile');
+const {getParameter,wizardsiigofile} = require('../../utils/siigoFile');
 const capitalize = require('../../utils/capitalize')
 const getChecksums = require('../../utils/checksum')
 const MicroserviceGenerator = require('../../utils/generator/microservice')
@@ -44,9 +44,9 @@ class CoreMSGenerator extends MicroserviceGenerator {
     }
 
     async _doPrompting() {
-        let tokenf = tokenSiigo;
+        let tokenf = await getParameter("token");
         let updatetoken = this.options['token']
-        if(tokenSiigo == "pending" || updatetoken != null ) tokenf = await wizardsiigofile(updatetoken);
+        if(tokenf == "pending" || updatetoken != null ) tokenf = await wizardsiigofile(updatetoken);
 
         // Save config
         this.appConfig = {
