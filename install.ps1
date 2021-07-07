@@ -1,5 +1,21 @@
+function Get-CheckRequirements {
+    param (
+        [string[]]$ParameterName
+    )
+
+    foreach ($Parameter in $ParameterName) {
+        $isrequirementsInstalled = $null -ne ( (Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*) + (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*) | Where-Object { $null -ne $_.DisplayName -and $_.Displayname.Contains($Parameter) })
+
+        If(!$isrequirementsInstalled)
+        {   
+            Write-Output "Please install <$Parameter> in your computer  "
+        }
+    }
+}
+
+Get-CheckRequirements -ParameterName Git, Node, Az
+
 $token = Read-Host "Input your token"
-$email = Read-Host "Input your email"
 $npmrcFile = ".npmrc"
 $tokenOutput = node -e "b64=Buffer.from('$token'.trim()).toString('base64');console.log(b64);process.exit();"
 
@@ -21,4 +37,4 @@ Add-Content $npmrcFile "; end auth token"
 
 npm install --global yo
 npm i -g generator-siigo
-
+yo siigo:config --token $token

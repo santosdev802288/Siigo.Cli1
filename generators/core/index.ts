@@ -1,7 +1,7 @@
 import rename from 'gulp-rename'
 import path from 'path'
 import {siigosay} from '@nodesiigo/siigosay'
-import {tokenSiigo,wizardsiigofile} from '../../utils/siigoFile'
+import {getParameter, wizardsiigofile} from '../../utils/siigoFile'
 import {capitalize} from '../../utils/capitalize'
 
 import {getChecksums} from '../../utils/checksum'
@@ -43,9 +43,9 @@ export class CoreMSGenerator extends MicroserviceGenerator {
     }
 
     async _doPrompting() {
-        let tokenf = tokenSiigo;
+        let tokenf = await getParameter("token");
         let updatetoken = this.options['token']
-        if(tokenSiigo == "pending" || updatetoken != null ) tokenf = await wizardsiigofile(updatetoken);
+        if(tokenf == "pending" || updatetoken != null ) tokenf = await wizardsiigofile(updatetoken);
 
         // Save config
         this.appConfig = {

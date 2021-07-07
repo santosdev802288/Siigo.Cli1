@@ -21,6 +21,11 @@ async function getAllParameters(parameters: any) {
 module.exports = class extends Generator {
     constructor(args: any, opt: any) {
         super(args, opt);
+        this.option("token", {
+            required: false,
+            description: "Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens",
+            type: String
+        });
     }
     showInformation(json: any) {
         this.log(colorize(json, {
@@ -32,19 +37,42 @@ module.exports = class extends Generator {
             }
         }));
     }
-    async initializing() {
-        const parameters = ["token", "token64", "user", "name", "tribe"];
-        const objParameters = await getAllParameters(parameters);
-        if ((objParameters as any).name == "pending" || (objParameters as any).tribe == "pending") {
-            let { name, tribe } = await setTribeAndNameByUser((objParameters as any).user);
-            (objParameters as any).name = name;
-            (objParameters as any).tribe = tribe;
-            this.showInformation(objParameters);
+
+    async getInformation(){
+        const parameters = ["token","token64","user","name","tribe"] 
+        const objParameters = await getAllParameters(parameters)
+        if(objParameters.token !="pending"){
+            if (objParameters.name == "pending" || objParameters.tribe == "pending") {
+                let { name, tribe } = await setTribeAndNameByUser(objParameters.user)
+                objParameters.name = name
+                objParameters.tribe = tribe
+                this.showInformation(objParameters)
+            } else this.showInformation(objParameters)
         }
-        else
-            this.showInformation(objParameters);
+        return objParameters
+    }
+    async initializing() {
+        let {token} = this.options
+        if(token!= null) {
+            token = await wizardsiigofile(token) 
+            this.getInformation()
+        }else{
+            const objParameters  = await this.getInformation()
+            this.options['token'] = objParameters.token;
+        }
     }
     async prompting() {
+        if(this.options['token']=="pending"){
+            this.validationToken  = await this.prompt([
+                {
+                    type: 'string',
+                    name: 'token',
+                    message: 'Typing your personal token: ',
+                }
+            ]);
+            wizardsiigofile(this.validationToken.token)
+            await this.getInformation(); 
+        }
         this.answers = await this.prompt([
             {
                 type: "confirm",
