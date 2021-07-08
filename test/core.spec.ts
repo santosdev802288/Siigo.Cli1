@@ -4,10 +4,10 @@ import fs from 'fs'
 import path from 'path'
 import os from 'os'
 
-import { CoreMSGenerator } from '../generators/core'
+import CoreMSGenerator from '../src/generators/core'
 
 const BACKUP_SUFIX = '.original'
-const GENERATOR_FOLDER = '../generators/core'
+const GENERATOR_FOLDER = '../src/generators/core'
 const NAMESPACE = 'siigo:core'
 const GITCONFIG_FILE = path.join(os.homedir(), '.gitconfig')
 const SIIGO_FILE = path.join(os.homedir(), '.siigo')

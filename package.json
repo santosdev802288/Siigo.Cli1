@@ -84,10 +84,11 @@
     "yeoman-environment": "^3.4.1",
     "yeoman-test": "^6.1.0"
   },
+  "files": ["dist"],
   "publishFiles": [
-    "generators",
-    "utils",
-    "tribes"
+    "src/generators",
+    "src/utils",
+    "src/tribes"
   ],
   "config": {
     "commitizen": {

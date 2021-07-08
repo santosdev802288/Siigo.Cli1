@@ -17,9 +17,9 @@ const {siigosay} = require('@nodesiigo/siigosay')
 
 // @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'upgradeFil... Remove this comment to see the full error message
 const upgradeFile = require('../../utils/upgrade')
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'readTribes... Remove this comment to see the full error message
+//// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'readTribes... Remove this comment to see the full error message
 const {readTribesFile} = require('../../utils/readTribes')
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'autocomple... Remove this comment to see the full error message
+//// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'autocomple... Remove this comment to see the full error message
 const autocomplete = require('../../utils/autocomplete')
 // @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'createFile... Remove this comment to see the full error message
 const createFile = require('../../utils/createTribeDir')
