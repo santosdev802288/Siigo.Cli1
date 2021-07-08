@@ -2,14 +2,18 @@
   "name": "generator-siigo",
   "version": "2.1.0",
   "description": "Generator archetype siigo",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "lint": "eslint \"{generators,test,utils}/**/*.js\"",
+    "build": "tsc && node .scripts/copy-files",
+    "clean": "rimraf dist/",
+    "lint": "eslint \"{generators,test,utils}/**/*.ts\"",
     "release": "standard-version --skip.commit --skip.tag --header \"# Changelog\n\nAll notable changes to this project.\n\"",
-    "test": "mocha --timeout 30000",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --timeout 30000",
     "test:debug": "mocha --inspect-brk",
     "coverage": "nyc --reporter lcov --reporter text --report-dir .nyc_output npm run test",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "repository": {
     "type": "git",
@@ -54,6 +58,13 @@
     "yosay": "^2.0.2"
   },
   "devDependencies": {
+    "@types/gulp-rename": "^2.0.0",
+    "@types/mocha": "^8.2.3",
+    "@types/prompt": "^1.1.0",
+    "@types/shelljs": "^0.8.9",
+    "@types/yeoman-assert": "^3.1.1",
+    "@types/yeoman-generator": "^5.0.0",
+    "@types/yeoman-test": "^4.0.2",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.27.0",
@@ -64,13 +75,16 @@
     "husky": "^5.1.0",
     "mocha": "^9.0.1",
     "nyc": "^15.1.0",
+    "rimraf": "^3.0.2",
     "standard-version": "^9.3.0",
     "svg-term-cli": "^2.1.1",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.5",
     "yeoman-assert": "^3.1.1",
     "yeoman-environment": "^3.4.1",
     "yeoman-test": "^6.1.0"
   },
-  "files": [
+  "publishFiles": [
     "generators",
     "utils",
     "tribes"
