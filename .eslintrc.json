@@ -11,7 +11,7 @@
     "parserOptions": {
         "ecmaVersion": 2019
     },
-    "ignorePatterns": ["**/templates/*.js"],
+    "ignorePatterns": ["**/templates/*.js, **/templates/*.ts"],
     "rules": {
         "indent": ["error", 4, { "SwitchCase": 1 }]
     }

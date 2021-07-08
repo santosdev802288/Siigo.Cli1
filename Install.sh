@@ -1,31 +1,21 @@
 #!/bin/bash
-
-FILESIIGO=$HOME/.siigo
-if test -f "$FILESIIGO"; then
-  TOKEN=$(grep "token=" "$FILESIIGO" | tr -d '\n')
-  TOKEN="${TOKEN:4}"
-  tokenOutput=$(grep "token64=" "$FILESIIGO" | tr -d '\n' )
-  tokenOutput="${tokenOutput:6}"
-else
-  if [ "x${TOKEN}" = "x" ] ; then
-    printf "Unable to get personal access token. Set TOKEN env var and re-run. For example: export TOKEN=jtj4aa5b55oh3ahsj7rgpfage53ut2g7rs6msgedw4ekmy5mdtpq"
-    exit 1;
-  fi
-
-  if ! [ -x "$(command -v json)" ] ; then
-    npm install -g json  
-  fi
-  
-  infoazure=$(az account show | json user.name)
-  echo $infoazure 
-
-  tokenOutput=$(node -e "b64=Buffer.from('$TOKEN'.trim()).toString('base64');console.log(b64);process.exit();") 
-  {
-    echo "token='$TOKEN'"
-    echo "token64='$tokenOutput'"
-    echo "user='$infoazure'"
-  } >> $FILESIIGO
+if ! [ -x "$(command -v node)" ] ; then
+    echo "Please install <node> in your computer"
+    exit
 fi
+if ! [ -x "$(command -v git)" ] ; then
+    echo "Please install <git> in your computer"
+    exit
+fi
+if ! [ -x "$(command -v az)" ] ; then
+    echo "Please install <az cli> in your computer"
+    exit
+fi
+
+echo -n "Typing your personal token: "
+read TOKEN
+
+tokenOutput=$(node -e "b64=Buffer.from('$TOKEN'.trim()).toString('base64');console.log(b64);process.exit();")
 
 cd "$HOME" || exit
 
@@ -40,14 +30,13 @@ cd "$HOME" || exit
   echo "//pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/:_password=$tokenOutput"
   echo "//pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/:email=ignore"
   echo "; end auth token"
-  echo ""
-  echo "@nodesiigo:registry=https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/"
-  echo "//pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/:username=SiigoDevOps"
-  echo "//pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/:_password=$tokenOutput"
 } >> "$HOME"/.npmrc
+
+echo "The installation process may be late, please wait ..."
 
 echo "Install Yeoman"
 npm list -g yo@^4.0.0 || npm install --global yo@^4.0.0
 
 echo "Install Siigo generator"
 npm i -g generator-siigo
+yo siigo:config --token $TOKEN
