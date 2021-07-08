@@ -9,7 +9,7 @@
     "clean": "rimraf dist/",
     "lint": "eslint \"{generators,test,utils}/**/*.ts\"",
     "release": "standard-version --skip.commit --skip.tag --header \"# Changelog\n\nAll notable changes to this project.\n\"",
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --timeout 30000",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --timeout 50000",
     "test:debug": "mocha --inspect-brk",
     "coverage": "nyc --reporter lcov --reporter text --report-dir .nyc_output npm run test",
     "prepare": "husky install",
