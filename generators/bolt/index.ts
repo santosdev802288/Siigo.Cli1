@@ -1,23 +1,18 @@
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'os'.
-const os = require('os')
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'path'.
-const path = require('path');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'colorize'.
-const colorize = require('json-colorizer');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'siigosay'.
-const {siigosay} = require('@nodesiigo/siigosay')
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Microservi... Remove this comment to see the full error message
-const MicroserviceGenerator = require('../../utils/generator/microservice')
+import os  from 'os'
+import path  from 'path'
+import colorize from'json-colorizer'
+import {siigosay} from'@nodesiigo/siigosay'
+import {MicroserviceGenerator} from '../../utils/generator/microservice'
 
 
 class GolangMSGenerator extends MicroserviceGenerator {
+    appConfig: { description?: any; author?: any; name?: any; token?: any } = {}
     constructor(args: any, opt: any) {
         super(args, opt)
 
         // optionals
         this.option("project-name", {
             type: String,
-            required: false,
             description: "Name project.",
             default: this.defaultName,
             alias: 'pn'
@@ -25,7 +20,6 @@ class GolangMSGenerator extends MicroserviceGenerator {
 
         this.option("description", {
             type: String,
-            required: false,
             description: "Description project.",
             default: '',
             alias: 'd'
@@ -33,13 +27,11 @@ class GolangMSGenerator extends MicroserviceGenerator {
 
         this.option("author", {
             type: String,
-            required: false,
             default: os.userInfo().username,
             alias: 'a'
         });
 
         this.option("personal-token", {
-            required: true,
             description: "Personal token. Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens",
             type: String
         })
@@ -101,6 +93,7 @@ class GolangMSGenerator extends MicroserviceGenerator {
         this.fs.copy(
             this.templatePath(".third_party"),
             this.destinationPath("third_party"),
+            {},
             {config: this.appConfig}
         );
         
@@ -112,6 +105,7 @@ class GolangMSGenerator extends MicroserviceGenerator {
             const gitConfig = this.fs.read(userGitConfig)
             if (!gitConfig.includes('insteadOf = https://dev.azure.com/SiigoDevOps')){
                 const templateContent = this.fs.read(templateGitConfig)
+                // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
                 this.fs.appendTpl(userGitConfig, templateContent, {config: this.appConfig})
             }
         } else {
@@ -122,11 +116,13 @@ class GolangMSGenerator extends MicroserviceGenerator {
         this.fs.copy(
             this.templatePath(".dots/.*"),
             this.destinationRoot(),
+            {},
             {config: this.appConfig}
         );
         this.fs.copy(
             this.templatePath(".dots/.**/**/*"),
             this.destinationRoot(),
+            {},
             {config: this.appConfig}
         );
     }

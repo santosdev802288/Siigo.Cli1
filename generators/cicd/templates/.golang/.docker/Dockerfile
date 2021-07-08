@@ -1,19 +1,23 @@
-FROM golang:1.16 as builder
+FROM golang:1.15.6 as builder
 
 WORKDIR /app
 
 ENV GIT_TERMINAL_PROMPT=1
 ENV LIBRDKAFKA_VERSION=1.5.3
 
-#RUN git clone https://github.com/edenhill/librdkafka.git && \
-#    cd librdkafka && \
-#    git checkout tags/v${LIBRDKAFKA_VERSION} && \
-#    ./configure --prefix=/usr && \
-#    make && \
-#    make install &&\
-#    ldconfig && \
-#    cd .. && \
-#    rm -rf librdkafka
+ARG devops_token=kib3wbzqlhoe5pc4aqdziifdkoddi7yxkbxt76aabymbly4yv5aq
+ENV GOPRIVATE=dev.azure.com
+RUN git config --global url."https://anythinggoeshere:$devops_token@dev.azure.com".insteadOf "https://dev.azure.com"
+
+RUN git clone https://github.com/edenhill/librdkafka.git && \
+    cd librdkafka && \
+    git checkout tags/v${LIBRDKAFKA_VERSION} && \
+    ./configure --prefix=/usr && \
+    make && \
+    make install &&\
+    ldconfig && \
+    cd .. && \
+    rm -rf librdkafka
 
 COPY . .
 

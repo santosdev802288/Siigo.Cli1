@@ -1,6 +1,6 @@
 // @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Generator'... Remove this comment to see the full error message
 const Generator = require('yeoman-generator/lib');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getParamet... Remove this comment to see the full error message
+//// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getParamet... Remove this comment to see the full error message
 const { getParameter, wizardsiigofile } = require('../../utils/siigoFile');
 // @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'colorize'.
 const colorize = require('json-colorizer');
