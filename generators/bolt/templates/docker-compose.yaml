@@ -11,9 +11,9 @@ services:
         # replace for your personal access token
         - devops_token=kib3wbzqlhoe5pc4aqdziifdkoddi7yxkbxt76aabymbly4yv5aq
     volumes:
-    - ./:$HOME/app
+    - ./:/app
     privileged: true
     stdin_open: true
     tty: true
-    working_dir: $HOME/app
+    working_dir: /app
     entrypoint: make all

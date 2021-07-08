@@ -118,6 +118,11 @@ class GolangMSGenerator extends MicroserviceGenerator {
             this.destinationRoot(),
             {config: this.appConfig}
         );
+        this.fs.copy(
+            this.templatePath(".dots/.**/**/*"),
+            this.destinationRoot(),
+            {config: this.appConfig}
+        );
     }
 
     end() {
