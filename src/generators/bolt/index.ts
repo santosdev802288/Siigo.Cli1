@@ -5,7 +5,7 @@ import {siigosay} from'@nodesiigo/siigosay'
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
 
 
-class GolangMSGenerator extends MicroserviceGenerator {
+export default class GolangMSGenerator extends MicroserviceGenerator {
     appConfig: { description?: any; author?: any; name?: any; token?: any } = {}
     constructor(args: any, opt: any) {
         super(args, opt)
@@ -133,5 +133,3 @@ class GolangMSGenerator extends MicroserviceGenerator {
 }
 
 MicroserviceGenerator.yeomanInheritance(GolangMSGenerator)
-
-module.exports = GolangMSGenerator
