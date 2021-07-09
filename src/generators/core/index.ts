@@ -8,7 +8,7 @@ import {getChecksums} from '../../utils/checksum'
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
 
 
-export class CoreMSGenerator extends MicroserviceGenerator {
+export default class CoreMSGenerator extends MicroserviceGenerator {
     appConfig: { name?: any; token?: string; nameCapitalize?: string; projectPrefix?: any} = {}
 
     constructor(args: any, opt: any) {

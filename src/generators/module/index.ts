@@ -6,18 +6,14 @@ const rename = require('gulp-rename');
 const {siigosay} = require('@nodesiigo/siigosay')
 
 
-interface Arguments {
-    arg1: string
-    arg2: string
-    argRest: string[]
-    option1: boolean
-    option2: string
-  }
+interface Options {
+    name: string
+}
 
-export class ModuleGenerator extends Generator {
-    [x: string]: any;
 
-    constructor(args: string | string[], opt: Generator.GeneratorOptions) {
+export class ModuleGenerator extends Generator<Options> {
+
+    constructor(args: string | string[], opt: Options) {
         verifyNewVersion()
         super(args, opt)
         this.log(siigosay(`Siigo generator Nest module.`))
@@ -27,6 +23,7 @@ export class ModuleGenerator extends Generator {
     writing() {
         let name = this.options['name']
 
+        // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
         this.queueTransformStream([
             rename((path: ParsedPath) => {
                 path.basename = path.basename.replace(/(user)/g, name.toLowerCase())
@@ -46,4 +43,4 @@ export class ModuleGenerator extends Generator {
             Import in your AppModule
         `))
     }
-};
+}
