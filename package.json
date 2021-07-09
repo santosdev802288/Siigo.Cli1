@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc && node .scripts/copy-files",
     "clean": "rimraf dist/",
-    "lint": "eslint \"{generators,test,utils}/**/*.ts\"",
+    "lint": "eslint \"{src,test}/**/*.ts\"",
     "release": "standard-version --skip.commit --skip.tag --header \"# Changelog\n\nAll notable changes to this project.\n\"",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --spec test/**/*.spec.ts",
     "test:debug": "mocha --inspect-brk --spec test/**/*.spec.ts",
@@ -65,10 +65,11 @@
     "@types/yeoman-assert": "^3.1.1",
     "@types/yeoman-generator": "^5.0.0",
     "@types/yeoman-test": "^4.0.2",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^7.27.0",
-    "eslint-config-standard": "^16.0.3",
+    "eslint": "^7.30.0",
     "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
@@ -84,7 +85,9 @@
     "yeoman-environment": "^3.4.1",
     "yeoman-test": "^6.1.0"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "publishFiles": [
     "src/generators",
     "src/utils",

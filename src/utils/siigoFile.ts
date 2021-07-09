@@ -2,7 +2,7 @@ import shell from "shelljs";
 import os from "os";
 import path from 'path';
 import prompt from 'prompt';
-import colors from "colors/safe";
+import * as colors from "colors/safe";
 import { tribeByUser } from './readTribes';
 
 const root = (os.homedir());
