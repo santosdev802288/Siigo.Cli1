@@ -1,4 +1,4 @@
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'os'.
+//// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'os'.
 const os = require('os')
 // @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Generator'... Remove this comment to see the full error message
 const Generator = require('yeoman-generator/lib');
@@ -11,7 +11,7 @@ const shell = require("shelljs")
 // @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'siigosay'.
 const {siigosay} = require('@nodesiigo/siigosay')
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Microservi... Remove this comment to see the full error message
+//// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Microservi... Remove this comment to see the full error message
 const MicroserviceGenerator = require('../../utils/generator/microservice')
 
 const _extend = require("lodash/extend")
