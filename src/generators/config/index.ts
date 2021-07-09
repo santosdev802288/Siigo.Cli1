@@ -1,5 +1,5 @@
 import Generator = require('yeoman-generator');
-import { getParameter, setParameter, setTribeAndNameByUser } from '../../utils/siigoFile'
+import { getParameter, setParameter, setTribeAndNameByUser, wizardsiigofile } from '../../utils/siigoFile'
 import colorize from 'json-colorizer'
 import { siigosay } from '@nodesiigo/siigosay'
 import { readTribesFile } from '../../utils/readTribes'
