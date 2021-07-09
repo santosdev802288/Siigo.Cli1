@@ -9,8 +9,8 @@
     "clean": "rimraf dist/",
     "lint": "eslint \"{generators,test,utils}/**/*.ts\"",
     "release": "standard-version --skip.commit --skip.tag --header \"# Changelog\n\nAll notable changes to this project.\n\"",
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha",
-    "test:debug": "mocha --inspect-brk",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --spec test/**/*.spec.ts",
+    "test:debug": "mocha --inspect-brk --spec test/**/*.spec.ts",
     "coverage": "nyc --reporter lcov --reporter text --report-dir .nyc_output npm run test",
     "prepare": "husky install",
     "prepublishOnly": "npm run clean && npm run build"

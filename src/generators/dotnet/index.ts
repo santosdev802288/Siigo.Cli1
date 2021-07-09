@@ -1,22 +1,25 @@
 import rename = require('gulp-rename');
-import { verifyNewVersion } from "../../utils/notification";
 import path from 'path';
-import Generator = require('yeoman-generator');
-import { capitalize } from "../../utils/capitalize";
 import { siigosay } from '@nodesiigo/siigosay';
+
+import { capitalize } from "../../utils/capitalize";
 import { getParameter, wizardsiigofile } from '../../utils/siigoFile';
 import { getChecksums } from '../../utils/checksum';
+import {MicroserviceGenerator} from '../../utils/generator/microservice'
 
 
-async function getAllParametersSiigo(parameters: any) {
-    let objParameters = {};
-    parameters.forEach(async (element: any) => {
-        // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+interface SiigoParameter {
+    "token"?: string, "token64"?: string, "user"?: string, "name"?: string, "tribe"?: string,
+}
+
+async function getAllParametersSiigo(parameters: (keyof SiigoParameter)[]) {
+    let objParameters: SiigoParameter = {};
+    parameters.forEach(async (element) => {
         objParameters[element] = await getParameter(element);
     });
     return objParameters;
 }
-module.exports = class extends Generator {
+export default class DotnetMSGenerator extends MicroserviceGenerator {
     appConfig: {
         name?: any,
         nameCapitalize?: any,
@@ -29,17 +32,10 @@ module.exports = class extends Generator {
     
     constructor(args: any, opt: any) {
         super(args, opt);
-        verifyNewVersion();
-        this.log(siigosay(`Siigo Generator .Net Core.`));
-        const prefixRepo = "Siigo.Microservice.";
-        const eSiigoPrefixRepo = "ESiigo.Microservice.";
-        const currentPath = path.basename(process.cwd());
-        if (!currentPath.startsWith(prefixRepo) && !currentPath.startsWith(eSiigoPrefixRepo))
-            throw new Error(`The name project should starts with ${prefixRepo} or ${eSiigoPrefixRepo}`);
-        const name = currentPath.split(".").reverse()[0];
+                
         this.option("name", {
             description: "Project name",
-            default: name,
+            default: this.defaultName,
             type: String
         });
         this.option("project-prefix", {
@@ -49,9 +45,11 @@ module.exports = class extends Generator {
         });
     }
     async initializing() {
+        this.log(siigosay(`Siigo Generator .Net Core.`));
     }
-    async prompting() {
-        const parameters = ["token", "token64", "user", "name", "tribe"];
+
+    async _doPrompting() {
+        const parameters: (keyof SiigoParameter)[] = ["token", "token64", "user", "name", "tribe"];
         const objParameters = await getAllParametersSiigo(parameters);
         let response = await this.prompt([
             {
@@ -74,18 +72,19 @@ module.exports = class extends Generator {
         this.appConfig.token = tokenf;
         this.appConfig.projectPrefix = this.options['project-prefix'];
     }
-    writing() {
+
+    _doWriting() {
         let nametemplate = (this.appConfig.type == 'command+query') ? 'commandquery' : this.appConfig.type;
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
         this.queueTransformStream([
-            rename((path: any) => {
+            rename((parsetPath) => {
                 const prefixChart = "ms-";
-                path.dirname = path.dirname.includes(prefixChart) ?
-                    path.dirname.replace(/(Microservice)/g, this.appConfig.name) :
-                    path.dirname.replace(/(Microservice)/g, capitalize(this.appConfig.name));
-                path.basename = path.basename.replace(/(Microservice)/g, capitalize(this.appConfig.name));
-                path.dirname = path.dirname.replace(/(Siigo)/g, this.appConfig.projectPrefix);
-                path.basename = path.basename.replace(/(Siigo)/g, this.appConfig.projectPrefix);
+                parsetPath.dirname = parsetPath.dirname.includes(prefixChart) ?
+                    parsetPath.dirname.replace(/(Microservice)/g, this.appConfig.name) :
+                    parsetPath.dirname.replace(/(Microservice)/g, capitalize(this.appConfig.name));
+                parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, capitalize(this.appConfig.name));
+                parsetPath.dirname = parsetPath.dirname.replace(/(Siigo)/g, this.appConfig.projectPrefix);
+                parsetPath.basename = parsetPath.basename.replace(/(Siigo)/g, this.appConfig.projectPrefix);
             })
         ]);
         this.fs.copyTpl(this.templatePath(nametemplate + "/"), this.destinationPath("."), { config: this.appConfig });
@@ -100,4 +99,6 @@ module.exports = class extends Generator {
     end() {
         this.log(siigosay(`Project Created!!`));
     }
-};
+}
+
+MicroserviceGenerator.yeomanInheritance(DotnetMSGenerator)
