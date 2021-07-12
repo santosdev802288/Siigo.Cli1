@@ -120,7 +120,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
             {config: this.appConfig}
         );
         this.fs.copy(
-            this.templatePath(".dots/.**/**/*"),
+            this.templatePath(".dots/.**/**"),
             this.destinationRoot(),
             {},
             {config: this.appConfig}
