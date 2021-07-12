@@ -1,7 +1,6 @@
 const info_tribes = require("../tribes/tribes.json")
 /**
  *
- * @param {string} filePath
  * @description Reads a given tribes JSON file and returns an array
  * with information about the name and group of the obtained tribes
  */
