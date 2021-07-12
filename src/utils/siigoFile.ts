@@ -2,7 +2,6 @@ import shell from "shelljs";
 import os from "os";
 import path from 'path';
 import prompt from 'prompt';
-import * as colors from "colors/safe";
 import { tribeByUser } from './readTribes';
 
 const root = (os.homedir());
@@ -23,7 +22,7 @@ export async function wizardsiigofile(updatetoken: any) {
 }
 
 async function typingToken(){
-    prompt.message = colors.green("siigo.cli")
+    prompt.message = "siigo.cli"
     const answers = await prompt.get(['personaltoken'])
     const personaltoken = String(answers.personaltoken)
     setSiigofile(personaltoken)

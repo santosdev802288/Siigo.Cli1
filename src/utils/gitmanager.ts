@@ -29,7 +29,7 @@ async function getProjects(token: any) {
     return projects;
 }
 // @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'createRepo... Remove this comment to see the full error message
-async function createRepository(token: any, name: any, idproject: any) {
+async function createRepository(token: any, name: any, idproject: any):any {
     const b64 = Buffer.from(token.trim() + ":").toString('base64');
     var myHeaders = new (fetch as any).Headers();
     myHeaders.append("Authorization", "Basic " + b64);
@@ -52,6 +52,6 @@ async function createRepository(token: any, name: any, idproject: any) {
     response = await response.text();
     // @ts-expect-error ts-migrate(2345) FIXME: Argument of type 'Response' is not assignable to p... Remove this comment to see the full error message
     response = JSON.parse(response);
-    return (response as any).remoteUrl;
+    return response;
 }
 module.exports = { getProjects, createRepository };

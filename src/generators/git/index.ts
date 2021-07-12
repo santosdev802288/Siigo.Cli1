@@ -4,6 +4,8 @@ const Generator = require('yeoman-generator/lib');
 const { getParameter, wizardsiigofile } = require('../../utils/siigoFile');
 // @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'colorize'.
 const colorize = require('json-colorizer');
+//// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'colors'.
+const colors = require('colors/safe');
 // @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'siigosay'.
 const { siigosay } = require('@nodesiigo/siigosay');
 // @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getProject... Remove this comment to see the full error message
@@ -31,7 +33,7 @@ module.exports = class extends Generator {
         }));
     }
     async prompting() {
-        const currentPath = path.basename(process.cwd());
+        let currentPath = path.basename(process.cwd());
         const createPrefix = !currentPath.startsWith(prefixRepo) && !currentPath.startsWith(eSiigoPrefixRepo);
         if (createPrefix) {
             console.log(("This folder is not Siigo" as any).red);
@@ -59,11 +61,27 @@ module.exports = class extends Generator {
                 }
             ]);
             if (this.answers.ready) {
-                const remoteUrl = await createRepository(token, currentPath, projects[response.project]);
-                this.log(siigosay(`Your repository has been created`));
-                this.showInformation({ remoteUrl: remoteUrl });
-                shell.exec(`git init`);
-                shell.exec(`git remote add origin ${remoteUrl}`);
+                let responseGit: any = {}
+                while(!responseGit.remoteUrl){
+                    responseGit = await createRepository(token, currentPath, projects[response.project]);
+                    if(responseGit.remoteUrl){
+                        this.log(siigosay(`Your repository has been created`));
+                        this.showInformation({ remoteUrl: responseGit.remoteUrl });
+                        shell.exec(`git init`);
+                        shell.exec(`git remote add origin ${responseGit.remoteUrl}`);
+                    }else{
+                        console.log(colors.red("Error: ya exite un repositorio con ese nombre!"))
+                        let responseAzure = await this.prompt([
+                            {
+                                type: 'string',
+                                name: 'projectname',
+                                message: 'Ingresa el nombre del proyecto:',
+                            }
+                        ]);
+                        currentPath = responseAzure.projectname;
+                    }
+                }
+            
             }
             else
                 this.cancelCancellableTasks();
