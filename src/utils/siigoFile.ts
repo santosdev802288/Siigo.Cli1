@@ -33,7 +33,7 @@ export async function getAllParametersSiigo(): Promise<SiigoParameter> {
  * @param updatetoken 
  * @returns 
  */
-export async function wizardsiigofile(updatetoken: string): Promise<string> {
+export async function wizardsiigofile(updatetoken?: string): Promise<string> {
     let token = ""
     if(updatetoken != null){
         token = updatetoken
