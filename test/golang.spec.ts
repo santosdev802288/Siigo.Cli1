@@ -49,4 +49,22 @@ describe(NAMESPACE, () => {
                 assert.file('third_party/embed.go')
             });
     });
+
+    it('Fail whith missing project-name, prefix and token', () => {
+
+        const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Golang'))
+        const folderPrefix = 'Siigo.Microservice.'
+
+        return helpers.run(GolangMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
+            .inDir(dir)
+            .withOptions({ })
+            .withPrompts({ ready: true, prefix: folderPrefix })   // Mock the prompt answers
+            .then(() => {
+                assert.fail()
+            })
+            .catch(error => {
+                assert.ok(error.message.startsWith('project-name is required or it should not be empty'), error.message)
+                
+            });
+    });
 });

@@ -3,22 +3,11 @@ import path from 'path';
 import { siigosay } from '@nodesiigo/siigosay';
 
 import { capitalize } from "../../utils/capitalize";
-import { getParameter, wizardsiigofile } from '../../utils/siigoFile';
+import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile';
 import { getChecksums } from '../../utils/checksum';
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
 
 
-interface SiigoParameter {
-    "token"?: string, "token64"?: string, "user"?: string, "name"?: string, "tribe"?: string,
-}
-
-async function getAllParametersSiigo(parameters: (keyof SiigoParameter)[]) {
-    let objParameters: SiigoParameter = {};
-    parameters.forEach(async (element) => {
-        objParameters[element] = await getParameter(element);
-    });
-    return objParameters;
-}
 export default class DotnetMSGenerator extends MicroserviceGenerator {
     appConfig: {
         name?: any,
@@ -49,8 +38,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
     }
 
     async _doPrompting() {
-        const parameters: (keyof SiigoParameter)[] = ["token", "token64", "user", "name", "tribe"];
-        const objParameters = await getAllParametersSiigo(parameters);
+        const objParameters = await getAllParametersSiigo();
         let response = await this.prompt([
             {
                 type: 'list',
@@ -59,7 +47,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
                 choices: ['basic', 'command', 'query', 'command+query', 'grpc-server', 'grpc-client']
             }
         ]);
-        let tokenf = (objParameters as any).token;
+        let tokenf = objParameters.token;
         let updatetoken = this.options['token'];
         if (tokenf == "pending" || updatetoken != null)
             tokenf = await wizardsiigofile(updatetoken);
