@@ -1,4 +1,5 @@
 extension: ["ts"]
+parallel: true
 require: "ts-node/register"
-timeout: 30000
+timeout: 60000
 

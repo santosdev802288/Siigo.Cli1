@@ -1,22 +1,17 @@
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Generator'... Remove this comment to see the full error message
-const Generator = require('yeoman-generator/lib');
-//// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getParamet... Remove this comment to see the full error message
-const { getParameter, wizardsiigofile } = require('../../utils/siigoFile');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'colorize'.
-const colorize = require('json-colorizer');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'siigosay'.
-const { siigosay } = require('@nodesiigo/siigosay');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getProject... Remove this comment to see the full error message
-const { getProjects, createRepository } = require('../../utils/gitmanager');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'path'.
-const path = require('path');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'shell'.
-const shell = require("shelljs");
-//// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'prefixRepo... Remove this comment to see the full error message
+import Generator = require('yeoman-generator');
+import { getParameter, wizardsiigofile } from '../../utils/siigoFile';
+import colorize from 'json-colorizer';
+import { siigosay } from '@nodesiigo/siigosay';
+import { getProjects, createRepository } from '../../utils/gitmanager';
+import path from 'path';
+import shell from "shelljs";
+
 const prefixRepo = "Siigo.Microservice.";
-//// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'eSiigoPref... Remove this comment to see the full error message
 const eSiigoPrefixRepo = "ESiigo.Microservice.";
+
 module.exports = class extends Generator {
+    answers: any;
+
     constructor(args: any, opt: any) {
         super(args, opt);
     }
@@ -59,6 +54,7 @@ module.exports = class extends Generator {
                 }
             ]);
             if (this.answers.ready) {
+                // @ts-expect-error FIXME: projects indexing
                 const remoteUrl = await createRepository(token, currentPath, projects[response.project]);
                 this.log(siigosay(`Your repository has been created`));
                 this.showInformation({ remoteUrl: remoteUrl });
