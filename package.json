@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "dev": "npm run clean && nodemon --config nodemon.json --exec 'npm run build'",
     "build": "tsc && node .scripts/copy-files",
     "clean": "rimraf dist/",
     "lint": "eslint \"{src,test}/**/*.ts\"",
@@ -75,6 +76,7 @@
     "eslint-plugin-promise": "^5.1.0",
     "husky": "^5.1.0",
     "mocha": "^9.0.1",
+    "nodemon": "^2.0.12",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
     "standard-version": "^9.3.0",

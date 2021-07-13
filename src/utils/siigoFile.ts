@@ -8,7 +8,31 @@ const root = (os.homedir());
 export const pathHome = path.join(root, '.siigo');
 
 
-export async function wizardsiigofile(updatetoken: any) {
+interface SiigoParameter {
+    "token"?: string, "token64"?: string, "user"?: string, "name"?: string, "tribe"?: string,
+}
+
+/**
+ * Return all the current params saved on .siigo file
+ * 
+ * @returns siigoParams
+ */
+export async function getAllParametersSiigo(): Promise<SiigoParameter> {
+    const parameters: (keyof SiigoParameter)[] = ["token", "token64", "user", "name", "tribe"];
+    const objParameters: SiigoParameter = {};
+    parameters.forEach(async (element) => {
+        objParameters[element] = await getParameter(element);
+    });
+    return objParameters;
+}
+
+/**
+ * Update or ask for token on .siigo file
+ * 
+ * @param updatetoken 
+ * @returns 
+ */
+export async function wizardsiigofile(updatetoken?: string): Promise<string> {
     let token = ""
     if(updatetoken != null){
         token = updatetoken
@@ -40,7 +64,7 @@ function setSiigofile(token: string){
     setTribeAndNameByUser(resUser);
 }
 
-export async function getParameter(parameter: any) {
+export async function getParameter(parameter: keyof SiigoParameter) {
     let temp = "";
     if (shell.test('-f', pathHome)) {
         let listPar = shell.cat(pathHome).split("\n")

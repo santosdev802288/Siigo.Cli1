@@ -1,25 +1,10 @@
 import Generator = require('yeoman-generator');
-import { getParameter, setParameter, setTribeAndNameByUser, wizardsiigofile } from '../../utils/siigoFile'
+import { getAllParametersSiigo, setParameter, setTribeAndNameByUser, wizardsiigofile } from '../../utils/siigoFile'
 import colorize from 'json-colorizer'
 import { siigosay } from '@nodesiigo/siigosay'
 import { readTribesFile } from '../../utils/readTribes'
-import { autocomplete } from '../../utils/autocomplete'
+import autocomplete from '../../utils/autocomplete'
 
-interface ObjectParameters {
-    token?: string;
-    name?: string;
-    tribe?: string;
-    user?: string;
-}
-
-async function getAllParameters(parameters: any): Promise<ObjectParameters> {
-    let objParameters: ObjectParameters = {};
-    parameters.forEach(async (element: any) => {
-        // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-        objParameters[element] = await getParameter(element);
-    });
-    return objParameters;
-}
 
 module.exports = class extends Generator {
     validationToken: any;
@@ -45,11 +30,10 @@ module.exports = class extends Generator {
     }
 
     async getInformation(){
-        const parameters = ["token","token64","user","name","tribe"] 
-        const objParameters = await getAllParameters(parameters)
+        const objParameters = await getAllParametersSiigo()
         if(objParameters.token !="pending"){
             if (objParameters.name == "pending" || objParameters.tribe == "pending") {
-                let { name, tribe } = await setTribeAndNameByUser(objParameters.user) || {}
+                const { name, tribe } = await setTribeAndNameByUser(objParameters.user) || {}
                 objParameters.name = name
                 objParameters.tribe = tribe
                 this.showInformation(objParameters)

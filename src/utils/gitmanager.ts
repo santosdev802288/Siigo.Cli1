@@ -1,7 +1,6 @@
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'fetch'.
-const fetch = require("node-fetch");
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getProject... Remove this comment to see the full error message
-async function getProjects(token: any) {
+import fetch from "node-fetch";
+
+export async function getProjects(token: any) {
     const b64 = Buffer.from(token.trim() + ":").toString('base64');
     var requestOptions = {
         method: 'GET',
@@ -10,7 +9,7 @@ async function getProjects(token: any) {
         },
         redirect: 'follow'
     };
-    // @ts-expect-error ts-migrate(2345) FIXME: Argument of type '{ method: string; headers: { Aut... Remove this comment to see the full error message
+    // @ts-expect-error -migrate(2345) FIXME: Argument of type '{ method: string; headers: { Aut... Remove this comment to see the full error message
     let response = await fetch("https://dev.azure.com/SiigoDevOps/_apis/projects?api-version=6.0", requestOptions);
     // @ts-expect-error ts-migrate(2322) FIXME: Type 'string' is not assignable to type 'Response'... Remove this comment to see the full error message
     response = await response.text();
@@ -54,4 +53,3 @@ async function createRepository(token: any, name: any, idproject: any):any {
     response = JSON.parse(response);
     return response;
 }
-module.exports = { getProjects, createRepository };

@@ -1,29 +1,23 @@
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getDirecto... Remove this comment to see the full error message
-const getDirectoriesRecursive = require("../../utils/walkProjects")
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'path'.
-const path = require('path')
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Generator'... Remove this comment to see the full error message
-const Generator = require('yeoman-generator/lib');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'rename'.
-const rename = require('gulp-rename');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'spawn'.
-const spawn = require('child_process').exec;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'colorize'.
-const colorize = require('json-colorizer');
-//// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'req'.
-const req = require("../../utils/required-tools")
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'siigosay'.
-const {siigosay} = require('@nodesiigo/siigosay')
+import getDirectoriesRecursive from "../../utils/walkProjects"
+import path from 'path'
+import Generator =  require('yeoman-generator');
+import rename from 'gulp-rename';
+import {exec as spawn} from 'child_process';
+import colorize from 'json-colorizer';
+import {req} from "../../utils/required-tools"
+import {siigosay} from '@nodesiigo/siigosay'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'upgradeFil... Remove this comment to see the full error message
-const upgradeFile = require('../../utils/upgrade')
-//// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'readTribes... Remove this comment to see the full error message
-const {readTribesFile} = require('../../utils/readTribes')
-//// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'autocomple... Remove this comment to see the full error message
-const autocomplete = require('../../utils/autocomplete')
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'createFile... Remove this comment to see the full error message
-const createFile = require('../../utils/createTribeDir')
-module.exports = class extends Generator {
+import upgradeFile from '../../utils/upgrade'
+import {readTribesFile} from '../../utils/readTribes'
+import autocomplete from '../../utils/autocomplete'
+import createFile from '../../utils/createTribeDir'
+
+
+export default class CicdGenerator extends Generator {
+    appConfig: any;
+    answers: any;
+    tribes: any;
+    upgrade: any;
 
     constructor(args: any, opt: any) {
         super(args, opt)
@@ -39,7 +33,6 @@ module.exports = class extends Generator {
         // optionals
         this.option("organization", {
             type: String,
-            required: false,
             description: "Url of the organization in azure devops.",
             default: 'https://dev.azure.com/SiigoDevOps',
             alias: 'org'
@@ -47,7 +40,6 @@ module.exports = class extends Generator {
 
         this.option("project", {
             type: String,
-            required: false,
             description: "Project in azure devops.",
             default: 'Siigo',
             alias: "p"
@@ -55,7 +47,6 @@ module.exports = class extends Generator {
 
         this.option("pipeline-name", {
             type: String,
-            required: false,
             description: "Pipeline name in azure devops.",
             default: `${currentPath} CICD`,
             alias: 'pn'
@@ -63,7 +54,6 @@ module.exports = class extends Generator {
 
         this.option("folder", {
             type: String,
-            required: false,
             description: "Name of the folder that will contain the pipeline.",
             default: currentPath,
             alias: 'f'
@@ -71,7 +61,6 @@ module.exports = class extends Generator {
 
         this.option("environment", {
             type: String,
-            required: false,
             description: "Environment that has access to the cluster. https://dev.azure.com/SiigoDevOps/Siigo/_environments",
             default: `aks`,
             alias: 'e'
@@ -79,7 +68,6 @@ module.exports = class extends Generator {
 
         this.option("owner", {
             type: String,
-            required: false,
             description: "Owner tag (whos execute the deployment test).",
             default: 'SiigoCli',
             alias: 'ow'
@@ -87,7 +75,6 @@ module.exports = class extends Generator {
 
         this.option("chart-version", {
             type: String,
-            required: true,
             description: "Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags",
             default: '0.2.17',
             alias: 'cv'
@@ -96,7 +83,6 @@ module.exports = class extends Generator {
         // required
         this.option("dll", {
             type: String,
-            required: !paths,
             description: "Project which the microservice starts. (Siigo.{Name}.Api). If --type is set to 'node', this value will be ignored.",
             default: paths.length ? paths[0] : null,
             alias: 'd'
@@ -104,20 +90,17 @@ module.exports = class extends Generator {
 
         this.option("project-name", {
             type: String,
-            required: true,
             description: "Used in Helm chart name, docker image and sonar.",
         });
 
         this.option("namespace-k8s", {
             type: String,
-            required: true,
             description: "Namespace in kubernetes configured in the environment.",
             alias: 'ns'
         });
 
         this.option("sonar-token", {
             type: String,
-            required: true,
             description: "Sonar token to publish metrics. If --type is set to 'node', this value will be ignored.",
             alias: 'st',
             default: 'null'
@@ -125,7 +108,6 @@ module.exports = class extends Generator {
 
         this.option("type", {
             type: String,
-            required: true,
             description: "Project type. (node, netcore, golang)",
             alias: 't',
             default: 'netcore'
@@ -139,7 +121,7 @@ module.exports = class extends Generator {
     async prompting() {
         const tribePath = './tribes/'
 
-        this.tribes = await readTribesFile(tribePath.concat('tribes.json'))
+        this.tribes = await readTribesFile()
         if (typeof this.tribes !== 'undefined' && this.tribes.length > 0) {
             this.upgrade = await this.prompt([
                 {
@@ -156,7 +138,7 @@ module.exports = class extends Generator {
             }
         } else {
             await createFile(tribePath)
-            this.tribes = await readTribesFile(tribePath.concat('tribes.json'))
+            this.tribes = await readTribesFile()
         }
 
         const select_tribe = await autocomplete(this.tribes)
@@ -217,7 +199,7 @@ module.exports = class extends Generator {
 
 
     writing() {
-
+        // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
         this.queueTransformStream([
             rename( (path: any) => {
                 path.dirname = path.dirname.replace(/(chart)/g, this.appConfig.name)
@@ -262,4 +244,4 @@ module.exports = class extends Generator {
     end(){
         this.log(siigosay(`Enjoy! Dont forget merge cicd branch in dev.`))
     }
-};
+}

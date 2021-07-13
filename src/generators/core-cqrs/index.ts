@@ -1,17 +1,12 @@
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Generator'... Remove this comment to see the full error message
-const Generator = require('yeoman-generator/lib');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'capitalize... Remove this comment to see the full error message
-const capitalize = require("../../utils/capitalize")
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'rename'.
-const rename = require('gulp-rename');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getDirecto... Remove this comment to see the full error message
-const getDirectoriesRecursive = require("../../utils/walkProjects")
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'verifyNewV... Remove this comment to see the full error message
-const verifyNewVersion = require("../../utils/notification");
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'siigosay'.
-const {siigosay} = require('@nodesiigo/siigosay')
+import Generator = require('yeoman-generator');
+import {capitalize} from "../../utils/capitalize"
+import rename from 'gulp-rename';
+import getDirectoriesRecursive from "../../utils/walkProjects"
+import {verifyNewVersion} from "../../utils/notification";
+import {siigosay} from '@nodesiigo/siigosay'
 
 module.exports = class extends Generator {
+    appConfig: any;
 
     constructor(args: any, opt: any) {
         verifyNewVersion()
@@ -52,6 +47,7 @@ module.exports = class extends Generator {
 
         switch (this.appConfig.type) {
             case 'command':
+                // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
                 this.queueTransformStream([
                     rename((path: any) => {
                         path.basename = path.basename.replace(/(CreateProduct)/g, capitalize(this.appConfig.name_cq))
@@ -67,6 +63,7 @@ module.exports = class extends Generator {
                 break
 
             case 'query':
+                // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
                 this.queueTransformStream([
                     rename((path: any) => {
                         path.basename = path.basename.replace(/(GetProductDetails)/g, capitalize(this.appConfig.name_cq))

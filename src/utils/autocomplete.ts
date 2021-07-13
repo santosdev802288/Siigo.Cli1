@@ -1,8 +1,7 @@
-const inquirer = require('inquirer');
+import inquirer from 'inquirer';
 
-const fuzzy = require('fuzzy');
-//// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash');
+import * as fuzzy from 'fuzzy';
+import _ from 'lodash';
 
 inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
 
@@ -12,7 +11,7 @@ inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'))
  * @description Creates a new prompt to select a tribe given an array
  * @param tribes
  */
-export function autocomplete (tribes: any) {
+export default function autocomplete (tribes: any) {
     return inquirer.prompt([
         {
             type: 'autocomplete',
@@ -25,7 +24,7 @@ export function autocomplete (tribes: any) {
                 input = input || '';
                 return new Promise(function (resolve) {
                     setTimeout(function () {
-                        var fuzzyResult = fuzzy.filter(input, tribes);
+                        const fuzzyResult = fuzzy.filter(input, tribes);
                         resolve(
                             fuzzyResult.map(function (el: any) {
                                 return el.original;

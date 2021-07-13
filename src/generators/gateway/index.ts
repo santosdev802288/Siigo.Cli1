@@ -1,17 +1,14 @@
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'path'.
-const path = require('path');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Generator'... Remove this comment to see the full error message
-const Generator = require('yeoman-generator/lib');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'rename'.
-const rename = require('gulp-rename');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'spawn'.
-const spawn = require('child_process').exec;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'colorize'.
-const colorize = require('json-colorizer');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'siigosay'.
-const {siigosay} = require('@nodesiigo/siigosay')
+import path from 'path';
+import Generator = require('yeoman-generator');
+import rename from 'gulp-rename';
+import {exec as spawn} from 'child_process';
+import colorize from 'json-colorizer';
+import {siigosay} from '@nodesiigo/siigosay'
 
 module.exports = class extends Generator {
+    appConfig: { organization?: any; project?: any; environment?: any; namespace?: any; folder?: any; port?: any; pipelineName?: any; name?: any; chartVersion?: any; } = {};
+    answers: any;
+
     constructor(args: any, opt: any) {
         super(args, opt);
         
@@ -21,7 +18,6 @@ module.exports = class extends Generator {
         // optionals
         this.option("organization", {
             type: String,
-            required: false,
             description: "Url of the organization in azure devops.",
             default: 'https://dev.azure.com/SiigoDevOps',
             alias: 'org'
@@ -29,7 +25,6 @@ module.exports = class extends Generator {
         
         this.option("project", {
             type: String,
-            required: false,
             description: "Project in azure devops.",
             default: 'Siigo',
             alias: "p"
@@ -37,7 +32,6 @@ module.exports = class extends Generator {
         
         this.option("pipeline-name", {
             type: String,
-            required: false,
             description: "Pipeline name in azure devops.",
             default: `${currentPath} CICD`,
             alias: 'pn'
@@ -45,7 +39,6 @@ module.exports = class extends Generator {
         
         this.option("folder", {
             type: String,
-            required: false,
             description: "Name of the folder that will contain the pipeline.",
             default: currentPath,
             alias: 'f'
@@ -53,7 +46,6 @@ module.exports = class extends Generator {
         
         this.option("environment", {
             type: String,
-            required: false,
             description: "Environment that has access to the cluster. https://dev.azure.com/SiigoDevOps/Siigo/_environments",
             default: `aks`,
             alias: 'e'
@@ -61,7 +53,6 @@ module.exports = class extends Generator {
         
         this.option("chart-version", {
             type: String,
-            required: false,
             description: "Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags",
             default: 'null',
             alias: 'cv'
@@ -69,20 +60,17 @@ module.exports = class extends Generator {
         
         this.option("project-name", {
             type: String,
-            required: true,
             description: "Used in Helm chart name, tag docker image and sonar.",
         });
         
         this.option("namespace-k8s", {
             type: String,
-            required: true,
             description: "Namespace in kubernetes configured in the environment.",
             alias: 'ns'
         });
         
         this.option("port", {
             type: String,
-            required: true,
             description: "Port to expose the api gateway in the ingress controller. Confirm with architecture team if that port that you need its open.",
             default: null
         });
@@ -139,7 +127,7 @@ module.exports = class extends Generator {
     }
     
     writing() {
-        
+        // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
         this.queueTransformStream([
             rename((path: any) => {
                 path.dirname = path.dirname.replace(

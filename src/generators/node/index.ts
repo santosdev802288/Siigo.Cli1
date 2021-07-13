@@ -1,24 +1,17 @@
-//// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'os'.
-const os = require('os')
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Generator'... Remove this comment to see the full error message
-const Generator = require('yeoman-generator/lib');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'path'.
-const path = require('path');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'colorize'.
-const colorize = require('json-colorizer');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'shell'.
-const shell = require("shelljs")
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'siigosay'.
-const {siigosay} = require('@nodesiigo/siigosay')
-
-//// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Microservi... Remove this comment to see the full error message
-const MicroserviceGenerator = require('../../utils/generator/microservice')
+import os  from 'os'
+import path  from 'path'
+import colorize from'json-colorizer'
+import {siigosay} from'@nodesiigo/siigosay'
+import shell from "shelljs"
+import {MicroserviceGenerator} from '../../utils/generator/microservice'
 
 const _extend = require("lodash/extend")
 _extend(Generator.prototype, require("yeoman-generator/lib/actions/install"))
 
 
-class NodeMSGenerator extends MicroserviceGenerator {
+export default class NodeMSGenerator extends MicroserviceGenerator {
+    appConfig: { description?: any; author?: any; name?: any } = {}
+
     constructor(args: any, opt: any) {        
         super(args, opt)
 
@@ -28,7 +21,6 @@ class NodeMSGenerator extends MicroserviceGenerator {
         // optionals
         this.option("project-name", {
             type: String,
-            required: false,
             description: "Name project.",
             default: currentPath,
             alias: 'pn'
@@ -36,7 +28,6 @@ class NodeMSGenerator extends MicroserviceGenerator {
 
         this.option("description", {
             type: String,
-            required: false,
             description: "Description project.",
             default: '',
             alias: 'd'
@@ -44,14 +35,12 @@ class NodeMSGenerator extends MicroserviceGenerator {
 
         this.option("author", {
             type: String,
-            required: false,
             default: os.userInfo().username,
             alias: 'a'
         });
 
         this.option("skip-install", {
             type: String,
-            required: false,
             default: false,
             description: 'Avoid Installing dependencies automatically.'
         });
@@ -128,5 +117,3 @@ class NodeMSGenerator extends MicroserviceGenerator {
 }
 
 MicroserviceGenerator.yeomanInheritance(NodeMSGenerator)
-
-module.exports = NodeMSGenerator

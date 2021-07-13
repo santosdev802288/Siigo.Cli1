@@ -1,0 +1,12 @@
+{
+    "verbose": true,
+    "ignore": [
+        ".git", "node_modules/", "dist/"
+    ],
+    "watch": ["src/**/*"],
+    "execMap": {
+        "rb": "ruby",
+        "pde": "processing --sketch={{pwd}} --run"
+    },
+    "ext": "ts"
+}

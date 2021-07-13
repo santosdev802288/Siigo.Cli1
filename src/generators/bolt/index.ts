@@ -3,9 +3,10 @@ import path  from 'path'
 import colorize from'json-colorizer'
 import {siigosay} from'@nodesiigo/siigosay'
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
+import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile'
 
 
-class GolangMSGenerator extends MicroserviceGenerator {
+export default class GolangMSGenerator extends MicroserviceGenerator {
     appConfig: { description?: any; author?: any; name?: any; token?: any } = {}
     constructor(args: any, opt: any) {
         super(args, opt)
@@ -35,15 +36,24 @@ class GolangMSGenerator extends MicroserviceGenerator {
             description: "Personal token. Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens",
             type: String
         })
-
     }
 
     async initializing(){
         this.log(siigosay(`Siigo Generator Golang.`))
+    }
 
+    async _doPrompting() {
         const message = "For more information execute yo siigo:bolt --help";
 
-        ['personal-token', 'project-name'].forEach(option => {
+        const siigoParams = await getAllParametersSiigo();
+
+        if (siigoParams.token === "pending" || this.options['personal-token'] != null) {
+            this.options['personal-token'] = await wizardsiigofile(this.options['personal-token']);
+        }else {
+            this.options['personal-token'] = siigoParams.token
+        }
+
+        ['project-name'].forEach(option => {
             if (this.options[option] === 'true' || !this.options[option])
                 throw new Error(`${option} is required or it should not be empty.\n ${message}`)
         });
@@ -55,9 +65,8 @@ class GolangMSGenerator extends MicroserviceGenerator {
             name: this.options['project-name'].toLowerCase(),
             token: this.options['personal-token'],
         };
-    }
+        
 
-    async _doPrompting() {
         // @ts-expect-error ts-migrate(2769) FIXME: No overload matches this call.
         const json = JSON.stringify(this.appConfig, false, '\t')
 
@@ -105,7 +114,7 @@ class GolangMSGenerator extends MicroserviceGenerator {
             const gitConfig = this.fs.read(userGitConfig)
             if (!gitConfig.includes('insteadOf = https://dev.azure.com/SiigoDevOps')){
                 const templateContent = this.fs.read(templateGitConfig)
-                // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
+                // @ts-expect-error FIXME: Missing method on @types
                 this.fs.appendTpl(userGitConfig, templateContent, {config: this.appConfig})
             }
         } else {
@@ -133,5 +142,3 @@ class GolangMSGenerator extends MicroserviceGenerator {
 }
 
 MicroserviceGenerator.yeomanInheritance(GolangMSGenerator)
-
-module.exports = GolangMSGenerator
