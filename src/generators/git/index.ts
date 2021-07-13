@@ -30,7 +30,7 @@ module.exports = class extends Generator {
         let currentPath = path.basename(process.cwd());
         const createPrefix = !currentPath.startsWith(prefixRepo) && !currentPath.startsWith(eSiigoPrefixRepo);
         if (createPrefix) {
-            console.log(("This folder is not Siigo" as any).red);
+            this.log(("This folder is not Siigo" as any).red);
             this.cancelCancellableTasks();
         }
         else {
@@ -65,7 +65,7 @@ module.exports = class extends Generator {
                         shell.exec(`git init`);
                         shell.exec(`git remote add origin ${responseGit.remoteUrl}`);
                     }else{
-                        console.log(colors.red("Error: ya exite un repositorio con ese nombre!"))
+                        this.log(colors.red("Error: ya exite un repositorio con ese nombre!"))
                         let responseAzure = await this.prompt([
                             {
                                 type: 'string',

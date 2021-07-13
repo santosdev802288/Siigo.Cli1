@@ -27,8 +27,8 @@ export async function getProjects(token: any) {
     });
     return projects;
 }
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'createRepo... Remove this comment to see the full error message
-export async function createRepository(token: any, name: any, idproject: any):any {
+
+export async function createRepository(token: any, name: any, idproject: any) {
     const b64 = Buffer.from(token.trim() + ":").toString('base64');
     var myHeaders = new (fetch as any).Headers();
     myHeaders.append("Authorization", "Basic " + b64);
