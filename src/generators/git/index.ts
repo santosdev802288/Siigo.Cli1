@@ -1,5 +1,6 @@
 import Generator = require('yeoman-generator');
 import { getParameter, wizardsiigofile } from '../../utils/siigoFile';
+import colors from 'colors';
 import colorize from 'json-colorizer';
 import { siigosay } from '@nodesiigo/siigosay';
 import { getProjects, createRepository } from '../../utils/gitmanager';
@@ -26,10 +27,10 @@ module.exports = class extends Generator {
         }));
     }
     async prompting() {
-        const currentPath = path.basename(process.cwd());
+        let currentPath = path.basename(process.cwd());
         const createPrefix = !currentPath.startsWith(prefixRepo) && !currentPath.startsWith(eSiigoPrefixRepo);
         if (createPrefix) {
-            console.log(("This folder is not Siigo" as any).red);
+            this.log(("This folder is not Siigo" as any).red);
             this.cancelCancellableTasks();
         }
         else {
@@ -54,12 +55,28 @@ module.exports = class extends Generator {
                 }
             ]);
             if (this.answers.ready) {
-                // @ts-expect-error FIXME: projects indexing
-                const remoteUrl = await createRepository(token, currentPath, projects[response.project]);
-                this.log(siigosay(`Your repository has been created`));
-                this.showInformation({ remoteUrl: remoteUrl });
-                shell.exec(`git init`);
-                shell.exec(`git remote add origin ${remoteUrl}`);
+                let responseGit: any = {}
+                while(!responseGit.remoteUrl){
+                    // @ts-expect-error FIXME: projects indexing
+                    responseGit = await createRepository(token, currentPath, projects[response.project]);
+                    if(responseGit.remoteUrl){
+                        this.log(siigosay(`Your repository has been created`));
+                        this.showInformation({ remoteUrl: responseGit.remoteUrl });
+                        shell.exec(`git init`);
+                        shell.exec(`git remote add origin ${responseGit.remoteUrl}`);
+                    }else{
+                        this.log(colors.red("Error: ya exite un repositorio con ese nombre!"))
+                        let responseAzure = await this.prompt([
+                            {
+                                type: 'string',
+                                name: 'projectname',
+                                message: 'Ingresa el nombre del proyecto:',
+                            }
+                        ]);
+                        currentPath = responseAzure.projectname;
+                    }
+                }
+            
             }
             else
                 this.cancelCancellableTasks();

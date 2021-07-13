@@ -51,5 +51,5 @@ export async function createRepository(token: any, name: any, idproject: any) {
     response = await response.text();
     // @ts-expect-error ts-migrate(2345) FIXME: Argument of type 'Response' is not assignable to p... Remove this comment to see the full error message
     response = JSON.parse(response);
-    return (response as any).remoteUrl;
+    return response;
 }
