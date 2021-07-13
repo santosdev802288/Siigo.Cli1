@@ -1,8 +1,6 @@
 import assert from 'yeoman-assert'
 import helpers from 'yeoman-test'
-import fs from 'fs'
 import path from 'path'
-import os from 'os'
 
 import CicdGenerator from '../src/generators/cicd'
 

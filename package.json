@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "npm run clean && nodemon --config nodemon.json --exec 'npm run build'",
+    "dev": "npm run clean && nodemon --config nodemon.json --exec npm run build",
     "build": "tsc && node .scripts/copy-files",
     "clean": "rimraf dist/",
     "lint": "eslint \"{src,test}/**/*.ts\"",

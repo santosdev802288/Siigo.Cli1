@@ -1,6 +1,6 @@
 import Generator = require('yeoman-generator');
 import { getParameter, wizardsiigofile } from '../../utils/siigoFile';
-import colors from 'colors/safe';
+import colors from 'colors';
 import colorize from 'json-colorizer';
 import { siigosay } from '@nodesiigo/siigosay';
 import { getProjects, createRepository } from '../../utils/gitmanager';
