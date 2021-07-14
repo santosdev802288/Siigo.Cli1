@@ -6,12 +6,46 @@ import {exec as spawn} from 'child_process';
 import colorize from 'json-colorizer';
 import {req} from "../../utils/required-tools"
 import {siigosay} from '@nodesiigo/siigosay'
-
+import shell from "shelljs";
 import upgradeFile from '../../utils/upgrade'
 import {readTribesFile} from '../../utils/readTribes'
 import autocomplete from '../../utils/autocomplete'
 import createFile from '../../utils/createTribeDir'
+import fetch from "node-fetch";
+import fs from "fs";
+import { getParameter} from '../../utils/siigoFile';
 
+async function writeChart(token:any, projectName:string,tagOwner:string ,tagTribu: string) {
+    const b64 = Buffer.from(token.trim() + ":").toString('base64');
+    var requestOptions = {
+        method: 'GET',
+        headers: {
+            Authorization: 'Basic ' + b64,
+        },
+        redirect: 'follow'
+    };
+    // @ts-expect-error -migrate(2345) FIXME: Argument of type '{ method: string; headers: { Aut... Remove this comment to see the full error message
+    let response = await fetch("https://dev.azure.com/SiigoDevOps/Siigo/_apis/git/repositories/Siigo.Chart/items?path=values.yaml&download=true&api-version=6.0", requestOptions);
+    //// @ts-expect-error ts-migrate(2322) FIXME: Type 'string' is not assignable to type 'Response'... Remove this comment to see the full error message
+    let stringResponse:string = await response.text();
+    stringResponse = stringResponse.replace("com: {}",
+        `com:
+            tribu: ${tagOwner}
+            owner: ${tagTribu}`);
+
+    try {
+        fs.writeFile(`./.docker/${projectName}/values.yaml`, stringResponse, function (err) {
+            if (err) {
+                console.log(err);
+                throw err
+            }
+            console.log('value.yaml is created successfully.');
+        });
+    }
+    catch (err) {
+        console.log(("Token no es valido" as any).red);
+    }
+}
 
 export default class CicdGenerator extends Generator {
     appConfig: any;
@@ -21,7 +55,7 @@ export default class CicdGenerator extends Generator {
 
     constructor(args: any, opt: any) {
         super(args, opt)
-
+        
         req()
 
         const currentPath = path.basename(process.cwd())
@@ -159,6 +193,9 @@ export default class CicdGenerator extends Generator {
 
         const {organization, project, environment, folder, type} = this.options
         const namespace = this.options['namespace-k8s']
+        console.log("Obteniendo la ultima version de Chart!");
+        let resGit: any = (shell.exec(`git ls-remote --refs --tags --sort=v:refname https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart`).stdout).split('/').pop();
+        resGit = resGit.replace("\n","");
         this.appConfig = {
             organization,
             project,
@@ -168,12 +205,12 @@ export default class CicdGenerator extends Generator {
             pipelineName: this.options['pipeline-name'],
             mainProject: this.options['dll'],
             name: this.options['project-name'],
-            chartVersion: this.options['chart-version'],
+            chartVersion: resGit,
             type,
             tagOwner: this.options['owner'],
             tagTribu: select_tribe.tribe
         };
-
+        
         // @ts-expect-error ts-migrate(2769) FIXME: No overload matches this call.
         const json = JSON.stringify(this.appConfig, false, '\t')
         this.log(colorize(json, {
@@ -198,7 +235,7 @@ export default class CicdGenerator extends Generator {
     }
 
 
-    writing() {
+    async writing() {
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
         this.queueTransformStream([
             rename( (path: any) => {
@@ -227,6 +264,10 @@ export default class CicdGenerator extends Generator {
                 { config: this.appConfig }
             );
         }
+
+        let token = await getParameter("token");
+        writeChart(token,this.appConfig.name,this.appConfig.tagOwner,this.appConfig.tagTribu)
+  
     }
 
     install() {
