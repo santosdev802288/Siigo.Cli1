@@ -263,10 +263,12 @@ export default class CicdGenerator extends Generator {
                 this.destinationPath('.docker'),
                 { config: this.appConfig }
             );
+        } else {
+            let token = await getParameter("token");
+            await writeChart(token,this.appConfig.name,this.appConfig.tagOwner,this.appConfig.tagTribu)
         }
 
-        let token = await getParameter("token");
-        writeChart(token,this.appConfig.name,this.appConfig.tagOwner,this.appConfig.tagTribu)
+        
   
     }
 
