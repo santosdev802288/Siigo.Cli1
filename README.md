@@ -53,13 +53,13 @@ Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_use
 ## ⚡ Generators
 
  - [Golang](#🔥-golang)
-   * [new project](#1.-new-project)
+   * [new project](#1-new-project)
  - [NodeJs](#‍👩‍🏫-nodejs)
-   * [new project](#1.-new-project)
-   * [basic module](#2.-new-basic-module)
+   * [new project](#1-new-project)
+   * [basic module](#2-new-basic-module)
  - [.Net Core](#👨‍🏫-.net-core)
-   * [new project](#1.-new-net-core-project)
-   * [create commands and queries](#2.-CQRS)
+   * [new project](#1-new-net-core-project)
+   * [create commands and queries](#2-CQRS)
  - [.Net 5 grpc client](#🗿-.net-5-grpc-client)
  - [.Net 5 grpc server](#💪-.net-5-grpc-server)
  - [CICD](#🚀-cicd)
