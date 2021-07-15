@@ -1,0 +1,1246 @@
+[
+  {
+    "vp": "HECTOR BECERRA",
+    "tribes" : [
+      {
+        "name": "ALIADOS",
+        "groups": [
+          {
+            "group_name": "TEAM_SQ1",
+            "members": [
+              {
+                "lead": {
+                  "name": "CRISTIAN ANDRES COLLAZOS RUIZ",
+                  "user": "coll33772@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Carlos Jose Manosalva Rivera",
+                    "user": "mano112374@siigo.com"
+                  },
+                  {
+                    "name": "Ricardo David Maya Herrera",
+                    "user": "maya800656@siigo.com"
+                  },
+                  {
+                    "name": "Jose Julio Tobar Cifuentes",
+                    "user": "toba112170@siigo.com"
+                  },
+                  {
+                    "name": "Jorge Anibal Pinargote Figueroa",
+                    "user": "toba112170@siigo.com"
+                  },
+                  {
+                    "name": "Joan Manuel Rivera",
+                    "user": "rive112246@siigo.com"
+                  },
+                  {
+                    "name": "Edilberto Rivera Pacheco",
+                    "user": "rive267209@siigo.com"
+                  },
+                  {
+                    "name": "Laura Yolima Perez",
+                    "user": "pere800410@siigo.com"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "group_name": "TEAM_SQ2",
+            "members": [
+              {
+                "lead": {
+                  "name": "JEIMMY SUSANA BONILLA MENDEZ",
+                  "user": "boni110110@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Fernando Jose Araujo Figueroa",
+                    "user": "arau800731@siigo.com"
+                  },
+                  {
+                    "name": "Laura Girleza Martinez Sandoval",
+                    "user": "mart800976@siigo.com"
+                  },
+                  {
+                    "name": "Heliberto Antonio Obando Pomeo",
+                    "user": "oban111741@siigo.com"
+                  },
+                  {
+                    "name": "Osler Nicolas Garcia Muñoz",
+                    "user": "garc801140@siigo.com"
+                  },
+                  {
+                    "name": "Geancarlo Murillo Mendoza",
+                    "user": "muri800587@siigo.com"
+                  },
+                  {
+                    "name": "Francy Idaly Muelas Muelas",
+                    "user": "muel800237@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "E_LATAM_ETERNALS",
+        "groups": [
+          {
+            "group_name": "TEAM_E_LATAM1",
+            "members": [
+              {
+                "lead": {
+                  "name": "EDGAR FABIAN RUANO DAZA",
+                  "user": "ruan33771@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Carlos Andres Burbano Palechor",
+                    "user": "burb800750@siigo.com"
+                  },
+                  {
+                    "name": "Luis Eduardo Bonilla Torres",
+                    "user": "boni800675@siigo.com"
+                  },
+                  {
+                    "name": "Julian David Jimenez Marin",
+                    "user": "jime111965@siigo.com"
+                  },
+                  {
+                    "name": "Yonatan Orlando Cuervo Camargo",
+                    "user": "cuer800676@siigo.com"
+                  },
+                  {
+                    "name": "Fredy Alberto Cardenas Bolaños",
+                    "user": "card800409@siigo.com"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "group_name": "TEAM_E_LATAM2",
+            "members": [
+              {
+                "lead": {
+                  "name": "DIEGO ARMANDO ALZATE RIOS",
+                  "user": "alza111967@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Cristhian Camilo Moreno Chaparro",
+                    "user": "more801255@siigo.com"
+                  },
+                  {
+                    "name": "Durley Andres Ramos Riaño",
+                    "user": "more801255@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "DEMOB_POS",
+        "groups": [
+          {
+            "group_name": "DEMOB_POS",
+            "members": [
+              {
+                "lead": {
+                  "name":"JOSE DIEGO ROMERO NOVOA",
+                  "user": "rome194334@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Diana Marcela Camacho",
+                    "user": "cama800502@siigo.com"
+                  },
+                  {
+                    "name": "Christiam Omaña",
+                    "user": "oman112360@siigo.com"
+                  },
+                  {
+                    "name": "Jose Luis Rodriguez",
+                    "user": "rodr800781@siigo.com"
+                  },
+                  {
+                    "name": "Jose Rafael Altamar",
+                    "user": "alta800763@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "MONOBUSTERS_MICROSERVICES",
+        "groups": [
+          {
+            "group_name": "TEAM_MICROS_1",
+            "members": [
+              {
+                "lead": {
+                  "name": "EDISON ARLEY PLAZA MARIN",
+                  "user": "plaz230680@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Juan Diego Romero Bocourt",
+                    "user": "rome112432@siigo.com"
+                  },
+                  {
+                    "name": "Sergio Luis Cortina Bassa",
+                    "user": "cort801132@siigo.com"
+                  },
+                  {
+                    "name": "Yilmer Ramiro Guativa Rincon",
+                    "user": "guat801261@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ARQUITECTURA",
+        "groups": [
+          {
+            "group_name": "TEAM_SERVERLESS",
+            "members": [
+              {
+                "lead": {
+                  "name": "ANDRES CAMILO JIMENEZ ALVAREZ",
+                  "user": "jime112372@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Wiliam Alexis Ruano",
+                    "user": "ruan111493@siigo.com"
+                  },
+                  {
+                    "name": "Edison Armando Quintero",
+                    "user": "quin111915@siigo.com"
+                  },
+                  {
+                    "name": "Andrés Felipe Navia",
+                    "user": "navi800904@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "vp": "FERNANDO GUTIERREZ",
+    "tribes" : [
+      {
+        "name": "ARQUITECTURA",
+        "groups": [
+          {
+            "group_name": "Cloud Native",
+            "members": [
+              {
+                "lead": {
+                  "name": "Miguel Oswaldo Velasquez Fragiel",
+                  "user": "vela801415@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Francisco Javier Anacona Campo",
+                    "user": "anac800776@siigo.com"
+                  },
+                  {
+                    "name": "Juan Sebastian Navarro Avila",
+                    "user": "nava801192@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "NOMINA",
+        "groups": [
+          {
+            "group_name": "TEAM_NOMINA",
+            "members": [
+              {
+                "lead": {
+                  "name": "IVAN DARIO CORCHUELO CASTRO",
+                  "user": "corc111536@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Jhonatan Sosapanta",
+                    "user": "sosa800026@siigo.com"
+                  },
+                  {
+                    "name": "Johan Ordoñez",
+                    "user": "ordo112245@siigo.com"
+                  },
+                  {
+                    "name": "Yury Martinez",
+                    "user": "mart28509@siigo.com"
+                  },
+                  {
+                    "name": "Luis Ernesto Parrado",
+                    "user": "parr112358@siigo.com"
+                  },
+                  {
+                    "name": "Anyela Rivera",
+                    "user": "rive800411@siigo.com"
+                  },
+                  {
+                    "name": "Wilmer Andres Camacho",
+                    "user": "cama800838@siigo.com"
+                  },
+                  {
+                    "name": "Julio Luna",
+                    "user": "luna801139@siigo.com"
+                  },
+                  {
+                    "name": "Mariana Palencia",
+                    "user": "pale801219@siigo.com"
+                  }
+                ]
+              },
+              {
+                "lead": {
+                  "name": "LUIS ERNESTO PARRADO ORTIZ",
+                  "user": "parr112358@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Johnny Ordoñez",
+                    "user": "ordo801157@siigo.com"
+                  },
+                  {
+                    "name": "Oscar Mauricio García",
+                    "user": "garc800501@siigo.com"
+                  },
+                  {
+                    "name": "Jair Buitron",
+                    "user": "buit801189@siigo.com"
+                  },
+                  {
+                    "name": "Manuel Lagos",
+                    "user": ""
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ALIANZAS_E_INTEGRACIONES",
+        "groups": [
+          {
+            "group_name": "TEAM_ALLIENS",
+            "members": [
+              {
+                "lead": {
+                  "name": "EDWIN FERMIN GOMEZ QUIÑONEZ",
+                  "user": "gome33773@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Sindy Paola Lasso",
+                    "user": "lass112171@siigo.com"
+                  },
+                  {
+                    "name": "Nicolás Alejandro Sarmiento",
+                    "user": "sarm32254@siigo.com"
+                  },
+                  {
+                    "name": "Jonathan Andrés Cárdenas",
+                    "user": "card800398@siigo.com"
+                  },
+                  {
+                    "name": "Jorge Andres Gutierrez Chavez",
+                    "user": "guti800500@siigo.com"
+                  },
+                  {
+                    "name": "Neider Alejandro Fajardo Cardona",
+                    "user": "faja800747@siigo.com"
+                  },
+                  {
+                    "name": "Martin Alonso Vivanco",
+                    "user": "viva112361@siigo.com"
+                  },
+                  {
+                    "name": "David Santiago Corchuelo",
+                    "user": "corc800972@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "STARK_PAYMENTS",
+        "groups": [
+          {
+            "group_name": "TEAM_PAYMENTS",
+            "members": [
+              {
+                "lead": {
+                  "name": "ALVIN DIAZ GUERRERO",
+                  "user": "diaz111786@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Astrid Gisell Duque Rico",
+                    "user": "duqu800273@siigo.com"
+                  },
+                  {
+                    "name": "Bryan Oswaldo Garcés Murillo",
+                    "user": "garc800557@siigo.com"
+                  },
+                  {
+                    "name": "Carlos Anthony Sesme Vera",
+                    "user": "sesm800562@siigo.com"
+                  },
+                  {
+                    "name": "Miller Andres Mera Inga",
+                    "user": "mera800240@siigo.com"
+                  },
+                  {
+                    "name": "Leyla Cristina Goyeneche Gordillo",
+                    "user": "goye800761@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "STARK_INTEGRATIONS",
+        "groups": [
+          {
+            "group_name": "TEAM_INTEGRATIONS",
+            "members": [
+              {
+                "lead": {
+                  "name": "DIEGO ANDRES MONTOYA BLANDON",
+                  "user": "mont801257@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Miller Padilla Mallory Muñoz",
+                    "user": "padi111572@siigo.com"
+                  },
+                  {
+                    "name": "Omar Lozano Hamilton Jojoa",
+                    "user": "loza110259@siigo.com"
+                  },
+                  {
+                    "name": "Juan Chaparro",
+                    "user": ""
+                  },
+                  {
+                    "name": "Angie Johanna Gomez",
+                    "user": "gome111881@siigo.com"
+                  },
+                  {
+                    "name": "Mallory Julieth Muñoz",
+                    "user": "muno800239@siigo.com"
+                  },
+                  {
+                    "name": "Luis Alberto Ramirez",
+                    "user": "rami27284@siigo.com"
+                  }
+                ]
+              },
+              {
+                "lead": {
+                  "name": "CARLOS JAVIER MENDEZ VERA",
+                  "user": "mend110124@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Jhony Alexander Alzate",
+                    "user": "alza801298@siigo.com"
+                  },
+                  {
+                    "name": "Cristian Fernando Clavijo",
+                    "user": "clav801138@siigo.com"
+                  },
+                  {
+                    "name": "Hamilton Daniel Jojoa",
+                    "user": "jojo801190@siigo.com"
+                  },
+                  {
+                    "name": "Manuel Andres Solano",
+                    "user": "sola197201@siigo.com"
+                  },
+                  {
+                    "name": "Juan Camilo Chaparro Riveros",
+                    "user": ""
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "vp": "JAIME ADALBERTO LOPEZ VIVAS",
+    "tribes" : [
+      {
+        "name": "EXPANSE_LATAM",
+        "groups": [
+          {
+            "group_name": "TEAM_EXPANSE",
+            "members": [
+              {
+                "lead": {
+                  "name": "ANDRES FELIPE RUIZ VELASCO",
+                  "user": "ruiz109069@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Manuel Fernando Zambrano",
+                    "user": "zamb110112@siigo.com"
+                  },
+                  {
+                    "name": "Cesar David Fernández",
+                    "user": "fern800823@siigo.com"
+                  },
+                  {
+                    "name": "Deiber Gaviria Alvarado",
+                    "user": "gavi801141@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "FSOCIETY",
+        "groups": [
+          {
+            "group_name": "TEAM_FSOCIETY",
+            "members": [
+              {
+                "lead": {
+                  "name": "GUSTAVO ADOLFO VILLADA TAPIAS",
+                  "user": "villa111772@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Ivonne Carolina Barco Enrique",
+                    "user": "barc801142@siigo.com"
+                  },
+                  {
+                    "name": "Daniel Felipe Marin Zuniga",
+                    "user": "mari801148@siigo.com"
+                  },
+                  {
+                    "name": "Daniel Alejandro Armijos Bustamante",
+                    "user": "armi801260@siigo.com"
+                  },
+                  {
+                    "name": "Ivan Alejandro Mera Maldonado",
+                    "user": "mera800599@siigo.com"
+                  },
+                  {
+                    "name": "Mary Stella Rojas Brausin",
+                    "user": "roja197251@siigo.com"
+                  },
+                  {
+                    "name": "Yudy Natali Leon Barrera",
+                    "user": "leon110018@siigo.com"
+                  },
+                  {
+                    "name": "Ana Rita Ortiz Herrera",
+                    "user": "orti4123@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "REVOLUTION_LATAM",
+        "groups": [
+          {
+            "group_name": "TEAM_REVOLUTION_1",
+            "members": [
+              {
+                "lead": {
+                  "name": "HERNAN CAMILO GOMEZ RUIZ",
+                  "user": "gome109070@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Anyeliz Beatriz Rico",
+                    "user": "rico112357@siigo.com"
+                  },
+                  {
+                    "name": "Andres Felipe Gutierrez Vivas",
+                    "user": "guti800973@siigo.com"
+                  },
+                  {
+                    "name": "Fernando Apupalo",
+                    "user": "apup800584@siigo.com"
+                  },
+                  {
+                    "name": "Kattya Roxana Desiderio",
+                    "user": "desi800636@siigo.com"
+                  },
+                  {
+                    "name": "Juan Carlos Guarin",
+                    "user": "guar111806@siigo.com"
+                  },
+                  {
+                    "name": "Nataly Quintana Bernal",
+                    "user": "quin15301@siigo.com"
+                  },
+                  {
+                    "name": "Luis Arturo Romero",
+                    "user": "rome199139@siigo.com"
+                  },
+                  {
+                    "name": "Chrisitan Arnulfo Burbano",
+                    "user": "burb800024@siigo.com"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "group_name": "TEAM_REVOLUTION_2",
+            "members": [
+              {
+                "lead": {
+                  "name": "FRANCISCO JOSE BOHORQUEZ TORRES",
+                  "user": "boho111805@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Hugo Ernesto Cruz Casallas",
+                    "user": "cruz108411@siigo.com"
+                  },
+                  {
+                    "name": "Necker Iván Espinosa Feijoo",
+                    "user": "espi800662@siigo.com"
+                  },
+                  {
+                    "name": "Diego Romario Palomeque Gómez",
+                    "user": "palo800574@siigo.com"
+                  },
+                  {
+                    "name": "Andrés Sebastian Rebolledo Sierra",
+                    "user": "rebo801259@siigo.com"
+                  },
+                  {
+                    "name": "Ángel Camilo Chávez Moreno",
+                    "user": "chav800618@siigo.com"
+                  },
+                  {
+                    "name": "Manuel Fernando Salazar Diaz",
+                    "user": "sala111498@siigo.com"
+                  },
+                  {
+                    "name": "Nury Astrid Chicue Cruz",
+                    "user": "achi800777@siigo.com"
+                  },
+                  {
+                    "name": "Kely Andrea Diaz Granados",
+                    "user": "diaz801136@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ARQUITECTURA",
+        "groups": [
+          {
+            "group_name": "TEAM_T4",
+            "members": [
+              {
+                "lead": {
+                  "name": "DAVID FELIPE PENAGOS MOSQUERA",
+                  "user": "pena110109@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Luis Felipe Roa Rosero",
+                    "user": "roar111743@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "DESING_SYSTEM",
+        "groups": [
+          {
+            "group_name": "TEAM_DSM",
+            "members": [
+              {
+                "lead": {
+                  "name": "JAIRO ANDRES MENDIETA REYES",
+                  "user": "mend112186@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Geraldine Claros Rios",
+                    "user": "clar801067@siigo.com"
+                  },
+                  {
+                    "name": "Luis Carlos Zuñiga Chalapud",
+                    "user": "zuni800756@siigo.com"
+                  },
+                  {
+                    "name": "Faber David Narvaez Tobar",
+                    "user": "narv800977@siigo.com"
+                  },
+                  {
+                    "name": "Martha Liliana Ospina Murillo",
+                    "user": "ospi800831@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "vp": "JUAN FRANCISCO LAVAYEN",
+    "tribes" : [
+      {
+        "name": "INVENTORY_LATAM",
+        "groups": [
+          {
+            "group_name": "TEAM_INVENTORY",
+            "members": [
+              {
+                "lead": {
+                  "name": "ANDREA DUQUE BOTERO",
+                  "user": "duqu110111@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Miguel Alexis Solano",
+                    "user": "sola800822@siigo.com"
+                  },
+                  {
+                    "name": "Haider Esteba Rincon",
+                    "user": "rinc800975@siigo.com"
+                  },
+                  {
+                    "name": "Marlon Stuart Suarez",
+                    "user": "suar800974@siigo.com"
+                  },
+                  {
+                    "name": "Cindy Eleana Madrid",
+                    "user": "madr800564@siigo.com"
+                  },
+                  {
+                    "name": "Laura Camila Narvaez",
+                    "user": "narv800238@siigo.com"
+                  },
+                  {
+                    "name": "Marien Carolina Diaz Analista Funcional",
+                    "user": "diaz112259@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ARQUITECTURA_CONTIFICO",
+        "groups": [
+          {
+            "group_name": "TEAM_ARQUITECTURA_CONTIFICO",
+            "members": [
+              {
+                "lead": {
+                  "name": "ISRAEL ANDRES FERNANDEZ ARMIJOS",
+                  "user": "fern800597@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Andres Alberto Gomez Bano",
+                    "user": "gome800550@siigo.com\n"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "vp": "MARCOS LIZARRAGA",
+    "tribes" : [
+      {
+        "name": "STARK_PROCESS",
+        "groups": [
+          {
+            "group_name": "TEAM_PROCESS",
+            "members": [
+              {
+                "lead": {
+                  "name": "CESAR EDUARDO LOPEZ SUESCUN",
+                  "user": "lope25642@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Daniel Santiago Cantor",
+                    "user": "cant800278@siigo.com"
+                  },
+                  {
+                    "name": "Henry Alejandro Saa Garcia",
+                    "user": "saag800721@siigo.com"
+                  },
+                  {
+                    "name": "Jose Enrique Rangel",
+                    "user": "rang801264@siigo.com"
+                  },
+                  {
+                    "name": "Wilmar Francisco Martínez",
+                    "user": "mart800749@siigo.com"
+                  },
+                  {
+                    "name": "Jhon Jairo Riaño",
+                    "user": "rian801150@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "vp": "JESUS SANCHEZ NAVA",
+    "tribes" : [
+      {
+        "name": "INFRAESTRUCTURA",
+        "groups": [
+          {
+            "group_name": "TEAM_SRE",
+            "members": [
+              {
+                "lead": {
+                  "name": "JHON EMMANUEL ZUÑIGA PAREDES",
+                  "user": "zuni230669@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "David Rosero Calle",
+                    "user": "rose800399@siigo.com"
+                  },
+                  {
+                    "name": "Jesus Gaibor",
+                    "user": "gaib800609@siigo.com"
+                  },
+                  {
+                    "name": "Juan David Correa Malagon",
+                    "user": "corr112460@siigo.com"
+                  },
+                  {
+                    "name": "Michael Andres Casallas Malagon",
+                    "user": "casa112526@siigo.com"
+                  },
+                  {
+                    "name": "Daniel Ovalle Salamanca",
+                    "user": "oval801152@siigo.com"
+                  },
+                  {
+                    "name": "Armando Zarate Mallarino",
+                    "user": "zara801191@siigo.com"
+                  },
+                  {
+                    "name": "Marco Antonio Ortega Piedrahita",
+                    "user": "orte801262@siigo.com"
+                  },
+                  {
+                    "name": "Juan Nikolas Chaparro Diaz",
+                    "user": "chap801263@siigo.com"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "group_name": "TEAM_SEGURIDAD",
+            "members": [
+              {
+                "lead": {
+                  "name": "JOSE MARIO GOMEZ",
+                  "user": "gome111689@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Yors Aranda",
+                    "user": "aran111713@siigo.com"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "group_name": "TEAM_CLOUD",
+            "members": [
+              {
+                "lead": {
+                  "name": "JOSE MANUEL DAVID",
+                  "user": "davi800971@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Oscar Mejia",
+                    "user": "meji111988@siigo.com"
+                  },
+                  {
+                    "name": "Miguel Palencia",
+                    "user": "pale110000@siigo.com"
+                  },
+                  {
+                    "name": "Fredy Ojeda",
+                    "user": "ojed801311@siigo.com"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "group_name": "TEAM_DBA",
+            "members": [
+              {
+                "lead": {
+                  "name": "FABIAN DAVID CARREÑO",
+                  "user": "carr800499@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Andres Felipe Bedoya Valencia",
+                    "user": "bedo801016@siigo.com"
+                  }
+                ]
+              },
+              {
+                "lead": {
+                  "name": "CESAR JULIAN RIVERA",
+                  "user": "rive33774@siigo.com"
+                },
+                "team": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "vp": "CRISTAN LORENA PARDO",
+    "tribes" : [
+      {
+        "name": "PYME",
+        "groups": [
+          {
+            "group_name": "TEAM_PYME",
+            "members": [
+              {
+                "lead": {
+                  "name": "HECTOR ORLANDO BOGOYA AGUILAR",
+                  "user": "bogo4031@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Sandra Marcela Prieto Palacios",
+                    "user": "prie11813@siigo.com"
+                  },
+                  {
+                    "name": "Elsa Eugenia Gómez González",
+                    "user": "gome4071@siigo.com"
+                  },
+                  {
+                    "name": "Luz Mireya Niño Duran",
+                    "user": "nino16038@siigo.com"
+                  },
+                  {
+                    "name": "Alexander Troncoso Morales",
+                    "user": "tron110078@siigo.com"
+                  },
+                  {
+                    "name": "Oscar Andres Niño Ávila",
+                    "user": "nino109924@siigo.com"
+                  },
+                  {
+                    "name": "Oscar Daniel Oñate Castilla",
+                    "user": "onat112340@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "vp": "CRISTIAN PARDO",
+    "tribes" : [
+      {
+        "name": "CONTIFICO_RAPTORS",
+        "groups": [
+          {
+            "group_name": "TEAM_CONTIFICO_2",
+            "members": [
+              {
+                "lead": {
+                  "name": "JORGE LUIS SALAS",
+                  "user": "sala800604@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Geomar Delgado",
+                    "user": "delg800588@siigo.com"
+                  },
+                  {
+                    "name": "Evelyn Gabriela Diaz",
+                    "user": "diaz800704@siigo.com"
+                  },
+                  {
+                    "name": "Bryan Gurumendi",
+                    "user": "guru800555@siigo.com"
+                  },
+                  {
+                    "name": "Angel Pineda",
+                    "user": "pine800551@siigo.com"
+                  },
+                  {
+                    "name": "Eddie Hurtado",
+                    "user": "hurt800575@siigo.com"
+                  },
+                  {
+                    "name": "Hernan Diaz",
+                    "user": "diaz800593@siigo.com"
+                  },
+                  {
+                    "name": "Jeffrey Prado",
+                    "user": "prad800607@siigo.com"
+                  },
+                  {
+                    "name": "Karen Borbor",
+                    "user": "borb800628@siigo.com"
+                  },
+                  {
+                    "name": "Marcos Rios",
+                    "user": "rios800649@siigo.com"
+                  },
+                  {
+                    "name": "Miguel Palacios",
+                    "user": "pala800660@siigo.com"
+                  },
+                  {
+                    "name": "Sophia Gomez",
+                    "user": "gome800637@siigo.com"
+                  },
+                  {
+                    "name": "Steffany Vallejo",
+                    "user": "vall800635@siigo.com"
+                  },
+                  {
+                    "name": "Vanessa Heredia",
+                    "user": "here800579@siigo.com"
+                  },
+                  {
+                    "name": "Victor Marquez",
+                    "user": "marq800627@siigo.com"
+                  },
+                  {
+                    "name": "Cristian Collazos",
+                    "user": "coll800025@siigo.com"
+                  },
+                  {
+                    "name": "Mauricio Aguilera",
+                    "user": "agui800987@siigo.com"
+                  },
+                  {
+                    "name": "Sergio Moncayo",
+                    "user": "monc801009@siigo.com"
+                  },
+                  {
+                    "name": "Xavier Pesantes",
+                    "user": "pesa800883@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "vp": "FERNANDO BALVUENA RECIO",
+    "tribes" : [
+      {
+        "name": "ILIMITADA",
+        "groups": [
+          {
+            "group_name": "TEAM_ILIMITADA",
+            "members": [
+              {
+                "lead": {
+                  "name": "AIDE MARCELA ZULUAGA CASTAÑO",
+                  "user": "zulu111972@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Edwin Castañeda Olave",
+                    "user": "cast111961@siigo.com"
+                  },
+                  {
+                    "name": "Manuel Alejandro Correa",
+                    "user": "corr111981@siigo.com"
+                  },
+                  {
+                    "name": "Andrés Gutiérrez Bello",
+                    "user": "guti111975@siigo.com"
+                  },
+                  {
+                    "name": "Lucia Sepulveda Zabala",
+                    "user": "sepu111980@siigo.com"
+                  },
+                  {
+                    "name": "Sebasitan Raigosa Mejia",
+                    "user": "raig111984@siigo.com"
+                  },
+                  {
+                    "name": "Juan Diego Ortiz Orozco",
+                    "user": "orti111978@siigo.com"
+                  },
+                  {
+                    "name": "Leidy Viviana Montoya",
+                    "user": "mont111927@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "vp": "",
+    "tribes" : [
+      {
+        "name": "MEMORY",
+        "groups": [
+          {
+            "group_name": "TEAM_MEMORY_1",
+            "members": [
+              {
+                "lead": {
+                  "name": "GERMAN RIZZI",
+                  "user": ""
+                },
+                "team": []
+              },
+              {
+                "lead": {
+                  "name": "HERNAN FAGGIANI",
+                  "user": ""
+                },
+                "team": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "vp": "MIGUEL ANGEL SUAREZ HERNANDEZ",
+    "tribes" : [
+      {
+        "name": "AUTOMATIZACION",
+        "groups": [
+          {
+            "group_name": "TEAM_DATA_ANALYTIC",
+            "members": [
+              {
+                "lead": {
+                  "name": "MIGUEL ANGEL ARIAS DIAZ",
+                  "user": "aria4016@siigo.com"
+                },
+                "team": [
+                  {
+                    "name": "Juan David López",
+                    "user": "lope112166@siigo.com"
+                  },
+                  {
+                    "name": "Rafael Alejandro Espinosa",
+                    "user": "espi801300@siigo.com"
+                  },
+                  {
+                    "name": "James Valencia",
+                    "user": "vale262268@siigo.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "vp": "",
+    "tribes" : [
+      {
+        "name": "CONTIFICO",
+        "groups": [
+          {
+            "group_name": "TEAM_CONTIFICO_1",
+            "members": [
+              {
+                "lead": {
+                  "name": "EDDIE STEVEN HURTADO HERRERA",
+                  "user": ""
+                },
+                "team": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

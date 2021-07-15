@@ -1,0 +1,22 @@
+version: v1beta1
+name: buf.build/siigo/<%= config.name %>
+build:
+  roots:
+    - proto
+    - third_party/googleapis
+    - third_party/grpc-gateway
+lint:
+  use:
+    - DEFAULT
+  ignore_only:
+    PACKAGE_DIRECTORY_MATCH:
+      - services.proto
+    PACKAGE_VERSION_SUFFIX:
+      - services.proto
+    RPC_REQUEST_RESPONSE_UNIQUE:
+      - services.proto
+    RPC_RESPONSE_STANDARD_NAME:
+      - services.proto
+deps:
+  - buf.build/beta/googleapis
+  - buf.build/grpc-ecosystem/grpc-gateway

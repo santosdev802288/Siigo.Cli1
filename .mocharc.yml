@@ -1,0 +1,5 @@
+extension: ["ts"]
+parallel: true
+require: "ts-node/register"
+timeout: 60000
+

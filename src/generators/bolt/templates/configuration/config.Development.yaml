@@ -1,0 +1,9 @@
+kafka:
+  "bootstrap.servers": "qakafka.siigo.com:9094"
+  "group.id": "greeterSvcLocal"
+  "auto.offset.reset": "earliest"
+
+mongo:
+  connectionString: "mongodb+srv://siigo-dev:S6bmGkLnaGpGgBJQ@siigo-dev.u7fhi.azure.mongodb.net/dbGoArchetype?retryWrites=true&w=majority"
+  database: "dbGoArchetype"
+  collection: "test"

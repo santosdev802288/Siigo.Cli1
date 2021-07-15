@@ -1,0 +1,4 @@
+kafka:
+  "bootstrap.servers": "broker-kafka-external-bootstrap.kafka-system.svc.cluster.local:9094"
+  "group.id": "greeterSvcLocal"
+  "auto.offset.reset": "earliest"

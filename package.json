@@ -1,17 +1,27 @@
 {
   "name": "generator-siigo",
-  "version": "2.0.6",
-  "description": "generator archetype siigo",
-  "main": "index.js",
+  "version": "2.2.0",
+  "description": "Generator archetype siigo",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm run clean && nodemon --config nodemon.json --exec npm run build",
+    "build": "tsc && node .scripts/copy-files",
+    "clean": "rimraf dist/",
+    "lint": "eslint \"{src,test}/**/*.ts\"",
+    "release": "standard-version --header \"# Changelog\n\nAll notable changes to this project.\n\"",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --spec test/**/*.spec.ts",
+    "test:debug": "mocha --inspect-brk --spec test/**/*.spec.ts",
+    "coverage": "nyc --reporter lcov --reporter text --report-dir .nyc_output npm run test",
+    "prepare": "husky install",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "repository": {
     "type": "git",
     "url": "https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli"
   },
-  "author": "Juan David Correa",
-  "license": "ISC",
+  "author": "Arquitectura",
+  "license": "UNLICENSED",
   "bugs": {
     "url": "https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli"
   },
@@ -27,25 +37,63 @@
     "s9s"
   ],
   "dependencies": {
+    "@azure/storage-blob": "^12.6.0",
+    "@nodesiigo/siigosay": "^1.0.0",
     "chalk": "^3.0.0",
+    "colors": "^1.4.0",
     "decamelize": "^3.2.0",
+    "fuzzy": "^0.1.3",
     "gulp-rename": "1.2.2",
+    "inquirer": "^8.1.1",
+    "inquirer-autocomplete-prompt": "^1.3.0",
     "json-colorizer": "^2.2.2",
+    "jsonfile": "^6.1.0",
+    "lodash": "^4.17.21",
+    "node-fetch": "^2.6.1",
+    "prompt": "^1.1.0",
     "replace-in-file": "^4.2.0",
     "shelljs": "^0.8.4",
-    "svg-term-cli": "^2.1.1",
-    "update-notifier": "^4.0.0",
+    "update-notifier": "^5.1.0",
     "uppercamelcase": "^3.0.0",
-    "yeoman-generator": "^4.2.0",
+    "yeoman-generator": "^5.3.0",
     "yosay": "^2.0.2"
   },
   "devDependencies": {
-    "commitizen": "^4.0.3",
-    "cz-conventional-changelog": "^3.0.2"
+    "@types/gulp-rename": "^2.0.0",
+    "@types/mocha": "^8.2.3",
+    "@types/prompt": "^1.1.0",
+    "@types/shelljs": "^0.8.9",
+    "@types/yeoman-assert": "^3.1.1",
+    "@types/yeoman-generator": "^5.0.0",
+    "@types/yeoman-test": "^4.0.2",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.30.0",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "husky": "^5.1.0",
+    "mocha": "^9.0.1",
+    "nodemon": "^2.0.12",
+    "nyc": "^15.1.0",
+    "rimraf": "^3.0.2",
+    "standard-version": "^9.3.0",
+    "svg-term-cli": "^2.1.1",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.5",
+    "yeoman-assert": "^3.1.1",
+    "yeoman-environment": "^3.4.1",
+    "yeoman-test": "^6.1.0"
   },
   "files": [
-    "generators",
-    "utils"
+    "dist"
+  ],
+  "publishFiles": [
+    "src/generators",
+    "src/utils",
+    "src/tribes"
   ],
   "config": {
     "commitizen": {

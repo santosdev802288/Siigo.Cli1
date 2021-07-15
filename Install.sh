@@ -1,9 +1,19 @@
 #!/bin/bash
-
-if [ "x${TOKEN}" = "x" ] ; then
-  printf "Unable to get personal access token. Set TOKEN env var and re-run. For example: export TOKEN=jtj4aa5b55oh3ahsj7rgpfage53ut2g7rs6msgedw4ekmy5mdtpq"
-  exit 1;
+if ! [ -x "$(command -v node)" ] ; then
+    echo "Please install <node> in your computer"
+    exit
 fi
+if ! [ -x "$(command -v git)" ] ; then
+    echo "Please install <git> in your computer"
+    exit
+fi
+if ! [ -x "$(command -v az)" ] ; then
+    echo "Please install <az cli> in your computer"
+    exit
+fi
+
+echo -n "Typing your personal token: "
+read TOKEN
 
 tokenOutput=$(node -e "b64=Buffer.from('$TOKEN'.trim()).toString('base64');console.log(b64);process.exit();")
 
@@ -22,5 +32,11 @@ cd "$HOME" || exit
   echo "; end auth token"
 } >> "$HOME"/.npmrc
 
-npm install --global yo
+echo "The installation process may be late, please wait ..."
+
+echo "Install Yeoman"
+npm list -g yo@^4.0.0 || npm install --global yo@^4.0.0
+
+echo "Install Siigo generator"
 npm i -g generator-siigo
+yo siigo:config --token $TOKEN
