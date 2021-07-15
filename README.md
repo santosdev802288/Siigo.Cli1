@@ -52,22 +52,23 @@ Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_use
 
 ## ⚡ Generators
 
- - [Golang](#🔥-golang)
-   * [new project](#1.-new-project)
- - [NodeJs](#‍👩‍🏫-nodejs)
-   * [new project](#1.-new-project)
-   * [basic module](#2.-new-basic-module)
- - [.Net Core](#👨‍🏫-.net-core)
-   * [new project](#1.-new-net-core-project)
-   * [create commands and queries](#2.-CQRS)
- - [.Net 5 grpc client](#🗿-.net-5-grpc-client)
- - [.Net 5 grpc server](#💪-.net-5-grpc-server)
- - [CICD](#🚀-cicd)
- - [Api Gateway](#🔱-api-gateway)
+- [Golang](#🔥-golang)
+  - [new project](#new-project)
+- [NodeJs](#‍👩‍🏫-nodejs)
+  - [new project](#new-project)
+  - [basic module](#new-basic-module)
+- [.Net Core](#👨‍🏫-.net-core)
+  - [new project](#new-net-core-project)
+  - [create commands and queries](#cqrs)
+- [.Net 5 grpc client](#🗿-.net-5-grpc-client)
+- [.Net 5 grpc server](#💪-.net-5-grpc-server)
+- [CICD](#🚀-cicd)
+- [Api Gateway](#🔱-api-gateway)
 
 ## 🔥 Golang
 
-### 1. New project
+### New project
+
 This command helps automating the creation of microservices with a minimal configuration in it.
 
 ### Using
@@ -110,7 +111,8 @@ Run *_yo siigo:bolt --help_* to see the configuration description, data type and
 
 ## ‍👩‍🏫 NodeJS
 
-### 1. New project
+### New project
+
 This command helps automating the creation of microservices with a minimal configuration in it.
 
 ### Using
@@ -155,7 +157,8 @@ Run *_yo siigo:node --help_* to see the configuration description, data type and
       -a,    --author         # Description for author                       Default: juancorrea
 
 
-#### 2. New basic module
+#### New basic module
+
 This command helps automating the creation of modules with solid principles. 
 
 #### Using
@@ -197,7 +200,8 @@ Run *_yo siigo:module --help_* to see the configuration description, data type a
 
 ## 👨‍🏫 .Net Core
 
-### 1. New net core project
+### New net core project
+
 This command helps automating the creation of microservices with a minimal configuration in it.
 
 #### Using
@@ -240,7 +244,9 @@ In the following [example](https://assetsdoc.blob.core.windows.net/assets/core.s
             --ask-answered    # Show prompts for already configured options                                  Default: false
             --name            # Project name                                                                 Default: MyMicro
             --personal-token  # Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens
-### 2. CQRS
+
+### CQRS
+
 Create queries and commands with their handlers quickly in your project.
 
 #### Using
