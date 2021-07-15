@@ -1,6 +1,6 @@
 {
   "name": "generator-siigo",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Generator archetype siigo",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,7 @@
     "build": "tsc && node .scripts/copy-files",
     "clean": "rimraf dist/",
     "lint": "eslint \"{src,test}/**/*.ts\"",
-    "release": "standard-version --skip.commit --skip.tag --header \"# Changelog\n\nAll notable changes to this project.\n\"",
+    "release": "standard-version --header \"# Changelog\n\nAll notable changes to this project.\n\"",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --spec test/**/*.spec.ts",
     "test:debug": "mocha --inspect-brk --spec test/**/*.spec.ts",
     "coverage": "nyc --reporter lcov --reporter text --report-dir .nyc_output npm run test",
