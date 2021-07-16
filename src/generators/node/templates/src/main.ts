@@ -7,7 +7,7 @@ import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger'
 async function boot() {
     const app = await NestFactory.create(AppModule)
     const contextPath = process.env.CONTEXT_PATH || 'api'
-    const defaultPort = 5000
+    const defaultPort = 5005
     const port = process.env.PORT || defaultPort
 
     app

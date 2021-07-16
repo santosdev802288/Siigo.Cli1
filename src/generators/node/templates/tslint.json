@@ -45,7 +45,7 @@
     "no-magic-numbers": true,
     "no-var-requires": true,
     "no-var-keyword": true,
-    "no-any": true,
+    "no-any": false,
     "switch-default": true,
     "arrow-return-shorthand": true,
     "triple-equals": true,
