@@ -102,13 +102,13 @@ siigo-chart:
   appsettings: { }
 
   labels:
-    owner: "CloudNative"
-    tribu: "A-Team"
+    owner: "<%= config.tagOwner %>"
+    tribu: "<%= config.tagTribu %>"
     tags:
       datadoghq:
         com:
-          tribu: A_TEAM_CN
-          owner: CloudNative
+          owner: <%= config.tagTribu %>
+          tribu: <%= config.tagOwner %>
 
     requiredLabels:
       tags:

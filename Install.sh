@@ -13,7 +13,7 @@ if ! [ -x "$(command -v az)" ] ; then
 fi
 
 echo -n "Typing your personal token: "
-read TOKEN
+read TOKEN < /dev/tty
 
 tokenOutput=$(node -e "b64=Buffer.from('$TOKEN'.trim()).toString('base64');console.log(b64);process.exit();")
 
