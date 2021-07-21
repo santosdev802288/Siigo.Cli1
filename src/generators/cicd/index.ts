@@ -1,16 +1,13 @@
 import getDirectoriesRecursive from "../../utils/walkProjects"
 import path from 'path'
 import Generator =  require('yeoman-generator');
-import rename from 'gulp-rename';
 import {exec as spawn} from 'child_process';
 import colorize from 'json-colorizer';
 import {req} from "../../utils/required-tools"
 import {siigosay} from '@nodesiigo/siigosay'
 import shell from "shelljs";
-import upgradeFile from '../../utils/upgrade'
 import {readTribesFile} from '../../utils/readTribes'
 import autocomplete from '../../utils/autocomplete'
-import createFile from '../../utils/createTribeDir'
 import fetch from "node-fetch";
 import fs from "fs";
 import { getParameter} from '../../utils/siigoFile';
@@ -153,27 +150,8 @@ export default class CicdGenerator extends Generator {
     }
 
     async prompting() {
-        const tribePath = './tribes/'
 
         this.tribes = await readTribesFile()
-        if (typeof this.tribes !== 'undefined' && this.tribes.length > 0) {
-            this.upgrade = await this.prompt([
-                {
-                    type: "confirm",
-                    name: "ok",
-                    message: "Do you want to upgrade the tribes.json file?"
-                }
-            ]);
-
-            if (this.upgrade.ok) {
-                console.log('\nUpgrading tribes.json file...')
-                await upgradeFile(tribePath, "tribes", "tribes.json")
-                console.log('\nUpgrade Complete!!')
-            }
-        } else {
-            await createFile(tribePath)
-            this.tribes = await readTribesFile()
-        }
 
         const select_tribe = await autocomplete(this.tribes)
 
@@ -236,18 +214,17 @@ export default class CicdGenerator extends Generator {
 
 
     async writing() {
-        // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
-        this.queueTransformStream([
-            rename( (path: any) => {
-                path.dirname = path.dirname.replace(/(chart)/g, this.appConfig.name)
-                path.basename = path.basename.replace(/(chart)/g, this.appConfig.name)
-            })
-        ]);
 
         this.fs.copyTpl(
             this.templatePath(".docker"),
             this.destinationPath(".docker"),
-            { config: this.appConfig }
+            { config: this.appConfig },
+            {},
+            {
+                processDestinationPath: (filePath) => {
+                    return filePath.replace(/(chart)/g, this.appConfig.name)
+                }
+            },
         );
 
         this.fs.copyTpl(
@@ -261,18 +238,25 @@ export default class CicdGenerator extends Generator {
             this.fs.copyTpl(
                 this.templatePath('.golang/.docker'),
                 this.destinationPath('.docker'),
-                { config: this.appConfig }
+                { config: this.appConfig },
+                {},
+                {
+                    processDestinationPath: (filePath) => {
+                        return filePath.replace(/(chart)/g, this.appConfig.name)
+                    }
+                },
             );
         } else {
             let token = await getParameter("token");
+            this.fs.commit(async error => {
+                if(error) this.log(`Error: ${error}`)
+            })
             await writeChart(token,this.appConfig.name,this.appConfig.tagOwner,this.appConfig.tagTribu)
         }
-
-        
-  
     }
 
-    install() {
+    async install() {
+        
         this.spawnCommandSync('git', ['checkout','-b','cicd']);
         this.spawnCommandSync('git', ['add','-A']);
         this.spawnCommandSync('git', ['commit','-m','cicd configuration']);
