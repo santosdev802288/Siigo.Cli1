@@ -1,7 +1,6 @@
 import getDirectoriesRecursive from "../../utils/walkProjects"
 import path from 'path'
 import Generator =  require('yeoman-generator');
-import rename from 'gulp-rename';
 import {exec as spawn} from 'child_process';
 import colorize from 'json-colorizer';
 import {req} from "../../utils/required-tools"
@@ -236,18 +235,17 @@ export default class CicdGenerator extends Generator {
 
 
     async writing() {
-        // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
-        this.queueTransformStream([
-            rename( (path: any) => {
-                path.dirname = path.dirname.replace(/(chart)/g, this.appConfig.name)
-                path.basename = path.basename.replace(/(chart)/g, this.appConfig.name)
-            })
-        ]);
 
         this.fs.copyTpl(
             this.templatePath(".docker"),
             this.destinationPath(".docker"),
-            { config: this.appConfig }
+            { config: this.appConfig },
+            {},
+            {
+                processDestinationPath: (filePath) => {
+                    return filePath.replace(/(chart)/g, this.appConfig.name)
+                }
+            },
         );
 
         this.fs.copyTpl(
@@ -265,14 +263,15 @@ export default class CicdGenerator extends Generator {
             );
         } else {
             let token = await getParameter("token");
-            await writeChart(token,this.appConfig.name,this.appConfig.tagOwner,this.appConfig.tagTribu)
+            this.fs.commit(async error => {
+                this.log(`Error? ${error}`)
+                await writeChart(token,this.appConfig.name,this.appConfig.tagOwner,this.appConfig.tagTribu)
+            })
         }
-
-        
-  
     }
 
-    install() {
+    async install() {
+        
         this.spawnCommandSync('git', ['checkout','-b','cicd']);
         this.spawnCommandSync('git', ['add','-A']);
         this.spawnCommandSync('git', ['commit','-m','cicd configuration']);
