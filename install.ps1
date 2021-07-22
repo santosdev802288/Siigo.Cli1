@@ -4,16 +4,41 @@ function Get-CheckRequirements {
     )
 
     foreach ($Parameter in $ParameterName) {
-        $isrequirementsInstalled = $null -ne ( (Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*) + (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*) | Where-Object { $null -ne $_.DisplayName -and $_.Displayname.Contains($Parameter) })
-
+        $isrequirementsInstalled = (Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*) + (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*) | Where-Object { $null -ne $_.DisplayName -and $_.Displayname.Contains($Parameter) }
+        # Write-Output $isrequirementsInstalled.VersionMinor
         If(!$isrequirementsInstalled)
         {   
-            Write-Output "Please install <$Parameter> in your computer  "
+            Write-Output "SiigoSay: Please install <$Parameter> in your computer"
+            Exit
+        }Else {
+            if ($Parameter -eq "Node") {
+                $vnode = 12
+                if($isrequirementsInstalled.VersionMajor -le $vnode){
+                    Write-Output "SiigoSay: NODE must be greater than or equal to $vnode"
+                    Exit
+                }
+            }
+            if ($Parameter -eq "Git") {
+                $vgit = 2
+                $vgitmin = 18
+                if($isrequirementsInstalled.VersionMajor -eq $vgit){
+                    if($isrequirementsInstalled.VersionMinor -le $vgitmin){
+                        Write-Output "SiigoSay: Git must be greater than or equal to $vgit.$vgitmin" 
+                        Exit
+                    }
+                }else {
+                    if($isrequirementsInstalled.VersionMajor -le $vgitmin){
+                        Write-Output "SiigoSay: Git must be greater than or equal to $vgit.$vgitmin" 
+                        Exit
+                    }
+                }
+            }
+            
         }
     }
 }
 
-Get-CheckRequirements -ParameterName Git, Node, Az
+Get-CheckRequirements -ParameterName "Node", Git, "Microsoft Azure CLI"
 
 $token = Read-Host "Input your token"
 $npmrcFile = ".npmrc"
