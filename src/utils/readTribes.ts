@@ -1,11 +1,13 @@
-const info_tribes = require("../tribes/tribes.json")
+import info_tribes from '../tribes/tribes.json'
+
+
 /**
  *
  * @description Reads a given tribes JSON file and returns an array
  * with information about the name and group of the obtained tribes
  */
 export const readTribesFile = async () =>{
-    let select_tribes: any = []
+    const select_tribes: any = []
     if (info_tribes != null && info_tribes.length > 0) {
         info_tribes.forEach((element: any) => {
             element.tribes.forEach((tribe: any) => {

@@ -44,7 +44,7 @@ export default class CoreMSGenerator extends MicroserviceGenerator {
 
     async _doPrompting() {
         let tokenf = await getParameter("token");
-        let updatetoken = this.options['token']
+        const updatetoken = this.options['token']
         if(tokenf == "pending" || updatetoken != null ) tokenf = await wizardsiigofile(updatetoken);
 
         // Save config

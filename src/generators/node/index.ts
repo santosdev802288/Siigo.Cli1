@@ -5,8 +5,11 @@ import {siigosay} from'@nodesiigo/siigosay'
 import shell from "shelljs"
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
 
-const _extend = require("lodash/extend")
-_extend(Generator.prototype, require("yeoman-generator/lib/actions/install"))
+import Generator = require('yeoman-generator');
+// @ts-expect-error FIXME: How to fix this?
+import install = require('yeoman-generator/lib/actions/install')
+import _extend from 'lodash/extend'
+_extend(Generator.prototype, install)
 
 
 export default class NodeMSGenerator extends MicroserviceGenerator {

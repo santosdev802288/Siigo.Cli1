@@ -1,16 +1,13 @@
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Generator'... Remove this comment to see the full error message
-const Generator = require('yeoman-generator/lib');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'capitalize... Remove this comment to see the full error message
-const capitalize = require('../../utils/capitalize')
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'rename'.
-const rename = require('gulp-rename');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'path'.
-const path = require('path');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'verifyNewV... Remove this comment to see the full error message
-const verifyNewVersion = require("../../utils/notification");
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'siigosay'.
-const {siigosay} = require('@nodesiigo/siigosay')
+import Generator = require('yeoman-generator');
+import {capitalize} from '../../utils/capitalize'
+import rename from 'gulp-rename';
+import path from 'path';
+import {verifyNewVersion} from "../../utils/notification";
+import {siigosay} from '@nodesiigo/siigosay'
+
+
 module.exports = class extends Generator {
+    appConfig: any;
 
     constructor(args: any, opt: any) {
         verifyNewVersion()
@@ -28,20 +25,17 @@ module.exports = class extends Generator {
         const name = currentPath.split(".").reverse()[0]
 
         this.option("name", {
-            required: false,
             description: "Project name",
             default: name,
             type: String
         })
 
         this.option("personal-token", {
-            required: true,
             description: "Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens",
             type: String
         })
 
         this.option("project-prefix", {
-            required: false,
             description: "Use this option to replace the prefix Siigo in the file names",
             default:"Siigo",
             type: String
@@ -69,7 +63,7 @@ module.exports = class extends Generator {
     }
 
     writing() {
-
+        // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
         this.queueTransformStream([
             rename((path: any) => {
                 const prefixChart = "ms-"

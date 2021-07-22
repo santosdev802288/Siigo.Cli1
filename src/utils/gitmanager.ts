@@ -1,8 +1,9 @@
 import fetch from "node-fetch";
 
+
 export async function getProjects(token: any) {
     const b64 = Buffer.from(token.trim() + ":").toString('base64');
-    var requestOptions = {
+    const requestOptions = {
         method: 'GET',
         headers: {
             Authorization: 'Basic ' + b64,
@@ -20,7 +21,7 @@ export async function getProjects(token: any) {
     catch (err) {
         console.log(("Token no es valido" as any).red);
     }
-    let projects = {};
+    const projects = {};
     (response as any).value.forEach((element: any) => {
         // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         projects[element.name] = element.id;
@@ -30,7 +31,7 @@ export async function getProjects(token: any) {
 
 export async function createRepository(token: any, name: any, idproject: any) {
     const b64 = Buffer.from(token.trim() + ":").toString('base64');
-    var myHeaders = new (fetch as any).Headers();
+    const myHeaders = new (fetch as any).Headers();
     myHeaders.append("Authorization", "Basic " + b64);
     myHeaders.append("Content-Type", "application/json");
     const raw = JSON.stringify({

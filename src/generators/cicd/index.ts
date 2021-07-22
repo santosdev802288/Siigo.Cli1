@@ -16,7 +16,7 @@ import { getParameter} from '../../utils/siigoFile';
 
 async function writeChart(token:any, projectName:string,tagOwner:string ,tagTribu: string) {
     const b64 = Buffer.from(token.trim() + ":").toString('base64');
-    var requestOptions = {
+    const requestOptions = {
         method: 'GET',
         headers: {
             Authorization: 'Basic ' + b64,
@@ -24,7 +24,7 @@ async function writeChart(token:any, projectName:string,tagOwner:string ,tagTrib
         redirect: 'follow'
     };
     // @ts-expect-error -migrate(2345) FIXME: Argument of type '{ method: string; headers: { Aut... Remove this comment to see the full error message
-    let response = await fetch("https://dev.azure.com/SiigoDevOps/Siigo/_apis/git/repositories/Siigo.Chart/items?path=values.yaml&download=true&api-version=6.0", requestOptions);
+    const response = await fetch("https://dev.azure.com/SiigoDevOps/Siigo/_apis/git/repositories/Siigo.Chart/items?path=values.yaml&download=true&api-version=6.0", requestOptions);
     //// @ts-expect-error ts-migrate(2322) FIXME: Type 'string' is not assignable to type 'Response'... Remove this comment to see the full error message
     let stringResponse:string = await response.text();
     stringResponse = stringResponse.replace("com: {}",
@@ -262,7 +262,7 @@ export default class CicdGenerator extends Generator {
                 { config: this.appConfig }
             );
         } else {
-            let token = await getParameter("token");
+            const token = await getParameter("token");
             this.fs.commit(async error => {
                 this.log(`Error? ${error}`)
                 await writeChart(token,this.appConfig.name,this.appConfig.tagOwner,this.appConfig.tagTribu)

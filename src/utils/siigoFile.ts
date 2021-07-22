@@ -56,7 +56,7 @@ async function typingToken(){
 function setSiigofile(token: string){
     shell.touch(pathHome)
     shell.exec(`echo token=${token} >> ${pathHome}`)
-    let b64 =Buffer.from(token.trim()).toString('base64')
+    const b64 =Buffer.from(token.trim()).toString('base64')
     shell.exec(`echo token64=${b64} >> ${pathHome}`)
     let resUser  = JSON.parse(shell.exec('az account show', {silent:true}).stdout).user.name
     resUser = resUser.replace("\n","").replace(" \r","")
@@ -67,7 +67,7 @@ function setSiigofile(token: string){
 export async function getParameter(parameter: keyof SiigoParameter) {
     let temp = "";
     if (shell.test('-f', pathHome)) {
-        let listPar = shell.cat(pathHome).split("\n")
+        const listPar = shell.cat(pathHome).split("\n")
         listPar.forEach(ele => {if (ele.includes(parameter+"=")){ temp=ele}})
         let resul = temp.replace(parameter+"=","")
         if(resul=="\n" || resul=="") { resul = "pending" }
@@ -81,7 +81,7 @@ export async function setParameter(parameter: any, value: any) {
     if (shell.test('-f', pathHome)) {
         shell.exec(`sed -i -e 's/${parameter}=.*/${parameter}=${value}/g' ${pathHome}`)
         if(parameter=="token") {
-            let b64 =Buffer.from(value.trim()).toString('base64')
+            const b64 =Buffer.from(value.trim()).toString('base64')
             shell.exec(`sed -i -e 's/${parameter+"64"}=.*/${parameter+"64"}=${b64}/g' ${pathHome}`)
         }
     }

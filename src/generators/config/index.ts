@@ -71,7 +71,7 @@ module.exports = class extends Generator {
             }
         ]);
         if (!this.answers.ready) {
-            let response = await this.prompt([
+            const response = await this.prompt([
                 {
                     type: 'list',
                     name: 'type',
@@ -81,7 +81,7 @@ module.exports = class extends Generator {
             ]);
             switch (response.type) {
                 case "token": {
-                    let res = await this.prompt([
+                    const res = await this.prompt([
                         {
                             type: 'string',
                             name: response.type,
@@ -98,7 +98,7 @@ module.exports = class extends Generator {
                     break;
                 }
                 case "name": {
-                    let res = await this.prompt([
+                    const res = await this.prompt([
                         {
                             type: 'string',
                             name: response.type,
@@ -111,12 +111,7 @@ module.exports = class extends Generator {
             }
         }
     }
-    writing() {
-    }
-    dependencies() {
-    }
-    install() {
-    }
+    
     end() {
         this.log(siigosay(`your siigofile has been updated`));
     }

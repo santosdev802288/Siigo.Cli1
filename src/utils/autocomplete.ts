@@ -2,8 +2,10 @@ import inquirer from 'inquirer';
 
 import * as fuzzy from 'fuzzy';
 import _ from 'lodash';
+import AutocompletePrompt from 'inquirer-autocomplete-prompt'
 
-inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
+
+inquirer.registerPrompt('autocomplete', AutocompletePrompt);
 
 /**
  *
@@ -35,11 +37,9 @@ export default function autocomplete (tribes: any) {
             },
             pageSize: 4,
             validate: function (choice: any) {
-                let valid;
-
                 const msg = 'You must type a valid Tribe!';
 
-                valid = choice && tribes.includes(choice.value)
+                const valid = choice && tribes.includes(choice.value)
 
                 return valid ? true : msg;
             },

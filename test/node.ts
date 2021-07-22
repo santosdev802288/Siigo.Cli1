@@ -1,20 +1,14 @@
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
-const assert = require('yeoman-assert');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'helpers'.
-const helpers = require('yeoman-test');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'fs'.
-const fs = require('fs')
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'path'.
-const path = require('path')
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'os'.
-const os = require('os')
+import assert from 'yeoman-assert';
+import helpers from 'yeoman-test';
+import fs from 'fs'
+import path from 'path'
+import os from 'os'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'GENERATOR_... Remove this comment to see the full error message
-const GENERATOR_FOLDER = '../generators/node'
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'GENERATOR'... Remove this comment to see the full error message
-const GENERATOR = require(GENERATOR_FOLDER)
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'NAMESPACE'... Remove this comment to see the full error message
+import GENERATOR from '../src/generators/node'
+
+const GENERATOR_FOLDER = '../src/generators/node'
 const NAMESPACE = 'siigo:node'
+
 
 describe(NAMESPACE, () => {
 
