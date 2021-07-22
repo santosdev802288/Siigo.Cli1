@@ -8,11 +8,12 @@ import {siigosay} from '@nodesiigo/siigosay'
 import shell from "shelljs";
 import upgradeFile from '../../utils/upgrade'
 import {readTribesFile} from '../../utils/readTribes'
-import autocomplete from '../../utils/autocomplete'
+import { autocompleteTribe, registerAutocomplete } from '../../utils/autocomplete'
 import createFile from '../../utils/createTribeDir'
 import fetch from "node-fetch";
 import fs from "fs";
 import { getParameter} from '../../utils/siigoFile';
+
 
 async function writeChart(token:any, projectName:string,tagOwner:string ,tagTribu: string) {
     const b64 = Buffer.from(token.trim() + ":").toString('base64');
@@ -149,6 +150,7 @@ export default class CicdGenerator extends Generator {
 
     async initializing() {
         this.log(siigosay(`Siigo Generator CICD.`))
+        registerAutocomplete(this)
     }
 
     async prompting() {
@@ -159,12 +161,12 @@ export default class CicdGenerator extends Generator {
             this.upgrade = await this.prompt([
                 {
                     type: "confirm",
-                    name: "ok",
+                    name: 'updateTribes',
                     message: "Do you want to upgrade the tribes.json file?"
                 }
             ]);
 
-            if (this.upgrade.ok) {
+            if (this.upgrade.updateTribes) {
                 console.log('\nUpgrading tribes.json file...')
                 await upgradeFile(tribePath, "tribes", "tribes.json")
                 console.log('\nUpgrade Complete!!')
@@ -174,7 +176,7 @@ export default class CicdGenerator extends Generator {
             this.tribes = await readTribesFile()
         }
 
-        const select_tribe = await autocomplete(this.tribes)
+        const select_tribe = await this.prompt([autocompleteTribe(this.tribes)])
 
         const message = "For more information execute yo siigo:cicd --help"
 

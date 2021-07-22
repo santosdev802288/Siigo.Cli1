@@ -26,7 +26,6 @@ describe(NAMESPACE, () => {
             .withOptions({ 'token': 'myToken' })
             .withPrompts({ ready: true })
             .then(async () => {
-                console.log("Proyecto core")
                 assert.file([
                     'nuget.config', 
                     '.gitignore', 
@@ -34,11 +33,11 @@ describe(NAMESPACE, () => {
                     'checksums.sha256',
                 ]);
             })
-
+        
         return helpers.run(CicdGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
             .cd(dir)
             .withOptions({ 'project-name': projectName, 'namespace-k8s': 'prueba', 'dll': `Siigo.${name}.Api` })
-            .withPrompts({ ready: true })
+            .withPrompts({ ready: true, updateTribes: false, tribe: 'ARQUITECTURA\n' })
             .catch((error) => {
                 assert.ok(error, 'Command should fail with exit code 128: git checkout -b cicd')
                 assert.file([
