@@ -8,7 +8,8 @@
     "extends": [
         "eslint:recommended",
         "plugin:import/recommended",
-        "plugin:import/typescript"
+        "plugin:import/typescript",
+        "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -18,6 +19,7 @@
     "plugins": ["@typescript-eslint"],
     "ignorePatterns": ["**/templates/**/*.ts", "src/@types/*"],
     "rules": {
-        "indent": ["error", 4, { "SwitchCase": 1 }]
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "quotes": ["warn", "single"]
     }
 }

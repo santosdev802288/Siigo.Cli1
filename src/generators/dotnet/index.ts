@@ -39,7 +39,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
 
     async _doPrompting() {
         const objParameters = await getAllParametersSiigo();
-        let response = await this.prompt([
+        const response = await this.prompt([
             {
                 type: 'list',
                 name: 'type',
@@ -48,7 +48,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
             }
         ]);
         let tokenf = objParameters.token;
-        let updatetoken = this.options['token'];
+        const updatetoken = this.options['token'];
         if (tokenf == "pending" || updatetoken != null)
             tokenf = await wizardsiigofile(updatetoken);
         this.appConfig = {};
@@ -62,7 +62,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
     }
 
     _doWriting() {
-        let nametemplate = (this.appConfig.type == 'command+query') ? 'commandquery' : this.appConfig.type;
+        const nametemplate = (this.appConfig.type == 'command+query') ? 'commandquery' : this.appConfig.type;
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
         this.queueTransformStream([
             rename((parsetPath) => {
@@ -80,10 +80,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         const checksums = getChecksums(this.destinationPath());
         this.fs.write(path.join(this.destinationPath(), 'checksums.sha256'), checksums);
     }
-    dependencies() {
-    }
-    install() {
-    }
+    
     end() {
         this.log(siigosay(`Project Created!!`));
     }

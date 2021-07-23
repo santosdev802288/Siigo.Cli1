@@ -3,7 +3,7 @@ import { getAllParametersSiigo, setParameter, setTribeAndNameByUser, wizardsiigo
 import colorize from 'json-colorizer'
 import { siigosay } from '@nodesiigo/siigosay'
 import { readTribesFile } from '../../utils/readTribes'
-import autocomplete from '../../utils/autocomplete'
+import { autocompleteTribe, registerAutocomplete } from '../../utils/autocomplete'
 
 
 module.exports = class extends Generator {
@@ -50,6 +50,7 @@ module.exports = class extends Generator {
             const objParameters  = await this.getInformation()
             this.options['token'] = objParameters.token;
         }
+        registerAutocomplete(this)
     }
     async prompting() {
         if(this.options['token']=="pending"){
@@ -71,7 +72,7 @@ module.exports = class extends Generator {
             }
         ]);
         if (!this.answers.ready) {
-            let response = await this.prompt([
+            const response = await this.prompt([
                 {
                     type: 'list',
                     name: 'type',
@@ -81,7 +82,7 @@ module.exports = class extends Generator {
             ]);
             switch (response.type) {
                 case "token": {
-                    let res = await this.prompt([
+                    const res = await this.prompt([
                         {
                             type: 'string',
                             name: response.type,
@@ -93,12 +94,12 @@ module.exports = class extends Generator {
                 }
                 case "tribe": {
                     this.tribes = await readTribesFile();
-                    const select_tribe = await autocomplete(this.tribes);
+                    const select_tribe = await this.prompt([autocompleteTribe(this.tribes)]);
                     setParameter(response.type, select_tribe.tribe);
                     break;
                 }
                 case "name": {
-                    let res = await this.prompt([
+                    const res = await this.prompt([
                         {
                             type: 'string',
                             name: response.type,
@@ -111,12 +112,7 @@ module.exports = class extends Generator {
             }
         }
     }
-    writing() {
-    }
-    dependencies() {
-    }
-    install() {
-    }
+    
     end() {
         this.log(siigosay(`your siigofile has been updated`));
     }

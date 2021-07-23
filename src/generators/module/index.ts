@@ -1,9 +1,8 @@
-import { ParsedPath } from "gulp-rename";
 import Generator = require("yeoman-generator")
-const capitalize = require('../../utils/capitalize')
-const verifyNewVersion = require("../../utils/notification");
-const rename = require('gulp-rename');
-const {siigosay} = require('@nodesiigo/siigosay')
+import {capitalize} from '../../utils/capitalize'
+import {verifyNewVersion} from "../../utils/notification";
+import rename from 'gulp-rename';
+import {siigosay} from '@nodesiigo/siigosay'
 
 
 interface Options {
@@ -21,11 +20,11 @@ export class ModuleGenerator extends Generator<Options> {
     }
 
     writing() {
-        let name = this.options['name']
+        const name = this.options['name']
 
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
         this.queueTransformStream([
-            rename((path: ParsedPath) => {
+            rename((path) => {
                 path.basename = path.basename.replace(/(user)/g, name.toLowerCase())
             }),
         ]);

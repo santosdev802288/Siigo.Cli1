@@ -38,7 +38,7 @@ module.exports = class extends Generator {
             token = (token == "pending") ? await wizardsiigofile() : token;
             const projects = await getProjects(token);
             const nameProjects = Object.keys(projects);
-            let response = await this.prompt([
+            const response = await this.prompt([
                 {
                     type: 'list',
                     name: 'project',
@@ -66,7 +66,7 @@ module.exports = class extends Generator {
                         shell.exec(`git remote add origin ${responseGit.remoteUrl}`);
                     }else{
                         this.log(colors.red("Error: ya exite un repositorio con ese nombre!"))
-                        let responseAzure = await this.prompt([
+                        const responseAzure = await this.prompt([
                             {
                                 type: 'string',
                                 name: 'projectname',

@@ -1,11 +1,9 @@
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Generator'... Remove this comment to see the full error message
-const Generator = require('yeoman-generator/lib');
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'siigosay'.
-const {siigosay, siigoerror} = require('@nodesiigo/siigosay')
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'capitalize... Remove this comment to see the full error message
-const capitalize = require('../../utils/capitalize')
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'rename'.
-const rename = require('gulp-rename');
+import Generator = require('yeoman-generator');
+import {siigosay, siigoerror} from '@nodesiigo/siigosay'
+import {capitalize} from '../../utils/capitalize'
+import rename from 'gulp-rename'
+
+
 module.exports = class extends Generator {
     constructor(args: any, opt: any) {
         super(args, opt)
@@ -13,15 +11,16 @@ module.exports = class extends Generator {
     }
     writing() {
         
-        let tempName = this.destinationRoot().split("/").pop().split(".")
-        if(tempName[2] === undefined){
+        const tempName = this.destinationRoot().split("/").pop()?.split(".")
+        if(tempName?.[2] === undefined){
             this.log(siigoerror(`
                 the project folder must have the structure "Siigo.Microservice.XXX"
             `))
         }else{
-            let pname = tempName[0]+"."+tempName[2]+".Sync";
-            let name = tempName[2];
-    
+            const pname = tempName[0]+"."+tempName[2]+".Sync";
+            const name = tempName[2];
+
+            // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
             this.queueTransformStream([
                 rename((path: any) => {
                     path.basename = path.basename.replace(/(MsTemplate)/g, name)
@@ -35,32 +34,4 @@ module.exports = class extends Generator {
             ) 
         }
     }
-
-    install() {
-    }
-
-    /*
-        if (this.options['skip-install']) {
-            this.log(chalk.green(`
-        To install dependencies, run
-        ${chalk.white('$')} cd ${this.appConfig.identifier}/
-        ${chalk.white('$')} npm install
-      `))
-        } else {
-            if (this.options['yarn']) {
-                this.installDependencies({
-                    yarn: true,
-                    bower: false,
-                    npm: false,
-                })
-            } else {
-                this.installDependencies({
-                    npm: true,
-                    yarn: false,
-                    bower: false,
-                })
-
-            }
-        }
-    }*/
 };

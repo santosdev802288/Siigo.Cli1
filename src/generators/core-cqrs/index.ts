@@ -80,14 +80,4 @@ module.exports = class extends Generator {
         }
 
     }
-
-    dependencies() {
-    }
-
-    install() {
-
-    }
-
-    end() {
-    }
 };

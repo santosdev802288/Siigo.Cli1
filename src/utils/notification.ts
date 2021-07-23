@@ -1,6 +1,7 @@
-const updateNotifier = require('update-notifier');
+import updateNotifier from 'update-notifier';
 import fs from 'fs';
 import path from 'path';
+
 
 export function verifyNewVersion() {
     // Read package.json. Avoid import, it change the dist folder structure
@@ -17,8 +18,8 @@ export function verifyNewVersion() {
     notifier.notify({isGlobal: true});
 
     // Stop if a new version is available
-    let type = notifier.update != null ? notifier.update.type: undefined;
-    if (['major', 'minor'].includes(type)) {
+    const type = notifier.update?.type
+    if (type === 'major' || type === 'minor') {
         console.error(`Error. Update to the last version of ${pkg.name}`)
         process.exit(1)
     }
