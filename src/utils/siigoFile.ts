@@ -71,7 +71,7 @@ async function setSiigofile(token: string){
     if(os.platform()=='win32'){
         resUser = JSON.parse(shell.exec('az account show', {silent:true}).stdout).user.name
     }else {
-        exec('az account show', {'shell':'powershell.exe'}, (error, stdout, stderr)=> {resUser = JSON.parse(stdout).user.name})
+        exec('az account show', {'shell':'powershell.exe'}, (error, stdout)=> {resUser = JSON.parse(stdout).user.name})
     }
     const { name, tribe } = await tribeByUser(resUser)
     const payload = `token=${token}\ntoken64=${b64}\nuser=${resUser}\nname=${name}\ntribe=${tribe}`
@@ -96,12 +96,10 @@ export async function getParameter(parameter: keyof SiigoParameter) {
 export async function setParameter(parameter: any, value: any) {
     if (fs.existsSync(pathHome)) {
         let payload = await readSiigoFile() 
-        // eslint-disable-next-line no-useless-escape
-        const regpa = new RegExp(`${parameter}=\w+`);
+        const regpa = new RegExp(`${parameter}=\\w+`);
         payload = payload.replace(regpa,`${parameter}=${value}`)
         if(parameter=='token') {
-            // eslint-disable-next-line no-useless-escape
-            const regpa64 = new RegExp(`${parameter}64=\w+`);
+            const regpa64 = new RegExp(`${parameter}64=\\w+`);
             payload = payload.replace(regpa64,`${parameter}64=${value}`)
         }
         await writeSiigoFile(payload)
@@ -109,7 +107,7 @@ export async function setParameter(parameter: any, value: any) {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function setTribeAndNameByUser(resUser: string) {
+export async function setTribeAndNameByUser(resUser: any) {
     const {tribe, name}  = await tribeByUser(resUser)
     if (fs.existsSync(pathHome)) {
         let payload = await readSiigoFile() 
