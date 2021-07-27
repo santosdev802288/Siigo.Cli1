@@ -3,10 +3,12 @@ import os from 'os';
 import path from 'path';
 import prompt from 'prompt';
 import { tribeByUser } from './readTribes';
-import { exec } from 'child_process';
+import child from 'child_process';
 const root = (os.homedir());
 export const pathHome = path.join(root, '.siigo');
 import fs from 'fs';
+import util from 'util'
+const exec = util.promisify(child.exec);
 
 interface SiigoParameter {
     'token'?: string, 'token64'?: string, 'user'?: string, 'name'?: string, 'tribe'?: string,
@@ -67,11 +69,13 @@ async function typingToken(){
 
 async function setSiigofile(token: string){
     const b64 =Buffer.from(token.trim()).toString('base64')
-    let resUser = ''
+    let resUser = ''    
     if(os.platform()=='win32'){
-        resUser = JSON.parse(shell.exec('az account show', {silent:true}).stdout).user.name
+        const result = await exec('az account show');
+        if(result.stderr) resUser = JSON.parse(shell.exec('az account show', {silent:true}).stdout).user.name
+        resUser = JSON.parse(result.stdout).user.name;
     }else {
-        exec('az account show', {'shell':'powershell.exe'}, (error, stdout)=> {resUser = JSON.parse(stdout).user.name})
+        resUser = JSON.parse(shell.exec('az account show', {silent:true}).stdout).user.name
     }
     const { name, tribe } = await tribeByUser(resUser)
     const payload = `token=${token}\ntoken64=${b64}\nuser=${resUser}\nname=${name}\ntribe=${tribe}`
