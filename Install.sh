@@ -1,7 +1,12 @@
 #!/bin/bash
 if ! [ -x "$(command -v node)" ] ; then
-    echo "Please install <node> in your computer"
-    exit
+    if ! [ -x "$(command -v nvm)" ] ; then
+        echo "SiigoSay: Please install <node> in your computer"
+        exit
+    else
+        nvm install 14.17.3
+        nvm use 14.17.3
+    fi
 else
     requiredver="12"
     if [ "$(node -v | egrep -o '[0-9]{1,}' | head -1)" -le "$requiredver" ]; then 
