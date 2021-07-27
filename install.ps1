@@ -14,7 +14,7 @@ function Get-CheckRequirements {
                     Exit 
                 }Else{
                     nvm install 14.17.3
-                    nvm use 
+                    nvm use 14.17.3
                 }
             }Else{
                 Write-Output "SiigoSay: Please install <$Parameter> in your computer"
