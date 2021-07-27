@@ -45,7 +45,7 @@ module.exports = class extends Generator {
         let {token} = this.options
         if(token!= null) {
             token = await wizardsiigofile(token) 
-            this.getInformation()
+            await this.getInformation()
         }else{
             const objParameters  = await this.getInformation()
             this.options['token'] = objParameters.token;
@@ -61,7 +61,7 @@ module.exports = class extends Generator {
                     message: 'Typing your personal token: ',
                 }
             ]);
-            wizardsiigofile(this.validationToken.token)
+            await wizardsiigofile(this.validationToken.token)
             await this.getInformation(); 
         }
         this.answers = await this.prompt([
