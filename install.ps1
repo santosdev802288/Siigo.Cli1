@@ -8,13 +8,16 @@ function Get-CheckRequirements {
         If(!$isrequirementsInstalled)
         {   
             if ($Parameter -eq "Node") {
-                $nvmv = (nvm version | Select-String 'v?(\d+)\.*').Matches.Groups[1].Value
-                if(!$nvmv){
-                    Write-Output "SiigoSay: Please install Node in your computer"
-                    Exit 
-                }Else{
+                try
+                {
+                    nvm version
                     nvm install 14.17.3
                     nvm use 14.17.3
+                }
+                catch
+                {
+                    Write-Output "SiigoSay: Please install Node in your computer"
+                    Exit 
                 }
             }Else{
                 Write-Output "SiigoSay: Please install <$Parameter> in your computer"
