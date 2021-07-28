@@ -1,0 +1,9 @@
+{
+  "qa": {
+    "serviceUrl": "https://servicesqa.siigo.com/auth",
+    "nominaUrl": "https://servicesqa.siigo.com/payroll/liquidator/api/v1/Payroll"
+  },
+  "preprod": {
+    "serviceUrl": "https://services.siigo.com/auth"
+  }
+}

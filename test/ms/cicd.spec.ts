@@ -4,11 +4,10 @@ import fs from 'fs'
 import os from 'os'
 import path from 'path'
 
-import CicdGenerator from '../src/generators/cicd'
-import { getGenerator, SiigoGenerator } from './generator.factory'
-import CoreMSGenerator from '../src/generators/core'
+import CicdGenerator from '../../src/generators/cicd'
+import { getGenerator, SiigoGenerator } from '../generator.factory'
 
-const GENERATOR_FOLDER = '../src/generators/cicd'
+const GENERATOR_FOLDER = '../../src/generators/cicd'
 const NAMESPACE = 'siigo:cicd'
 
 describe(NAMESPACE, () => {
@@ -18,10 +17,10 @@ describe(NAMESPACE, () => {
         const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.CicdNetCore'))
         const name = path.basename(dir).split('.').reverse()[0]
 
-        const coremsGenerator = getGenerator(SiigoGenerator.CoreMS)
+        const coreMsGenerator = getGenerator(SiigoGenerator.MS_CORE)
         const projectName = 'borrame'
 
-        await helpers.run(CoreMSGenerator, coremsGenerator.settings)
+        await helpers.run(coreMsGenerator.generatorOrNamespace, coreMsGenerator.settings)
             .cd(dir)
             .withOptions({ 'token': 'myToken' })
             .withPrompts({ ready: true })

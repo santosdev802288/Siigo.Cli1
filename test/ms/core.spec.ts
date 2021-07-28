@@ -4,15 +4,15 @@ import fs from 'fs'
 import path from 'path'
 import os from 'os'
 
-import CoreMSGenerator from '../src/generators/core'
+import { getGenerator, SiigoGenerator } from '../generator.factory'
 
 const BACKUP_SUFIX = '.original'
-const GENERATOR_FOLDER = '../src/generators/core'
-const NAMESPACE = 'siigo:core'
 const GITCONFIG_FILE = path.join(os.homedir(), '.gitconfig')
 const SIIGO_FILE = path.join(os.homedir(), '.siigo')
 
-describe(NAMESPACE, () => {
+describe('siigo:core', () => {
+
+    const generator = getGenerator(SiigoGenerator.MS_CORE)
 
     before( () => {
         // Backup user config
@@ -28,7 +28,7 @@ describe(NAMESPACE, () => {
         const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.Core'))
         const name = path.basename(dir).split('.').reverse()[0]
 
-        return helpers.run(CoreMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
+        return helpers.run(generator.generatorOrNamespace, generator.settings)
             .inDir(dir)
             .withOptions({ 'token': 'myToken' })      // Mock options passed in
             .withPrompts({ ready: true })   // Mock the prompt answers
@@ -52,7 +52,7 @@ describe(NAMESPACE, () => {
         const folderPrefix = 'Siigo.Microservice.'
         const name = 'NoFolder'
 
-        return helpers.run(CoreMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
+        return helpers.run(generator.generatorOrNamespace, generator.settings)
             .inDir(dir)
             .withOptions({ 'token': 'myToken', 'name': name })// Mock options passed in
             .withPrompts({ ready: true, prefix: folderPrefix  })   // Mock the prompt answers
@@ -60,7 +60,7 @@ describe(NAMESPACE, () => {
                 assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
                 // assert something about the generator
                 assert.file(`Siigo.${name}.sln`);
-                assert.file(`.gitignore`);
+                assert.file('.gitignore');
             });
     });
 
