@@ -1,11 +1,15 @@
 #!/bin/bash
 if ! [ -x "$(command -v node)" ] ; then
-    if ! [ -x "$(command -v nvm)" ] ; then
-        echo "SiigoSay: Please install <node> in your computer"
-        exit
-    else
+    if [ -d "$HOME/.nvm" ]; then
+        . ~/.nvm/nvm.sh
+        . ~/.profile
+        . ~/.bashrc
+
         nvm install 14.17.3
         nvm use 14.17.3
+    else
+        echo "SiigoSay: Please install <node> in your computer"
+        exit
     fi
 else
     requiredver="12"
