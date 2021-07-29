@@ -4,9 +4,9 @@ import fs from 'fs'
 import path from 'path'
 import os from 'os'
 
-import GolangMSGenerator from '../src/generators/bolt'
+import GolangMSGenerator from '../../src/generators/bolt'
 
-const GENERATOR_FOLDER = '../src/generators/bolt'
+const GENERATOR_FOLDER = '../../src/generators/bolt'
 const NAMESPACE = 'siigo:bolt'
 
 describe(NAMESPACE, () => {

@@ -4,9 +4,9 @@ import fs from 'fs'
 import path from 'path'
 import os from 'os'
 
-import DotnetMSGenerator from '../src/generators/dotnet'
+import DotnetMSGenerator from '../../src/generators/dotnet'
 
-const GENERATOR_FOLDER = '../src/generators/dotnet'
+const GENERATOR_FOLDER = '../../src/generators/dotnet'
 const NAMESPACE = 'siigo:dotnet'
 
 describe(NAMESPACE, () => {
@@ -44,7 +44,7 @@ describe(NAMESPACE, () => {
                 assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
                 // assert something about the generator
                 assert.file(`Siigo.${name}.sln`);
-                assert.file(`.gitignore`);
+                assert.file('.gitignore');
             });
     });
 

@@ -4,9 +4,9 @@ import fs from 'fs'
 import path from 'path'
 import os from 'os'
 
-import GENERATOR from '../src/generators/node'
+import GENERATOR from '../../src/generators/node'
 
-const GENERATOR_FOLDER = '../src/generators/node'
+const GENERATOR_FOLDER = '../../src/generators/node'
 const NAMESPACE = 'siigo:node'
 
 
