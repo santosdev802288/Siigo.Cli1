@@ -22,6 +22,7 @@ export class MicroserviceGenerator extends Generator {
     }
 
     answers: any
+    response: any
     createPrefix: boolean
     defaultName: string | undefined
 
@@ -51,6 +52,15 @@ export class MicroserviceGenerator extends Generator {
                     default: 1,
                 },
             ]);
+            this.response = await this.prompt([
+                {
+                    type: 'string',
+                    name: 'nameproject',
+                    message: 'Typing the name for the project',
+                },
+            ]);
+            if(this.options['project-name']==null) this.options['name'] = this.response.nameproject
+            
             const name = _.defaultTo(this.options['name'], this.options['project-name'])
             const appPath = path.join(process.cwd(), `${this.answers.prefix}${name}`)
             this.destinationRoot(appPath)

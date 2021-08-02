@@ -174,7 +174,7 @@ export default class CicdGenerator extends Generator {
         const {organization, project, environment, folder, type} = this.options
         const namespace = this.options['namespace-k8s']
         console.log("Obteniendo la ultima version de Chart!");
-        let resGit: any = (shell.exec(`git ls-remote --refs --tags --sort=v:refname https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart`).stdout).split('/').pop();
+        let resGit: any = (shell.exec(`git ls-remote --refs --tags --sort=v:refname https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart`,{silent: true}).stdout).split('/').pop();
         resGit = resGit.replace("\n","");
         this.appConfig = {
             organization,
@@ -184,7 +184,7 @@ export default class CicdGenerator extends Generator {
             folder,
             pipelineName: this.options['pipeline-name'],
             mainProject: this.options['dll'],
-            name: this.options['project-name'],
+            name: this.options['project-name'].toLowerCase(),
             chartVersion: resGit,
             type,
             tagOwner: this.options['owner'],
@@ -258,12 +258,17 @@ export default class CicdGenerator extends Generator {
     }
 
     async install() {
-        
-        this.spawnCommandSync('git', ['checkout','-b','cicd']);
-        this.spawnCommandSync('git', ['add','-A']);
-        this.spawnCommandSync('git', ['commit','-m','cicd configuration']);
-        this.spawnCommandSync('git', ['push','origin','cicd']);
-        
+        shell.exec('git remote update origin --prune',{silent: true})
+        const branchsGit: any = (shell.exec('git branch -r',{silent: true}).stdout).split('\n');
+        let flagCicd = false;
+        branchsGit.forEach((branch: string) => { if(branch.includes('cicd')) flagCicd = true;});
+        if(!flagCicd){
+            this.spawnCommandSync('git', ['checkout','-b','cicd']);
+            this.spawnCommandSync('git', ['add','-A']);
+            this.spawnCommandSync('git', ['commit','-m','cicd configuration']);
+            this.spawnCommandSync('git', ['push','origin','cicd']);
+        }
+
         this.spawnCommandSync('az', ['login']);
         this.spawnCommandSync('az', ['extension','add','--name', 'azure-devops']);
         spawn(`az devops configure --defaults organization='${this.appConfig.organization}' project='${this.appConfig.project}'` );
