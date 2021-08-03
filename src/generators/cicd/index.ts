@@ -32,13 +32,7 @@ async function writeChart(token:any, projectName:string,tagOwner:string ,tagTrib
             owner: ${tagTribu}`);
 
     try {
-        fs.writeFile(`./.docker/${projectName}/values.yaml`, stringResponse, function (err) {
-            if (err) {
-                console.log(err);
-                throw err
-            }
-            console.log('value.yaml is created successfully.');
-        });
+        await fs.writeFileSync(`./.docker/${projectName}/values.yaml`, stringResponse);
     }
     catch (err) {
         console.log(("Token no es valido" as any).red);
@@ -267,12 +261,19 @@ export default class CicdGenerator extends Generator {
             this.spawnCommandSync('git', ['add','-A']);
             this.spawnCommandSync('git', ['commit','-m','cicd configuration']);
             this.spawnCommandSync('git', ['push','origin','cicd']);
+        }else{
+            this.log('The branch cicd is already created!')
         }
-
-        this.spawnCommandSync('az', ['login']);
-        this.spawnCommandSync('az', ['extension','add','--name', 'azure-devops']);
-        spawn(`az devops configure --defaults organization='${this.appConfig.organization}' project='${this.appConfig.project}'` );
-        this.spawnCommandSync('az', ['pipelines','create','--name', this.appConfig.pipelineName, '--yml-path', 'azure-pipelines.yml', '--folder-path',this.appConfig.folder]);
+        const branchsPipeline: any = (shell.exec(`az pipelines list --organization https://dev.azure.com/SiigoDevOps --project ${this.appConfig.project} --name ${this.appConfig.pipelineName}`,{silent: true}).stdout);
+        this.log(branchsPipeline)
+        if(branchsPipeline.length){
+            this.spawnCommandSync('az', ['login']);
+            this.spawnCommandSync('az', ['extension','add','--name', 'azure-devops']);
+            spawn(`az devops configure --defaults organization='${this.appConfig.organization}' project='${this.appConfig.project}'` );
+            this.spawnCommandSync('az', ['pipelines','create','--name', this.appConfig.pipelineName, '--yml-path', 'azure-pipelines.yml', '--folder-path',this.appConfig.folder]);
+        }else{
+            this.log(`The Pipeline ${this.appConfig.pipelineName} is already created!`)
+        }
     }
     
     end(){
