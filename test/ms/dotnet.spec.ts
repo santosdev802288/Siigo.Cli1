@@ -22,7 +22,8 @@ describe(NAMESPACE, () => {
             .then(() => {
                 // assert something about the generator
                 assert.file([
-                    'nuget.config', 
+                    'nuget.config',
+                    '.editorconfig',
                     '.gitignore', 
                     `Siigo.${name}.Api/Siigo.${name}.Api.csproj`,
                     'checksums.sha256',
