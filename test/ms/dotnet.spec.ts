@@ -39,8 +39,8 @@ describe(NAMESPACE, () => {
 
         return helpers.run(DotnetMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
             .inDir(dir)
-            .withOptions({ 'token': 'myToken', 'name': name })
-            .withPrompts({ ready: true, prefix: folderPrefix, type: 'grpc-server'  })
+            .withOptions({ 'token': 'myToken' })
+            .withPrompts({ ready: true, prefix: folderPrefix, type: 'grpc-server', name: name  })
             .then(() => {
                 assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
                 // assert something about the generator

@@ -282,7 +282,9 @@ export default class CicdGenerator extends Generator {
         shell.exec('git remote update origin --prune',{silent: true})
         const branchsGit: any = (shell.exec('git branch -r',{silent: true}).stdout).split('\n');
         let flagCicd = false;
-        branchsGit.forEach((branch: string) => { if(branch.includes('cicd')) flagCicd = true;});
+        if(branchsGit != null){
+            branchsGit.forEach((branch: string) => { if(branch.includes('cicd')) flagCicd = true;});
+        }
         if(!flagCicd){
             this.spawnCommandSync('git', ['checkout','-b','cicd']);
             this.spawnCommandSync('git', ['add','-A']);

@@ -55,11 +55,11 @@ export class MicroserviceGenerator extends Generator {
             this.response = await this.prompt([
                 {
                     type: 'string',
-                    name: 'nameproject',
+                    name: 'name',
                     message: 'Typing the name for the project',
                 },
             ]);
-            if(this.options['project-name']==null) this.options['name'] = this.response.nameproject
+            if(this.options['project-name']==null) this.options['name'] = this.response.name
             
             const name = _.defaultTo(this.options['name'], this.options['project-name'])
             const appPath = path.join(process.cwd(), `${this.answers.prefix}${name}`)
