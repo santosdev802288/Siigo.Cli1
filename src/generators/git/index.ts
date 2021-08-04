@@ -5,10 +5,10 @@ import colorize from 'json-colorizer';
 import { siigosay } from '@nodesiigo/siigosay';
 import { getProjects, createRepository } from '../../utils/gitmanager';
 import path from 'path';
-import shell from "shelljs";
+import shell from 'shelljs';
 
-const prefixRepo = "Siigo.Microservice.";
-const eSiigoPrefixRepo = "ESiigo.Microservice.";
+const prefixRepo = 'Siigo.Microservice.';
+const eSiigoPrefixRepo = 'ESiigo.Microservice.';
 
 module.exports = class extends Generator {
     answers: any;
@@ -30,12 +30,12 @@ module.exports = class extends Generator {
         let currentPath = path.basename(process.cwd());
         const createPrefix = !currentPath.startsWith(prefixRepo) && !currentPath.startsWith(eSiigoPrefixRepo);
         if (createPrefix) {
-            this.log(("This folder is not Siigo" as any).red);
+            this.log(('This folder is not Siigo' as any).red);
             this.cancelCancellableTasks();
         }
         else {
-            let token = await getParameter("token");
-            token = (token == "pending") ? await wizardsiigofile() : token;
+            let token = await getParameter('token');
+            token = (token == 'pending') ? await wizardsiigofile() : token;
             const projects = await getProjects(token);
             const nameProjects = Object.keys(projects);
             const response = await this.prompt([
@@ -49,9 +49,9 @@ module.exports = class extends Generator {
             this.showInformation({ project: response.project, name_repository: currentPath });
             this.answers = await this.prompt([
                 {
-                    type: "confirm",
-                    name: "ready",
-                    message: "Is the configuration correct?"
+                    type: 'confirm',
+                    name: 'ready',
+                    message: 'Is the configuration correct?'
                 }
             ]);
             if (this.answers.ready) {
@@ -60,12 +60,12 @@ module.exports = class extends Generator {
                     // @ts-expect-error FIXME: projects indexing
                     responseGit = await createRepository(token, currentPath, projects[response.project]);
                     if(responseGit.remoteUrl){
-                        this.log(siigosay(`Your repository has been created`));
+                        this.log(siigosay('Your repository has been created'));
                         this.showInformation({ remoteUrl: responseGit.remoteUrl });
-                        shell.exec(`git init`);
+                        shell.exec('git init');
                         shell.exec(`git remote add origin ${responseGit.remoteUrl}`);
                     }else{
-                        this.log(colors.red("Error: ya exite un repositorio con ese nombre!"))
+                        this.log(colors.red('Error: ya exite un repositorio con ese nombre!'))
                         const responseAzure = await this.prompt([
                             {
                                 type: 'string',

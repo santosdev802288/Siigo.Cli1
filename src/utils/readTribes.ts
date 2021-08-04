@@ -27,9 +27,10 @@ export const readTribesFile = async () =>{
  * @description Return tribe by User of siiigo
  * 
  */
-export const tribeByUser = async (userSiigo: any) => {
-    let tribe = "pendiente"
+export const getInformationUser = async (userSiigo: any) => {
+    let tribe = 'pendiente'
     let name = userSiigo
+    let group = 'pendiente'
     info_tribes.forEach((ele: any) => {
         ele.tribes.forEach((ele2: any) => {
             ele2.groups.forEach((ele3: any) => {
@@ -37,11 +38,13 @@ export const tribeByUser = async (userSiigo: any) => {
                     if(ele4.lead.user == userSiigo ) {
                         tribe = ele2.name
                         name = ele4.lead.name
+                        group = ele3.group_name
                     }else {
                         ele4.team.forEach((ele5: any) => {
                             if(ele5.user == userSiigo) {
                                 tribe = ele2.name
                                 name = ele5.name
+                                group = ele3.group_name
                             }
                         })
                     }
@@ -49,5 +52,5 @@ export const tribeByUser = async (userSiigo: any) => {
             })
         })
     })
-    return {tribe, name}
+    return {tribe, name, group}
 }

@@ -247,7 +247,7 @@
         "name": "ARQUITECTURA",
         "groups": [
           {
-            "group_name": "Cloud Native",
+            "group_name": "CLOUD_NATIVE",
             "members": [
               {
                 "lead": {
