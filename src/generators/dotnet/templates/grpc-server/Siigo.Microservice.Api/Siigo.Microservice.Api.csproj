@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Siigo.LogTest.Api</RootNamespace>
+    <RootNamespace><%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api</RootNamespace>
     <UserSecretsId>b2c5843a-21fe-4727-a62f-64242a31ef44</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>

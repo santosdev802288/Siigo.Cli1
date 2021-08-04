@@ -2,7 +2,7 @@ import rename = require('gulp-rename');
 import path from 'path';
 import { siigosay } from '@nodesiigo/siigosay';
 
-import { capitalize } from "../../utils/capitalize";
+import { capitalize } from '../../utils/capitalize';
 import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile';
 import { getChecksums } from '../../utils/checksum';
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
@@ -22,19 +22,19 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
     constructor(args: any, opt: any) {
         super(args, opt);
                 
-        this.option("name", {
-            description: "Project name",
+        this.option('name', {
+            description: 'Project name',
             default: this.defaultName,
             type: String
         });
-        this.option("project-prefix", {
-            description: "Use this option to replace the prefix Siigo in the file names",
-            default: "Siigo",
+        this.option('project-prefix', {
+            description: 'Use this option to replace the prefix Siigo in the file names',
+            default: 'Siigo',
             type: String
         });
     }
     async initializing() {
-        this.log(siigosay(`Siigo Generator .Net Core.`));
+        this.log(siigosay('Siigo Generator .Net Core.'));
     }
 
     async _doPrompting() {
@@ -49,7 +49,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         ]);
         let tokenf = objParameters.token;
         const updatetoken = this.options['token'];
-        if (tokenf == "pending" || updatetoken != null)
+        if (tokenf == 'pending' || updatetoken != null)
             tokenf = await wizardsiigofile(updatetoken);
         this.appConfig = {};
         this.appConfig.name = this.options['name'];
@@ -61,12 +61,12 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         this.appConfig.projectPrefix = this.options['project-prefix'];
     }
 
-    _doWriting() {
+    _doWriting(): void {
         const nametemplate = (this.appConfig.type == 'command+query') ? 'commandquery' : this.appConfig.type;
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
         this.queueTransformStream([
             rename((parsetPath) => {
-                const prefixChart = "ms-";
+                const prefixChart = 'ms-';
                 parsetPath.dirname = parsetPath.dirname.includes(prefixChart) ?
                     parsetPath.dirname.replace(/(Microservice)/g, this.appConfig.name) :
                     parsetPath.dirname.replace(/(Microservice)/g, capitalize(this.appConfig.name));
@@ -75,14 +75,16 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
                 parsetPath.basename = parsetPath.basename.replace(/(Siigo)/g, this.appConfig.projectPrefix);
             })
         ]);
-        this.fs.copyTpl(this.templatePath(nametemplate + "/"), this.destinationPath("."), { config: this.appConfig });
-        this.fs.copyTpl(this.templatePath(nametemplate + "/.*"), this.destinationPath("."), { config: this.appConfig });
+        this.fs.copyTpl(this.templatePath('.common/.*'), this.destinationPath('.'), { config: this.appConfig });
+
+        this.fs.copyTpl(this.templatePath(nametemplate + '/'), this.destinationPath('.'), { config: this.appConfig });
+        this.fs.copyTpl(this.templatePath(nametemplate + '/.*'), this.destinationPath('.'), { config: this.appConfig });
         const checksums = getChecksums(this.destinationPath());
         this.fs.write(path.join(this.destinationPath(), 'checksums.sha256'), checksums);
     }
     
     end() {
-        this.log(siigosay(`Project Created!!`));
+        this.log(siigosay('Project Created!!'));
     }
 }
 
