@@ -37,9 +37,6 @@ export default class CoreMSGenerator extends MicroserviceGenerator {
 
         const message = "For more information execute yo siigo:core --help"
 
-        if (this.options['name'] === 'true' || !this.options['name'] )
-            throw new Error("--name is required or it should not be empty.\n " + message)
-
     }
 
     async _doPrompting() {
