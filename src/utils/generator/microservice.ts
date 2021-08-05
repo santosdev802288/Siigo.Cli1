@@ -57,11 +57,13 @@ export class MicroserviceGenerator extends Generator {
                     type: 'string',
                     name: 'name',
                     message: 'Typing the name for the project',
+                    default: 'TestMS'
                 },
             ]);
-            if(this.options['project-name']==null) this.options['name'] = this.response.name
             
-            const name = _.defaultTo(this.options['name'], this.options['project-name'])
+            let name = _.defaultTo(this.options['name'], this.options['project-name'])
+            name = (this.response.name).charAt(0).toUpperCase() + (this.response.name).slice(1);
+            this.options['name'] = name
             const appPath = path.join(process.cwd(), `${this.answers.prefix}${name}`)
             this.destinationRoot(appPath)
             process.chdir(appPath)

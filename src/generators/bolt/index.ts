@@ -53,10 +53,8 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
             this.options['personal-token'] = siigoParams.token
         }
 
-        ['project-name'].forEach(option => {
-            if (this.options[option] === 'true' || !this.options[option])
-                throw new Error(`${option} is required or it should not be empty.\n ${message}`)
-        });
+        if (this.options['project-name'] === 'true' || !this.options['project-name'])
+            throw new Error('project-name is required or it should not be empty.')
 
         const {description, author} = this.options
         this.appConfig = {

@@ -37,9 +37,11 @@ describe(NAMESPACE, () => {
 
         return helpers.run(GolangMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
             .inDir(dir)
-            .withOptions({ 'personal-token': 'myToken', 'project-name':  name})
-            .withPrompts({ ready: true, prefix: folderPrefix })   // Mock the prompt answers
+            .withOptions({ 'personal-token': 'myToken','project-name': name })
+            .withPrompts({ ready: true, prefix: folderPrefix, name: name})   // Mock the prompt answers
             .then(() => {
+                console.log('process.cwd()'+ process.cwd());
+                
                 assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
                 // assert something about the generator
                 assert.file('.air.toml');
@@ -54,16 +56,15 @@ describe(NAMESPACE, () => {
 
         const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Golang'))
         const folderPrefix = 'Siigo.Microservice.'
-
         return helpers.run(GolangMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
             .inDir(dir)
             .withOptions({ })
-            .withPrompts({ ready: true, prefix: folderPrefix })   // Mock the prompt answers
+            .withPrompts({ ready: true, prefix: folderPrefix})   // Mock the prompt answers
             .then(() => {
                 assert.fail()
             })
             .catch(error => {
-                assert.ok(error.message.startsWith('project-name is required or it should not be empty'), error.message)
+                assert.ok(error.message.includes('project-name is required or it should not be empty'), error.message)
                 
             });
     });
