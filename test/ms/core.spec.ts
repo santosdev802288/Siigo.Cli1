@@ -54,8 +54,8 @@ describe('siigo:core', () => {
 
         return helpers.run(generator.generatorOrNamespace, generator.settings)
             .inDir(dir)
-            .withOptions({ 'token': 'myToken', 'name': name })// Mock options passed in
-            .withPrompts({ ready: true, prefix: folderPrefix  })   // Mock the prompt answers
+            .withOptions({ 'token': 'myToken'})// Mock options passed in
+            .withPrompts({ ready: true, prefix: folderPrefix , name: name  })   // Mock the prompt answers
             .then(() => {
                 assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
                 // assert something about the generator
