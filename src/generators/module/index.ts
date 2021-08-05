@@ -1,6 +1,6 @@
-import Generator = require("yeoman-generator")
+import Generator = require('yeoman-generator')
 import {capitalize} from '../../utils/capitalize'
-import {verifyNewVersion} from "../../utils/notification";
+import {verifyNewVersion} from '../../utils/notification';
 import rename from 'gulp-rename';
 import {siigosay} from '@nodesiigo/siigosay'
 
@@ -10,16 +10,19 @@ interface Options {
 }
 
 
-export class ModuleGenerator extends Generator<Options> {
+export default class ModuleGenerator extends Generator<Options> {
 
     constructor(args: string | string[], opt: Options) {
         verifyNewVersion()
         super(args, opt)
-        this.log(siigosay(`Siigo generator Nest module.`))
-        this.argument("name", { required: true })
+        this.argument('name', { required: true })
     }
 
-    writing() {
+    initializing(): void {
+        this.log(siigosay('Siigo generator Nest module.'))
+    }
+
+    writing(): void {
         const name = this.options['name']
 
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
@@ -30,13 +33,13 @@ export class ModuleGenerator extends Generator<Options> {
         ]);
 
         this.fs.copyTpl(
-            this.templatePath(""),
+            this.templatePath(''),
             this.destinationPath(`src/${name.toLowerCase()}/`),
             {config: {name, nameUpper: capitalize(name)}}
         )
     }
 
-    install() {
+    install(): void {
 
         this.log(siigosay(`
             Import in your AppModule

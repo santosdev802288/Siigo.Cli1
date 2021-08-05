@@ -1,8 +1,17 @@
-# Introduction 
-This an API to generate logs
+# BASIC microservice
 
-# Getting Started
+## Introduction
+
+This an REST API to generate logs
+
+## Getting Started
+
 dotnet restore
 
-# Build and Test
+## Build
+
 dotnet build
+
+## Test
+
+dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
