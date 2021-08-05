@@ -42,8 +42,9 @@ module.exports = class extends Generator {
                 {
                     type: 'list',
                     name: 'project',
-                    message: 'Where do you want to create the repository?',
-                    choices: nameProjects
+                    message: 'In which Project?',
+                    choices: nameProjects,
+                    default: 'Siigo', 
                 }
             ]);
             this.showInformation({ project: response.project, name_repository: currentPath });
