@@ -12,7 +12,7 @@ const NAMESPACE = 'siigo:node'
 
 describe(NAMESPACE, () => {
 
-    it('Generates a project', () => {
+    it('Generates a Node project', () => {
 
         const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.Node'))
 
