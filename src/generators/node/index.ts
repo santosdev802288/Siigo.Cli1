@@ -4,6 +4,7 @@ import colorize from'json-colorizer'
 import {siigosay} from'@nodesiigo/siigosay'
 import shell from 'shelljs'
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
+import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile'
 
 import Generator = require('yeoman-generator');
 // @ts-expect-error FIXME: How to fix this?
@@ -31,7 +32,7 @@ export default class NodeMSGenerator extends MicroserviceGenerator {
         this.option('description', {
             type: String,
             description: 'Description project.',
-            default: '',
+            default: 'This is a Microservice from Siigo :)',
             alias: 'd'
         });
 
@@ -52,10 +53,17 @@ export default class NodeMSGenerator extends MicroserviceGenerator {
     async initializing(): Promise<void> {
         this.log(siigosay('Siigo Generator NodeJS.'))
 
+        const siigoParams = await getAllParametersSiigo();
+
+        if (siigoParams.token === 'pending' || this.options['personal-token'] != null) {
+            this.options['personal-token'] = await wizardsiigofile(this.options['personal-token']);
+        }else {
+            this.options['personal-token'] = siigoParams.token
+        }
         const {description, author} = this.options
         this.appConfig = {
             description,
-            author,
+            author: siigoParams.user,
             name: this.options['project-name']
         };
     }

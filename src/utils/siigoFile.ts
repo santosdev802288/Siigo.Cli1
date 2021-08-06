@@ -97,8 +97,9 @@ export async function getParameter(parameter: keyof SiigoParameter) {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function setParameter(parameter: any, value: any) {
+export async function setParameter(parameter: any, value: string) {
     if (fs.existsSync(pathHome)) {
+        value = value.replace(/ /g,'_')
         let payload = await readSiigoFile() 
         const regpa = new RegExp(`${parameter}=\\w+`);
         payload = payload.replace(regpa,`${parameter}=${value}`)
