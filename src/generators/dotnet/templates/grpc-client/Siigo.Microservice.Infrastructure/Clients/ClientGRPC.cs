@@ -8,16 +8,20 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructur
 {
     public class ClientGRPC
     {
-        public ClientGRPC()
-        {
+        private readonly Example.ExampleClient client;
 
-        }
-        public static async Task<string> SendMessage(int id)
+        public ClientGRPC() : this(new GRPCClientFactory())
         {
-            using var channel = GrpcChannel.ForAddress("http://localhost:5002");
-            var client = new Example.ExampleClient(channel);
-            var reply = await client.ExampleGetIdAsync(
-                              new ExampleRequest { Id = id });
+        }
+
+        public ClientGRPC(IGRPCClientFactory factory)
+        {
+            client = factory.GetGrpcClient();
+        }
+
+        public async Task<string> SendMessage(int id)
+        {
+            ExampleReply reply = client.ExampleGetId(new ExampleRequest { Id = id });
             return reply.Message;
         }
     }
