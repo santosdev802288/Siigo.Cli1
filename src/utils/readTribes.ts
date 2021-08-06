@@ -27,7 +27,7 @@ export const readTribesFile = async () =>{
  * @description Return tribe by User of siiigo
  * 
  */
-export const getInformationUser = async (userSiigo: any) => {
+export const getInformationUser = async (userSiigo: string) => {
     let tribe = 'pendiente'
     let name = userSiigo
     let group = 'pendiente'
@@ -52,5 +52,9 @@ export const getInformationUser = async (userSiigo: any) => {
             })
         })
     })
+    
+    tribe = tribe.replace(/ /g,'_')
+    name = name.replace(/ /g,'_')
+    group = group.replace(/ /g,'_')
     return {tribe, name, group}
 }

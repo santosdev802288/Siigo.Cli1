@@ -22,7 +22,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
         this.option("description", {
             type: String,
             description: "Description project.",
-            default: '',
+            default: 'This is a Microservice from Siigo :)',
             alias: 'd'
         });
 
@@ -53,13 +53,10 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
             this.options['personal-token'] = siigoParams.token
         }
 
-        if (this.options['project-name'] === 'true' || !this.options['project-name'])
-            throw new Error('project-name is required or it should not be empty.')
-
         const {description, author} = this.options
         this.appConfig = {
             description,
-            author,
+            author:siigoParams.user,
             name: this.options['project-name'].toLowerCase(),
             token: this.options['personal-token'],
         };

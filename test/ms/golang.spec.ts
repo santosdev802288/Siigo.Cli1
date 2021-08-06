@@ -52,20 +52,27 @@ describe(NAMESPACE, () => {
             });
     });
 
-    it('Fail whith missing project-name, prefix and token', () => {
+    it('Create Siigo.Microservice. folder', () => {
 
         const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Golang'))
+        const name = 'NoFolder'
         const folderPrefix = 'Siigo.Microservice.'
+
         return helpers.run(GolangMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
             .inDir(dir)
-            .withOptions({ })
-            .withPrompts({ ready: true, prefix: folderPrefix})   // Mock the prompt answers
+            .withOptions({ 'personal-token': 'myToken','project-name': name })
+            .withPrompts({ ready: true, prefix: folderPrefix, name: name})   // Mock the prompt answers
             .then(() => {
-                assert.fail()
-            })
-            .catch(error => {
-                assert.ok(error.message.includes('project-name is required or it should not be empty'), error.message)
+                console.log('process.cwd()'+ process.cwd());
                 
+                assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
+                // assert something about the generator
+                assert.file('.air.toml');
+                assert.file('.gitignore');
+                assert.file('.golangci.yml');
+
+                assert.file('third_party/embed.go')
             });
     });
+
 });

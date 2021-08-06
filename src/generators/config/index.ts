@@ -13,8 +13,8 @@ module.exports = class extends Generator {
 
     constructor(args: any, opt: any) {
         super(args, opt);
-        this.option("token", {
-            description: "Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens",
+        this.option('token', {
+            description: 'Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens',
             type: String
         });
     }
@@ -31,8 +31,8 @@ module.exports = class extends Generator {
 
     async getInformation(){
         const objParameters = await getAllParametersSiigo()
-        if(objParameters.token !="pending"){
-            if (objParameters.name == "pending" || objParameters.tribe == "pending") {
+        if(objParameters.token !='pending'){
+            if (objParameters.name == 'pending' || objParameters.tribe == 'pending') {
                 const { name, tribe } = await setTribeAndNameByUser(objParameters.user) || {}
                 objParameters.name = name
                 objParameters.tribe = tribe
@@ -53,7 +53,7 @@ module.exports = class extends Generator {
         registerAutocomplete(this)
     }
     async prompting() {
-        if(this.options['token']=="pending"){
+        if(this.options['token']=='pending'){
             this.validationToken  = await this.prompt([
                 {
                     type: 'string',
@@ -66,9 +66,9 @@ module.exports = class extends Generator {
         }
         this.answers = await this.prompt([
             {
-                type: "confirm",
-                name: "ready",
-                message: "Is the configuration correct?"
+                type: 'confirm',
+                name: 'ready',
+                message: 'Is the configuration correct?'
             }
         ]);
         if (!this.answers.ready) {
@@ -77,43 +77,28 @@ module.exports = class extends Generator {
                     type: 'list',
                     name: 'type',
                     message: 'What do you want to update?',
-                    choices: ['token', "tribe", "name",]
+                    choices: ['token', 'tribe', 'name','group']
                 }
             ]);
-            switch (response.type) {
-                case "token": {
-                    const res = await this.prompt([
-                        {
-                            type: 'string',
-                            name: response.type,
-                            message: 'Typing your personal token: ',
-                        }
-                    ]);
-                    setParameter(response.type, res.token);
-                    break;
-                }
-                case "tribe": {
-                    this.tribes = await readTribesFile();
-                    const select_tribe = await this.prompt([autocompleteTribe(this.tribes)]);
-                    setParameter(response.type, select_tribe.tribe);
-                    break;
-                }
-                case "name": {
-                    const res = await this.prompt([
-                        {
-                            type: 'string',
-                            name: response.type,
-                            message: 'Typing your name: ',
-                        }
-                    ]);
-                    setParameter(response.type, res.name);
-                    break;
-                }
+            if(response.type=='tribe') {
+                this.tribes = await readTribesFile();
+                const select_tribe = await this.prompt([autocompleteTribe(this.tribes)]);
+                setParameter(response.type, select_tribe.tribe);
+
+            }else{
+                const res = await this.prompt([
+                    {
+                        type: 'string',
+                        name: response.type,
+                        message: `Typing your ${response.type}: `,
+                    }
+                ]);
+                setParameter(response.type, res[response.type]);
             }
         }
     }
     
     end() {
-        this.log(siigosay(`your siigofile has been updated`));
+        this.log(siigosay('your siigofile has been updated'));
     }
 };
