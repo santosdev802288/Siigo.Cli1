@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "nodemon --config nodemon.json",
+    "start:dev": "nodemon --config nodemon.json",
     "prebuild": "rimraf dist",
     "build": "tsc && node .scripts/copy-files",
     "lint": "eslint \"{src,test}/**/*.ts\"",

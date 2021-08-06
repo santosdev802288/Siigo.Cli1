@@ -39,9 +39,7 @@ describe(NAMESPACE, () => {
             .inDir(dir)
             .withOptions({ 'personal-token': 'myToken','project-name': name })
             .withPrompts({ ready: true, prefix: folderPrefix, name: name})   // Mock the prompt answers
-            .then(() => {
-                console.log('process.cwd()'+ process.cwd());
-                
+            .then(() => {                
                 assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
                 // assert something about the generator
                 assert.file('.air.toml');
@@ -52,27 +50,18 @@ describe(NAMESPACE, () => {
             });
     });
 
-    it('Create Siigo.Microservice. folder', () => {
+    it('Use default project name', () => {
 
         const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Golang'))
-        const name = 'NoFolder'
         const folderPrefix = 'Siigo.Microservice.'
 
         return helpers.run(GolangMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
             .inDir(dir)
-            .withOptions({ 'personal-token': 'myToken','project-name': name })
-            .withPrompts({ ready: true, prefix: folderPrefix, name: name})   // Mock the prompt answers
+            .withOptions({ })
+            .withPrompts({ ready: true, prefix: folderPrefix})
             .then(() => {
-                console.log('process.cwd()'+ process.cwd());
-                
-                assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
-                // assert something about the generator
-                assert.file('.air.toml');
-                assert.file('.gitignore');
-                assert.file('.golangci.yml');
-
-                assert.file('third_party/embed.go')
-            });
+                assert.textEqual(path.basename(process.cwd()), `${folderPrefix}TestMS`)
+            })
     });
 
 });

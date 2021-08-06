@@ -129,8 +129,8 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
         );
     }
 
-    end() {
-        this.log(siigosay('Execute \'make all\' and Enjoy!!'))
+    end(): void {
+        this.log(siigosay("Execute 'make all' and Enjoy!!"))
     }
 }
 

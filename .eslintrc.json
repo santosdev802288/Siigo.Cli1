@@ -20,6 +20,6 @@
     "ignorePatterns": ["**/templates/**/*.ts", "src/@types/*"],
     "rules": {
         "indent": ["error", 4, { "SwitchCase": 1 }],
-        "quotes": ["warn", "single"]
+        "quotes": ["warn", "single", { "avoidEscape": true }]
     }
 }
