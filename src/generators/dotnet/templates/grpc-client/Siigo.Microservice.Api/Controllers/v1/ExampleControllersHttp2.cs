@@ -11,11 +11,12 @@ namespace Siigo.Noticli.Api.Controllers.v1
     [Produces("application/json")]
     public class ExampleControllerHttp2
     {
+        private readonly ClientGRPC client = new();
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
         public async Task<string> ExampleQuery(int id)
-            => await ClientGRPC.SendMessage(id);
+            => await client.SendMessage(id);
 
     }
 }

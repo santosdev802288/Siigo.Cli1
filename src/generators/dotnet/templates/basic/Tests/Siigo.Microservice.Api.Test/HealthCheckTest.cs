@@ -18,7 +18,7 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Test
         }
 
         [Fact]
-        public async Task ReturnHelloWorld()
+        public async Task IsHealthy()
         {
             // Act
             HttpResponseMessage response = await _client.GetAsync("/health");
