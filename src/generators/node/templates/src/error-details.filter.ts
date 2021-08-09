@@ -1,6 +1,6 @@
 import {ArgumentsHost, Catch, ExceptionFilter, HttpException} from '@nestjs/common'
 import {Response} from 'express'
-import {ErrorDetails, LoggerService} from '@siigo/core'
+import {ErrorDetails, LoggerService} from '@siigo/core-security'
 
 /**
  * handler errors
