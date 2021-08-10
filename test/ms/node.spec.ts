@@ -21,8 +21,10 @@ describe(NAMESPACE, () => {
             .withOptions({ 'personal-token': 'myToken' })      // Mock options passed in
             .withPrompts({ ready: true })   // Mock the prompt answers
             .then(() => {
-                // assert something about the generator
-                assert.file('.gitignore');
+                assert.file([
+                    '.gitignore',
+                    '.npmrc'
+                ]);
             });
     });
 });

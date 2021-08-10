@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Grpc.Net.Client;
 using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace Siigo.DotnetgRPCServer.Api.Test.Fixture
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Test.Fixture
 {
     public sealed class TestServerFixture : IDisposable
     {

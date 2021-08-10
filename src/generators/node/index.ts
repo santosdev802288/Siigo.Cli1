@@ -2,7 +2,6 @@ import os  from 'os'
 import path  from 'path'
 import colorize from'json-colorizer'
 import {siigosay} from'@nodesiigo/siigosay'
-import shell from 'shelljs'
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
 import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile'
 
@@ -107,19 +106,6 @@ export default class NodeMSGenerator extends MicroserviceGenerator {
             this.destinationPath('.'),
             {config: this.appConfig}
         );
-    }
-
-    install(): void {
-
-        shell.cp('~/.npmrc', '.npmrc')
-
-        if(!this.options['skip-install']){
-            this.installDependencies({
-                npm: true,
-                yarn: false,
-                bower: false,
-            })
-        }
     }
 
     end(): void {

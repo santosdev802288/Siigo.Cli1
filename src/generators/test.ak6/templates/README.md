@@ -14,6 +14,14 @@ Now run the test using the following command:
 
 This will run the [test.ts](/src/tests/test.ts) script, using **k6**.
 
+### gRPC example
+
+```bash
+yarn k6:grpc -- -e TYPE=smoke -e ENV=qa
+```
+
+This will run the [test.grpc.ts](/src/tests/test.grpc.ts) script.
+
 ## Run with Monitoring
 
 Ensure you have [docker](https://www.docker.com/products/docker-desktop)
@@ -23,7 +31,7 @@ Start the monitors using the following command:
 
 `yarn monitors`
 
-Go to **localhost:3000** in your browser to login to Grafana with the username '**admin**' and the password '**admin**'.
+Go to [**localhost:3000**](localhost:3000) in your browser to login to Grafana with the username '**admin**' and the password '**admin**'.
 
 Add the [k6 dashboard](https://grafana.com/grafana/dashboards/2587) to **Grafana** by following these
 instructions: [Importing a Dashboad](https://grafana.com/docs/grafana/latest/reference/export_import/)

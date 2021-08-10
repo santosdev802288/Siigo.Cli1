@@ -1,8 +1,8 @@
 import {check, group} from "k6";
 import http, {RefinedResponse} from "k6/http";
 import {Counter} from "k6/metrics";
-import {setSleep} from "../lib/sleep.helpers";
-import {IConfig} from "../models/config";
+import {setSleep} from "../../lib/sleep.helpers";
+import {IConfig} from "../../config/config";
 
 export class SessionManagement {
 
