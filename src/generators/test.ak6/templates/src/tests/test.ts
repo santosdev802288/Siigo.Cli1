@@ -2,6 +2,7 @@ import {fail, group} from 'k6';
 import {setSleep} from '../lib/sleep.helpers'
 import {Payroll, SessionManagement} from "../actions/roles/public-user.role";
 import { EmployeeAvailable } from '../models/payroll';
+import CONFIGS from '../config/configs'
 
 // Test Options https://docs.k6.io/docs/options
 if (!__ENV.TYPE) {
@@ -14,11 +15,10 @@ export let options = require(`./options.test.json`)[__ENV.TYPE]
  * Initialize config instance
  */
 console.debug(`Started env: ${__ENV.ENV}`)
-const jsonConfig = require(`../config/config.json`)
-if (!jsonConfig[__ENV.ENV]) {
+if (!(`${__ENV.ENV}` in CONFIGS)) {
     throw new Error(`environment not found. Try add -e ENV={replace_name_env} in your k6 arguments script`)
 }
-const config = jsonConfig[__ENV.ENV]
+const config = CONFIGS[__ENV.ENV]
 console.debug("JSON Config: ", JSON.stringify(config))
 
 /**
@@ -88,4 +88,10 @@ export function teardown(data: TestData) {
             periodDeleted[period] = true;
         }
     })
+}
+
+
+
+export function cycle() {
+    
 }

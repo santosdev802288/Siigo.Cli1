@@ -1,2 +1,2 @@
-export {SessionManagement} from '../session-management.actions'
-export {Payroll} from '../payroll'
+export {SessionManagement} from '../rest/session-management'
+export {Payroll} from '../rest/payroll'
