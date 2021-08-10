@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
-using Siigo.DotnetgRPCServer.Api.Test.Fixture;
-using Siigo.DotnetgRPCServer.Infrastructure.Service;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Test.Fixture;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Service;
 using Grpc.Net.Client;
 
 using Xunit;
 
-namespace Siigo.DotnetgRPCServer.Api.Test
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Test
 {
     public class GrpcTest : IClassFixture<TestServerFixture>
     {
