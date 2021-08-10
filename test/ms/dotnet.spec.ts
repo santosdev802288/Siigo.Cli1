@@ -4,9 +4,9 @@ import fs from 'fs'
 import path from 'path'
 import os from 'os'
 
-import DotnetMSGenerator from '../src/generators/dotnet'
+import DotnetMSGenerator from '../../src/generators/dotnet'
 
-const GENERATOR_FOLDER = '../src/generators/dotnet'
+const GENERATOR_FOLDER = '../../src/generators/dotnet'
 const NAMESPACE = 'siigo:dotnet'
 
 describe(NAMESPACE, () => {
@@ -22,7 +22,8 @@ describe(NAMESPACE, () => {
             .then(() => {
                 // assert something about the generator
                 assert.file([
-                    'nuget.config', 
+                    'nuget.config',
+                    '.editorconfig',
                     '.gitignore', 
                     `Siigo.${name}.Api/Siigo.${name}.Api.csproj`,
                     'checksums.sha256',
@@ -38,13 +39,13 @@ describe(NAMESPACE, () => {
 
         return helpers.run(DotnetMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
             .inDir(dir)
-            .withOptions({ 'token': 'myToken', 'name': name })
-            .withPrompts({ ready: true, prefix: folderPrefix, type: 'grpc-server'  })
+            .withOptions({ 'token': 'myToken' })
+            .withPrompts({ ready: true, prefix: folderPrefix, type: 'grpc-server', name: name  })
             .then(() => {
                 assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
                 // assert something about the generator
                 assert.file(`Siigo.${name}.sln`);
-                assert.file(`.gitignore`);
+                assert.file('.gitignore');
             });
     });
 

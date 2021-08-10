@@ -247,7 +247,7 @@
         "name": "ARQUITECTURA",
         "groups": [
           {
-            "group_name": "Cloud Native",
+            "group_name": "CLOUD_NATIVE",
             "members": [
               {
                 "lead": {
@@ -677,7 +677,7 @@
         "name": "ARQUITECTURA",
         "groups": [
           {
-            "group_name": "TEAM_T4",
+            "group_name": "T4A",
             "members": [
               {
                 "lead": {
@@ -688,6 +688,10 @@
                   {
                     "name": "Luis Felipe Roa Rosero",
                     "user": "roar111743@siigo.com"
+                  },
+                  {
+                    "name": "Wilson Yesid Rivera Casas",
+                    "user": "rive801528@siigo.com"
                   }
                 ]
               }

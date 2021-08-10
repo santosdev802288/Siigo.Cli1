@@ -5,11 +5,24 @@ function Get-CheckRequirements {
 
     foreach ($Parameter in $ParameterName) {
         $isrequirementsInstalled = (Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*) + (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*) | Where-Object { $null -ne $_.DisplayName -and $_.Displayname.Contains($Parameter) }
-        # Write-Output $isrequirementsInstalled.VersionMinor
         If(!$isrequirementsInstalled)
         {   
-            Write-Output "SiigoSay: Please install <$Parameter> in your computer"
-            Exit
+            if ($Parameter -eq "Node") {
+                try
+                {
+                    nvm version
+                    nvm install 14.17.3
+                    nvm use 14.17.3
+                }
+                catch
+                {
+                    Write-Output "SiigoSay: Please install Node in your computer"
+                    Exit 
+                }
+            }Else{
+                Write-Output "SiigoSay: Please install <$Parameter> in your computer"
+                Exit
+            }
         }Else {
             if ($Parameter -eq "Node") {
                 $vnode = 12

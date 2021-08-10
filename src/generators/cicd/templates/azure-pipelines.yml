@@ -17,6 +17,6 @@ extends:
   template: node/node-pipeline.yaml@Pipelines
   <% } %> 
   parameters:
-    projectName: <%= config.name %>
+    projectName: ms-<%= config.name %>
     environment: <%= config.environment %>
     namespace: <%= config.namespace %>

@@ -1,0 +1,83 @@
+{
+  "smoke": {
+    "vus": 1,
+    "duration": "1m",
+    "thresholds": {
+      "http_req_duration": [
+        "p(90)<500"
+      ]
+    }
+  },
+  "load": {
+    "scenarios": {
+      "login_constant": {
+        "executor": "constant-vus",
+        "vus": 2000,
+        "duration": "5m",
+        "tags": {
+          "my_custom_tag": "login"
+        }
+      },
+      "login_per_vu": {
+        "executor": "per-vu-iterations",
+        "vus": 2000,
+        "iterations": 100,
+        "startTime": "10s",
+        "maxDuration": "2m",
+        "tags": {
+          "my_custom_tag": "login"
+        }
+      },
+      "login_ramping_arrival_rate": {
+        "executor": "ramping-arrival-rate",
+        "startRate": 50,
+        "timeUnit": "30s",
+        "preAllocatedVUs": 50,
+        "maxVUs": 600,
+        "stages": [
+          {
+            "target": 500,
+            "duration": "120s"
+          },
+          {
+            "target": 1000,
+            "duration": "120s"
+          },
+          {
+            "target": 1500,
+            "duration": "120s"
+          }
+        ]
+      }
+    },
+    "thresholds": {
+      "http_req_duration": [
+        "avg<500",
+        "p(90)<500"
+      ],
+      "http_req_duration{name:validate_login_token}": [
+        "avg<400"
+      ],
+      "http_req_duration{name:login}": [
+        "avg<500",
+        "p(90)<500"
+      ]
+    }
+  },
+  "soak": {
+    "stages": [
+      {
+        "duration": "2m",
+        "target": 400
+      },
+      {
+        "duration": "3h56m",
+        "target": 400
+      },
+      {
+        "duration": "2m",
+        "target": 0
+      }
+    ]
+  }
+}

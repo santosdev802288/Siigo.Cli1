@@ -23,7 +23,7 @@
     "sonar": "node sonar-project.js"
   },
   "dependencies": {
-    "@siigo/core": "0.0.6",
+    "@siigo/core-security": "^0.0.7",
     "@nestjs/common": "^6.7.2",
     "@nestjs/core": "^6.7.2",
     "@nestjs/jwt": "^6.1.1",

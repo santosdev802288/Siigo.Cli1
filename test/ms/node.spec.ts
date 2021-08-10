@@ -4,15 +4,15 @@ import fs from 'fs'
 import path from 'path'
 import os from 'os'
 
-import GENERATOR from '../src/generators/node'
+import GENERATOR from '../../src/generators/node'
 
-const GENERATOR_FOLDER = '../src/generators/node'
+const GENERATOR_FOLDER = '../../src/generators/node'
 const NAMESPACE = 'siigo:node'
 
 
 describe(NAMESPACE, () => {
 
-    it('Generates a project', () => {
+    it('Generates a Node project', () => {
 
         const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.Node'))
 
@@ -21,8 +21,10 @@ describe(NAMESPACE, () => {
             .withOptions({ 'personal-token': 'myToken' })      // Mock options passed in
             .withPrompts({ ready: true })   // Mock the prompt answers
             .then(() => {
-                // assert something about the generator
-                assert.file('.gitignore');
+                assert.file([
+                    '.gitignore',
+                    '.npmrc'
+                ]);
             });
     });
 });

@@ -1,13 +1,17 @@
 import Generator = require('yeoman-generator')
 import path from 'path'
-import {req} from "../required-tools"
+import {req} from '../required-tools'
 import _ from 'lodash'
 
-import {verifyNewVersion} from "../notification"
+import {verifyNewVersion} from '../notification'
 
 
-const prefixRepo = "Siigo.Microservice."
-const eSiigoPrefixRepo = "ESiigo.Microservice."
+export enum MSPrefix {
+    ESIIGO_MS = 'ESiigo.Microservice.',
+    SIIGO_MS = 'Siigo.Microservice.',
+}
+
+const msPrefixes = Object.keys(MSPrefix).map(k => MSPrefix[k as keyof typeof MSPrefix])
 
 
 export class MicroserviceGenerator extends Generator {
@@ -16,12 +20,13 @@ export class MicroserviceGenerator extends Generator {
      * 
      * @param {extends MicroserviceGenerator} childClass 
      */
-    static yeomanInheritance(childClass: any) {
+    static yeomanInheritance(childClass: any): void {
         childClass.prototype.prompting = MicroserviceGenerator.prototype.prompting
         childClass.prototype.writing = MicroserviceGenerator.prototype.writing
     }
 
     answers: any
+    response: any
     createPrefix: boolean
     defaultName: string | undefined
 
@@ -31,8 +36,8 @@ export class MicroserviceGenerator extends Generator {
         verifyNewVersion()
 
         const currentPath = path.basename(process.cwd())
-        this.createPrefix = !currentPath.startsWith(prefixRepo) && !currentPath.startsWith(eSiigoPrefixRepo)
-        this.defaultName = this.createPrefix? undefined : currentPath.split(".").reverse()[0]
+        this.createPrefix = !msPrefixes.some(prefix => currentPath.startsWith(prefix))
+        this.defaultName = this.createPrefix ? undefined : currentPath.split('.').reverse()[0]
     }
 
     async _doPrompting() { throw new Error('You have to implement _doPrompting()')}
@@ -41,17 +46,27 @@ export class MicroserviceGenerator extends Generator {
 
         // Create project folder using prefix
         if(this.createPrefix){
-            const prefixes = [eSiigoPrefixRepo, prefixRepo]
             this.answers = await this.prompt([
                 {
                     type: 'list',
                     name: 'prefix',
                     message: 'Select project prefix',
-                    choices: prefixes,
-                    default: 1,
+                    choices: msPrefixes,
+                    default: msPrefixes.indexOf(MSPrefix.SIIGO_MS),
                 },
             ]);
-            const name = _.defaultTo(this.options['name'], this.options['project-name'])
+            this.response = await this.prompt([
+                {
+                    type: 'string',
+                    name: 'name',
+                    message: 'Typing the name for the project',
+                    default: 'TestMS'
+                },
+            ]);
+            
+            const name = _.upperFirst(this.response.name);
+            this.options['name'] = name
+            this.options['project-name'] = name
             const appPath = path.join(process.cwd(), `${this.answers.prefix}${name}`)
             this.destinationRoot(appPath)
             process.chdir(appPath)

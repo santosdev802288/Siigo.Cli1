@@ -14,43 +14,40 @@ export default class CoreMSGenerator extends MicroserviceGenerator {
     constructor(args: any, opt: any) {
         super(args, opt)
 
-        this.option("name", {
-            description: "Project name",
+        this.option('name', {
+            description: 'Project name',
             default: this.defaultName,
             type: String
         })
 
-        this.option("token", {
-            description: "Personal token. Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens",
+        this.option('token', {
+            description: 'Personal token. Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens',
             type: String
         })
 
-        this.option("project-prefix", {
-            description: "Use this option to replace the prefix Siigo in the file names",
-            default:"Siigo",
+        this.option('project-prefix', {
+            description: 'Use this option to replace the prefix Siigo in the file names',
+            default:'Siigo',
             type: String
         })
     }
 
     initializing() {
-        this.log(siigosay(`Siigo Generator .Net Core.`))
+        this.log(siigosay('Siigo Generator .Net Core.'))
 
-        const message = "For more information execute yo siigo:core --help"
-
-        if (this.options['name'] === 'true' || !this.options['name'] )
-            throw new Error("--name is required or it should not be empty.\n " + message)
+        const message = 'For more information execute yo siigo:core --help'
 
     }
 
     async _doPrompting() {
-        let tokenf = await getParameter("token");
+        let tokenf = await getParameter('token');
         const updatetoken = this.options['token']
-        if(tokenf == "pending" || updatetoken != null ) tokenf = await wizardsiigofile(updatetoken);
+        if(tokenf == 'pending' || updatetoken != null ) tokenf = await wizardsiigofile(updatetoken);
 
         // Save config
         this.appConfig = {
             name: this.options['name'],
-            token: tokenf.replace(" \n",""),
+            token: tokenf.replace(' \n',''),
             nameCapitalize: capitalize(this.options.name),
             projectPrefix: this.options['project-prefix'],
         }
@@ -61,7 +58,7 @@ export default class CoreMSGenerator extends MicroserviceGenerator {
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
         this.queueTransformStream([
             rename((parsedPath: rename.ParsedPath) => {
-                const prefixChart = "ms-"
+                const prefixChart = 'ms-'
                 parsedPath.dirname = parsedPath.dirname.includes(prefixChart) ?
                     parsedPath.dirname.replace(/(Microservice)/g, this.appConfig.name) :
                     parsedPath.dirname.replace(/(Microservice)/g, capitalize(this.appConfig.name))
@@ -72,14 +69,14 @@ export default class CoreMSGenerator extends MicroserviceGenerator {
         ]);
 
         this.fs.copyTpl(
-            this.templatePath(""),
-            this.destinationPath("."),
+            this.templatePath(''),
+            this.destinationPath('.'),
             {config: this.appConfig},
         );
 
         this.fs.copyTpl(
-            this.templatePath(".*"),
-            this.destinationPath("."),
+            this.templatePath('.*'),
+            this.destinationPath('.'),
             {config: this.appConfig}
         );
 
@@ -92,7 +89,7 @@ export default class CoreMSGenerator extends MicroserviceGenerator {
     }
 
     end() {
-        this.log(siigosay(`Project Created!!`));
+        this.log(siigosay('Project Created!!'));
     }
 
 }

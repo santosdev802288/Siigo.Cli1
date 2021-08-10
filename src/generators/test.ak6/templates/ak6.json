@@ -1,0 +1,10 @@
+{
+    "ligera": {
+        "TYPE": "smoke",
+        "ENV": "qa"
+    },
+    "prod": {
+        "TYPE": "smoke",
+        "ENV": "prod"
+    }
+}
