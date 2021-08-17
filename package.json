@@ -9,7 +9,7 @@
     "prebuild": "rimraf dist",
     "build": "tsc && node .scripts/copy-files",
     "lint": "eslint \"{src,test}/**/*.ts\"",
-    "release": "standard-version --header \"# Changelog\n\nAll notable changes to this project.\n\"",
+    "release": "standard-version",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --spec test/**/*.spec.ts",
     "test:debug": "mocha --inspect-brk --spec test/**/*.spec.ts",
     "coverage": "nyc --reporter lcov --reporter text --report-dir .nyc_output npm run test",
