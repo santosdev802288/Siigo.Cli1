@@ -1,4 +1,4 @@
-import { Service } from '@siigo/core'
+import { Service } from '@siigo/core-security'
 import {Observable} from 'rxjs'
 
 export interface I<%= config.nameUpper %>Service<T> extends Service<T> {
