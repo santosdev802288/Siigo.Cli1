@@ -12,6 +12,7 @@ import fetch from 'node-fetch';
 import fs from 'fs';
 import { getParameter} from '../../utils/siigoFile';
 import chalk from 'chalk';
+import _ from 'lodash';
 
 
 const prefixRepo = 'Siigo.Microservice.';
@@ -37,21 +38,38 @@ async function writeChart(token:any, projectName:string,tagOwner:string ,tagTrib
             group: ${tagGroup}`);
 
     try {
-        await fs.writeFileSync(`./.docker/${projectName}/values.yaml`, stringResponse);
+        fs.writeFileSync(`./.docker/${projectName}/values.yaml`, stringResponse);
     }
     catch (err) {
         console.log(('Token no es valido' as any).red);
     }
 }
 
-export default class CicdGenerator extends Generator {
+
+enum TypeEnum {
+    GOLANG='golang',
+    NET_5='net5',
+    NETCORE_3='netcore',
+    NODE='node',
+}
+
+const TYPE_LIST = Object.keys(TypeEnum).map(k => TypeEnum[k as keyof typeof TypeEnum])
+
+
+interface CicdOptions extends Generator.GeneratorOptions {
+    skipInstallStep: boolean;
+    type: TypeEnum;
+}
+
+
+export default class CicdGenerator extends Generator<CicdOptions> {
     appConfig: any;
     answers: any;
     tribes: any;
     upgrade: any;
     token: any;
 
-    constructor(args: any, opt: any) {
+    constructor(args: any, opt: CicdOptions) {
         super(args, opt)
         
         req()
@@ -59,10 +77,12 @@ export default class CicdGenerator extends Generator {
         const currentPath = path.basename(process.cwd())
 
         const paths = getDirectoriesRecursive('.')
-            .filter((path: any) => !path.includes('Test'))
-            .filter((path: any) => path.endsWith('.Api'))
+            .filter(filepath => !filepath.includes('Test'))
+            .filter(filepath => filepath.endsWith('.Api'))
+            .map(filepath => path.basename(filepath))
 
         // optionals
+
         this.option('organization', {
             type: String,
             description: 'Url of the organization in azure devops.',
@@ -82,6 +102,12 @@ export default class CicdGenerator extends Generator {
             description: 'Pipeline name in azure devops.',
             default: `${currentPath} CICD`,
             alias: 'pn'
+        });
+
+        this.option('skipInstallStep', {
+            type: Boolean,
+            description: 'Saltar el paso de instalación.',
+            default: false,
         });
 
         this.option('folder', {
@@ -115,7 +141,7 @@ export default class CicdGenerator extends Generator {
         // required
         this.option('dll', {
             type: String,
-            description: 'Project which the microservice starts. (Siigo.{Name}.Api). If --type is set to \'node\', this value will be ignored.',
+            description: 'Project which the microservice starts (Siigo.{Name}.Api). Only for .Net types.',
             default: paths.length ? paths[0] : null,
             alias: 'd'
         });
@@ -140,9 +166,9 @@ export default class CicdGenerator extends Generator {
 
         this.option('type', {
             type: String,
-            description: 'Project type. (node, netcore, golang)',
+            description: `Project type, one of: ${TYPE_LIST}.`,
             alias: 't',
-            default: 'net5'
+            default: TypeEnum.NET_5
         });
     }
 
@@ -239,11 +265,11 @@ export default class CicdGenerator extends Generator {
     }
 
 
-    async writing() {
+    async writing(): Promise<void> {
 
         this.fs.copyTpl(
-            this.templatePath(".docker"),
-            this.destinationPath(".docker"),
+            this.templatePath('.docker'),
+            this.destinationPath('.docker'),
             { config: this.appConfig },
             {},
             {
@@ -260,16 +286,17 @@ export default class CicdGenerator extends Generator {
         );
 
         // Copy based on type
-        if (this.options['type'] === 'golang'){
+        if ([TypeEnum.GOLANG, TypeEnum.NODE].includes(this.options.type)){
             this.fs.copyTpl(
-                this.templatePath('.golang/.docker'),
-                this.destinationPath('.docker'),
+                this.templatePath(`.${this.options.type}/`),
+                this.destinationPath(''),
                 { config: this.appConfig },
                 {},
                 {
                     processDestinationPath: (filePath) => {
                         return filePath.replace(/(chart)/g, 'ms-'+this.appConfig.name)
-                    }
+                    }, 
+                    globOptions: {dot: true}
                 },
             );
         } else {
@@ -278,11 +305,14 @@ export default class CicdGenerator extends Generator {
         }
     }
 
-    async install() {
+    install(): void {
+        if (this.options.skipInstallStep){
+            return
+        }
         shell.exec('git remote update origin --prune',{silent: true})
-        const branchsGit: any = (shell.exec('git branch -r',{silent: true}).stdout).split('\n');
+        const branchsGit = (shell.exec('git branch -r',{silent: true}).stdout).split('\n').filter(value => value.length);
         let flagCicd = false;
-        if(branchsGit != null){
+        if(branchsGit != null && !_.isEmpty(branchsGit)){
             branchsGit.forEach((branch: string) => { if(branch.includes('cicd')) flagCicd = true;});
         }
         if(!flagCicd){

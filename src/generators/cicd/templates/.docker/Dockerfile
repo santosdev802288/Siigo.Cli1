@@ -119,38 +119,6 @@ EXPOSE 5000
 USER 1000
 ENTRYPOINT ["dotnet", "<%= config.mainProject %>.dll"]
 
-
-<% } else if (config.type == 'node') { %>
-    
-FROM node:13 as build
-
-WORKDIR /usr/src/app
-COPY package*.json ./
-COPY .npmrc .npmrc
-RUN npm install
-RUN npm i sonarqube-scanner
-COPY . .
-
-RUN npm run build
-RUN npm run sonar
-
-FROM node:13.0.1-alpine as run
-
-ENV COMPlus_EnableDiagnostics=0
-WORKDIR /usr/src/app
-USER root
-COPY --from=build /usr/src/app .
-RUN npm i -g pm2
-
-ARG NODE_ENV
-ENV NODE_ENV ${NODE_ENV:-Development}
-
-RUN adduser --disabled-password --gecos "" app -u 1100
-USER 1100
-
-EXPOSE 5000
-CMD [ "pm2-runtime", "dist/main.js" ]
-
 <% } else { %>
 # Unkwon type. Unable to generate Dockerfile content
 <% } %>

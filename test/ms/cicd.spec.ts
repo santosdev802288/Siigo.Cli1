@@ -5,13 +5,12 @@ import os from 'os'
 import path from 'path'
 import shell from 'shelljs';
 
-import CicdGenerator from '../../src/generators/cicd'
 import { getGenerator, SiigoGenerator } from '../generator.factory'
 
-const GENERATOR_FOLDER = '../../src/generators/cicd'
 const NAMESPACE = 'siigo:cicd'
 
 describe(NAMESPACE, () => {
+    const generator = getGenerator(SiigoGenerator.MS_CICD)
 
     it('Config a dotnet project', async () => {
 
@@ -40,16 +39,17 @@ describe(NAMESPACE, () => {
 
     /*it('Config a Golang project', () => {
 
-        //const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.Bolt'))
+        const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.Go'))
 
         return helpers.run(CicdGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
-            //.inDir(dir)
+            .cd(dir)
             .withOptions({ 'project-name': 'golang', 'type': 'golang', 'namespace-k8s': 'cross' })
             .withPrompts({ ready: true })
             .then(() => {
                 console.log(process.cwd())
-                // assert something about the generator
+                shell.exec('git init',{silent: true})
 
+                // assert something about the generator
                 assert.file('.air.toml');
                 assert.file('.gitignore');
                 assert.file('.golangci.yml');
@@ -57,4 +57,18 @@ describe(NAMESPACE, () => {
                 assert.file('third_party/embed.go')
             });
     });*/
+
+    it('Config a NodeJS project', () => {
+        
+        const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.Node'))
+
+        return helpers.run(generator.generatorOrNamespace, generator.settings)
+            .cd(dir)
+            .withOptions({ 'skipInstallStep': true, 'project-name': 'NodeApp', 'type': 'node', 'namespace-k8s': 'cross'})
+            .withPrompts({ ready: true })
+            .then(() => {
+                assert.file(['.docker/Dockerfile']);
+                assert.fileContent('.docker/Dockerfile', /FROM node:.*/)
+            });
+    });
 });
