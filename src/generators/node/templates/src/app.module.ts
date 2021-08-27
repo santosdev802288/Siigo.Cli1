@@ -1,5 +1,5 @@
 import {Module} from '@nestjs/common'
-import {CoreModule} from '@siigo/core-security'
+import {CoreModule} from '@siigo/core'
 import {ErrorDetailsFilter} from './error-details.filter'
 import {APP_FILTER} from '@nestjs/core'
 

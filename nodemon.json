@@ -1,4 +1,5 @@
 {
+    "delay": 1000,
     "verbose": false,
     "ignore": [
         ".git", "node_modules/", "dist/"

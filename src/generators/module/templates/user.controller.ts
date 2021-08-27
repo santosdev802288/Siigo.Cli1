@@ -21,8 +21,8 @@ export class <%= config.nameUpper %>Controller {
      */
     @Get()
     public <%= config.name %>(): Observable<string> {
-            <%= config.nameUpper %>Controller.logger.log({message: 'Controller', 'trace_id': '120123239'})
-            return this.<%= config.name %>Service.<%= config.name %>()
-        }
+        <%= config.nameUpper %>Controller.logger.log({message: 'Controller', 'trace_id': '120123239'})
+        return this.<%= config.name %>Service.<%= config.name %>()
+    }
 
 }

@@ -5,9 +5,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "start:dev": "nodemon --config nodemon.json",
     "prebuild": "rimraf dist",
     "build": "tsc && node .scripts/copy-files",
+    "build:dev": "nodemon --config nodemon.json",
     "lint": "eslint \"{src,test}/**/*.ts\"",
     "release": "standard-version",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --spec test/**/*.spec.ts",

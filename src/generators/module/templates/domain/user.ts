@@ -1,4 +1,4 @@
-import { Builder, Build } from '@siigo/core-security'
+import { Builder, Build } from '@siigo/core'
 
 @Builder
 export class <%= config.nameUpper %> {
