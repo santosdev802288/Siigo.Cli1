@@ -23,7 +23,6 @@ export const readTribesFile = async () =>{
 /**
  *
  * @param {string} userSiigo
-
  * @description Return tribe by User of siiigo
  * 
  */

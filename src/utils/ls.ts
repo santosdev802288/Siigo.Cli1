@@ -9,7 +9,7 @@ const fileList: string[] = []
  * @param {bool} inner
  * @returns {array of files}
  * @description Walks down a file directory returning the path of the children directory,.
- *  The inner params causes the function to return just the name of the children directory
+ * The inner params causes the function to return just the name of the children directory
  */
 function ls(dir: any, inner?: any) {
     fs.readdirSync(dir).forEach((file: any) => {

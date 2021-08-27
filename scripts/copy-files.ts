@@ -1,5 +1,5 @@
-const shell = require('shelljs');
-const pkg = require('../package.json');
+import shell from 'shelljs';
+import pkg from '../package.json';
 
 // The path to the directory to copy the file(s) to.
 const DEST_DIR = './dist';
