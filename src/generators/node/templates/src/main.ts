@@ -1,6 +1,6 @@
 import {NestFactory} from '@nestjs/core'
 import {AppModule} from './app.module'
-import {LoggerService} from '@siigo/core-security'
+import {LoggerService} from '@siigo/core'
 import {ValidationPipe} from '@nestjs/common'
 import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger'
 

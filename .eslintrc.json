@@ -2,7 +2,6 @@
     "env": {
         "node": true,
         "commonjs": true,
-        "es2021": true,
         "mocha": true
     },
     "extends": [
@@ -13,13 +12,30 @@
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 2021,
+        "project": ["tsconfig.json"],
         "sourceType": "module"
     },
-    "plugins": ["@typescript-eslint"],
+    "plugins": [
+        "eslint-plugin-import",
+        "eslint-plugin-jsdoc",
+        "eslint-plugin-prefer-arrow",
+        "@typescript-eslint"
+    ],
     "ignorePatterns": ["**/templates/**/*.ts", "src/@types/*"],
     "rules": {
-        "indent": ["error", 4, { "SwitchCase": 1 }],
-        "quotes": ["warn", "single", { "avoidEscape": true }]
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-unnecessary-type-assertion": "error",
+        "@typescript-eslint/no-var-requires": "error",
+        "arrow-body-style": "warn",
+        "default-case": "warn",
+        "eqeqeq": ["warn", "smart"],
+        "indent": ["warn", 2, { "SwitchCase": 1 }],
+        "jsdoc/check-alignment": "error",
+        "jsdoc/check-indentation": "warn",
+        "jsdoc/newline-after-description": "error",
+        "max-len": ["warn", {"code": 150}],
+        "no-magic-numbers": ["warn", { "ignoreArrayIndexes": true }],
+        "quotes": ["warn", "single", { "avoidEscape": true }],
+        "semi": ["warn", "never"]
     }
 }
