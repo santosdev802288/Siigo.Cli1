@@ -4,10 +4,6 @@ This an API to generate logs
 
 ## Getting Started
 
-```bash
-dotnet restore
-```
-
 ## Build
 
 ```bash
