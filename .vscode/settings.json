@@ -9,5 +9,9 @@
         "activityBarBadge.foreground": "#e7e7e7"
     },
     "peacock.color": "#63190b",
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "conventionalCommits.scopes": [
+        "cicd",
+        "dotnet"
+    ]
 }
