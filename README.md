@@ -21,8 +21,7 @@
 <span style="font-size:2em;">☠️</span> | Before to start to use this CLI , it's important to follow the instructions. If you have some errors during the Siiglo ClI installation process or when you're using it, read those exceptions carefully, they can give you a lot of information about how to fix them. 
 :---: | :---
 
-  
-### 
+
     The defaults values are taken from the folder where the ClI is running.
 
 ## 🛠️ Requirements
@@ -249,13 +248,14 @@ In the following [example](https://assetsdoc.blob.core.windows.net/assets/core.s
 
 Create queries and commands with their handlers quickly in your project.
 
-#### Using
+#### Using CQRS
 
 Create a new command or query
-    
+
     yo siigo:crqs
 
-#### Example 
+#### Example of CQRS
+
 In the following [example](https://assetsdoc.blob.core.windows.net/assets/cqrs.svg) you can see how to create a command and a query.
 
 ## 🗿 .Net 5 grpc client
