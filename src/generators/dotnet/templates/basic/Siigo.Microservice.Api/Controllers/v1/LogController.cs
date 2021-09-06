@@ -45,7 +45,8 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Controlle
         [HttpPost]
         public async Task WriteLog(PostLogEntry entry)
         {
-            await Task.Run(_loggerService.WriteLog(entry));
+            _ = Task.Run(_loggerService.WriteLog(entry));
+            return await Task.Run(Ok);
         }
 
         #endregion Public Methods
