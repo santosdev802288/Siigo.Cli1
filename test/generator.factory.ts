@@ -7,8 +7,6 @@ import NodeMSGenerator from '../src/generators/node';
 import CoreMSGenerator from '../src/generators/core'
 import Ak6TestingGenerator from '../src/generators/test.ak6'
 
-
-
 export enum SiigoGenerator {
     MS_CICD,
     MS_CORE,

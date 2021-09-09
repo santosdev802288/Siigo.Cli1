@@ -1,8 +1,8 @@
 import {check, group} from "k6";
 import http, {RefinedResponse} from "k6/http";
 import {Counter} from "k6/metrics";
-import {setSleep} from "../../lib/sleep.helpers";
-import {IConfig} from "../../config/config";
+import {setSleep} from "../lib/sleep.helpers";
+import {IConfig} from "../models/config";
 
 export class SessionManagement {
 
@@ -20,22 +20,22 @@ export class SessionManagement {
 
     public constructor(
         public readonly config: IConfig
-    ) {
-    }
+    ) {}
 
     /**
      *
      * @param username
+     * @param password
      */
-    public login(username: string) {
+    public login(username: string, password: string) {
 
         let loginResponse = {} as RefinedResponse<any>
 
         group("user auth", () => {
 
             loginResponse = http.post(
-                `${this.config.serviceUrl}/connect/token?`,
-                `grant_type=password&username=${username}&password=1111&scope=WebApi offline_access`,
+                `${this.config.baseUrl}/${this.config.serviceAuthUrl}/connect/token?`,
+                `grant_type=password&username=${username}&password=${password}&scope=WebApi offline_access`,
                 {
                     headers: this.headers,
                     tags: {
@@ -47,7 +47,7 @@ export class SessionManagement {
             check(loginResponse, {
                 'login status is 200': () => loginResponse.status === 200,
                 'has token': () => !!loginResponse.json("access_token"),
-            })
+            });
 
             this.counterLoginOk.add(loginResponse.status === 200)
             this.counterLoginFail.add(loginResponse.status !== 200)
@@ -66,7 +66,7 @@ export class SessionManagement {
 
         group("validate auth token", () => {
             const validateToken = http.get(
-                `${this.config.serviceUrl}/connect/accessTokenValidation?token=${loginData.json("access_token")}`,
+                `${this.config.baseUrl}/${this.config.serviceAuthUrl}/connect/accessTokenValidation?token=${loginData.json("access_token")}`,
                 {
                     headers: this.headers,
                     tags: {
@@ -85,4 +85,31 @@ export class SessionManagement {
 
         setSleep(0.5, 1);
     }
+
+    // health example
+    public health(): void {
+
+        group("health", () => {
+            const validateToken = http.get(
+                `${this.config.baseUrl}/strategy/health`,
+                {
+                    headers: this.headers,
+                    tags: {
+                        name: 'health',
+                    },
+                }
+            );
+
+            check(validateToken, {
+                'token validation status is 200': () => validateToken.status === 200,
+            });
+
+            this.counterValidationTokenErrors.add(validateToken.status !== 200)
+            this.counterValidationTokenOk.add(validateToken.status === 200)
+        })
+
+        setSleep(0.5, 1);
+    }
+
+
 }

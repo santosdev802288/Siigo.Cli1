@@ -504,6 +504,7 @@ To contribute to the project and make a pull request you must follow these requi
   - clone master branch  
   - create a new branch 
   - install dependencies
+  - npm run build:dev
   - execute [__*npm link*__](https://docs.npmjs.com/cli/v6/commands/npm-link) in the root of the project 
 
 Now all the commands with __*yo siigo:(core, node, gateway, cicd, etc.)*__ point to your local repository.

@@ -7,7 +7,7 @@
     // Search under node_modules for non-relative imports.
 
     "moduleResolution": "node",
-    // Process & infer types from .js files.
+    // Process & infer models from .js files.
 
     "allowJs": true,
     // Don't emit; allow Babel to transform files.

@@ -1,11 +1,9 @@
-FROM node:16-alpine3.11 as build
-WORKDIR /test
-COPY . .
-RUN npm install -g npm@7.16.0
-RUN npm i
-RUN npm run build
-
 FROM loadimpact/k6:latest
-ENV K6_STATSD_ADDR=52.247.86.112:8125
-ENV K6_STATSD_ENABLE_TAGS=true
-COPY --from=build /test/ .
+
+COPY k6 /usr/bin/k6
+
+ENV AZURE_STORAGE_ACCOUNT=siigoloadtesting
+ENV AZURE_STORAGE_ACCESS_KEY=AY5VSKFHJNrHwslWQTahZds3utXfKmqsl9Nkag5Rg+SfoWHhJz27vwJHH0cyQx0wU/PYXMdccD7fYVSv7887yw==
+
+CMD ls -laR
+ENTRYPOINT ["k6"]

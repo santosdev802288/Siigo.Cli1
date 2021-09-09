@@ -1,104 +1,136 @@
-# Siigo AK-6
 
-A starter framework for k6 load tests written in TypeScript.
 
-## Quick Start :zap:
+<br>
 
-Install dependencies using [yarn](https://yarnpkg.com/getting-started/install) :
+![logo](https://www.siigo.com/wp-content/uploads/2019/05/Logo-Siigo.png)
 
-`yarn install`
 
-Now run the test using the following command:
+<p align="center" >
+  <img src="https://assetsdoc.blob.core.windows.net/assets/ic_logo@2x.png">
+</p>
 
-`yarn k6`
 
-This will run the [test.ts](/src/tests/test.ts) script, using **k6**.
+    A starter framework for k6 load tests written in TypeScript.
 
-### gRPC example
+![cicd1](https://img.shields.io/badge/siigo-tech-brightgreen)
+![cicd2](https://img.shields.io/badge/I%20%E2%9D%A4%EF%B8%8F-JS-blue)
+![cicd3](https://img.shields.io/badge/node-v14.13.1-green)
+![cicd4](https://img.shields.io/badge/npm-6.14.8-brightgreen)
+![cicd5](https://img.shields.io/badge/coverage%20100%25-%F0%9F%98%9C-blue)
 
-```bash
-yarn k6:grpc -- -e TYPE=smoke -e ENV=qa
-```
+<br>
 
-This will run the [test.grpc.ts](/src/tests/test.grpc.ts) script.
+<p align="center" >
+  <img width="1200" src="https://assetsdoc.blob.core.windows.net/assets/example.svg">
+</p>
+<br>
+<p align="center">
+  <img width="1200" src="https://assetsdoc.blob.core.windows.net/assets/grafana.png">
+</p>
+<br>
+<p align="center">
+  <img width="1200" src="https://assetsdoc.blob.core.windows.net/assets/dd.png">
+</p>
 
-## Run with Monitoring
 
-Ensure you have [docker](https://www.docker.com/products/docker-desktop)
+# Quick Start with Monitoring 🔥 👨‍🏫
+
+<br>
+
+1. Login with [acr](https://azure.microsoft.com/en-us/services/container-registry)
+   
+        docker login acraksqa.azurecr.io -u acrAksQa -p ZcgBUG708b=xU/99rC0M7e+FcKbrK32s
+   
+<br>
+
+2. Install [docker](https://www.docker.com/products/docker-desktop)
 and [docker-compose](https://docs.docker.com/compose/install/) installed on your machine.
 
-Start the monitors using the following command:
+<br>
 
-`yarn monitors`
+3. Install dependencies using [yarn](https://yarnpkg.com/getting-started/install) :
 
-Go to [**localhost:3000**](localhost:3000) in your browser to login to Grafana with the username '**admin**' and the password '**admin**'.
+        yarn install
 
-Add the [k6 dashboard](https://grafana.com/grafana/dashboards/2587) to **Grafana** by following these
-instructions: [Importing a Dashboad](https://grafana.com/docs/grafana/latest/reference/export_import/)
+<br>
 
-Now run the test using the following command:
+4. Start the monitors using the following command:
 
-`yarn test:docker`
+        yarn monitors
 
-This will run the [test.ts](/src/tests/test.ts) script, using **k6** installed in a docker, which outputs the results
-to **influxDB**. **Grafana** is used to visualise the results.
+<br>
 
-**Please NOTE:** If you're running in **Windows** you'll need to use the full path for the local directories in the **
-volumes** sections of the [docker-compose.yaml](docker-compose.yml) file. See
-the [k6 documentation](https://docs.k6.io/docs/docker-on-windows) for more details.
+5. Go to **localhost:3000** in your browser to login to Grafana with the username '**admin**' and the password '**admin**'.
+    Add the [k6 dashboard](https://grafana.com/grafana/dashboards/2587) to **Grafana** by following these
+    instructions: [Importing a Dashboad](https://grafana.com/docs/grafana/latest/reference/export_import/)
 
-![Grafana Dashboard](https://grafana.com/api/dashboards/2587/images/1696/image)
+   <span style="font-size:2em;">☠️</span> | If you're running in **Windows** probably you'll need to use the full path for the local directories in the **volumes** sections of the [docker-compose.yaml](docker-compose.yml) file.
+   :---: | :---
 
-## Run the 'Seed' Script
+<br>
 
-[seed.ts](src/tests/seed.ts)
+6.  Run [seed.ts](src/tests/seed.ts) script. This is an example of a script that you could use to 'seed' the application with test data before you run your
+    performance tests.
 
-This is an example of a script that you could use to 'seed' the application with test data before you run your
-performance tests. You can run it using the following command:
+        yarn seed
 
-`yarn seed`.
+<br>
 
-This is just an example script and not needed for the test.
+7.  Now run the test. This will run the [test.ts](/src/tests/test.ts) script, using **k6** installed in a docker, which outputs the results
+    to **influxDB**. **Grafana** is used to visualise the results.
 
-### High-level architecture diagram:
+        yarn test
 
-![Framework Diagram](images/FrameworkDiagram.png)
+<br>
+
+# High-level architecture diagram
+
+<br>
+<br>
+<p align="center" >
+  <img width="1000" src="https://assetsdoc.blob.core.windows.net/assets/FrameworkDiagram.png">
+</p>
 
 As you can see from the framework diagram above, k6 modules allow for a lot of code re-use. Let's go into more detail
 about each of the folders and what they do.
 
-### **src** folder
+## **src** folder
 
 All the code can be found in the `src` folder. And is written in TypeScript
 using [types provided by k6](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/k6).
 
-### **lib** folder
+
+## **lib** folder
 
 This folder contains bespoke `types` and helper functions. It's highly recommended that you unit test your helper
 functions (e.g. with [Jest](https://jestjs.io/)). However I've not done that here, just to keep things simple.
 
-#### The types folder
 
-This currently contains an interface for a 'User' in the system, specifying that they need a first name, last name,
-username and password.
+## The models folder
 
-### **actions** folder
+This currently contains all classes, interfaces, constants definitions.  
+
+
+## **actions** folder
 
 The `actions` folder contains a script file for each user action. Each script file contains the requests that are sent
 when a user performs that particular action (e.g. login). The `roles` folder (inside the `actions` folder) contains a
 file for each user type and the actions they can perform.
 
-#### *roles folder*
+
+## *roles folder*
 
 There are three types of user (or roles) that use the Crocodile app. The first is a *public user* that isn't logged into
 the system. They can query crocodiles, but can't create, update or delete them. The second are *crocodile owners* who
 can log in and create, read and update crocodiles. The third are *admin* users who can create other users. The admin
 users don't need to log in, as this is just a dummy app.
 
-### **tests** folder
+
+## **tests** folder
 
 This is where you create your performance tests using the modules from the rest of the framework. `actions` are never
 called directly, but always through the `role` performing them (see the `actions` and `roles` folders above).
+
 
 ## Checking your Code
 
@@ -113,15 +145,18 @@ this running while you work using:
 
 **PLEASE NOTE** I haven't set up `ESLint` and `Prettier` which this framework, but it's recommended that you do so.
 
+
 ## Building your Code
 
-[Babel](https://babeljs.io/) handles the transpiling of the code (see the [.babelrc](.babelrc) file in the root
+[Babel](https://babeljs.io/) handles the transpiling of the code (see the [.babelrc](.dotfiles/.babelrc) file in the root
 directory), while [Webpack](https://webpack.js.org/) builds it (see the [webpack.config.js](webpack.config.js) file in
 the root directory).
+
 
 ## Debugging k6 :bug:
 
 It's easy to debug `k6` scripts. See the [k6 documentation](https://docs.k6.io/docs/debugging) for more details.
+
 
 ## Running in CI/CD Pipelines
 

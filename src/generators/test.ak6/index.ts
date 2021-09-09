@@ -1,18 +1,18 @@
-import os  from 'os'
-import colorize from'json-colorizer'
-import {siigosay} from'@nodesiigo/siigosay'
-import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile'
-import { TestingGenerator } from '../../utils/generator/testing'
-import { GeneratorOptions } from 'yeoman-generator'
-
+import colorize from 'json-colorizer'
+import {siigosay} from '@nodesiigo/siigosay'
+import {getAllParametersSiigo, wizardsiigofile} from '../../utils/siigoFile'
+import {TestingGenerator} from '../../utils/generator/testing'
+import {GeneratorOptions} from 'yeoman-generator'
 
 interface Ak6Options extends GeneratorOptions {
     name: string;
 }
 
+type AppConfig = { description: string; author: string; name: string; token: string }
 
 export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
-    appConfig: { description?: any; author?: any; name?: any; token?: any } = {}
+
+    private appConfig: Partial<AppConfig> = {}
 
     constructor(args: any, options: Ak6Options) {
         super(args, options)
@@ -80,6 +80,18 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
     }
 
     async _doWriting() {
+
+        this.fs.copyTpl(
+            this.templatePath('.docker'),
+            this.destinationPath('.docker'),
+            { config: this.appConfig },
+            {},
+            {
+                processDestinationPath: (filePath) => {
+                    return filePath.replace(/(ak6)/g, 'ms-'+this.appConfig.name)
+                }
+            },
+        )
         
         this.fs.copyTpl(
             this.templatePath(''),
