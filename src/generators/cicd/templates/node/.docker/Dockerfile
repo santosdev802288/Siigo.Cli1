@@ -1,8 +1,10 @@
+#
 # Imagen base para Node
-# Para acceder a las imágenes siigo localmente logearse en acr: "az acr login -n siigo"
-FROM siigo.azurecr.io/node-build as build
+# Para acceder a las imágenes siigo localmente ejecutar: "az acr login -n siigo"
+#
+FROM siigo.azurecr.io/node-build:2 as build
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY .npmrc .npmrc
 COPY package*.json ./
@@ -15,18 +17,18 @@ RUN npm run build
 
 RUN npm prune --production
 
-# run node prune
-RUN /usr/local/bin/node-prune
+# Compilar a binario, ver https://github.com/vercel/pkg
+RUN pkg -c package.json -t node14-alpine-x64 --o dist/binary --compress GZip dist/main.js
 
 #
 # Imagen de ejecución
 #
-FROM siigo.azurecr.io/node-runtime as runtime
+FROM siigo.azurecr.io/node-runtime:3 as runtime
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY --from=build /usr/src/app/dist ./dist
-COPY --from=build /usr/src/app/node_modules ./node_modules
+# Copiar binario construido en la imagén anteior
+COPY --from=build /app/binary ./
 
 EXPOSE 5000
-CMD [ "node", "dist/main.js" ]
+CMD ["/app/binary"]
