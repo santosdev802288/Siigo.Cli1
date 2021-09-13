@@ -3,12 +3,21 @@ import {siigosay} from '@nodesiigo/siigosay'
 import {getAllParametersSiigo, wizardsiigofile} from '../../utils/siigoFile'
 import {TestingGenerator} from '../../utils/generator/testing'
 import {GeneratorOptions} from 'yeoman-generator'
+import {exec as spawn} from "child_process";
+import path from "path";
 
 interface Ak6Options extends GeneratorOptions {
     name: string;
 }
 
-type AppConfig = { description: string; author: string; name: string; token: string }
+type AppConfig = {
+    description: string;
+    author: string;
+    name: string;
+    token: string;
+    project: string;
+    organization: string
+}
 
 export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
 
@@ -24,6 +33,21 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
             default: this.defaultName,
             alias: 'pn'
         });
+
+        this.option('organization', {
+            type: String,
+            description: 'Url of the organization in azure devops.',
+            default: 'https://dev.azure.com/SiigoDevOps',
+            alias: 'org'
+        })
+
+        this.option('project', {
+            type: String,
+            description: 'Project in azure devops.',
+            default: 'Siigo',
+            alias: 'p'
+        })
+
     }
 
     initializing(): void{
@@ -46,10 +70,12 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
                 throw new Error(`${option} is required.\n${message}`)
         });
 
-        const {description, author} = this.options
+        const {description, author, project, organization } = this.options
         this.appConfig = {
             description,
+            organization,
             author,
+            project,
             name: this.options.name.toLowerCase(),
             token: this.options['personal-token'],
         };
@@ -88,7 +114,7 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
             {},
             {
                 processDestinationPath: (filePath) => {
-                    return filePath.replace(/(ak6)/g, 'ms-'+this.appConfig.name)
+                    return filePath.replace(/(ak6)/g, this.appConfig.name ?? "")
                 }
             },
         )
@@ -108,8 +134,29 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
         );
     }
 
+    install(){
+        super.spawnCommandSync('git', ['add','-A'])
+        super.spawnCommandSync('git', ['commit','-m','init project test'])
+        super.spawnCommandSync('git', ['push','origin','master'])
+
+        const currentPath = path.basename(process.cwd())
+
+        super.spawnCommandSync('az', ['login'])
+        super.spawnCommandSync('az', ['extension','add','--name', 'azure-devops'])
+        spawn(`az devops configure --defaults organization='${this.appConfig.organization}' project='${this.appConfig.name}'` )
+        this.spawnCommandSync('az',
+            ['pipelines','create','--name', currentPath,
+                '--yml-path', 'azure-pipelines.yml',
+                '--folder-path',currentPath,
+                "--repository-type", "tfsgit",
+                "--project", String(this.appConfig.project),
+                "--repository" , currentPath,
+            ]
+        )
+    }
+
     end() {
-        this.log(siigosay('Execute \'make all\' and Enjoy!!'))
+        this.log(siigosay('Enjoy!!'))
     }
 }
 

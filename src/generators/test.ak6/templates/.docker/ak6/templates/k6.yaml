@@ -1,3 +1,16 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Release.Name }}-pvc
+  namespace: {{ .Release.Namespace }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: "azure-file-load-testing"
+---
 apiVersion: k6.io/v1alpha1
 kind: K6
 metadata:
@@ -6,9 +19,9 @@ spec:
   parallelism: {{ .Values.parallelism }}
   script:
     volumeClaim:
-      name: fileshare-pvc
-      file: dist/test.js
-  separate: true
+      name: {{ .Release.Name }}-pvc
+      file: <%= config.name %>/dist/test.js
+  separate: false
   arguments: "--out statsd -e ENV={{ .Values.environment }} -e TYPE={{ .Values.type }}"
   runner:
     image: acraksqa.azurecr.io/ak6:latest

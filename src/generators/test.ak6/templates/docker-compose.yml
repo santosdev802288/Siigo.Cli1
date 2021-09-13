@@ -37,8 +37,8 @@ services:
       - K6_STATSD_ENABLE_TAGS=true
       - K6_OUT=influxdb=http://influxdb:8086/k6
     volumes:
-      - ./:/ak-6
-    working_dir: /ak-6
+      - ./:/<%= config.name %>
+    working_dir: /<%= config.name %>
 
 
     # entrypoint: k6 run /scripts/soakTest.bundle.js --vus 50 --duration 120s --out statsd

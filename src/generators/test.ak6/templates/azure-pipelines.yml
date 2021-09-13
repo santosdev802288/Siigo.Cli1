@@ -1,0 +1,35 @@
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-20.04'
+
+resources:
+
+  # ¡ IMPORTANT !
+  # uncomment to add trigger pipeline when a microservice pipeline has been finished
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/build/triggers?view=azure-devops&tabs=yaml#pipeline-triggers
+
+  # pipelines:
+  #  - pipeline: Parent
+  #    source: 'Siigo.Microservice.Logger CICD' # Change with the name of the source pipeline microservice
+  #    project: 'Siigo'
+  #    trigger:
+  #      branches:
+  #        - refs/heads/dev
+
+  repositories:
+    - repository: Pipelines
+      type: git
+      name: "Siigo/Siigo.Pipeline"
+
+extends:
+
+  template: ak6/azure-pipeline.yaml@Pipelines
+
+  # you must comment on these parameters if you want to receive them from azure devops.
+  parameters:
+    projectName: <%= config.name %>
+    environment: qa
+    test: load
+    parallelism: 10
+    claims: false

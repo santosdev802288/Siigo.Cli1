@@ -37,30 +37,50 @@
 
 <br>
 
-1. Login with [acr](https://azure.microsoft.com/en-us/services/container-registry)
+1. Create a folder with prefix 'Siigo.Test' and move to him.
+       
+        powerSheel > New-Item -Path 'Siigo.Test.Catalog' -ItemType Directory
+
+        Bash > mkdir Siigo.Test.Catalog
+        
+        Move To Folder > cd Siigo.Test.Catalog
+        
+2. Create a repository 
+
+        yo siigo:git 
+
+<br>
+
+3. Generate an ak6 project
+
+        yo siigo:test.ak6 
+
+<br>
+
+4. Login with [acr](https://azure.microsoft.com/en-us/services/container-registry)
    
         docker login acraksqa.azurecr.io -u acrAksQa -p ZcgBUG708b=xU/99rC0M7e+FcKbrK32s
    
 <br>
 
-2. Install [docker](https://www.docker.com/products/docker-desktop)
+5. Install [docker](https://www.docker.com/products/docker-desktop)
 and [docker-compose](https://docs.docker.com/compose/install/) installed on your machine.
 
 <br>
 
-3. Install dependencies using [yarn](https://yarnpkg.com/getting-started/install) :
+6. Install dependencies using [yarn](https://yarnpkg.com/getting-started/install) :
 
         yarn install
 
 <br>
 
-4. Start the monitors using the following command:
+7. Start the monitors using the following command:
 
         yarn monitors
 
 <br>
 
-5. Go to **localhost:3000** in your browser to login to Grafana with the username '**admin**' and the password '**admin**'.
+8. Go to **localhost:3000** in your browser to login to Grafana with the username '**admin**' and the password '**admin**'.
     Add the [k6 dashboard](https://grafana.com/grafana/dashboards/2587) to **Grafana** by following these
     instructions: [Importing a Dashboad](https://grafana.com/docs/grafana/latest/reference/export_import/)
 
@@ -69,17 +89,17 @@ and [docker-compose](https://docs.docker.com/compose/install/) installed on your
 
 <br>
 
-6.  Run [seed.ts](src/tests/seed.ts) script. This is an example of a script that you could use to 'seed' the application with test data before you run your
+9.  Run [seed.ts](src/tests/seed.ts) script. This is an example of a script that you could use to 'seed' the application with test data before you run your
     performance tests.
 
         yarn seed
 
 <br>
 
-7.  Now run the test. This will run the [test.ts](/src/tests/test.ts) script, using **k6** installed in a docker, which outputs the results
+10.  Now run the test. This will run the [test.ts](/src/tests/test.ts) script, using **k6** installed in a docker, which outputs the results
     to **influxDB**. **Grafana** is used to visualise the results.
 
-        yarn test
+            yarn test
 
 <br>
 
@@ -148,7 +168,7 @@ this running while you work using:
 
 ## Building your Code
 
-[Babel](https://babeljs.io/) handles the transpiling of the code (see the [.babelrc](.dotfiles/.babelrc) file in the root
+[Babel](https://babeljs.io/) handles the transpiling of the code (see the [.babelrc](.babelrc) file in the root
 directory), while [Webpack](https://webpack.js.org/) builds it (see the [webpack.config.js](webpack.config.js) file in
 the root directory).
 

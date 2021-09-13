@@ -4,6 +4,7 @@ import {Counter} from "k6/metrics";
 import {setSleep} from "../lib/sleep.helpers";
 import {IConfig} from "../models/config";
 
+
 export class SessionManagement {
 
     public counterLoginFail = new Counter('counterAuthFail');
