@@ -477,7 +477,7 @@ If you need to configure your pipeline that was generated, you can check out the
 If for some reason the deployment process failed, and you need to try it again, you can use the following [tool]() to clean the helm chart in kubernetes.
 
 
-## 🔫 Performance Testing  ⚡
+## 🔫 Performance Testing ⚡
 A starter framework for k6 load tests written in TypeScript.
 
 ### Using 
