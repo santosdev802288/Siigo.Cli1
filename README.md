@@ -475,6 +475,35 @@ If you need to configure your pipeline that was generated, you can check out the
 
 If for some reason the deployment process failed, and you need to try it again, you can use the following [tool]() to clean the helm chart in kubernetes.
 
+
+## Load Testing  ⚡ 🔫
+A starter framework for k6 load tests written in TypeScript.
+
+### Using 
+Generate a new ak6 project with monitoring and distributed testing 
+
+1. Create a folder with prefix 'Siigo.Test' and move to him.
+<br>    
+    Windows powershell:
+    
+        New-Item -Path 'Siigo.Test.PutHereYourProjectName' -ItemType Directory
+    
+    linux or mac:
+    
+        mkdir Siigo.Test.PutHereYourProjectName
+            
+    move to the folder: 
+        
+        cd Siigo.Test.PutHereYourProjectName
+
+2. Create a repository
+
+        yo siigo:git 
+
+3. Generate an ak6 project
+
+        yo siigo:test.ak6     
+
 ## Contributing
 
 ### Requirements
