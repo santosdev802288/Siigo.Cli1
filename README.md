@@ -487,15 +487,15 @@ Generate a new ak6 project with monitoring and distributed testing
 <br>    
     Windows powershell:
     
-        New-Item -Path 'Siigo.Test.PutHereYourProjectName' -ItemType Directory
+        New-Item -Path 'Siigo.Test.{PutHereYourProjectName}' -ItemType Directory
     
     linux or mac:
     
-        mkdir Siigo.Test.PutHereYourProjectName
+        mkdir Siigo.Test.{PutHereYourProjectName}
             
     move to the folder: 
         
-        cd Siigo.Test.PutHereYourProjectName
+        cd Siigo.Test.{PutHereYourProjectName}
 
 2. Create a repository
 
