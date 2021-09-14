@@ -1,0 +1,10 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+#npm audit --production --registry=https://registry.npmjs.org/
+
+npm run build 
+
+npm run test:local 
+
+npm run test:local:e2e
