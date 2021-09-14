@@ -82,7 +82,41 @@ and [docker-compose](https://docs.docker.com/compose/install/) installed on your
 
         yarn test
 
-<br>
+
+# ✨ Distributed testing and continues testing ☁️
+
+After executing the command __*yo siigo: test.ak6*__ when this project was created you should see the pipeline of the project created in the portal of azure devops.
+
+The Distributed tests and Continues Testing are parameterized by means of the [azure-pipeline.yaml](azure-pipelines.yml) file generated together with the project.
+
+In this file you will find an initial configuration that you will have to adjust as the case may be.
+
+### example 
+
+
+With the following configuration, the load tests are started every time the Siigo.Microservice.Logger CICD pipeline has finished with the dev branch
+    
+    resources:
+    
+     pipelines:
+      - pipeline: Parent
+        source: 'Siigo.Microservice.Logger CICD' 
+        project: 'Siigo'
+        trigger:
+          branches:
+            - refs/heads/dev
+
+
+The pipeline parameters indicate the environment and the type of test to run. In addition to other additional parameters.
+
+    parameters:
+        projectName: <%= config.name %>
+        environment: qa
+        test: load
+        parallelism: 10
+        claims: false
+
+__*After parameterizing the pipeline and uploading the changes, you can launch the pipeline from the azure portal and the load test will launch within kubernetes.*__
 
 # High-level architecture diagram
 

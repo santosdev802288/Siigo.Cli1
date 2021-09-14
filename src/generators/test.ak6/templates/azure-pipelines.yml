@@ -5,6 +5,7 @@ pool:
 
 resources:
 
+  # Continues testing
   # ¡ IMPORTANT !
   # uncomment to add trigger pipeline when a microservice pipeline has been finished
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/build/triggers?view=azure-devops&tabs=yaml#pipeline-triggers

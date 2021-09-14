@@ -62,6 +62,7 @@ Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_use
 - [.Net 5 grpc client](#🗿-.net-5-grpc-client)
 - [.Net 5 grpc server](#💪-.net-5-grpc-server)
 - [CICD](#🚀-cicd)
+- [AK6 Load Testing](#🔫-performance-testing-⚡) 
 - [Api Gateway](#🔱-api-gateway)
 
 ## 🔥 Golang
@@ -476,7 +477,7 @@ If you need to configure your pipeline that was generated, you can check out the
 If for some reason the deployment process failed, and you need to try it again, you can use the following [tool]() to clean the helm chart in kubernetes.
 
 
-## Load Testing  ⚡ 🔫
+## 🔫 Performance Testing  ⚡
 A starter framework for k6 load tests written in TypeScript.
 
 ### Using 
