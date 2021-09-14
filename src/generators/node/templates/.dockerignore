@@ -1,2 +1,7 @@
-node_modules
+# NodeJS
+dist/
+node_modules/
 npm-debug.log
+
+# Siigo
+.docker/
