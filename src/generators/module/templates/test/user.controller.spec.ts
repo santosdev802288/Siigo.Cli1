@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { <%= config.nameUpper %> } from '../domain/<%= config.name %>'
-import { I<%= config.nameUpper %>Service } from '../domain/interface/i<%= config.nameUpper %>-service'
+import { I<%= config.nameUpper %>Service } from '../domain/interface/i<%= config.name %>-service'
 import { <%= config.nameUpper %>ServiceToken } from '../constans'
-import { <%= config.nameUpper %>Controller } from '../<%= config.nameUpper %>.controller'
+import { <%= config.nameUpper %>Controller } from '../<%= config.name %>.controller'
 import { <%= config.nameUpper %>Mock } from './mock'
 
 describe('<%= config.nameUpper %> Controller', () => {

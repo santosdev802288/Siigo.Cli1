@@ -1,4 +1,6 @@
-export const capitalize = (s: any) => {
-    if (typeof s !== 'string') return ''
-    return s.charAt(0).toUpperCase() + s.slice(1)
+import _ from 'lodash'
+
+export function capitalize(s: string | null): string {
+  if (typeof s !== 'string' || s == null) return ''
+  return _.capitalize(s)
 }
