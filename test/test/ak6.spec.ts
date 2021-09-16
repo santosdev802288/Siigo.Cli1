@@ -5,7 +5,7 @@ import path from 'path'
 import os from 'os'
 
 import { getGenerator, SiigoGenerator } from '../generator.factory'
-
+/*
 describe('siigo:test.ak6', () => {
     const generator = getGenerator(SiigoGenerator.TEST_AK6)
 
@@ -59,3 +59,4 @@ describe('siigo:test.ak6', () => {
             });
     });
 });
+*/

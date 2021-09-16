@@ -4,7 +4,7 @@
     "duration": "1m",
     "thresholds": {
       "http_req_duration": [
-        "p(90)<500"
+        "p(99)<1500"
       ]
     }
   },
@@ -12,7 +12,7 @@
     "scenarios": {
       "login_constant": {
         "executor": "constant-vus",
-        "vus": 2000,
+        "vus": 15000,
         "duration": "5m",
         "tags": {
           "my_custom_tag": "login"
@@ -20,48 +20,33 @@
       },
       "login_per_vu": {
         "executor": "per-vu-iterations",
-        "vus": 2000,
-        "iterations": 100,
+        "vus": 10000,
+        "iterations": 1000,
         "startTime": "10s",
-        "maxDuration": "2m",
         "tags": {
           "my_custom_tag": "login"
         }
       },
       "login_ramping_arrival_rate": {
         "executor": "ramping-arrival-rate",
-        "startRate": 50,
-        "timeUnit": "30s",
-        "preAllocatedVUs": 50,
-        "maxVUs": 600,
+        "startRate": 5000,
+        "timeUnit": "10s",
+        "preAllocatedVUs": 500,
         "stages": [
           {
-            "target": 500,
-            "duration": "120s"
+            "target": 3000,
+            "duration": "320s"
           },
           {
-            "target": 1000,
-            "duration": "120s"
+            "target": 4000,
+            "duration": "320s"
           },
           {
-            "target": 1500,
-            "duration": "120s"
+            "target": 5500,
+            "duration": "320s"
           }
         ]
       }
-    },
-    "thresholds": {
-      "http_req_duration": [
-        "avg<500",
-        "p(90)<500"
-      ],
-      "http_req_duration{name:validate_login_token}": [
-        "avg<400"
-      ],
-      "http_req_duration{name:login}": [
-        "avg<500",
-        "p(90)<500"
-      ]
     }
   },
   "soak": {

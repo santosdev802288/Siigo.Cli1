@@ -1,97 +1,95 @@
 import {fail, group} from 'k6';
 import {setSleep} from '../lib/sleep.helpers'
-import {Payroll, SessionManagement} from "../actions/roles/public-user.role";
-import { EmployeeAvailable } from '../models/payroll';
-import CONFIGS from '../config/configs'
+import {SessionManagement} from "../actions/roles/public-user.role";
+import {buildConfig} from "../lib/config";
 
-// Test Options https://docs.k6.io/docs/options
-if (!__ENV.TYPE) {
-    throw new Error(`test type not found. Try add -e TYPE={ load | smoke | soak } in your k6 arguments script`)
-}
-
-export let options = require(`./options.test.json`)[__ENV.TYPE]
+// @ts-ignore
+import promp from 'k6/x/siigo/promp';
+import {Options} from "k6/options";
+import {ENV} from "../models/enums/envs";
+import {Test} from "../models/enums/test";
+import {DEFAULT_PASSWORD} from "../models/constants";
 
 /**
- * Initialize config instance
+ * instance all extensions
  */
-console.debug(`Started env: ${__ENV.ENV}`)
-if (!(`${__ENV.ENV}` in CONFIGS)) {
-    throw new Error(`environment not found. Try add -e ENV={replace_name_env} in your k6 arguments script`)
-}
-const config = CONFIGS[__ENV.ENV]
-console.debug("JSON Config: ", JSON.stringify(config))
+const prompClient = promp.Client()
+
+/**
+ * build a config instance with promp parameter
+ */
+const labelEnv: string = "Environment"
+const env = __ENV.ENV ? __ENV.ENV : prompClient
+    .prompt
+    .select(
+        labelEnv,
+        ...Object.values(ENV)
+    )
+
+const config = buildConfig(env)
 
 /**
  * Initialize actions by role (user, admin, owner)
  */
 const sessionManagement = new SessionManagement(config)
-const payroll = new Payroll(config)
 
 /**
  * Webpack will automatically convert JSON to a JS object (don't need JSON.parse)
  *
  * */
-const payrollData: any[] = require('../data/payroll.json')
+const usersData = require('../data/users.generated.json')
 
-interface TestData {
-    tokenCache: {[k: string]: any}
-}
+/**
+ *
+ */
+// Test Options https://docs.k6.io/docs/options
+const labelTypeTest = "Tipo de test"
+const typeOfTest = __ENV.TYPE ? __ENV.TYPE : prompClient
+    .prompt
+    .select(
+        labelTypeTest,              // labels
+        ...Object.values(Test)      // options
+    )
+
+export const options: Options = require(`./options.test.json`)[typeOfTest]
 
 
 // The Setup Function is run once before the Load Test https://docs.k6.io/docs/test-life-cycle
-export function setup(): TestData {
-    const tokenCache: {[k: string]: any} = {}
-    payrollData.forEach(row => {
-        if (tokenCache[row.username] == null){
-            // user authentication
-            const response = sessionManagement.login(row.username)
-            // Immediately throw an error, aborting the current script iteration.
-            if (response.status != 200)
-                fail(`login request failed. User: ${row.username} Status: ${response.status}`);
-            tokenCache[row.username] = response.json('access_token')
-        }
-    })
-    return {tokenCache}
+export function setup() {
+
+
 }
 
 // default function (imports the Bearer token) https://docs.k6.io/docs/test-life-cycle
-export default (data: TestData) => {
+export default () => {
 
     // this is a group https://docs.k6.io/docs/tags-and-groups
-    group("Create Payroll", () => {
+    // remove this example group and implement your groups
+    group("Example User login group", () => {
 
         // Pick a random username
-        const {username, description, year, month} = payrollData[Math.floor(Math.random() * payrollData.length)];
+        const {username} = usersData[Math.floor(Math.random() * usersData.length)];
+
+        // user authentication
+        const response = sessionManagement.login(username, DEFAULT_PASSWORD)
+
+        // Immediately throw an error, aborting the current script iteration.
+        if (response.status != 200)
+            return fail(`login request failed. User: ${username} Status: ${response.status}. Response: ${response.body}`);
+
+        // sleeps help keep your script realistic https://docs.k6.io/docs/sleep-t-1
+        setSleep();
 
         // user validation token
-        const token = data.tokenCache[username]
-        
-        const employees = payroll.getEmployeesAvailableUsed(token, 0, year, month).json() as unknown as EmployeeAvailable[]
+        sessionManagement.validateToken(response)
 
-        // Test
-        payroll.createPayroll(token, parseInt(employees[0].payrollContractID), description, year, month)
+        // sleeps help keep your script realistic https://docs.k6.io/docs/sleep-t-1
+        setSleep();
     })
 
-    // sleeps help keep your script realistic https://docs.k6.io/docs/sleep-t-1
-    setSleep();
+    console.debug(`VU: ${__VU}  -  ITER: ${__ITER}`);
 }
 
-export function teardown(data: TestData) {
-    const periodDeleted: {[k: string]: any} = {}
-
-    payrollData.forEach(row => {
-        const {username, year, monthPeriod} = row;
-        const period = `${year}${monthPeriod}`
-        if (periodDeleted[period] == null){
-            const token = data.tokenCache[username]
-            payroll.deletePayrollByPeriod(token, year, monthPeriod)
-            periodDeleted[period] = true;
-        }
-    })
-}
-
-
-
-export function cycle() {
-    
+export function teardown(data: any) {
+    // 4. teardown code
 }

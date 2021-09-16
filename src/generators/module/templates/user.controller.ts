@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Param } from '@nestjs/common'
+import { Controller, Get, Inject, Logger } from '@nestjs/common'
 import { <%= config.nameUpper %> } from './domain/<%= config.name %>'
 import { <%= config.nameUpper %>ServiceToken } from './constans'
 import { I<%= config.nameUpper %>Service } from './domain/interface/i<%= config.name %>-service'
@@ -6,6 +6,7 @@ import {Observable} from 'rxjs'
 
 @Controller('<%= config.name %>')
 export class <%= config.nameUpper %>Controller {
+    private static readonly logger = new Logger(<%= config.nameUpper %>Controller.name)
     /**
      *
      * @param <%= config.name %>Service
@@ -20,7 +21,8 @@ export class <%= config.nameUpper %>Controller {
      */
     @Get()
     public <%= config.name %>(): Observable<string> {
-            return this.<%= config.name %>Service.<%= config.name %>()
-        }
+        <%= config.nameUpper %>Controller.logger.log({message: 'Controller', 'trace_id': '120123239'})
+        return this.<%= config.name %>Service.<%= config.name %>()
+    }
 
 }

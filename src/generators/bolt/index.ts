@@ -5,7 +5,6 @@ import {siigosay} from'@nodesiigo/siigosay'
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
 import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile'
 
-
 export default class GolangMSGenerator extends MicroserviceGenerator {
     appConfig: { description?: any; author?: any; name?: any; token?: any } = {}
     constructor(args: any, opt: any) {

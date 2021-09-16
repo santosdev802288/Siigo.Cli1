@@ -21,8 +21,7 @@
 <span style="font-size:2em;">☠️</span> | Before to start to use this CLI , it's important to follow the instructions. If you have some errors during the Siiglo ClI installation process or when you're using it, read those exceptions carefully, they can give you a lot of information about how to fix them. 
 :---: | :---
 
-  
-### 
+
     The defaults values are taken from the folder where the ClI is running.
 
 ## 🛠️ Requirements
@@ -63,6 +62,7 @@ Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_use
 - [.Net 5 grpc client](#🗿-.net-5-grpc-client)
 - [.Net 5 grpc server](#💪-.net-5-grpc-server)
 - [CICD](#🚀-cicd)
+- [AK6 Load Testing](#🔫-performance-testing-⚡) 
 - [Api Gateway](#🔱-api-gateway)
 
 ## 🔥 Golang
@@ -249,13 +249,14 @@ In the following [example](https://assetsdoc.blob.core.windows.net/assets/core.s
 
 Create queries and commands with their handlers quickly in your project.
 
-#### Using
+#### Using CQRS
 
 Create a new command or query
-    
+
     yo siigo:crqs
 
-#### Example 
+#### Example of CQRS
+
 In the following [example](https://assetsdoc.blob.core.windows.net/assets/cqrs.svg) you can see how to create a command and a query.
 
 ## 🗿 .Net 5 grpc client
@@ -475,6 +476,35 @@ If you need to configure your pipeline that was generated, you can check out the
 
 If for some reason the deployment process failed, and you need to try it again, you can use the following [tool]() to clean the helm chart in kubernetes.
 
+
+## 🔫 Performance Testing ⚡
+A starter framework for k6 load tests written in TypeScript.
+
+### Using 
+Generate a new ak6 project with monitoring and distributed testing 
+
+1. Create a folder with prefix 'Siigo.Test' and move to him.
+<br>    
+    Windows powershell:
+    
+        New-Item -Path 'Siigo.Test.{PutHereYourProjectName}' -ItemType Directory
+    
+    linux or mac:
+    
+        mkdir Siigo.Test.{PutHereYourProjectName}
+            
+    move to the folder: 
+        
+        cd Siigo.Test.{PutHereYourProjectName}
+
+2. Create a repository
+
+        yo siigo:git 
+
+3. Generate an ak6 project
+
+        yo siigo:test.ak6     
+
 ## Contributing
 
 ### Requirements
@@ -504,6 +534,7 @@ To contribute to the project and make a pull request you must follow these requi
   - clone master branch  
   - create a new branch 
   - install dependencies
+  - npm run build:dev
   - execute [__*npm link*__](https://docs.npmjs.com/cli/v6/commands/npm-link) in the root of the project 
 
 Now all the commands with __*yo siigo:(core, node, gateway, cicd, etc.)*__ point to your local repository.

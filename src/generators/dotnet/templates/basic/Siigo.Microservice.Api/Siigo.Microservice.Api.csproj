@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Siigo.LogTest.Api</RootNamespace>
+    <RootNamespace><%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api</RootNamespace>
     <UserSecretsId>b2c5843a-21fe-4727-a62f-64242a31ef44</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
@@ -24,9 +24,9 @@
     <None Remove="Application\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
-    <PackageReference Include="Siigo.Core.Logs" Version="0.1.3.9" />
-    <PackageReference Include="Siigo.Core.OpenAPI" Version="0.1.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.12.0" />
+    <PackageReference Include="Siigo.Core.Logs" Version="0.1.3.12" />
+    <PackageReference Include="Siigo.Core.OpenAPI" Version="0.1.2.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.csproj" />

@@ -4,6 +4,8 @@ import { <%= config.nameUpper %>Service } from './<%= config.name %>.service'
 import { <%= config.nameUpper %>Repository } from './<%= config.name %>.repository'
 import { <%= config.nameUpper %>RepositoryToken, <%= config.nameUpper %>ServiceToken } from './constans'
 import { CoreModule } from '@siigo/core'
+
+
 @Module({
     controllers: [<%= config.nameUpper %>Controller],
     providers: [
