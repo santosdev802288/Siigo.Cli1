@@ -1,0 +1,43 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Release.Name }}-pvc
+  namespace: {{ .Release.Namespace }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: "azure-file-load-testing"
+---
+apiVersion: k6.io/v1alpha1
+kind: K6
+metadata:
+  name: {{.Release.Name}}
+spec:
+  parallelism: {{ .Values.parallelism }}
+  script:
+    volumeClaim:
+      name: {{ .Release.Name }}-pvc
+      file: <%= config.name %>/dist/test.js
+  separate: false
+  arguments: "--out statsd -e ENV={{ .Values.environment }} -e TYPE={{ .Values.type }}"
+  runner:
+    image: acraksqa.azurecr.io/ak6:latest
+
+    env:
+
+      - name: DD_AGENT_HOST
+        valueFrom:
+          fieldRef:
+            fieldPath: status.hostIP
+
+      - name: K6_STATSD_ADDR
+        value: "$(DD_AGENT_HOST):8125"
+
+      - name: K6_STATSD_ENABLE_TAGS
+        value: "true"
+
+  scuttle:
+    enabled: "false"

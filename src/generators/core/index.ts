@@ -2,7 +2,7 @@ import rename from 'gulp-rename'
 import path from 'path'
 import {siigosay} from '@nodesiigo/siigosay'
 import {getParameter, wizardsiigofile} from '../../utils/siigoFile'
-import {capitalize} from '../../utils/capitalize'
+import _ from 'lodash'
 
 import {getChecksums} from '../../utils/checksum'
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
@@ -48,7 +48,7 @@ export default class CoreMSGenerator extends MicroserviceGenerator {
         this.appConfig = {
             name: this.options['name'],
             token: tokenf.replace(' \n',''),
-            nameCapitalize: capitalize(this.options.name),
+            nameCapitalize: _.upperFirst(this.options.name),
             projectPrefix: this.options['project-prefix'],
         }
         
@@ -61,8 +61,8 @@ export default class CoreMSGenerator extends MicroserviceGenerator {
                 const prefixChart = 'ms-'
                 parsedPath.dirname = parsedPath.dirname.includes(prefixChart) ?
                     parsedPath.dirname.replace(/(Microservice)/g, this.appConfig.name) :
-                    parsedPath.dirname.replace(/(Microservice)/g, capitalize(this.appConfig.name))
-                parsedPath.basename = parsedPath.basename.replace(/(Microservice)/g, capitalize(this.appConfig.name))
+                    parsedPath.dirname.replace(/(Microservice)/g, _.upperFirst(this.appConfig.name))
+                parsedPath.basename = parsedPath.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.name))
                 parsedPath.dirname = parsedPath.dirname.replace(/(Siigo)/g,this.appConfig.projectPrefix)
                 parsedPath.basename = parsedPath.basename.replace(/(Siigo)/g, this.appConfig.projectPrefix )
             })

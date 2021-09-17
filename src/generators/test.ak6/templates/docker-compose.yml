@@ -29,14 +29,16 @@ services:
       - ./grafana-datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
 
   k6:
-    image: loadimpact/k6:latest
+    image: acraksqa.azurecr.io/ak6:latest
+    privileged: true
     networks:
       - k6
     environment:
       - K6_STATSD_ENABLE_TAGS=true
-      # - K6_OUT=statsd=52.247.86.112:8125
       - K6_OUT=influxdb=http://influxdb:8086/k6
     volumes:
-      - ./dist:/scripts
+      - ./:/<%= config.name %>
+    working_dir: /<%= config.name %>
+
 
     # entrypoint: k6 run /scripts/soakTest.bundle.js --vus 50 --duration 120s --out statsd

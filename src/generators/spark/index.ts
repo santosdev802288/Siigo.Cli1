@@ -1,7 +1,7 @@
 import Generator = require('yeoman-generator');
 import {siigosay, siigoerror} from '@nodesiigo/siigosay'
-import {capitalize} from '../../utils/capitalize'
 import rename from 'gulp-rename'
+import _ from 'lodash'
 
 
 module.exports = class extends Generator {
@@ -30,7 +30,7 @@ module.exports = class extends Generator {
             this.fs.copyTpl(
                 this.templatePath(""),
                 this.destinationPath(`./${pname}/`),
-                {config: {name, nameUpper: capitalize(name)}}
+                {config: {name, nameUpper: _.upperFirst(name)}}
             ) 
         }
     }

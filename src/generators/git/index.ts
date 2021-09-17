@@ -9,6 +9,7 @@ import shell from 'shelljs';
 
 const prefixRepo = 'Siigo.Microservice.';
 const eSiigoPrefixRepo = 'ESiigo.Microservice.';
+const siigoPrefixRepoTest = 'Siigo.Test.';
 
 module.exports = class extends Generator {
     answers: any;
@@ -28,7 +29,7 @@ module.exports = class extends Generator {
     }
     async prompting() {
         let currentPath = path.basename(process.cwd());
-        const createPrefix = !currentPath.startsWith(prefixRepo) && !currentPath.startsWith(eSiigoPrefixRepo);
+        const createPrefix = !currentPath.startsWith(prefixRepo) && !currentPath.startsWith(eSiigoPrefixRepo) && !currentPath.startsWith(siigoPrefixRepoTest);
         if (createPrefix) {
             this.log(('This folder is not Siigo' as any).red);
             this.cancelCancellableTasks();

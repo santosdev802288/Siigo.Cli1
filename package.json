@@ -1,6 +1,6 @@
 {
   "name": "generator-siigo",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Generator archetype siigo",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,7 +8,7 @@
     "prebuild": "rimraf dist",
     "build": "tsc --project tsconfig.build.json && ts-node scripts/copy-files",
     "build:dev": "nodemon --config nodemon.json",
-    "lint": "eslint \"{scripts,src,test}/**/*.ts\"",
+    "lint": "eslint --no-eslintrc -c .eslintrc.json \"{scripts,src,test}/**/*.ts\"",
     "release": "standard-version",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --spec test/**/*.spec.ts",
     "test:debug": "mocha --inspect-brk --spec test/**/*.spec.ts",
@@ -87,7 +87,7 @@
     "standard-version": "^9.3.0",
     "svg-term-cli": "^2.1.1",
     "ts-node": "^10.0.0",
-    "typescript": "^4.3.5",
+    "typescript": "^4.4.2",
     "yeoman-assert": "^3.1.1",
     "yeoman-environment": "^3.4.1",
     "yeoman-test": "^6.1.0"
