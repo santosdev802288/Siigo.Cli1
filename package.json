@@ -8,7 +8,7 @@
     "prebuild": "rimraf dist",
     "build": "tsc --project tsconfig.build.json && ts-node scripts/copy-files",
     "build:dev": "nodemon --config nodemon.json",
-    "lint": "eslint \"{scripts,src,test}/**/*.ts\"",
+    "lint": "eslint --no-eslintrc -c .eslintrc.json \"{scripts,src,test}/**/*.ts\"",
     "release": "standard-version",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --spec test/**/*.spec.ts",
     "test:debug": "mocha --inspect-brk --spec test/**/*.spec.ts",

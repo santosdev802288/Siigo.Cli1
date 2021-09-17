@@ -1,8 +1,8 @@
 import rename = require('gulp-rename');
 import path from 'path';
 import { siigosay } from '@nodesiigo/siigosay';
+import _ from 'lodash'
 
-import { capitalize } from '../../utils/capitalize';
 import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile';
 import { getChecksums } from '../../utils/checksum';
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
@@ -53,7 +53,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         tokenf = await wizardsiigofile(updatetoken);
       this.appConfig = {};
       this.appConfig.name = this.options['name'];
-      this.appConfig.nameCapitalize = capitalize(this.appConfig.name);
+      this.appConfig.nameCapitalize = _.upperFirst(this.appConfig.name);
       this.appConfig.type = response.type;
       this.appConfig.userSiigo = (objParameters as any).user;
       this.appConfig.nameDev = (objParameters as any).name;
@@ -69,8 +69,8 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
           const prefixChart = 'ms-';
           parsetPath.dirname = parsetPath.dirname.includes(prefixChart) ?
             parsetPath.dirname.replace(/(Microservice)/g, this.appConfig.name) :
-            parsetPath.dirname.replace(/(Microservice)/g, capitalize(this.appConfig.name));
-          parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, capitalize(this.appConfig.name));
+            parsetPath.dirname.replace(/(Microservice)/g, _.upperFirst(this.appConfig.name));
+          parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.name));
           parsetPath.dirname = parsetPath.dirname.replace(/(Siigo)/g, this.appConfig.projectPrefix);
           parsetPath.basename = parsetPath.basename.replace(/(Siigo)/g, this.appConfig.projectPrefix);
         })
