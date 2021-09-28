@@ -7,7 +7,6 @@ resources:
     - repository: Pipelines
       type: git
       name: "Siigo/Siigo.Pipeline"
-      ref: feature/arquitectura/node-library
 
 extends:
 
