@@ -6,7 +6,9 @@ import {MicroserviceGenerator} from '../../utils/generator/microservice'
 import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile'
 
 export default class GolangMSGenerator extends MicroserviceGenerator {
-    appConfig: { description?: any; author?: any; name?: any; token?: any } = {}
+
+    appConfig: { description?: any; author?: any; name?: any; token?: any; auth?: any; } = {}
+
     constructor(args: any, opt: any) {
         super(args, opt)
 
@@ -70,6 +72,14 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
                 NUMBER_LITERAL: '#FF0000'
             }
         }))
+
+        const response = await this.prompt([
+            {
+                type: 'confirm',
+                name: 'auth',
+                message: 'Do you want to add the module SECURITY?'
+            }
+        ]);
         
         this.answers = await this.prompt([
             {
@@ -78,25 +88,15 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
                 message: 'Is the configuration correct?'
             }
         ]);
-
+        this.appConfig.auth =  response.auth;
         if (!this.answers.ready)
             this.cancelCancellableTasks()
     }
 
     _doWriting() {
         
-        this.fs.copyTpl(
-            this.templatePath(''),
-            this.destinationRoot(),
-            {config: this.appConfig},
-        );
-
-        this.fs.copy(
-            this.templatePath('.third_party'),
-            this.destinationPath('third_party'),
-            {},
-            {config: this.appConfig}
-        );
+        this.fs.copyTpl(this.templatePath(''),this.destinationRoot(),{config: this.appConfig},)
+        this.fs.copy(this.templatePath('.third_party'),this.destinationPath('third_party'),{},{config: this.appConfig})
         
         // Update .gitconfig
         const templateGitConfig = this.templatePath('.user/.gitconfig');
@@ -110,22 +110,22 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
                 this.fs.appendTpl(userGitConfig, templateContent, {config: this.appConfig})
             }
         } else {
-            this.fs.copyTpl(templateGitConfig, userGitConfig, {config: this.appConfig});
+            this.fs.copyTpl(templateGitConfig, userGitConfig, {config: this.appConfig})
         }
         
         // Copy all dotfiles
-        this.fs.copy(
-            this.templatePath('.dots/.*'),
-            this.destinationRoot(),
-            {},
-            {config: this.appConfig}
-        );
-        this.fs.copy(
-            this.templatePath('.dots/.**/**'),
-            this.destinationRoot(),
-            {},
-            {config: this.appConfig}
-        );
+        this.fs.copy( this.templatePath('.dots/.*'), this.destinationRoot(),{},{config: this.appConfig});
+        this.fs.copy(this.templatePath('.dots/.**/**'),this.destinationRoot(),{},{config: this.appConfig})
+
+        if(this.appConfig.auth){
+            this.fs.delete('src/boot/boot.go')
+            this.fs.delete('go.mod')
+            this.fs.delete('go.sum')
+
+            this.fs.copyTpl(this.templatePath('.mod_auth/boot'),this.destinationPath('src/boot/'),{config: this.appConfig})
+            this.fs.copyTpl(this.templatePath('.mod_auth/_go.mod'),this.destinationPath('go.mod'),{config: this.appConfig})
+            this.fs.copyTpl(this.templatePath('.mod_auth/_go.sum'),this.destinationPath('go.sum'),{config: this.appConfig})
+        }
     }
 
     end(): void {
