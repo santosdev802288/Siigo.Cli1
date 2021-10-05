@@ -8,42 +8,15 @@ import {siigosay} from '@nodesiigo/siigosay'
 import shell from 'shelljs'
 import {getProjects} from '../../utils/gitmanager'
 import {registerAutocomplete } from '../../utils/autocomplete'
-import fetch from 'node-fetch'
-import fs from 'fs'
 import { getParameter} from '../../utils/siigoFile'
 import chalk from 'chalk'
 import _ from 'lodash'
 
+import { lastChartVersion, writeChart } from './chart'
+
 
 const prefixRepo = 'Siigo.Microservice.'
 const eSiigoPrefixRepo = 'ESiigo.Microservice.'
-
-async function writeChart(token:any, projectName:string,tagOwner:string ,tagTribu: string, tagGroup: string) {
-  const b64 = Buffer.from(token.trim() + ':').toString('base64')
-  const requestOptions = {
-    method: 'GET',
-    headers: {
-      Authorization: 'Basic ' + b64,
-    },
-    redirect: 'follow'
-  }
-    // @ts-expect-error -migrate(2345) FIXME: Argument of type '{ method: string; headers: { Aut... Remove this comment to see the full error message
-  const response = await fetch('https://dev.azure.com/SiigoDevOps/Siigo/_apis/git/repositories/Siigo.Chart/items?path=values.yaml&download=true&api-version=6.0', requestOptions)
-  //// @ts-expect-error ts-migrate(2322) FIXME: Type 'string' is not assignable to type 'Response'... Remove this comment to see the full error message
-  let stringResponse:string = await response.text()
-  stringResponse = stringResponse.replace('com: {}',
-    `com:
-            tribu: ${tagOwner}
-            owner: ${tagTribu}
-            group: ${tagGroup}`)
-
-  try {
-    fs.writeFileSync(`./.docker/${projectName}/values.yaml`, stringResponse)
-  }
-  catch (err) {
-    console.log(('Token no es valido' as any).red)
-  }
-}
 
 
 enum TypeEnum {
@@ -65,9 +38,7 @@ interface CicdOptions extends Generator.GeneratorOptions {
 export default class CicdGenerator extends Generator<CicdOptions> {
     appConfig: any;
     answers: any;
-    tribes: any;
-    upgrade: any;
-    token: any;
+    token = '';
 
     constructor(args: any, opt: CicdOptions) {
       super(args, opt)
@@ -172,7 +143,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
       })
     }
 
-    async initializing() {
+    async initializing(): Promise<void> {
       this.log(siigosay('Siigo Generator CICD.'))
       this.token = await getParameter('token')
       const currentPath = path.basename(process.cwd())
@@ -186,7 +157,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
       registerAutocomplete(this)
     }
 
-    async prompting() {
+    async prompting(): Promise<void> {
       // TODO update tribes file
       const projects = await getProjects(this.token)
       const nameProjects = Object.keys(projects)
@@ -201,26 +172,25 @@ export default class CicdGenerator extends Generator<CicdOptions> {
       ])
 
       const message = 'For more information execute yo siigo:cicd --help'
+      const notEmptyMessage = 'is required or it should not be empty'
 
       if (!this.options['project-name'] || this.options['project-name'] === 'true')
-        throw new Error('--project-name is required or it should not be empty.\n ' + message)
+        throw new Error(`--project-name ${notEmptyMessage}.\n ${message}`)
 
       if (!this.options['namespace-k8s'] || this.options['namespace-k8s'] === 'true')
-        throw new Error('--namespace-k8s || --ns is required or it should not be empty.\n ' + message)
+        throw new Error(`--namespace-k8s || --ns ${notEmptyMessage}.\n ${message}`)
 
       if ((this.options['dll'] === 'null' || this.options['dll'] === 'true') && this.options['type'] === 'netcore' )
-        throw new Error('--dll is required or it should not be empty.\n ' + message)
+        throw new Error(`--dll ${notEmptyMessage}.\n ${message}`)
 
       if ((this.options['chart-version'] === 'null' || this.options['chart-version'] === 'true'))
-        throw new Error('--chart-version is required or it should not be empty. Visit https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags \n ' + message)
+        throw new Error(`--chart-version ${notEmptyMessage}. Visit https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags \n ${message}`)
 
       const {organization, environment, folder, type} = this.options
      
       const namespace = this.options['namespace-k8s']
 
-      console.log('Obteniendo la ultima version de Chart!')
-      let resGit: any = (shell.exec('git ls-remote --refs --tags --sort=v:refname https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart',{silent: true}).stdout).split('/').pop()
-      resGit = resGit.replace('\n','')
+      const resGit = lastChartVersion()
 
       const owner = await getParameter('user')
       const tribe = await getParameter('tribe')
@@ -241,8 +211,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         tagGroup: group
       }
         
-      // @ts-expect-error ts-migrate(2769) FIXME: No overload matches this call.
-      const json = JSON.stringify(this.appConfig, false, '\t')
+      const json = JSON.stringify(this.appConfig, null, '\t')
       this.log(colorize(json, {
         pretty: true,
         colors: {
@@ -273,9 +242,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         { config: this.appConfig },
         {},
         {
-          processDestinationPath: (filePath) => {
-            return filePath.replace(/(chart)/g, 'ms-'+this.appConfig.name)
-          }
+          processDestinationPath: (filePath) => filePath.replace(/(chart)/g, 'ms-'+this.appConfig.name)
         },
       )
 
@@ -293,9 +260,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
           { config: this.appConfig },
           {},
           {
-            processDestinationPath: (filePath) => {
-              return filePath.replace(/(chart)/g, 'ms-'+this.appConfig.name)
-            }, 
+            processDestinationPath: (filePath) => filePath.replace(/(chart)/g, 'ms-'+this.appConfig.name), 
             globOptions: {dot: true}
           },
         )
@@ -336,7 +301,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
       }
     }
     
-    end(){
+    end(): void{
       this.log(siigosay('Enjoy! Dont forget merge cicd branch in dev.'))
     }
 }
