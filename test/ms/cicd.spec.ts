@@ -58,7 +58,7 @@ describe('siigo:cicd', () => {
       .withPrompts({ ready: true })
       .then(() => {
         assert.file(['.docker/Dockerfile'])
-        assert.fileContent('.docker/Dockerfile', /FROM golang.*/)
+        assert.fileContent('.docker/Dockerfile', /.*FROM siigo\.azurecr\.io\/golang-build.*/)
       })
   })
 
