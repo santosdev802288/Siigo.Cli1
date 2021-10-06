@@ -59,7 +59,6 @@ module.exports = class extends Generator {
             if (this.answers.ready) {
                 let responseGit: any = {}
                 while(!responseGit.remoteUrl){
-                    // @ts-expect-error FIXME: projects indexing
                     responseGit = await createRepository(token, currentPath, projects[response.project]);
                     if(responseGit.remoteUrl){
                         this.log(siigosay('Your repository has been created'));

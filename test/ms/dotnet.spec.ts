@@ -3,6 +3,9 @@ import helpers from 'yeoman-test'
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
+import sinon from 'sinon'
+
+import * as siigoFile from '../../src/utils/siigoFile'
 
 import DotnetMSGenerator from '../../src/generators/dotnet'
 
@@ -10,6 +13,10 @@ const GENERATOR_FOLDER = '../../src/generators/dotnet'
 const NAMESPACE = 'siigo:dotnet'
 
 describe(NAMESPACE, () => {
+
+  before( () => {
+    sinon.stub(siigoFile, 'wizardsiigofile').returns(Promise.resolve('mockToken'))
+  }) 
 
   it('Generates a basic project', () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.Dotnet'))
@@ -47,5 +54,9 @@ describe(NAMESPACE, () => {
         assert.file('.gitignore');
       });
   });
+
+  after(() => {
+    sinon.restore()
+  })
 
 });

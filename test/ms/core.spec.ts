@@ -5,8 +5,10 @@ import path from 'path'
 import os from 'os'
 import sinon from 'sinon'
 
-import { getGenerator, SiigoGenerator } from '../generator.factory'
 import * as siigoFile from '../../src/utils/siigoFile'
+
+import { getGenerator, SiigoGenerator } from '../generator.factory'
+
 
 const BACKUP_SUFIX = '.original'
 const GITCONFIG_FILE = path.join(os.homedir(), '.gitconfig')
@@ -23,14 +25,12 @@ describe('siigo:core', () => {
         fs.renameSync(file, file + BACKUP_SUFIX)
       }   
     })
-    
+    sinon.stub(siigoFile, 'wizardsiigofile').returns(Promise.resolve('mockToken'))
   }) 
 
   it('Generates a project', () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.Core'))
     const name = path.basename(dir).split('.').reverse()[0]
-
-    sinon.stub(siigoFile, 'wizardsiigofile').returns(Promise.resolve('mockToken'))
 
     return helpers.run(generator.generatorOrNamespace, generator.settings)
       .inDir(dir)
@@ -75,6 +75,7 @@ describe('siigo:core', () => {
         fs.renameSync(file + BACKUP_SUFIX, file)
       }
     })
+    sinon.restore()
   })
 
 });

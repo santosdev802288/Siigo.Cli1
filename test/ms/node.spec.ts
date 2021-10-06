@@ -3,14 +3,19 @@ import helpers from 'yeoman-test'
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
+import sinon from 'sinon'
 
-import shell from 'shelljs'
+import * as siigoFile from '../../src/utils/siigoFile'
 
 import { getGenerator, SiigoGenerator } from '../generator.factory'
 
 
 describe('siigo:node', () => {
   const generator = getGenerator(SiigoGenerator.MS_NODE)
+
+  before( () => {
+    sinon.stub(siigoFile, 'wizardsiigofile').returns(Promise.resolve('mockToken'))
+  }) 
 
   it('Generates a Node project', () => {
 
@@ -33,4 +38,9 @@ describe('siigo:node', () => {
         //assert.strictEqual(shell.exec('npm run lint', {silent: true}).code, 0)
       })
   })
+
+  after(() => {
+    sinon.restore()
+  })
+
 })
