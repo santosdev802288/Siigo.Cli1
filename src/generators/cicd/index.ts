@@ -208,7 +208,10 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         type,
         tagOwner: owner.split('@')[0],
         tagTribu: tribe,
-        tagGroup: group
+        tagGroup: group,
+        pod: {
+          healthPath: type === TypeEnum.NETCORE_3 || type === TypeEnum.NET_5 ? '/health': '/api/health'
+        }
       }
         
       const json = JSON.stringify(this.appConfig, null, '\t')
@@ -290,7 +293,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         console.log(chalk.yellow('The branch cicd is already created!'))
       }
       const branchsPipeline: any = (shell.exec(`az pipelines list --organization https://dev.azure.com/SiigoDevOps --project "${this.appConfig.project}" --name "${this.appConfig.pipelineName}"`,{silent:true}).stdout)
-      if(branchsPipeline.length<5){
+      if(branchsPipeline.length < 5){
         this.spawnCommandSync('az', ['login'])
         this.spawnCommandSync('az', ['extension','add','--name', 'azure-devops'])
         spawn(`az devops configure --defaults organization='${this.appConfig.organization}' project='${this.appConfig.project}'` )
