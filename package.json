@@ -10,11 +10,13 @@
     "build:dev": "nodemon --config nodemon.json",
     "lint": "eslint --no-eslintrc -c .eslintrc.json \"{scripts,src,test}/**/*.ts\"",
     "release": "standard-version",
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --spec test/**/*.spec.ts",
+    "test": "npm run coverage",
+    "test:mocha": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --spec test/**/*.spec.ts",
     "test:debug": "mocha --inspect-brk --spec test/**/*.spec.ts",
-    "coverage": "nyc --reporter lcov --reporter text --report-dir .nyc_output npm run test",
+    "coverage": "nyc --reporter lcov --reporter text --report-dir .nyc_output npm run test:mocha",
     "prepare": "husky install",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "sonar": "sonar-scanner"
   },
   "repository": {
     "type": "git",
@@ -66,6 +68,7 @@
     "@types/node-fetch": "^2.5.12",
     "@types/prompt": "^1.1.0",
     "@types/shelljs": "^0.8.9",
+    "@types/sinon": "^10.0.4",
     "@types/update-notifier": "^5.0.1",
     "@types/yeoman-assert": "^3.1.1",
     "@types/yeoman-generator": "^5.0.0",
@@ -83,6 +86,8 @@
     "nodemon": "^2.0.12",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
+    "sinon": "^11.1.2",
+    "sonarqube-scanner": "^2.8.1",
     "standard-version": "^9.3.0",
     "ts-node": "^10.0.0",
     "typescript": "^4.4.2",
