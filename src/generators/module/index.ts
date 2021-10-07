@@ -3,6 +3,7 @@ import {verifyNewVersion} from '../../utils/notification'
 import rename from 'gulp-rename'
 import {siigosay} from '@nodesiigo/siigosay'
 import _ from 'lodash'
+import { saveStatistic } from '../../utils/statistics/statistic'
 
 
 interface Options {
@@ -15,6 +16,7 @@ export default class ModuleGenerator extends Generator<Options> {
   constructor(args: string | string[], opt: Options) {
     verifyNewVersion()
     super(args, opt)
+    saveStatistic('node-module')
     this.argument('name', { required: true })
   }
 

@@ -5,6 +5,7 @@ import _ from 'lodash'
 import getDirectoriesRecursive from "../../utils/walkProjects"
 import {verifyNewVersion} from "../../utils/notification";
 import {siigosay} from '@nodesiigo/siigosay'
+import { saveStatistic } from '../../utils/statistics/statistic';
 
 module.exports = class extends Generator {
     appConfig: any;
@@ -12,6 +13,7 @@ module.exports = class extends Generator {
     constructor(args: any, opt: any) {
         verifyNewVersion()
         super(args, opt)
+        saveStatistic('core-cqrs')
     }
 
     initializing() {

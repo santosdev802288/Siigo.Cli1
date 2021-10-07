@@ -3,8 +3,9 @@ import rename from 'gulp-rename';
 import _ from 'lodash'
 import path from 'path';
 
-import {verifyNewVersion} from "../../utils/notification";
+import {verifyNewVersion} from '../../utils/notification';
 import {siigosay} from '@nodesiigo/siigosay'
+import { saveStatistic } from '../../utils/statistics/statistic';
 
 
 module.exports = class extends Generator {
@@ -13,8 +14,8 @@ module.exports = class extends Generator {
     constructor(args: any, opt: any) {
         verifyNewVersion()
         super(args, opt)
-
-        this.log(siigosay(`Siigo Generator .Net 5.0 grpc Client.`))
+        saveStatistic('core-grpc-client')
+        this.log(siigosay('Siigo Generator .Net 5.0 grpc Client.'))
 
         const prefixRepo = "Siigo.Microservice."
         const eSiigoPrefixRepo = "ESiigo.Microservice."

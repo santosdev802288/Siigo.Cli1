@@ -5,6 +5,7 @@ import path from 'path';
 
 import {verifyNewVersion} from "../../utils/notification";
 import {siigosay} from '@nodesiigo/siigosay'
+import { saveStatistic } from '../../utils/statistics/statistic';
 
 
 module.exports = class extends Generator {
@@ -13,7 +14,7 @@ module.exports = class extends Generator {
     constructor(args: any, opt: any) {
         verifyNewVersion()
         super(args, opt)
-
+        saveStatistic('core-grpc-server')
         this.log(siigosay(`Siigo Generator .Net 5.0 grpc Server.`))
 
         const prefixRepo = "Siigo.Microservice."

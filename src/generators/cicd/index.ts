@@ -11,6 +11,7 @@ import {registerAutocomplete } from '../../utils/autocomplete'
 import { getParameter} from '../../utils/siigoFile'
 import chalk from 'chalk'
 import _ from 'lodash'
+import { saveStatistic } from '../../utils/statistics/statistic'
 
 import { lastChartVersion, writeChart } from './chart'
 
@@ -42,7 +43,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
 
     constructor(args: any, opt: CicdOptions) {
       super(args, opt)
-        
+      saveStatistic('cicd')  
       req()
 
       const currentPath = path.basename(process.cwd())

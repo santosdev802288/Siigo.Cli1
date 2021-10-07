@@ -6,6 +6,7 @@ import _ from 'lodash'
 import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile';
 import { getChecksums } from '../../utils/checksum';
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
+import { saveStatistic } from '../../utils/statistics/statistic';
 
 
 export default class DotnetMSGenerator extends MicroserviceGenerator {
@@ -46,7 +47,8 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
           message: 'what do you want to generate?',
           choices: ['basic', 'command', 'query', 'command+query', 'grpc-server', 'grpc-client']
         }
-      ]);
+      ])
+      saveStatistic('dotnet-'+response.type)
       let tokenf = objParameters.token;
       const updatetoken = this.options['token'];
       if (tokenf == 'pending' || updatetoken != null)

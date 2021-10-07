@@ -6,6 +6,7 @@ import _ from 'lodash'
 
 import {getChecksums} from '../../utils/checksum'
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
+import { saveStatistic } from '../../utils/statistics/statistic'
 
 
 export default class CoreMSGenerator extends MicroserviceGenerator {
@@ -13,7 +14,7 @@ export default class CoreMSGenerator extends MicroserviceGenerator {
 
     constructor(args: any, opt: any) {
         super(args, opt)
-
+        saveStatistic('core')
         this.option('name', {
             description: 'Project name',
             default: this.defaultName,

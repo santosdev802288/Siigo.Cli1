@@ -5,6 +5,7 @@ import {TestingGenerator} from '../../utils/generator/testing'
 import {GeneratorOptions} from 'yeoman-generator'
 import {exec as spawn} from "child_process";
 import path from "path";
+import { saveStatistic } from '../../utils/statistics/statistic'
 
 interface Ak6Options extends GeneratorOptions {
     name: string;
@@ -25,7 +26,7 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
 
     constructor(args: any, options: Ak6Options) {
         super(args, options)
-
+        saveStatistic('test-ak6')
         // optionals
         this.option('name', {
             type: String,

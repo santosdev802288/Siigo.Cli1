@@ -4,6 +4,7 @@ import colorize from'json-colorizer'
 import {siigosay} from'@nodesiigo/siigosay'
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
 import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile'
+import { saveStatistic } from '../../utils/statistics/statistic'
 
 export default class GolangMSGenerator extends MicroserviceGenerator {
 
@@ -11,7 +12,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
 
     constructor(args: any, opt: any) {
         super(args, opt)
-
+        saveStatistic('bolt')
         // optionals
         this.option('project-name', {
             type: String,

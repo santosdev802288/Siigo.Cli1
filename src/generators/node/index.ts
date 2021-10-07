@@ -9,6 +9,7 @@ import Generator = require('yeoman-generator');
 // @ts-expect-error FIXME: How to fix this?
 import install = require('yeoman-generator/lib/actions/install')
 import _extend from 'lodash/extend'
+import { saveStatistic } from '../../utils/statistics/statistic'
 _extend(Generator.prototype, install)
 
 
@@ -17,7 +18,7 @@ export default class NodeMSGenerator extends MicroserviceGenerator {
 
     constructor(args: any, opt: any) {        
       super(args, opt)
-
+      saveStatistic('node')
       const currentPath = path.basename(process.cwd())
 
       // optionals
