@@ -3,6 +3,7 @@ module siigo.com/<%= config.name %>
 go 1.16
 
 require (
+	dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Core.Logs.Golang.git v0.1.0
 	dev.azure.com/SiigoDevOps/Siigo/_git/go-cqrs.git v0.0.2
 	dev.azure.com/SiigoDevOps/Siigo/_git/go-kafka.git v0.0.1
 	github.com/common-nighthawk/go-figure v0.0.0-20200609044655-c4b36f998cf2

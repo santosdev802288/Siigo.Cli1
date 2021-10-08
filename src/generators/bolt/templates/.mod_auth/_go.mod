@@ -3,6 +3,7 @@ module siigo.com/<%= config.name %>
 go 1.16
 
 require (
+	dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Core.Logs.Golang.git v0.1.0
 	dev.azure.com/SiigoDevOps/Siigo/_git/go-cqrs.git v0.0.2
 	dev.azure.com/SiigoDevOps/Siigo/_git/go-kafka.git v0.0.1
 	dev.azure.com/SiigoDevOps/Siigo/_git/validate-token-bolt.git v0.0.0-20211004211019-f3c5b521a44b
