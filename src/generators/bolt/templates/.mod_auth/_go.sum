@@ -31,6 +31,8 @@ cloud.google.com/go/storage v1.5.0/go.mod h1:tpKbwo567HUNpVclU5sGELwQWBDZ8gh0Zeo
 cloud.google.com/go/storage v1.6.0/go.mod h1:N7U0C8pVQ/+NIKOBQyamJIeKQKkZ+mxpohlUTyfDhBk=
 cloud.google.com/go/storage v1.8.0/go.mod h1:Wv1Oy7z6Yz3DshWRJFhqM/UCfaWIRTdp0RXyy7KQOVs=
 cloud.google.com/go/storage v1.10.0/go.mod h1:FLPqc6j+Ki4BU591ie1oL6qBQGu2Bl/tZ9ullr3+Kg0=
+dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Core.Logs.Golang.git v0.1.0 h1:EESNMsX9TyudS6AVZjNLVI8WGQgJTjXTsiChmqK7KYw=
+dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Core.Logs.Golang.git v0.1.0/go.mod h1:hatSDLXmqS5MpLYLhf3F4LHyL+dLkKM3QXysVLTSlRk=
 dev.azure.com/SiigoDevOps/Siigo/_git/go-cqrs.git v0.0.2 h1:R0GhAEI9gMfCRdOOLXO9+/pMRHkT6Nz/n4r+rxBrqN0=
 dev.azure.com/SiigoDevOps/Siigo/_git/go-cqrs.git v0.0.2/go.mod h1:bQZDkJgR5xGsHN3j1RYujZQP55qG0iVy4rzhE9OWgbs=
 dev.azure.com/SiigoDevOps/Siigo/_git/go-kafka.git v0.0.1 h1:smGEWKVtkJWkjKqxK4yO41JlT+cnouPM6NCxfjTUtCc=

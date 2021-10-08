@@ -6,11 +6,12 @@
 package main
 
 import (
+	"os"
+	easy "dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Core.Logs.Golang.git/easy"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	log "github.com/sirupsen/logrus"
 	_ "go.uber.org/automaxprocs"
 	"go.uber.org/fx"
-	"os"
 	"siigo.com/<%= config.name %>/src/api"
 	"siigo.com/<%= config.name %>/src/boot"
 	"siigo.com/<%= config.name %>/src/config"
@@ -23,14 +24,14 @@ func main() {
 
 //
 func init() {
-	// Log as JSON instead of the default ASCII formatter.
-	log.SetFormatter(&log.TextFormatter{DisableColors: true, FullTimestamp: true})
+	// Log using Siigo format as default formatter.
+	log.SetFormatter(&easy.Formatter{})
 	// Output to stdout instead of the default stderr
 	// Can be any io.Writer, see below for File example
 	log.SetOutput(os.Stdout)
 
 	// Only log the warning severity or above.
-	log.SetLevel(log.DebugLevel)
+	log.SetLevel(log.InfoLevel)
 
 	// Set Reporter
 	log.SetReportCaller(true)
