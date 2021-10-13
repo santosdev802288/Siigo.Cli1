@@ -6,7 +6,7 @@ require (
 	dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Core.Logs.Golang.git v0.1.0
 	dev.azure.com/SiigoDevOps/Siigo/_git/go-cqrs.git v0.0.2
 	dev.azure.com/SiigoDevOps/Siigo/_git/go-kafka.git v0.0.1
-	dev.azure.com/SiigoDevOps/Siigo/_git/validate-token-bolt.git v0.0.0-20211004211019-f3c5b521a44b
+	dev.azure.com/SiigoDevOps/Siigo/_git/validate-token-bolt.git v0.0.0-20211013220008-c80590449a58
 	github.com/common-nighthawk/go-figure v0.0.0-20200609044655-c4b36f998cf2
 	github.com/go-bongo/bongo v0.10.4
 	github.com/go-playground/validator/v10 v10.4.1
