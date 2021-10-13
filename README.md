@@ -64,6 +64,7 @@ Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_use
 - [CICD](#🚀-cicd)
 - [AK6 Load Testing](#🔫-performance-testing-⚡) 
 - [Api Gateway](#🔱-api-gateway)
+- [Datadog](#🐶datadog)
 
 ## 🔥 Golang
 
@@ -462,6 +463,49 @@ Run *_yo siigo:cicd --help_* to see the configuration description, data type and
       
 > **⚠️ WARNING**: If you set --environment option, remember: you only need pass
 >the name without the prefix of the environment(qa, dev, prod). Example 'qa aks' is aks and 'prod aks chile' is aks chile.  
+
+## 🐶 Datadog
+[Datadog](https://www.datadoghq.com/) is an observability service for cloud-scale applications, providing monitoring of servers, databases, tools, and services, through a SaaS-based data analytics platform.
+
+### Motivation
+This command helps to automate the creation and configuration of an SLO by each microservice and its respective dashboard.
+
+### Using
+
+Create a new SLO project in Datadog.
+
+    yo siigo:datadog --ms-name mymicroservice
+
+
+### Example
+In the following [example](https://assetsdoc.blob.core.windows.net/assets/datadog.gif) you can see the step by step how to create a SLO.
+
+
+### Flags and description
+Run *_yo siigo:datadog --help_* to see the configuration description, data type and default value for all the parameters.
+
+         _-----_     
+        |       |    ╭──────────────────────────╮
+        |--(o)--|    │    Siigo Generator Api   │
+       `---------´   │         Datadog.         │
+        ( _´U`_ )    ╰──────────────────────────╯
+        /___A___\   /
+         |  ~  |     
+       __'.___.'__   
+     ´   `  |° ´ Y ` 
+    
+    Usage:
+      yo siigo:datadog [options]
+    
+    Options:
+      -h,     --help           # Print the generator's options and usage
+              --skip-cache     # Do not remember prompt answers                                                                                                 Default: false
+              --skip-install   # Do not automatically install dependencies                                                                                      Default: false
+              --force-install  # Fail on install dependencies error                                                                                             Default: false
+              --ask-answered   # Show prompts for already configured options                                                                                    Default: false
+      -msn,   --ms-name        # Microservice name.                                                                                                             Default: false
+### Did something go wrong?
+If for some reason the deployment process failed, and you need to try it again, you can use the following [tool]() to clean the helm chart in kubernetes. The unique parameter needed is the value passed in *__--project-name__* flag.
 
 
 ### Customize pipeline
