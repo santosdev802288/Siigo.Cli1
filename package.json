@@ -10,7 +10,7 @@
     "build:dev": "nodemon --config nodemon.json",
     "lint": "eslint --no-eslintrc -c .eslintrc.json \"{scripts,src,test}/**/*.ts\"",
     "release": "standard-version",
-    "test": "npm run coverage",
+    "test": "npm run test:mocha",
     "test:mocha": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --spec test/**/*.spec.ts",
     "test:debug": "mocha --inspect-brk --spec test/**/*.spec.ts",
     "coverage": "nyc --reporter lcov --reporter text --report-dir .nyc_output npm run test:mocha",
