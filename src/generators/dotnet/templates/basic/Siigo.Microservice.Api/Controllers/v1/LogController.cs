@@ -43,7 +43,7 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Controlle
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
-        public async Task WriteLog(PostLogEntry entry)
+        public async Task<IActionResult> WriteLog(PostLogEntry entry)
         {
             _ = Task.Run(_loggerService.WriteLog(entry));
             return await Task.Run(Ok);

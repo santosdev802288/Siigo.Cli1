@@ -37,8 +37,8 @@ dev.azure.com/SiigoDevOps/Siigo/_git/go-cqrs.git v0.0.2 h1:R0GhAEI9gMfCRdOOLXO9+
 dev.azure.com/SiigoDevOps/Siigo/_git/go-cqrs.git v0.0.2/go.mod h1:bQZDkJgR5xGsHN3j1RYujZQP55qG0iVy4rzhE9OWgbs=
 dev.azure.com/SiigoDevOps/Siigo/_git/go-kafka.git v0.0.1 h1:smGEWKVtkJWkjKqxK4yO41JlT+cnouPM6NCxfjTUtCc=
 dev.azure.com/SiigoDevOps/Siigo/_git/go-kafka.git v0.0.1/go.mod h1:IirgU49nb22TRcAHZY0YbZyFi0kgHXx2ydZGrGGNyaE=
-dev.azure.com/SiigoDevOps/Siigo/_git/validate-token-bolt.git v0.0.0-20211004211019-f3c5b521a44b h1:tHPj//9KNxASeDjpp1SnELvWEvF6LdnWtOZLX55ifS0=
-dev.azure.com/SiigoDevOps/Siigo/_git/validate-token-bolt.git v0.0.0-20211004211019-f3c5b521a44b/go.mod h1:ggRuh4+6rBomaYSRy8/dgZwwBED68voO4275IaA0p4k=
+dev.azure.com/SiigoDevOps/Siigo/_git/validate-token-bolt.git v0.0.0-20211013220008-c80590449a58 h1:7lmWfvs2iYXg5nTffqEM+fYzbEVGO0JC4fHOXqB0vDk=
+dev.azure.com/SiigoDevOps/Siigo/_git/validate-token-bolt.git v0.0.0-20211013220008-c80590449a58/go.mod h1:ggRuh4+6rBomaYSRy8/dgZwwBED68voO4275IaA0p4k=
 dev.azure.com/SiigoDevOps/Siigo/_git/validate-token.git v0.0.5 h1:+OxW2zZ+LR6GfsopaK0tPCErGsrXeQ/dldhKCMgDR8w=
 dev.azure.com/SiigoDevOps/Siigo/_git/validate-token.git v0.0.5/go.mod h1:xKpUMlkfijwKaSfnF8Z/dqQQPj00CgytdpHFddSdMxk=
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
