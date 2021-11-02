@@ -26,7 +26,7 @@ siigo-chart:
   secrets: {}
 
   # -- Replicas of the micro service
-  replicaCount: 2
+  replicaCount: 1
 
   image:
     repository: #argument in pipeline
