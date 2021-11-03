@@ -39,10 +39,9 @@ export class DashboardHandler {
         this._dashboards.push(dashboard)
     }
 
-    save(){
+    save(fs: any){
         const tmpFile = this.contentFile.replace(this.dashboardDependencies, this._dependencies)
         const newFile = tmpFile.replace(this.dashboardsText,  JSON.stringify(this._dashboards, null, 2))
-        writeFileSync(this.TERRAGRUNT_PATH, newFile)
+        return newFile
     }
-
 }

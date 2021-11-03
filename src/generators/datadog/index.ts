@@ -30,7 +30,9 @@ export default class DatadogGenerator extends Generator<DatadogOptions> {
   token: any;
   branch: any;
 
-  constructor(args: any, opt: DatadogOptions) {
+  newFile = ''
+
+  constructor(args: string, opt: DatadogOptions) {
     super(args, opt)
 
     req()
@@ -44,24 +46,18 @@ export default class DatadogGenerator extends Generator<DatadogOptions> {
 
   }
 
-  async initializing() {
+  async initializing(): Promise<void> {
     this.log(siigosay('Siigo Generator Datadog.'))
     this.token = await getParameter('token')
     registerAutocomplete(this)
   }
 
-  async prompting() {
+  async prompting(): Promise<void> {
 
     const message = 'For more information execute yo siigo:datadog --help'
 
     if (!this.options['ms-name'] || this.options['ms-name'] === 'true')
       throw new Error('--ms-name is required or it should not be empty.\n ' + message)
-
-    console.log('Obteniendo la ultima version de Chart!')
-    let resGit: any = (shell.exec('git ls-remote --refs --tags --sort=v:refname https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart',
-      {silent: true}).stdout).split('/').pop()
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    resGit = resGit.replace('\n','')
 
     const tribe = await getParameter('tribe')
     this.appConfig = {
@@ -69,8 +65,7 @@ export default class DatadogGenerator extends Generator<DatadogOptions> {
       tagTribu: tribe
     }
 
-    // @ts-expect-error ts-migrate(2769) FIXME: No overload matches this call.
-    const json = JSON.stringify(this.appConfig, false, '\t')
+    const json = JSON.stringify(this.appConfig)
     this.log(colorize(json, {
       pretty: true,
       colors: {
@@ -102,30 +97,42 @@ export default class DatadogGenerator extends Generator<DatadogOptions> {
     )
 
     const freeText2 = setFreeText(
-        {
-          layoutX: 78,
-          layoutY: 1,
-          definitionText: 'Métrica de Latencia '
-        }
+      {
+        layoutX: 78,
+        layoutY: 1,
+        definitionText: 'Métrica de Latencia '
+      }
     )
 
-      const slo1 = setSLOInfo({
-          layoutX: 1,
-          layoutY: 9,
-          definitionSloId: 'dependency.datadog-slo-'+this.appConfig.microserviceName+'.outputs.metric_based_slo.ISIIGO'+this.appConfig.microserviceName+'CLI-Less-than-0_1-are-5xx-4xx-Terraform',
-      })
+    const slo1 = setSLOInfo({
+      layoutX: 1,
+      layoutY: 9,
+      definitionSloId: 'dependency.datadog-slo-' + 
+                        this.appConfig.microserviceName + 
+                        '.outputs.metric_based_slo.ISIIGO' + 
+                        this.appConfig.microserviceName + 
+                        'CLI-Less-than-0_1-are-5xx-4xx-Terraform',
+    })
 
-      const slo2 = setSLOInfo({
-          layoutX: 1,
-          layoutY: 30,
-          definitionSloId: 'dependency.datadog-slo-'+this.appConfig.microserviceName+'.outputs.metric_based_slo.ISIIGO'+this.appConfig.microserviceName+'CLI-Less-than-0_1-are-5xx-4xx-Terraform',
-      })
+    const slo2 = setSLOInfo({
+      layoutX: 1,
+      layoutY: 30,
+      definitionSloId: 'dependency.datadog-slo-' + 
+                        this.appConfig.microserviceName + 
+                        '.outputs.metric_based_slo.ISIIGO' + 
+                        this.appConfig.microserviceName + 
+                        'CLI-Less-than-0_1-are-5xx-4xx-Terraform',
+    })
 
-      const slo3 = setSLOInfo({
-          layoutX: 1,
-          layoutY: 51,
-          definitionSloId: 'dependency.datadog-slo-'+this.appConfig.microserviceName+'.outputs.metric_based_slo.ISIIGO'+this.appConfig.microserviceName+'CLI-Less-than-0_1-are-5xx-4xx-Terraform',
-      })
+    const slo3 = setSLOInfo({
+      layoutX: 1,
+      layoutY: 51,
+      definitionSloId: 'dependency.datadog-slo-' + 
+                        this.appConfig.microserviceName + 
+                        '.outputs.metric_based_slo.ISIIGO' + 
+                        this.appConfig.microserviceName + 
+                        'CLI-Less-than-0_1-are-5xx-4xx-Terraform',
+    })
 
     dashboard
       .setFreeText([freeText1.build(), freeText2.build()])
@@ -136,12 +143,13 @@ export default class DatadogGenerator extends Generator<DatadogOptions> {
 
     dashboardHandler.addDashboard(dashboard.build())
 
-    dashboardHandler.save()
+    this.newFile = dashboardHandler.save(this.fs)
   }
 
 
   async writing(): Promise<void> {
 
+    this.fs.write(destinationPath + '/tribe/dashboard/terragrunt.hcl', this.newFile)
     this.fs.copyTpl(
       this.templatePath(templatePath),
       this.destinationPath(destinationPath),
@@ -149,12 +157,11 @@ export default class DatadogGenerator extends Generator<DatadogOptions> {
       {},
       {
         processDestinationPath: (filePath) => {
-          const mapObj = {
+          const mapObj: { [key: string]: string } = {
             tribe: this.appConfig.tagTribu.toLowerCase(),
             micro: this.appConfig.microserviceName
           }
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
+
           return filePath.replace(/(tribe|micro)/g, matched => mapObj[matched])
         }
       },
@@ -184,7 +191,7 @@ export default class DatadogGenerator extends Generator<DatadogOptions> {
     }
   }
 
-  end(){
+  end(): void{
     this.log(siigosay('Enjoy! Dont forget merge' +this.branch+ 'branch in dev.'))
   }
 }
