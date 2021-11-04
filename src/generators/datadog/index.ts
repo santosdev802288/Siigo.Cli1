@@ -148,24 +148,22 @@ export default class DatadogGenerator extends Generator<DatadogOptions> {
 
 
   async writing(): Promise<void> {
+    const mapObj: { [key: string]: string } = {
+      tribe: this.appConfig.tagTribu.toLowerCase(),
+      micro: this.appConfig.microserviceName
+    }
 
-    this.fs.write(destinationPath + '/tribe/dashboard/terragrunt.hcl', this.newFile)
     this.fs.copyTpl(
       this.templatePath(templatePath),
       this.destinationPath(destinationPath),
       { config: this.appConfig },
       {},
       {
-        processDestinationPath: (filePath) => {
-          const mapObj: { [key: string]: string } = {
-            tribe: this.appConfig.tagTribu.toLowerCase(),
-            micro: this.appConfig.microserviceName
-          }
-
-          return filePath.replace(/(tribe|micro)/g, matched => mapObj[matched])
-        }
+        processDestinationPath: (filePath) => filePath.replace(/(tribe|micro)/g, matched => mapObj[matched])
       },
     )
+
+    this.fs.write(destinationPath + `/${mapObj.tribe}/dashboard/terragrunt.hcl`, this.newFile)
   }
 
   install(): void {
