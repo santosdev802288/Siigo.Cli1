@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project.
 
+### [2.5.1](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v2.5.0...v2.5.1) (2021-11-05)
+
+
+### Bug Fixes
+
+* create only once statistic scheme ([7824c72](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/7824c7278aecf35bcce8bf058e54ffe92caaf2ef))
+
 ## [2.5.0](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v2.3.0...v2.5.0) (2021-11-04)
 
 
