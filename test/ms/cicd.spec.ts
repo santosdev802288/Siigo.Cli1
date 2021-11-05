@@ -3,13 +3,27 @@ import helpers from 'yeoman-test'
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
+import sinon from 'sinon'
 import shell from 'shelljs'
+
+import * as gitmanager from '../../src/utils/gitmanager'
+import * as siigoFile from '../../src/utils/siigoFile'
+
 
 import { getGenerator, SiigoGenerator } from '../generator.factory'
 
 
+
 describe('siigo:cicd', () => {
   const generator = getGenerator(SiigoGenerator.MS_CICD)
+
+  before( () => {
+    sinon.stub(siigoFile, 'wizardsiigofile').returns(Promise.resolve('mockToken'))
+    sinon.stub(gitmanager, 'getProjects').returns(Promise.resolve({
+      Architecture:'55db46d7-c3a3-481c-b4a2-14c9f75e547a', 
+      Siigo:'2b375626-f976-487e-9aa8-097804b773cc'
+    }))
+  }) 
 
 
   it('Config a dotnet project', async () => {
@@ -58,7 +72,7 @@ describe('siigo:cicd', () => {
       .withPrompts({ ready: true })
       .then(() => {
         assert.file(['.docker/Dockerfile'])
-        assert.fileContent('.docker/Dockerfile', /FROM golang.*/)
+        assert.fileContent('.docker/Dockerfile', /.*FROM siigo\.azurecr\.io\/golang-build.*/)
       })
   })
 
@@ -75,5 +89,9 @@ describe('siigo:cicd', () => {
         assert.file(['.docker/Dockerfile'])
         assert.fileContent('.docker/Dockerfile', /FROM siigo.azurecr.io\/node-build.*/)
       })
+  })
+
+  after(() => {
+    sinon.restore()
   })
 })

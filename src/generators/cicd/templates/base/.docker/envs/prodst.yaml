@@ -3,54 +3,106 @@
 # Declare variables to be passed into your templates.
 
 siigo-chart:
-
-  # can be Development, Production, Testing, Local
+  # -- Can be Development, Production, Testing, Local. Use to create a configmap with appsettings configuration appsettings.{{ .Values.env }}.json
   env: Production
 
   envs:
     ASPNETCORE_ENVIRONMENT: Production
 
-  secrets: { }
+  apiGateway:
+    # -- Set true to create a istio gateway
+    enabled: false
 
-  replicaCount: 2
+    # -- Prefix to access to api gateway from application gateway
+    prefix: ''
+
+    host:
+      dns: "*"
+      port: 8081 # port to expose in the ingress controller
+      protocol: HTTP
+  # end config gateway
+
+  # -- You can set secrets for the containers that run in the Pod. Loaded as environment variables.
+  secrets: {}
+
+  # -- Replicas of the micro service
+  replicaCount: 1
 
   image:
     repository: #argument in pipeline
     pullPolicy: IfNotPresent
 
+  # container ports expose by dockerfile. By default exposed port is 5000
+  ports: []
+    #- containerPort: 10000
+    #  name: grpc
+    #  protocol: TCP
+
+    #- containerPort: 11000
+    #  name: http
+    #  protocol: TCP
+
+  kafka:
+
+    keda:
+      enabled: false # if set to true the hpa will be disabled
+      pollingInterval: 10
+      minReplicaCount: 2   # Optional. Default: 0
+      maxReplicaCount: 30  # Optional. Default: 100
+      cooldownPeriod: 300  # Optional. Default 300
+
+    topics: []
+
+      # Name of the topic on which processing the offset lag.
+      #- name: example
+
+      # Name of the consumer group used for checking the offset on the topic and processing the related lag.
+      #  group: my-example-group
+
+      # Average target value to trigger scaling actions. (default: 20)
+      #  lagThreshold: "10"
+
+      # The offset reset policy for the consumer. Options are latest or earliest (default: latest)
+      #  offsetResetPolicy: latest
+
   service:
     type: ClusterIP
-    port: 5000
-
-  <% if(config.type == 'netcore') { %>
-  livenessProbe:
-    httpGet:
-      path: /health
-      port: http ## service.port
-  
-  readinessProbe:
-    httpGet:
-      path: /health
-      port: http ## service.port
-  
-  <% } else { %> # probes nodejs
+    ports:
+      - port: 5000
+        targetPort: 5000
+        protocol: TCP
+        name: http
+      #- name: grpc
+      #  port: 10000
+      #  protocol: TCP
+      #  targetPort: 10000
 
   livenessProbe:
+    failureThreshold: 6
     httpGet:
-      path: /api/health
+      path: <% config.pod.healthPath %>
       port: http ## service.port
-  
+      scheme: HTTP
+    periodSeconds: 10 # The periodSeconds field specifies that the kubelet should perform a liveness probe every 10 seconds
+    successThreshold: 1 # The initialDelaySeconds field tells the kubelet that it should wait 5 seconds before performing the first probe.
+    timeoutSeconds: 5 # Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1.
+    initialDelaySeconds: 5 # Number of seconds after the container has started before liveness or readiness probes are initiated. Defaults to 0 seconds.
+
   readinessProbe:
+    failureThreshold: 6
     httpGet:
-      path: /api/health
+      path: <% config.pod.healthPath %>
       port: http ## service.port
-  
-  <% } %>
-    
+      scheme: HTTP
+    periodSeconds: 10 # The periodSeconds field specifies that the kubelet should perform a liveness probe every 10 seconds
+    successThreshold: 1 # The initialDelaySeconds field tells the kubelet that it should wait 5 seconds before performing the first probe.
+    timeoutSeconds: 5 # Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1.
+    initialDelaySeconds: 5 # Number of seconds after the container has started before liveness or readiness probes are initiated. Defaults to 0 seconds.
+
 
   hpa:
     maxReplicas: 15
-    minReplicas: 5
+    minReplicas: 1
     targetCPUUtilizationPercentage: 70
 
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -59,28 +111,31 @@ siigo-chart:
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   resources:
     limits:
-      cpu: 1
+      cpu: 400m
       memory: 512Mi
     requests:
-      cpu: 500m
+      cpu: 200m
       memory: 256Mi
 
-  podSecurityContext: { }
-  # fsGroup: 2000
+  podSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 3000
+    fsGroup: 2000
 
-  securityContext: { }
-    # capabilities:
-    #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+  securityContext:
+    #  Controls whether a process can gain more privileges than its parent process.
+    # This bool directly controls whether the no_new_privs flag gets set on the container process.
+    # AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged OR 2) has CAP_SYS_ADMIN.
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true #  Mounts the container's root filesystem as read-only.
+    runAsNonRoot: true
+    runAsUser: 1000
 
-  nodeSelector: { }
+  nodeSelector: {}
 
-  tolerations: [ ]
+  tolerations: []
 
-  affinity: { }
+  affinity: {}
 
   podDisruptionBugets:
     minAvailable: 50%
@@ -91,19 +146,17 @@ siigo-chart:
       maxUnavailable: 25%
     type: RollingUpdate
 
-  outlierDetection: { }
+  outlierDetection: {}
     #baseEjectionTime: 120.000s
     #consecutiveErrors: 2
     #interval: 1.000s
   #maxEjectionPercent: 100
 
-  podAnnotations: { }
+  podAnnotations: {}
 
   appsettings: { }
 
   labels:
-    owner: "<%= config.tagOwner %>"
-    tribu: "<%= config.tagTribu %>"
     tags:
       datadoghq:
         com:

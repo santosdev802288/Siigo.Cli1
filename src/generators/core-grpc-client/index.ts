@@ -1,9 +1,11 @@
 import Generator = require('yeoman-generator');
-import {capitalize} from '../../utils/capitalize'
 import rename from 'gulp-rename';
+import _ from 'lodash'
 import path from 'path';
-import {verifyNewVersion} from "../../utils/notification";
+
+import {verifyNewVersion} from '../../utils/notification';
 import {siigosay} from '@nodesiigo/siigosay'
+import { saveStatistic } from '../../utils/statistics/statistic';
 
 
 module.exports = class extends Generator {
@@ -12,8 +14,8 @@ module.exports = class extends Generator {
     constructor(args: any, opt: any) {
         verifyNewVersion()
         super(args, opt)
-
-        this.log(siigosay(`Siigo Generator .Net 5.0 grpc Client.`))
+        saveStatistic('core-grpc-client')
+        this.log(siigosay('Siigo Generator .Net 5.0 grpc Client.'))
 
         const prefixRepo = "Siigo.Microservice."
         const eSiigoPrefixRepo = "ESiigo.Microservice."
@@ -58,7 +60,7 @@ module.exports = class extends Generator {
         this.appConfig = {}
         this.appConfig.name = this.options['name']
         this.appConfig.token = this.options['personal-token']
-        this.appConfig.nameCapitalize = capitalize(this.appConfig.name)
+        this.appConfig.nameCapitalize = _.upperFirst(this.appConfig.name)
         this.appConfig.projectPrefix = this.options['project-prefix']
     }
 
@@ -69,8 +71,8 @@ module.exports = class extends Generator {
                 const prefixChart = "ms-"
                 path.dirname = path.dirname.includes(prefixChart) ?
                     path.dirname.replace(/(Microservice)/g, this.appConfig.name) :
-                    path.dirname.replace(/(Microservice)/g, capitalize(this.appConfig.name))
-                path.basename = path.basename.replace(/(Microservice)/g, capitalize(this.appConfig.name))
+                    path.dirname.replace(/(Microservice)/g, _.upperFirst(this.appConfig.name))
+                path.basename = path.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.name))
                 path.dirname = path.dirname.replace(/(Siigo)/g,this.appConfig.projectPrefix)
                 path.basename = path.basename.replace(/(Siigo)/g, this.appConfig.projectPrefix )
             })

@@ -23,12 +23,12 @@
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Local"
             },
-            "applicationUrl": "http://localhost:5000/docs"
+            "applicationUrl": "http://localhost:5000/api/docs"
         },
         "Docker": {
             "commandName": "Docker",
             "launchBrowser": true,
-            "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/docs",
+            "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/docs",
             "environmentVariables": {
                 "ASPNETCORE_URLS": "https://+:443;http://+:5000",
                 "ASPNETCORE_HTTPS_PORT": "44321"

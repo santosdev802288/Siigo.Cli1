@@ -6,6 +6,7 @@ import { siigosay } from '@nodesiigo/siigosay';
 import { getProjects, createRepository } from '../../utils/gitmanager';
 import path from 'path';
 import shell from 'shelljs';
+import { saveStatistic } from '../../utils/statistics/statistic';
 
 const prefixRepo = 'Siigo.Microservice.';
 const eSiigoPrefixRepo = 'ESiigo.Microservice.';
@@ -15,7 +16,8 @@ module.exports = class extends Generator {
     answers: any;
 
     constructor(args: any, opt: any) {
-        super(args, opt);
+        super(args, opt)
+        saveStatistic('git')
     }
     showInformation(json: any) {
         this.log(colorize(json, {
@@ -59,7 +61,6 @@ module.exports = class extends Generator {
             if (this.answers.ready) {
                 let responseGit: any = {}
                 while(!responseGit.remoteUrl){
-                    // @ts-expect-error FIXME: projects indexing
                     responseGit = await createRepository(token, currentPath, projects[response.project]);
                     if(responseGit.remoteUrl){
                         this.log(siigosay('Your repository has been created'));

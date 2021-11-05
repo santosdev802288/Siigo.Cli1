@@ -4,6 +4,7 @@ import rename from 'gulp-rename';
 import {exec as spawn} from 'child_process';
 import colorize from 'json-colorizer';
 import {siigosay} from '@nodesiigo/siigosay'
+import { saveStatistic } from '../../utils/statistics/statistic';
 
 module.exports = class extends Generator {
     appConfig: { organization?: any; project?: any; environment?: any; namespace?: any; folder?: any; port?: any; pipelineName?: any; name?: any; chartVersion?: any; } = {};
@@ -11,7 +12,7 @@ module.exports = class extends Generator {
 
     constructor(args: any, opt: any) {
         super(args, opt);
-        
+        saveStatistic('gateway')
         this.log(siigosay(`Siigo Generator Api Gateway.`))
         const currentPath = path.basename(process.cwd())
         

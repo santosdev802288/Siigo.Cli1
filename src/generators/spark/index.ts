@@ -1,12 +1,14 @@
 import Generator = require('yeoman-generator');
 import {siigosay, siigoerror} from '@nodesiigo/siigosay'
-import {capitalize} from '../../utils/capitalize'
 import rename from 'gulp-rename'
+import _ from 'lodash'
+import { saveStatistic } from '../../utils/statistics/statistic';
 
 
 module.exports = class extends Generator {
     constructor(args: any, opt: any) {
         super(args, opt)
+        saveStatistic('spark')
         this.log(siigosay(`Siigo generator Spark module.`))
     }
     writing() {
@@ -30,7 +32,7 @@ module.exports = class extends Generator {
             this.fs.copyTpl(
                 this.templatePath(""),
                 this.destinationPath(`./${pname}/`),
-                {config: {name, nameUpper: capitalize(name)}}
+                {config: {name, nameUpper: _.upperFirst(name)}}
             ) 
         }
     }

@@ -3,6 +3,9 @@ import helpers from 'yeoman-test'
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
+import sinon from 'sinon'
+
+import * as siigoFile from '../../src/utils/siigoFile'
 
 import GolangMSGenerator from '../../src/generators/bolt'
 
@@ -11,57 +14,64 @@ const NAMESPACE = 'siigo:bolt'
 
 describe(NAMESPACE, () => {
 
-    it('Generates a project', () => {
+  before( () => {
+    sinon.stub(siigoFile, 'wizardsiigofile').returns(Promise.resolve('mockToken'))
+  }) 
 
-        const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.Bolt'))
+  it('Generates a project', () => {
 
-        return helpers.run(GolangMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
-            .inDir(dir)
-            .withOptions({ 'personal-token': 'myToken' })      // Mock options passed in
-            .withPrompts({ ready: true })   // Mock the prompt answers
-            .then(() => {
-                // assert something about the generator
-                assert.file('.air.toml');
-                assert.file('.gitignore');
-                assert.file('.golangci.yml');
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.Bolt'))
 
-                assert.file('third_party/embed.go')
-            });
-    });
+    return helpers.run(GolangMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
+      .inDir(dir)
+      .withOptions({ 'personal-token': 'myToken' })      // Mock options passed in
+      .withPrompts({ ready: true })   // Mock the prompt answers
+      .then(() => {
+        // assert something about the generator
+        assert.file('.air.toml');
+        assert.file('.gitignore');
+        assert.file('.golangci.yml');
 
-    it('Create ESiigo.Microservice. folder', () => {
+        assert.file('third_party/embed.go')
+      });
+  });
 
-        const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Golang'))
-        const name = 'NoFolder'
-        const folderPrefix = 'ESiigo.Microservice.'
+  it('Create ESiigo.Microservice. folder', () => {
 
-        return helpers.run(GolangMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
-            .inDir(dir)
-            .withOptions({ 'personal-token': 'myToken','project-name': name })
-            .withPrompts({ ready: true, prefix: folderPrefix, name: name})   // Mock the prompt answers
-            .then(() => {                
-                assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
-                // assert something about the generator
-                assert.file('.air.toml');
-                assert.file('.gitignore');
-                assert.file('.golangci.yml');
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Golang'))
+    const name = 'NoFolder'
+    const folderPrefix = 'ESiigo.Microservice.'
 
-                assert.file('third_party/embed.go')
-            });
-    });
+    return helpers.run(GolangMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
+      .inDir(dir)
+      .withOptions({ 'personal-token': 'myToken','project-name': name })
+      .withPrompts({ ready: true, prefix: folderPrefix, name: name})   // Mock the prompt answers
+      .then(() => {                
+        assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
+        // assert something about the generator
+        assert.file('.air.toml');
+        assert.file('.gitignore');
+        assert.file('.golangci.yml');
 
-    it('Use default project name', () => {
+        assert.file('third_party/embed.go')
+      });
+  });
 
-        const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Golang'))
-        const folderPrefix = 'Siigo.Microservice.'
+  it('Use default project name', () => {
 
-        return helpers.run(GolangMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
-            .inDir(dir)
-            .withOptions({ })
-            .withPrompts({ ready: true, prefix: folderPrefix})
-            .then(() => {
-                assert.textEqual(path.basename(process.cwd()), `${folderPrefix}TestMS`)
-            })
-    });
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Golang'))
+    const folderPrefix = 'Siigo.Microservice.'
 
+    return helpers.run(GolangMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
+      .inDir(dir)
+      .withOptions({ })
+      .withPrompts({ ready: true, prefix: folderPrefix})
+      .then(() => {
+        assert.textEqual(path.basename(process.cwd()), `${folderPrefix}TestMS`)
+      })
+  });
+
+  after(() => {
+    sinon.restore()
+  })
 });

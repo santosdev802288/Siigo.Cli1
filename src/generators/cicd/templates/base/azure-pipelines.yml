@@ -1,6 +1,6 @@
 trigger:
   - dev
-  - develop
+  - sandbox
   - master
   - cicd
 

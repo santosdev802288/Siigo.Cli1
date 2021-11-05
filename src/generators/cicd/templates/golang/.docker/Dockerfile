@@ -1,32 +1,29 @@
-FROM golang:1.16 as builder
+#
+# Build image
+#
+# To access the images locally run: "az acr login -n siigo"
+#
+FROM siigo.azurecr.io/golang-build:1 as build
 
 WORKDIR /app
 
-ENV GIT_TERMINAL_PROMPT=1
-ENV LIBRDKAFKA_VERSION=1.5.3
-
-ARG devops_token=kib3wbzqlhoe5pc4aqdziifdkoddi7yxkbxt76aabymbly4yv5aq
-ENV GOPRIVATE=dev.azure.com
-RUN git config --global url."https://anythinggoeshere:$devops_token@dev.azure.com".insteadOf "https://dev.azure.com"
-
-RUN git clone https://github.com/edenhill/librdkafka.git && \
-    cd librdkafka && \
-    git checkout tags/v${LIBRDKAFKA_VERSION} && \
-    ./configure --prefix=/usr && \
-    make && \
-    make install &&\
-    ldconfig && \
-    cd .. && \
-    rm -rf librdkafka
-
 COPY . .
 
+# Build binary
 RUN go mod download && go mod tidy && go mod verify && go mod why
-RUN GOOS=linux go build -a -o app .
-RUN chmod +x ./app
+RUN GOOS=linux go build -a -o golang-app .
+RUN chmod +x ./golang-app
 
-RUN adduser --disabled-password --gecos "" app -u 1000
-USER 1000
+#
+# Runtime image
+#
+FROM siigo.azurecr.io/golang-runtime:1 as runtime
+
+WORKDIR /app
+
+# Copy configuration and binary
+COPY --from=build /app/configuration ./configuration
+COPY --from=build /app/golang-app ./
 
 EXPOSE 11000 10000
-ENTRYPOINT ["./app"]
+ENTRYPOINT ["./golang-app"]

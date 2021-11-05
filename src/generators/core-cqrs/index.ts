@@ -1,9 +1,11 @@
 import Generator = require('yeoman-generator');
-import {capitalize} from "../../utils/capitalize"
 import rename from 'gulp-rename';
+import _ from 'lodash'
+
 import getDirectoriesRecursive from "../../utils/walkProjects"
 import {verifyNewVersion} from "../../utils/notification";
 import {siigosay} from '@nodesiigo/siigosay'
+import { saveStatistic } from '../../utils/statistics/statistic';
 
 module.exports = class extends Generator {
     appConfig: any;
@@ -11,6 +13,7 @@ module.exports = class extends Generator {
     constructor(args: any, opt: any) {
         verifyNewVersion()
         super(args, opt)
+        saveStatistic('core-cqrs')
     }
 
     initializing() {
@@ -36,9 +39,9 @@ module.exports = class extends Generator {
             }
         ]).then((res: any) => {
             this.appConfig = {}
-            this.appConfig.name = capitalize(paths.length ? paths[0] : null,)
+            this.appConfig.name = _.upperFirst(paths.length ? paths[0] : '',)
             this.appConfig.type = res.type
-            this.appConfig.name_cq = capitalize(res.name_cq)
+            this.appConfig.name_cq = _.upperFirst(res.name_cq)
         });
     }
 
@@ -50,14 +53,14 @@ module.exports = class extends Generator {
                 // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
                 this.queueTransformStream([
                     rename((path: any) => {
-                        path.basename = path.basename.replace(/(CreateProduct)/g, capitalize(this.appConfig.name_cq))
-                        path.dirname = path.dirname.replace(/(CreateProduct)/g, capitalize(this.appConfig.name_cq))
+                        path.basename = path.basename.replace(/(CreateProduct)/g, _.upperFirst(this.appConfig.name_cq))
+                        path.dirname = path.dirname.replace(/(CreateProduct)/g, _.upperFirst(this.appConfig.name_cq))
                     })
                 ]);
 
                 this.fs.copyTpl(
                     this.templatePath("command/"),
-                    this.destinationPath(`${capitalize(this.appConfig.name)}/Application/Commands/`),
+                    this.destinationPath(`${_.upperFirst(this.appConfig.name)}/Application/Commands/`),
                     {config: {name: this.appConfig.name, command_name: this.appConfig.name_cq}}
                 )
                 break
@@ -66,13 +69,13 @@ module.exports = class extends Generator {
                 // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
                 this.queueTransformStream([
                     rename((path: any) => {
-                        path.basename = path.basename.replace(/(GetProductDetails)/g, capitalize(this.appConfig.name_cq))
-                        path.dirname = path.dirname.replace(/(GetProductDetails)/g, capitalize(this.appConfig.name_cq))
+                        path.basename = path.basename.replace(/(GetProductDetails)/g, _.upperFirst(this.appConfig.name_cq))
+                        path.dirname = path.dirname.replace(/(GetProductDetails)/g, _.upperFirst(this.appConfig.name_cq))
                     })
                 ]);
                 this.fs.copyTpl(
                     this.templatePath("query/"),
-                    this.destinationPath(`${capitalize(this.appConfig.name)}/Application/Queries/`),
+                    this.destinationPath(`${_.upperFirst(this.appConfig.name)}/Application/Queries/`),
                     {config: {name: this.appConfig.name, query_name: this.appConfig.name_cq}}
                 )
                 this.log("Replace the type <IContract> with your viewModel.")

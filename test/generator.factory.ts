@@ -6,12 +6,15 @@ import CicdGenerator from '../src/generators/cicd'
 import NodeMSGenerator from '../src/generators/node';
 import CoreMSGenerator from '../src/generators/core'
 import Ak6TestingGenerator from '../src/generators/test.ak6'
+import DatadogGenerator from '../src/generators/datadog'
+
 
 export enum SiigoGenerator {
     MS_CICD,
     MS_CORE,
     MS_NODE,
     TEST_AK6,
+    TEST_DD,
 }
 
 export interface TestGenerator {
@@ -51,6 +54,14 @@ export function getGenerator(generator: SiigoGenerator): TestGenerator {
                 settings: {
                     resolved: path.join(__dirname, '../src/generators/test.ak6', 'index.js'),
                     namespace: 'siigo:test.ak6'
+                }
+            }
+        case SiigoGenerator.TEST_DD:
+            return {
+                generatorOrNamespace: DatadogGenerator as Constructor<Generator>,
+                settings: {
+                    resolved: path.join(__dirname, '../src/generators/datadog', 'index.js'),
+                    namespace: 'siigo:datadog'
                 }
             }
         default:

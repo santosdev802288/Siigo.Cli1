@@ -6,8 +6,6 @@ import {Observable, of} from 'rxjs'
 @Injectable({ scope: Scope.REQUEST })
 export class <%= config.nameUpper %>Repository implements I<%= config.nameUpper %>Repository<<%= config.nameUpper %>> {
 
-    constructor() {}
-
     public <%= config.name %>(): Observable<string> {
         return of('Enjoy!')
     }

@@ -1,6 +1,74 @@
 # Changelog
 All notable changes to this project.
 
+## [2.5.0](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v2.3.0...v2.5.0) (2021-11-04)
+
+
+### Features
+
+* **bolt:** add siigo core logs ([0994b6a](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/0994b6a370ed6dcef2bd85c06cbf66c633704e09))
+* **cicd:** install Datadog agent on container ([c299c00](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/c299c002ada330f315a025ec41a6ed87a47fcc32))
+* **cicd:** use siigo nodejs images ([840d70d](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/840d70d337d8d69a5209183afe344c70991abd72))
+* **node:** change dockerfile to compile node app ([e7b251c](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/e7b251cd9d5c0231f4388d845f47a795814025c0))
+* **node:** replace TSLint with ESLint ([dbb6e6d](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/dbb6e6d94dfb72589c1399b2fcb07b8d26fa535e))
+* **node:** update Husky ([fee05b2](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/fee05b208316f1478e6f1af58569aeaef7559d25))
+* updating internal libraries ([3dc8e1c](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/3dc8e1c429be92631fd98a84944b7c4bca7249de))
+* updating libs & fixing missing placeholder ([762d4a3](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/762d4a3ed9a43426795ff912e1dfaa1b1188fdd9))
+
+
+### Bug Fixes
+
+* :zap: update reponse logcontroller and routes of swagger ([2479dd6](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/2479dd6813148d95a0bf4be0b0e21286486da99b))
+* change to [@siigo](https://dev.azure.com/siigo):core ([927380d](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/927380d3c202121c3e9082f209713f62ab7a3b97))
+* **dotnet:** remove test for .editorconfig file ([c08443a](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/c08443ad38284b9802000cfc946be0f1ea0b6766))
+* error in env files, removing extra editconfig ([2c55c11](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/2c55c1191e08b0635b7d9d2f10929cf91051531c))
+* **node:** use @siigo/core-security for new nest modules ([63fd51a](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/63fd51a888f8d52949be86240fbbf6a7c2e6c911))
+* remove dotnet version of Datadog tracer ([9f54e32](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/9f54e320c76271498990d5f4df6cd74e91cd190b))
+
+
+### Performance Improvements
+
+* reduce default replica count ([4f03039](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/4f03039a721fb6b24ddf1d80b158ee9a73ac8401))
+
+
+### Build System
+
+* **golang:** use siigo images for golang dockerfile ([ef6cea1](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/ef6cea123d902b0426313d67eeda7d0fd8543011))
+
+
+### Tests
+
+* add more rules to ESLint ([12d6a26](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/12d6a26c7f377d5786bb50ed53f5da0ccd772a64))
+* **cicd:** mock devops projects ([3f3c72b](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/3f3c72bcc23266eb65a1c6965f59ba8522c57aec))
+* **core:** mock siigo file update ([a8c7fad](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/a8c7fad4f3c58e26277d2cb83e212b1ebefb02ef))
+* **dotnet:** increase coverage in comand+query template ([edae70c](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/edae70c3ea5c3371c24882c43f7dafde0e24230e))
+* **dotnet:** increase coverage in command template ([ccb65d8](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/ccb65d859fd364cbf3c210e4e1b68a2146ff99cf))
+* **dotnet:** increase coverage in query template ([0f3e94a](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/0f3e94ab05b12689f3f795df9cdb3df48c8d4bcd))
+
+
+### CI
+
+* configure sonar script ([3c940c7](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/3c940c72ee134b20e65880813d25eddcc8b9042e))
+* use Siigo node library pipeline ([749295f](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/749295f951212f014f62c22a923fe8c5e313ecc8))
+
+
+### Code Refactoring
+
+* :dizzy: custumize open-api ([459fc9f](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/459fc9f4a40787d7d1ce81a6155fe7d2c33aeb0d))
+* :recycle: update test mocha ([ae18b6d](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/ae18b6d87e9e4ce2659918e6ed079d727b536100))
+* **cicd:** move out chart functions ([53343dd](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/53343dd11beb29629568d5a525c0b01c597ead0d))
+* use Lodash for upper first letter ([21cc610](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/21cc610ecdf00961435c4ff6745d4989e35bdb81))
+
+
+### Others
+
+* **cicd:** update environment yamls ([4f8192b](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/4f8192bb805212a6e77d211dac4ba1f870da622f))
+* **golang:** update validation token module ([046f498](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/046f498f121b773bc7eb26eceaecf28177f5fb93))
+* reduce update interval and change release config file ([fcf5481](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/fcf5481e89a03e6196865a01d35a57a7d6399002))
+* **release:** 2.4.0 ([730fc8f](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/730fc8fca89fdd5b7fabf70ac50489786ecb18f0))
+* remove unused packages ([79e44d8](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/79e44d89d514adb99ca38735e03dfe321c13e361))
+* remove vscode folder ([284c39b](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/284c39bf3fbdf702f1b9b03b067ac376c95c9b8e))
+
 ## [2.4.0](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v2.3.0...v2.4.0) (2021-09-16)
 
 

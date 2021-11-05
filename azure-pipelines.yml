@@ -1,48 +1,13 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 trigger:
-- master
-- dev
+  - dev
+  - master
 
-variables:
-  isMain: ${{ eq(variables['Build.SourceBranchName'], 'master') }}
-  registry: 'https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/'
+resources:
+  repositories:
+    - repository: Pipelines
+      type: git
+      name: "Siigo/Siigo.Pipeline"
 
-  # Production variables
-  ${{ if eq(variables.isMain, true) }}: # only works if you have a main branch
-    tag: latest
-  
-  # Other env variables
-  ${{ if eq(variables.isMain, false) }}:
-    tag: beta
+extends:
 
-pool:
-  vmImage: ubuntu-latest
-
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '14.x'
-  displayName: 'Install Node.js'
-
-- script: |
-    npm audit --production --registry=https://registry.npmjs.org/ 
-  displayName: 'npm audit'
-
-- script: |
-    npm ci
-  displayName: 'npm install'
-
-- ${{ if eq(variables.isMain, false) }}:
-  - script: |
-      npm version --no-git-tag-version --preid "$(Build.SourceBranchName)$(Build.BuildNumber)" prerelease
-    displayName: 'npm version'
-
-- script: |
-    npm publish --tag ${{variables.tag}} --registry=${{variables.registry}}
-  displayName: 'npm publish'
-
-
+  template: node/node-library.yaml@Pipelines

@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ArchetypeProviderLibrary" Version="0.1.3" />
+    <PackageReference Include="ArchetypeProviderLibrary" Version="0.1.7" />
     <PackageReference Include="Dapper" Version="2.0.78" />
     <PackageReference Include="DataAbstractions.Dapper" Version="3.0.0" />
     <PackageReference Include="Flurl.Http" Version="3.0.1" />

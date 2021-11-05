@@ -1,8 +1,16 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "services.proto",
-    "version": "version not set"
+    "title": "<%= config.name %>",
+    "version": "v1",
+    "description": "API for  <%= config.name %>",
+    "contact": {
+      "name": "<%= config.author  %>",
+      "email": "<%= config.email %>"
+    },
+    "license":{
+      "name": "MIT"
+    }
   },
   "tags": [
     {
