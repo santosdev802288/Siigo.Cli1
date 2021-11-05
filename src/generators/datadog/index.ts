@@ -7,10 +7,12 @@ import {registerAutocomplete } from '../../utils/autocomplete'
 import { getParameter} from '../../utils/siigoFile'
 import chalk from 'chalk'
 import _ from 'lodash'
+import path from 'path'
 
 import {DashboardBuilder} from './templates/dashboard'
 import {DashboardHandler} from './templates/dashboard.handler'
 import { setFreeText, setSLOInfo } from './templates/dashboardInfo'
+import { saveStatistic } from '../../utils/statistics/statistic';
 
 
 const templatePath = 'datadog-sli'
@@ -36,9 +38,9 @@ export default class DatadogGenerator extends Generator<DatadogOptions> {
     super(args, opt)
 
     req()
+    saveStatistic(path.basename(__dirname))
 
     // optionals
-
     this.option('ms-name', {
       type: String,
       description: 'microservice name.',
