@@ -35,7 +35,6 @@
         "jsdoc/newline-after-description": "error",
         "max-len": ["warn", {"code": 150}],
         "no-magic-numbers": ["warn", { "ignoreArrayIndexes": true }],
-        "quotes": ["warn", "single", { "avoidEscape": true }],
-        "semi": ["warn", "never"]
+        "quotes": ["warn", "single", { "avoidEscape": true }]
     }
 }
