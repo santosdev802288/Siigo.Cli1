@@ -107,17 +107,10 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
     }
 
     async _doWriting() {
-
         this.fs.copyTpl(
-            this.templatePath('.docker'),
-            this.destinationPath('.docker'),
+            this.templatePath('.docker/ak6'),
+            this.destinationPath(`.docker/${this.appConfig.name}`),
             { config: this.appConfig },
-            {},
-            {
-                processDestinationPath: (filePath) => {
-                    return filePath.replace(/(ak6)/g, this.appConfig.name ?? "")
-                }
-            },
         )
         
         this.fs.copyTpl(
