@@ -24,6 +24,7 @@ export abstract class TestingGenerator<T extends Generator.GeneratorOptions> ext
     }
 
     answers: any
+    response: any
     createPrefix: boolean
     defaultName: string | undefined
 
@@ -54,7 +55,20 @@ export abstract class TestingGenerator<T extends Generator.GeneratorOptions> ext
                     default: prefixes.indexOf(TestingPrefix.SIIGO_TEST),
                 },
             ]);
-            const name = _.defaultTo(this.options['name'], this.options['project-name'])
+
+            this.response = await this.prompt([
+                {
+                    type: 'string',
+                    name: 'name',
+                    message: 'Typing the name for the test',
+                    default: 'MS'
+                },
+            ])
+
+            const name = this.response.name
+            this.options['name'] = name
+            this.options['project-name'] = name            
+
             const appPath = path.join(process.cwd(), `${this.answers.prefix}${name}`)
             this.destinationRoot(appPath)
             process.chdir(appPath)
@@ -77,3 +91,4 @@ export abstract class TestingGenerator<T extends Generator.GeneratorOptions> ext
         );
     }
 }
+
