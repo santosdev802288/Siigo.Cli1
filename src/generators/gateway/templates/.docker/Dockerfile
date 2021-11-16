@@ -1,4 +1,4 @@
-FROM devopsfaith/krakend:1.1.1
+FROM devopsfaith/krakend:1.4
 
 USER root
 

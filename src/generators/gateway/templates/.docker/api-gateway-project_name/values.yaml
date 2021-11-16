@@ -88,3 +88,16 @@ siigo-chart:
   podAnnotations: { }
 
   appsettings: { }
+
+  labels:
+    tags:
+      datadoghq:
+        com:
+          tribu: <%= config.owner.tribe %>
+          owner: <%= config.owner.user %>
+
+  requiredLabels:
+    tags:
+      datadoghq:
+        com:
+          - tribu

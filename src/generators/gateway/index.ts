@@ -4,16 +4,35 @@ import rename from 'gulp-rename';
 import {exec as spawn} from 'child_process';
 import colorize from 'json-colorizer';
 import {siigosay} from '@nodesiigo/siigosay'
-import { saveStatistic } from '../../utils/statistics/statistic';
 
-module.exports = class extends Generator {
-    appConfig: { organization?: any; project?: any; environment?: any; namespace?: any; folder?: any; port?: any; pipelineName?: any; name?: any; chartVersion?: any; } = {};
+import { saveStatistic } from '../../utils/statistics/statistic';
+import { lastChartVersion } from '../../utils/chart';
+import { getParameter } from '../../utils/siigoFile';
+
+interface AppConfig {
+    organization: any; 
+    project: any; 
+    environment: any; 
+    namespace: any; 
+    folder: any; 
+    port: any; 
+    pipelineName: any; 
+    name: any; 
+    chartVersion: any;
+    owner: {
+        user: string;
+        tribe: string;
+    }
+}
+
+export default class GatewayGenerator extends Generator {
+    appConfig: Partial<AppConfig> = {};
     answers: any;
 
     constructor(args: any, opt: any) {
         super(args, opt);
         saveStatistic('gateway')
-        this.log(siigosay(`Siigo Generator Api Gateway.`))
+
         const currentPath = path.basename(process.cwd())
         
         // optionals
@@ -34,7 +53,7 @@ module.exports = class extends Generator {
         this.option("pipeline-name", {
             type: String,
             description: "Pipeline name in azure devops.",
-            default: `${currentPath} CICD`,
+            default: `"${currentPath} CICD"`,
             alias: 'pn'
         });
         
@@ -55,7 +74,7 @@ module.exports = class extends Generator {
         this.option("chart-version", {
             type: String,
             description: "Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags",
-            default: 'null',
+            default: lastChartVersion(),
             alias: 'cv'
         });
         
@@ -79,6 +98,7 @@ module.exports = class extends Generator {
     }
     
     async initializing() {
+        this.log(siigosay(`Siigo Generator Api Gateway.`))
         const message = "For more information execute yo siigo:cicd --help"
         
         if (!this.options['project-name'] || this.options['project-name'] === 'true')
@@ -102,10 +122,13 @@ module.exports = class extends Generator {
             pipelineName: this.options['pipeline-name'],
             name: this.options['project-name'],
             chartVersion: this.options['chart-version'],
+            owner: {
+                user: await getParameter('user'),
+                tribe: await getParameter('tribe')
+            }
         };
         
-        // @ts-expect-error ts-migrate(2769) FIXME: No overload matches this call.
-        const json = JSON.stringify(this.appConfig, false, '\t')
+        const json = JSON.stringify(this.appConfig, undefined, '  ')
         this.log(colorize(json, {
             pretty: true,
             colors: {
@@ -175,5 +198,5 @@ module.exports = class extends Generator {
     end() {
         this.log(siigosay(`Gateway Created!!`));
     }
-};
+}
             
