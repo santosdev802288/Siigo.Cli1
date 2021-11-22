@@ -5,4 +5,4 @@ export enum MSPrefix {
     SIITO_TEST = 'Siigo.Test.'
 }
 
-export const msPrefixes = Object.keys(MSPrefix).map(k => MSPrefix[k as keyof typeof MSPrefix])
+export const msPrefixes = Object.values(MSPrefix)
