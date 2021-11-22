@@ -7,10 +7,7 @@ import { getProjects, createRepository } from '../../utils/gitmanager'
 import path from 'path'
 import shell from 'shelljs'
 import { saveStatistic } from '../../utils/statistics/statistic'
-
-const prefixRepo = 'Siigo.Microservice.';
-const eSiigoPrefixRepo = 'ESiigo.Microservice.';
-const siigoPrefixRepoTest = 'Siigo.Test.';
+import { msPrefixes } from '../../utils/enumerators/siigoEnums'
 
 module.exports = class extends Generator {
     answers: any;
@@ -39,7 +36,7 @@ module.exports = class extends Generator {
     }
     async prompting() {
         let currentPath = path.basename(process.cwd())
-        const createPrefix = !currentPath.startsWith(prefixRepo) && !currentPath.startsWith(eSiigoPrefixRepo) && !currentPath.startsWith(siigoPrefixRepoTest);
+        const createPrefix = !msPrefixes.some(prefix => currentPath.startsWith(prefix))
         if (createPrefix) {
             this.log(('This folder is not Siigo' as any).red);
             this.cancelCancellableTasks()
