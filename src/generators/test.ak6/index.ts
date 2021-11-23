@@ -92,12 +92,12 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
                 throw new Error(`${option} is required.\n${message}`)
         });
 
-        const {description, author, project, organization } = this.options
+        const {description, author, organization } = this.options
         this.appConfig = {
             description,
             organization,
             author,
-            project,
+            project: response.project,
             name: this.options.name.toLowerCase(),
             token: this.options['personal-token'],
         };
