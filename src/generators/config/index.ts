@@ -2,8 +2,11 @@ import Generator = require('yeoman-generator');
 import { getAllParametersSiigo, setParameter, setTribeAndNameByUser, wizardsiigofile } from '../../utils/siigoFile'
 import colorize from 'json-colorizer'
 import { siigosay } from '@nodesiigo/siigosay'
+import path from 'path'
+
 import { readTribesFile } from '../../utils/readTribes'
 import { autocompleteTribe, registerAutocomplete } from '../../utils/autocomplete'
+import { saveStatistic } from '../../utils/statistics/statistic';
 
 
 module.exports = class extends Generator {
@@ -13,6 +16,9 @@ module.exports = class extends Generator {
 
     constructor(args: any, opt: any) {
         super(args, opt);
+
+        saveStatistic(path.basename(__dirname))
+        
         this.option('token', {
             description: 'Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens',
             type: String
