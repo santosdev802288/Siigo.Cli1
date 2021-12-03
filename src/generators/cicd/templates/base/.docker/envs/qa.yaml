@@ -80,7 +80,7 @@ siigo-chart:
   livenessProbe:
     failureThreshold: 6
     httpGet:
-      path: <% config.pod.healthPath %>
+      path: <%= config.pod.healthPath %>
       port: http ## service.port
       scheme: HTTP
     periodSeconds: 10 # The periodSeconds field specifies that the kubelet should perform a liveness probe every 10 seconds
@@ -91,7 +91,7 @@ siigo-chart:
   readinessProbe:
     failureThreshold: 6
     httpGet:
-      path: <% config.pod.healthPath %>
+      path: <%= config.pod.healthPath %>
       port: http ## service.port
       scheme: HTTP
     periodSeconds: 10 # The periodSeconds field specifies that the kubelet should perform a liveness probe every 10 seconds
@@ -126,7 +126,7 @@ siigo-chart:
     # This bool directly controls whether the no_new_privs flag gets set on the container process.
     # AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged OR 2) has CAP_SYS_ADMIN.
     allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true #  Mounts the container's root filesystem as read-only.
+    # readOnlyRootFilesystem: true #  Mounts the container's root filesystem as read-only.
     runAsNonRoot: true
     runAsUser: 1000
 

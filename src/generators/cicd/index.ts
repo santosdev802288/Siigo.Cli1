@@ -256,6 +256,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
       )
 
       // Copy based on type
+      const chartFolder = 'ms-'+this.appConfig.name
       if ([TypeEnum.GOLANG, TypeEnum.NODE].includes(this.options.type)){
         this.fs.copyTpl(
           this.templatePath(`${this.options.type}/`),
@@ -263,13 +264,13 @@ export default class CicdGenerator extends Generator<CicdOptions> {
           { config: this.appConfig },
           {},
           {
-            processDestinationPath: (filePath) => filePath.replace(/(chart)/g, 'ms-'+this.appConfig.name), 
+            processDestinationPath: (filePath) => filePath.replace(/(chart)/g, chartFolder), 
             globOptions: {dot: true}
           },
         )
       } else {
         this.fs.commit(async error => {if(error) this.log(`Error: ${error}`)})
-        await writeChart(this.token,this.appConfig.name,this.appConfig.tagOwner,this.appConfig.tagTribu, this.appConfig.tagGroup)
+        await writeChart(this.token, chartFolder, this.appConfig.tagOwner, this.appConfig.tagTribu, this.appConfig.tagGroup)
       }
     }
 

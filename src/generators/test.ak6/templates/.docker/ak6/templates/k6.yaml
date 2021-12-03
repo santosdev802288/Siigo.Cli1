@@ -22,7 +22,7 @@ spec:
       name: {{ .Release.Name }}-pvc
       file: <%= config.name %>/dist/test.js
   separate: false
-  arguments: "--out statsd -e ENV={{ .Values.environment }} -e TYPE={{ .Values.type }}"
+  arguments: "--out statsd --out influxdb=http://influxdb:8086/k6 -e ENV={{ .Values.environment }} -e TYPE={{ .Values.type }}"
   runner:
     image: acraksqa.azurecr.io/ak6:latest
 
