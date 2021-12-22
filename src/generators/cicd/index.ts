@@ -13,7 +13,7 @@ import chalk from 'chalk'
 import _ from 'lodash'
 import { saveStatistic } from '../../utils/statistics/statistic'
 
-import { lastChartVersion, writeChart } from './chart'
+import { lastChartVersion, writeChart } from '../../utils/chart'
 
 
 const prefixRepo = 'Siigo.Microservice.'
@@ -31,6 +31,7 @@ const TYPE_LIST = Object.keys(TypeEnum).map(k => TypeEnum[k as keyof typeof Type
 
 
 interface CicdOptions extends Generator.GeneratorOptions {
+    'chart-version': string;
     'skip-install-step': boolean;
     type: TypeEnum;
 }
@@ -106,7 +107,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
       this.option('chart-version', {
         type: String,
         description: 'Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags',
-        default: '0.2.17',
+        default: lastChartVersion(),
         alias: 'cv'
       })
 
@@ -191,8 +192,6 @@ export default class CicdGenerator extends Generator<CicdOptions> {
      
       const namespace = this.options['namespace-k8s']
 
-      const resGit = lastChartVersion()
-
       const owner = await getParameter('user')
       const tribe = await getParameter('tribe')
       const group = await getParameter('group')
@@ -205,7 +204,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         pipelineName: this.options['pipeline-name'],
         mainProject: this.options['dll'],
         name: this.options['project-name'].toLowerCase(),
-        chartVersion: resGit,
+        chartVersion: this.options['chart-version'],
         type,
         tagOwner: owner.split('@')[0],
         tagTribu: tribe,
@@ -257,6 +256,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
       )
 
       // Copy based on type
+      const chartFolder = 'ms-'+this.appConfig.name
       if ([TypeEnum.GOLANG, TypeEnum.NODE].includes(this.options.type)){
         this.fs.copyTpl(
           this.templatePath(`${this.options.type}/`),
@@ -264,13 +264,13 @@ export default class CicdGenerator extends Generator<CicdOptions> {
           { config: this.appConfig },
           {},
           {
-            processDestinationPath: (filePath) => filePath.replace(/(chart)/g, 'ms-'+this.appConfig.name), 
+            processDestinationPath: (filePath) => filePath.replace(/(chart)/g, chartFolder), 
             globOptions: {dot: true}
           },
         )
       } else {
         this.fs.commit(async error => {if(error) this.log(`Error: ${error}`)})
-        await writeChart(this.token,this.appConfig.name,this.appConfig.tagOwner,this.appConfig.tagTribu, this.appConfig.tagGroup)
+        await writeChart(this.token, chartFolder, this.appConfig.tagOwner, this.appConfig.tagTribu, this.appConfig.tagGroup)
       }
     }
 

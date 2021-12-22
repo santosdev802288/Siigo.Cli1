@@ -104,7 +104,7 @@ export async function setParameter(parameter: any, value: string) {
         const regpa = new RegExp(`${parameter}=\\w+`)
         payload = payload.replace(regpa,`${parameter}=${value}`)
         if(parameter=='token') {
-            const regpa64 = new RegExp(`${parameter}64=\\w+`)
+            const regpa64 = new RegExp(`${parameter}64=\\w+==+`)
             const b64 =Buffer.from(value.trim()).toString('base64')
             payload = payload.replace(regpa64,`${parameter}64=${b64}`)
         }

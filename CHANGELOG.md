@@ -1,6 +1,24 @@
 # Changelog
 All notable changes to this project.
 
+## [2.6.0](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v2.5.1...v2.6.0) (2021-12-21)
+
+
+### Features
+
+* :zap: feature-git and bug-ak6 ([0581c25](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/0581c25011755e59b90f6bb99fa76c0ecd5384ab))
+* **api-gateway:** use latest chart version and owner tags ([c557cb6](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/c557cb65d28a9e6cd33b55f36c9a71a462c21c59))
+* **golang:** update protobuf modules ([56de99b](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/56de99be74149cf332d9137f74488cdec11d5ed2))
+* **test-ak6:** send metrics to influxdb on cluster ([9f7af08](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/9f7af085cc3966b3cdd3c25d082a6b705810a283))
+
+
+### Bug Fixes
+
+* **cicd:** add missing health check path and disable readOnlyRootFilesystem ([353e264](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/353e2641ba65ee3489b18fb5848856bd69d55488))
+* **cicd:** use correct values.yaml path ([3385e96](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/3385e962211b01bf3687ee7425275a4c13a14864))
+* disable statistics on test ([3fa08c9](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/3fa08c94d24ed7e7f2f141f59b24151396c29163))
+* **test-ak6:** reduce default VUs for load test ([756e966](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/756e9666a85b2ea5812b10a5b6bcf48487cc0ab7))
+
 ### [2.5.1](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v2.5.0...v2.5.1) (2021-11-05)
 
 

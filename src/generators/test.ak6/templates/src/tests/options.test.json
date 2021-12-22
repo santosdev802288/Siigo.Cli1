@@ -12,7 +12,7 @@
     "scenarios": {
       "login_constant": {
         "executor": "constant-vus",
-        "vus": 15000,
+        "vus": 1500,
         "duration": "5m",
         "tags": {
           "my_custom_tag": "login"
@@ -20,7 +20,7 @@
       },
       "login_per_vu": {
         "executor": "per-vu-iterations",
-        "vus": 10000,
+        "vus": 1000,
         "iterations": 1000,
         "startTime": "10s",
         "tags": {
@@ -29,20 +29,20 @@
       },
       "login_ramping_arrival_rate": {
         "executor": "ramping-arrival-rate",
-        "startRate": 5000,
+        "startRate": 50,
         "timeUnit": "10s",
-        "preAllocatedVUs": 500,
+        "preAllocatedVUs": 50,
         "stages": [
           {
-            "target": 3000,
+            "target": 300,
             "duration": "320s"
           },
           {
-            "target": 4000,
+            "target": 400,
             "duration": "320s"
           },
           {
-            "target": 5500,
+            "target": 550,
             "duration": "320s"
           }
         ]

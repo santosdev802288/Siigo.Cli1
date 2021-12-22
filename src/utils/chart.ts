@@ -1,9 +1,19 @@
 import fetch, { RequestInit } from 'node-fetch'
 import fs from 'fs'
+import path from 'path'
+
 import _ from 'lodash'
 import shell from 'shelljs'
 
-
+/**
+ * Fetch values file from Siigo.Chart repository and write to ./.docker/${projectName}/values.yaml.
+ * 
+ * @param token 
+ * @param projectName Project chart folder name.
+ * @param tagOwner 
+ * @param tagTribu 
+ * @param tagGroup 
+ */
 export async function writeChart(token:string, projectName:string, tagOwner:string, tagTribu: string, tagGroup: string): Promise<void> {
   const b64 = Buffer.from(token.trim() + ':').toString('base64')
   const requestOptions: RequestInit = {
@@ -18,16 +28,17 @@ export async function writeChart(token:string, projectName:string, tagOwner:stri
   let stringResponse:string = await response.text()
   stringResponse = stringResponse.replace('com: {}',
     `com:
-            tribu: ${tagOwner}
-            owner: ${tagTribu}
-            group: ${tagGroup}`)
-
+      tribu: ${tagTribu}
+      owner: ${tagOwner}
+      group: ${tagGroup}`)
+  
+  const valuesPath = path.resolve(`./.docker/${projectName}/values.yaml`)
   try {
-    fs.writeFileSync(`./.docker/${projectName}/values.yaml`, stringResponse)
+    fs.writeFileSync(valuesPath, stringResponse)
   }
   catch (err) {
     console.log(err)
-    console.error('Token no es valido')
+    console.error(`No se pudo escribir el archivo ${valuesPath}`)
   }
 }
 

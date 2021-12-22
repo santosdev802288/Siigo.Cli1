@@ -2,6 +2,8 @@ import assert from 'yeoman-assert'
 import helpers from 'yeoman-test'
 import fs from 'fs'
 import os from 'os'
+
+import yaml from 'js-yaml'
 import path from 'path'
 import sinon from 'sinon'
 import shell from 'shelljs'
@@ -11,6 +13,7 @@ import * as siigoFile from '../../src/utils/siigoFile'
 
 
 import { getGenerator, SiigoGenerator } from '../generator.factory'
+import _ from 'lodash'
 
 
 
@@ -57,7 +60,20 @@ describe('siigo:cicd', () => {
           '.docker/Dockerfile',
           `.docker/ms-${name.toLowerCase()}/values.yaml`,
         ])
-        assert.fileContent('.docker/Dockerfile', /FROM siigo.azurecr.io\/dotnet-build.*/)
+
+        assert.fileContent([
+          ['.docker/Dockerfile', /FROM siigo.azurecr.io\/dotnet-build.*/],
+        ])
+        
+        // Test env files
+        const envs = ['.docker/envs/prod.yaml', '.docker/envs/prodst.yaml', '.docker/envs/qa.yaml', '.docker/envs/sandbox.yaml']
+        envs.forEach(filepath => {
+          const parsed = yaml.load(fs.readFileSync(path.join(dir, filepath), 'utf8'))
+          assert.strictEqual(undefined, _.get(parsed, 'siigo-chart.securityContext.readOnlyRootFilesystem'), `${filepath}. Bad securityContext.`)
+          assert.strictEqual('/health', _.get(parsed, 'siigo-chart.livenessProbe.httpGet.path'), `${filepath}. Bad livenessProbe path`)
+          assert.strictEqual('/health', _.get(parsed, 'siigo-chart.readinessProbe.httpGet.path'), `${filepath}. Bad readinessProbe path`)
+        });
+      
       })
   })
 

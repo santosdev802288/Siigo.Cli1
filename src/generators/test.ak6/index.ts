@@ -1,12 +1,17 @@
 import colorize from 'json-colorizer'
 import {siigosay} from '@nodesiigo/siigosay'
-import {getAllParametersSiigo, wizardsiigofile} from '../../utils/siigoFile'
+import {getAllParametersSiigo, wizardsiigofile, getParameter} from '../../utils/siigoFile'
 import {TestingGenerator} from '../../utils/generator/testing'
 import {GeneratorOptions} from 'yeoman-generator'
 import {exec as spawn} from "child_process";
 import path from "path";
 import { saveStatistic } from '../../utils/statistics/statistic'
+import { getProjects } from '../../utils/gitmanager'
 
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const yeoman = require('yeoman-environment')
+const env = yeoman.createEnv()
 interface Ak6Options extends GeneratorOptions {
     name: string;
 }
@@ -51,12 +56,28 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
 
     }
 
-    initializing(): void{
-        this.log(siigosay('Siigo AK6 Generator.'))
-    }
-
     async _doPrompting(): Promise<void> {
         const message = 'For help execute "yo siigo:test.ak6 --help".';
+
+        let token = await getParameter('token')
+        token = (token == 'pending') ? await wizardsiigofile() : token
+
+        const projects = await getProjects(token)
+        const nameProjects = Object.keys(projects)
+        const response = await this.prompt([
+            {
+                type: 'list',
+                name: 'project',
+                message: 'In which Project?',
+                choices: nameProjects,
+                default: 'Siigo', 
+            }
+        ]);
+
+        env.register(require.resolve('../git'), 'siigo:git')
+        await env.run('siigo:git',{'project':`${response.project}`})
+
+        this.log(siigosay('Siigo AK6 Generator.'))
 
         const siigoParams = await getAllParametersSiigo();
 
@@ -71,12 +92,12 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
                 throw new Error(`${option} is required.\n${message}`)
         });
 
-        const {description, author, project, organization } = this.options
+        const {description, author, organization } = this.options
         this.appConfig = {
             description,
             organization,
             author,
-            project,
+            project: response.project,
             name: this.options.name.toLowerCase(),
             token: this.options['personal-token'],
         };
@@ -107,17 +128,10 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
     }
 
     async _doWriting() {
-
         this.fs.copyTpl(
-            this.templatePath('.docker'),
-            this.destinationPath('.docker'),
+            this.templatePath('.docker/ak6'),
+            this.destinationPath(`.docker/${this.appConfig.name}`),
             { config: this.appConfig },
-            {},
-            {
-                processDestinationPath: (filePath) => {
-                    return filePath.replace(/(ak6)/g, this.appConfig.name ?? "")
-                }
-            },
         )
         
         this.fs.copyTpl(
@@ -136,6 +150,7 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
     }
 
     install(){
+
         super.spawnCommandSync('git', ['add','-A'])
         super.spawnCommandSync('git', ['commit','-m','init project test'])
         super.spawnCommandSync('git', ['push','origin','master'])
@@ -154,6 +169,7 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
                 "--repository" , currentPath,
             ]
         )
+        super.spawnCommandSync('yarn',['install'])
     }
 
     end() {
@@ -162,3 +178,4 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
 }
 
 TestingGenerator.yeomanInheritance(Ak6TestingGenerator)
+
