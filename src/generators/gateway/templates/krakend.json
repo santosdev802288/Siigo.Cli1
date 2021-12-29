@@ -18,8 +18,8 @@
       },
       "backend": [
         {
-          "url_pattern": "/",
-          "host": ["http://dummy-url"]
+          "url_pattern": "/__health",
+          "host": ["http://localhost:<%= config.port %>"]
         }
       ]
     }

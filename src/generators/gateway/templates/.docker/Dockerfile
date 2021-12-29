@@ -15,3 +15,6 @@ RUN adduser --disabled-password --gecos "" app -u 1000
 USER 1000
 
 COPY krakend.json /etc/krakend/krakend.json
+
+# Validate the config (https://www.krakend.io/docs/commands/check/)
+RUN krakend check --test-gin-routes --config /etc/krakend/krakend.json
