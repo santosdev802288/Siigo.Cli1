@@ -711,6 +711,7 @@ olympos.io/encoding/edn v0.0.0-20200308123125-93e3b8dd0e24/go.mod h1:oVgVk4OWVDi
 rsc.io/binaryregexp v0.2.0/go.mod h1:qTv7/COck+e2FymRvadv62gMdZztPaShugOCi3I+8D8=
 rsc.io/quote/v3 v3.1.0/go.mod h1:yEA65RcK8LyAZtP9Kv3t0HmxON59tX3rD+tICJqUlj0=
 rsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=
+sigs.k8s.io/yaml v1.3.0 h1:a2VclLzOGrwOHDiV8EfBGhvjHvP46CtW5j6POvhYGGo=
 sigs.k8s.io/yaml v1.3.0/go.mod h1:GeOyir5tyXNByN85N/dRIT9es5UQNerPYEKK56eTBm8=
 software.sslmate.com/src/go-pkcs12 v0.0.0-20210415151418-c5206de65a78 h1:SqYE5+A2qvRhErbsXFfUEUmpWEKxxRSMgGLkvRAFOV4=
 software.sslmate.com/src/go-pkcs12 v0.0.0-20210415151418-c5206de65a78/go.mod h1:B7Wf0Ya4DHF9Yw+qfZuJijQYkWicqDa+79Ytmmq3Kjg=
