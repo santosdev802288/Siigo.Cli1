@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project.
 
+## [2.7.0](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v2.6.0...v2.7.0) (2021-12-29)
+
+
+### Features
+
+* **api-gateway:** validate krakend config ([30d68f5](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/30d68f5b2d9212fc274309b7086f0b13244c4150))
+
+
+### Bug Fixes
+
+* **golang:** add missing sum ([f24979f](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/f24979f4ccf1cf8e3fa9bfc29df28cbdfb38a03a))
+
 ## [2.6.0](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v2.5.1...v2.6.0) (2021-12-21)
 
 
