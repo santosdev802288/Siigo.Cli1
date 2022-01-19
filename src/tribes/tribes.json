@@ -440,16 +440,12 @@
                 },
                 "team": [
                   {
-                    "name": "Miller Padilla Mallory Muñoz",
+                    "name": "Miller Padilla",
                     "user": "padi111572@siigo.com"
                   },
                   {
-                    "name": "Omar Lozano Hamilton Jojoa",
+                    "name": "Omar Lozano",
                     "user": "loza110259@siigo.com"
-                  },
-                  {
-                    "name": "Juan Chaparro",
-                    "user": ""
                   },
                   {
                     "name": "Angie Johanna Gomez",
@@ -458,22 +454,6 @@
                   {
                     "name": "Mallory Julieth Muñoz",
                     "user": "muno800239@siigo.com"
-                  },
-                  {
-                    "name": "Luis Alberto Ramirez",
-                    "user": "rami27284@siigo.com"
-                  }
-                ]
-              },
-              {
-                "lead": {
-                  "name": "CARLOS JAVIER MENDEZ VERA",
-                  "user": "mend110124@siigo.com"
-                },
-                "team": [
-                  {
-                    "name": "Jhony Alexander Alzate",
-                    "user": "alza801298@siigo.com"
                   },
                   {
                     "name": "Cristian Fernando Clavijo",
@@ -490,6 +470,60 @@
                   {
                     "name": "Juan Camilo Chaparro Riveros",
                     "user": ""
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "STARK_USER_AUTONOMY",
+        "groups": [
+          {
+            "group_name": "TEAM_USER_AUTONOMY",
+            "members": [
+              {
+                "lead": {
+                  "name": "Diego Andres Montoya Blandon",
+                  "user": "mont801257@siigo.com"
+                },                
+                "team": [
+                  {
+                    "name": "Jhony Alexander Alzate",
+                    "user": "alza801298@siigo.com"
+                  },
+                  {
+                    "name": "Luis Alberto Ramirez",
+                    "user": "rami27284@siigo.com"
+                  },
+                  {
+                    "name": "Juan Jose Arias Rodas",
+                    "user": "aria801529@siigo.com"
+                  },
+                  {
+                    "name": "Miguel Angel Parada Cañon",
+                    "user": "para801589@siigo.com"
+                  },
+                  {
+                    "name": "Juan David Gamboa Saenz",
+                    "user": "gamb802080@siigo.com"
+                  },
+                  {
+                    "name": "Jefry Esteban Naicipa Ortiz",
+                    "user": "naic801603@siigo.com"
+                  },
+                  {
+                    "name": "Yully Paulin Manrique Vera",
+                    "user": "manr801428@siigo.com"
+                  },
+                  {
+                    "name": "Hector Fabio Ramirez Franco",
+                    "user": "rami801590@siigo.com"
+                  },
+                  {
+                    "name": "Felix Ramon Martinez Hossne",
+                    "user": "felix.martinez@siigo.com"
                   }
                 ]
               }
