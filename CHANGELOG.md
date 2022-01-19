@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project.
 
+## [2.8.0](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v2.7.0...v2.8.0) (2022-01-19)
+
+
+### Features
+
+* :fire: update library logs and deprecated siigo:core ([bd4ed6a](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/bd4ed6a25636b26bd2033cbf02ffd06ce559e3cc))
+
 ## [2.7.0](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v2.6.0...v2.7.0) (2021-12-29)
 
 
