@@ -16,7 +16,6 @@ import { getGenerator, SiigoGenerator } from '../generator.factory'
 import _ from 'lodash'
 
 
-
 describe('siigo:cicd', () => {
   const generator = getGenerator(SiigoGenerator.MS_CICD)
 
@@ -26,57 +25,7 @@ describe('siigo:cicd', () => {
       Architecture:'55db46d7-c3a3-481c-b4a2-14c9f75e547a', 
       Siigo:'2b375626-f976-487e-9aa8-097804b773cc'
     }))
-  }) 
-
-
-  it('Config a dotnet project', async () => {
-
-    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.CicdNetCore'))
-
-    const name = path.basename(dir).split('.').reverse()[0]
-
-    const coreMsGenerator = getGenerator(SiigoGenerator.MS_CORE)
-
-    await helpers.run(coreMsGenerator.generatorOrNamespace, coreMsGenerator.settings)
-      .cd(dir)
-      .withOptions({ 'token': '6olnzdsrhifooe42m46w64lgxwpggf6pb3qjcjtbizmdmqeqvtiq' })
-      .withPrompts({ ready: true })
-      .then(async () => {
-        assert.file([
-          'nuget.config',
-          '.gitignore',
-          `Siigo.${name}.Api/Siigo.${name}.Api.csproj`,
-          'checksums.sha256',
-        ])
-        shell.exec('git init',{silent: true})
-      })
-
-    return helpers.run(generator.generatorOrNamespace, generator.settings)
-      .cd(dir)
-      .withOptions({ 'skip-install-step': true, 'namespace-k8s': 'prueba', 'dll': `Siigo.${name}.Api` })
-      .withPrompts({ ready: true, updateTribes: false, tribe: 'ARQUITECTURA\n' })
-      .then(() => {
-        assert.file([
-          '.docker/Dockerfile',
-          `.docker/ms-${name.toLowerCase()}/values.yaml`,
-        ])
-
-        assert.fileContent([
-          ['.docker/Dockerfile', /FROM siigo.azurecr.io\/dotnet-build.*/],
-        ])
-        
-        // Test env files
-        const envs = ['.docker/envs/prod.yaml', '.docker/envs/prodst.yaml', '.docker/envs/qa.yaml', '.docker/envs/sandbox.yaml']
-        envs.forEach(filepath => {
-          const parsed = yaml.load(fs.readFileSync(path.join(dir, filepath), 'utf8'))
-          assert.strictEqual(undefined, _.get(parsed, 'siigo-chart.securityContext.readOnlyRootFilesystem'), `${filepath}. Bad securityContext.`)
-          assert.strictEqual('/health', _.get(parsed, 'siigo-chart.livenessProbe.httpGet.path'), `${filepath}. Bad livenessProbe path`)
-          assert.strictEqual('/health', _.get(parsed, 'siigo-chart.readinessProbe.httpGet.path'), `${filepath}. Bad readinessProbe path`)
-        });
-      
-      })
   })
-
 
   it('Config a Golang project', () => {
 
