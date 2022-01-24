@@ -16,7 +16,6 @@ import { getGenerator, SiigoGenerator } from '../generator.factory'
 import _ from 'lodash'
 
 
-
 describe('siigo:cicd', () => {
   const generator = getGenerator(SiigoGenerator.MS_CICD)
 
