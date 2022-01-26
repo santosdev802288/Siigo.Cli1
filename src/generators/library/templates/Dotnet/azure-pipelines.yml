@@ -1,0 +1,58 @@
+trigger:
+  - master
+  - dev
+  
+pool:
+  vmImage: 'windows-latest'
+  
+variables:
+  - name: isMain
+    value: ${{ eq(variables['Build.SourceBranch'], 'refs/heads/master') }}
+
+  - name: buildConfiguration
+    ${{ if eq(variables.isMain, true) }}:
+      value: 'Release'
+    ${{ else }}:
+      value: 'Debug'
+  
+steps:
+- bash: echo "$(isMain) $(buildConfiguration)"
+
+- task: PowerShell@2
+  condition: eq(variables.isMain, false)
+  inputs:
+    targetType: 'inline'
+    script: |
+      $path = "Siigo.Core.<%= config.nameCapitalize %>.csproj"
+      [xml]$xml =(gc $path)
+      Write-Host $xml.Project.PropertyGroup.Version
+      $version = $xml.Project.PropertyGroup.Version
+      $xml.Project.PropertyGroup.Version = $version + "-Beta"
+      $xml.Save($path)
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
+  inputs:
+    command: 'build'
+    arguments: '--configuration ${{variables.buildConfiguration}}'
+    projects: 'Siigo.Core.<%= config.nameCapitalize %>.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: "dotnet pack"
+  inputs:
+    command: 'pack'
+    arguments: '--configuration ${{variables.buildConfiguration}}'
+    packagesToPack: 'Siigo.Core.<%= config.nameCapitalize %>.csproj'
+    nobuild: true
+    versioningScheme: 'off'
+    
+- task: NuGetCommand@2
+  displayName: 'nuget push'
+  inputs:
+    command: 'push'
+    feedsToUse: 'select'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: '<%= config.publishVstsFeed %>'
+    versioningScheme: 'off'
+    allowPackageConflicts: true
