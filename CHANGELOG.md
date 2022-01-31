@@ -1,6 +1,8 @@
 # Changelog
 All notable changes to this project.
 
+### [2.8.1](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v2.8.0...v2.8.1) (2022-01-24)
+
 ## [2.8.0](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v2.7.0...v2.8.0) (2022-01-19)
 
 
