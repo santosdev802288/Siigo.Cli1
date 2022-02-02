@@ -5,15 +5,20 @@ import {TestingGenerator} from '../../utils/generator/testing'
 import {GeneratorOptions} from 'yeoman-generator'
 import {exec as spawn} from 'child_process';
 import path from 'path';
+import shell from 'shelljs'
+
 import { saveStatistic } from '../../utils/statistics/statistic'
 import { getProjects } from '../../utils/gitmanager'
+import { remoteExists } from '../../utils/git'
 
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const yeoman = require('yeoman-environment')
 const env = yeoman.createEnv()
+
 interface Ak6Options extends GeneratorOptions {
     name: string;
+    'skip-install-step': boolean;
 }
 
 type AppConfig = {
@@ -52,6 +57,12 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
         description: 'Project in azure devops.',
         default: 'Siigo',
         alias: 'p'
+      })
+
+      this.option('skip-install-step', {
+        type: Boolean,
+        description: 'Saltar el paso de instalación.',
+        default: false,
       })
 
     }
@@ -158,9 +169,18 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
     }
 
     install(): void{
+      if (this.options['skip-install-step']){
+        return
+      }
+      if(shell.exec('git rev-parse --is-inside-work-tree', {silent: true}).code !== 0){
+        super.spawnCommandSync('git', ['init'])
+      }
       super.spawnCommandSync('git', ['add','-A'])
       super.spawnCommandSync('git', ['commit','-m','init project test'])
-      super.spawnCommandSync('git', ['push','origin','master'])
+
+      if(remoteExists()){
+        super.spawnCommandSync('git', ['push','origin','master'])
+      }
 
       const currentPath = path.basename(process.cwd())
 
