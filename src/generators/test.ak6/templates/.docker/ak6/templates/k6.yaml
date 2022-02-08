@@ -34,7 +34,7 @@ spec:
             fieldPath: status.hostIP
 
       - name: K6_STATSD_ADDR
-        value: "$(DD_AGENT_HOST):8125"
+        value: "datadog-agent.datadog-system:8125"
 
       - name: K6_STATSD_ENABLE_TAGS
         value: "true"

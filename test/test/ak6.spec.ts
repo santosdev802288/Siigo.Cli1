@@ -3,60 +3,56 @@ import helpers from 'yeoman-test'
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
+import shelljs from 'shelljs'
 
 import { getGenerator, SiigoGenerator } from '../generator.factory'
-/*
+import { TestingPrefix } from '../../src/utils/generator/testing'
+
+enum YARN_AUDIT_CODE{
+  INFO = 1,
+  LOW = 2,
+  MODERATE = 4,
+  HIGH = 8,
+  CRITICAL = 16
+}
+
 describe('siigo:test.ak6', () => {
-    const generator = getGenerator(SiigoGenerator.TEST_AK6)
+  const generator = getGenerator(SiigoGenerator.TEST_AK6)
 
-    it('Generates a project', () => {
+  it('Generates a project', () => {
 
-        const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Test.Ak6'))
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Test.Ak6'))
 
-        return helpers.run(generator.generatorOrNamespace, generator.settings)
-            .cd(dir)
-            .withOptions({ })
-            .withPrompts({ ready: true })
-            .then(() => {
-                assert.file([
-                    '.babelrc',
-                    '.gitignore']);
-            });
-    });
+    return helpers.run(generator.generatorOrNamespace, generator.settings)
+      .cd(dir)
+      .withOptions({ 'skip-install-step': true })
+      .withPrompts({ createRepo: false, ready: true })
+      .then(() => {
+        assert.file([
+          '.babelrc',
+          '.gitignore']);
+        assert.equal(true, shelljs.exec('yarn audit --level critical', {silent: true}).code < YARN_AUDIT_CODE.CRITICAL)
+      });
+  });
 
-    it('Create ESiigo.Test. folder', () => {
+  it('Create ESiigo.Test. folder', () => {
 
-        const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Test.Ak6'))
-        const name = 'NoFolder'
-        const folderPrefix = 'Siigo.Test.'
+    const name = 'NoFolder'
+    const folderPrefix = TestingPrefix.SIIGO_TEST
 
-        return helpers.run(generator.generatorOrNamespace, generator.settings)
-            .cd(dir)
-            .withOptions({ 'name':  name})
-            .withPrompts({ ready: true, prefix: folderPrefix })   // Mock the prompt answers
-            .then(() => {
-                assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Test.Ak6'))
+
+    return helpers.run(generator.generatorOrNamespace, generator.settings)
+      .cd(dir)
+      .withOptions({ 'skip-install-step': true})
+      .withPrompts({ createRepo: false, 'name': name, ready: true, prefix: folderPrefix })   // Mock the prompt answers
+      .then(() => {
+        assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
                 
-                assert.file([
-                    '.babelrc',
-                    '.gitignore']);
-            });
-    });
-
-    it('Fail whith missing project name, prefix and token', () => {
-
-        const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Test.Ak6'))
-
-        return helpers.run(generator.generatorOrNamespace, generator.settings)
-            .cd(dir)
-            .withOptions({ })
-            .withPrompts({ ready: true })
-            .then(() => {
-                assert.fail()
-            })
-            .catch(error => {
-                assert.textEqual(error.message, 'name is required.\nFor help execute "yo siigo:test.ak6 --help".')
-            });
-    });
+        assert.file([
+          '.babelrc',
+          '.gitignore']);
+      });
+  });
 });
-*/
+
