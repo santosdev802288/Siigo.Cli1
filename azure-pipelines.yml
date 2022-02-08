@@ -7,7 +7,6 @@ resources:
     - repository: Pipelines
       type: git
       name: "Siigo/Siigo.Pipeline"
-      ref: fix/architecture/default-feed
 
 extends:
 
