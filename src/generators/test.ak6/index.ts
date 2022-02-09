@@ -79,7 +79,7 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
       {
         type: 'confirm',
         name: 'createRepo',
-        message: '¿Crear repositorio remoto?',
+        message: '¿Crear repositorio remoto en Azure DevOps?',
         default: true
       },
       {
@@ -88,7 +88,6 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
         message: 'In which Project?',
         choices: nameProjects,
         default: 'Siigo',
-        when: (answers) => answers.createRepo 
       },
     ]);
 
