@@ -8,7 +8,7 @@ import { restore, stub } from 'sinon'
 
 import { getGenerator, SiigoGenerator } from '../generator.factory'
 import { TestingPrefix } from '../../src/utils/generator/testing'
-import { runningOnAzurePipeline } from '../azureDevops'
+import { runningOnAzurePipeline } from '../azureDevOps'
 import * as gitmanager from '../../src/utils/gitmanager'
 import * as siigoFile from '../../src/utils/siigoFile'
 

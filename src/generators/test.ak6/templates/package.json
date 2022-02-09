@@ -14,10 +14,10 @@
     "check-types": "tsc",
     "check-types:watch": "tsc --watch",
     "monitors": "docker-compose up -d influxdb grafana",
-    "build": "docker-compose pull && webpack",
-    "test": "yarn build && docker-compose run --rm k6 run dist/test.js",
-    "seed": "yarn build && docker-compose run --rm k6 run dist/seed.js",
-    "seed-distributed": "yarn build && docker-compose run --rm k6 run dist/seed-distributed.js -e ENV=qa"
+    "build": "webpack",
+    "test": "docker-compose pull && yarn build && docker-compose run --rm k6 run dist/test.js",
+    "seed": "docker-compose pull && yarn build && docker-compose run --rm k6 run dist/seed.js",
+    "seed-distributed": "docker-compose pull && yarn build && docker-compose run --rm k6 run dist/seed-distributed.js -e ENV=qa"
   },
   "dependencies": {
     "@types/k6": "^0.36.0",
