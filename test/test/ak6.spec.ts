@@ -44,8 +44,8 @@ describe('siigo:test-ak6', () => {
           '.babelrc',
           '.gitignore'
         ]);
-        if(!runningOnAzurePipeline()){
-          const auditCommand = shelljs.exec('yarn audit --level critical', { silent: true})
+        if (!runningOnAzurePipeline()) {
+          const auditCommand = shelljs.exec('yarn audit --level critical', { silent: true })
           assert.equal(true, auditCommand.code < YARN_AUDIT_CODE.CRITICAL, `The archetype has dependencies with bugs. \n${auditCommand.stderr}`)
         }
       });
