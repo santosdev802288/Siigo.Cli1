@@ -32,5 +32,5 @@ extends:
     projectName: <%= config.name %>
     environment: qa
     test: load
-    parallelism: 10
+    parallelism: 2
     claims: false
