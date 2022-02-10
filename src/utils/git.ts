@@ -21,7 +21,7 @@ function execAndChek(command: string): boolean{
  * @returns 
  */
 export function hasUnstagedChanges(): boolean {
-  return execAndChek('git diff --exit-code')
+  return !execAndChek('git diff --exit-code')
 }
 
 /**

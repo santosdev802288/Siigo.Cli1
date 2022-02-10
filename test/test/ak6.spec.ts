@@ -20,7 +20,7 @@ enum YARN_AUDIT_CODE{
   CRITICAL = 16
 }
 
-describe('siigo:test.ak6', () => {
+describe('siigo:test-ak6', () => {
   const generator = getGenerator(SiigoGenerator.TEST_AK6)
 
   before( () => {

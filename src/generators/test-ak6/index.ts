@@ -68,7 +68,7 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
   }
 
   async _doPrompting(): Promise<void> {
-    const message = 'For help execute "yo siigo:test.ak6 --help".';
+    const message = 'For help execute "yo siigo:test-ak6 --help".';
 
     let token = await getParameter('token')
     token = (token == 'pending') ? await wizardsiigofile() : token
@@ -176,7 +176,7 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
     }
     if (hasUnstagedChanges()) {
       super.spawnCommandSync('git', ['add', '-A'])
-      super.spawnCommandSync('git', ['commit', '-m', 'init project test'])
+      super.spawnCommandSync('git', ['commit', '-m', 'siigo cli: init ak6 test project'])
     }
 
     if (remoteExists()) {

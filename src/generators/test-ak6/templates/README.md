@@ -98,7 +98,7 @@ and [docker-compose](https://docs.docker.com/compose/install/) installed on your
 
 ## ✨ Distributed testing and continues testing ☁️
 
-After executing the command ***yo siigo: test.ak6*** when this project was created you should see the pipeline of the project created in the portal of azure devops.
+After executing the command ***yo siigo: test-ak6*** when this project was created you should see the pipeline of the project created in the portal of azure devops.
 
 The Distributed tests and Continues Testing are parameterized by means of the [azure-pipeline.yaml](azure-pipelines.yml) file generated together with the project.
 

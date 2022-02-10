@@ -391,7 +391,7 @@ Generate a new ak6 project with monitoring and distributed testing
 
 3. Generate an ak6 project
 
-        yo siigo:test.ak6     
+        yo siigo:test-ak6     
 
 ## Contributing
 
