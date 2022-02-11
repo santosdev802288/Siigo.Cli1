@@ -3,10 +3,8 @@ import helpers from 'yeoman-test'
 import fs from 'fs'
 import os from 'os'
 
-import yaml from 'js-yaml'
 import path from 'path'
 import sinon from 'sinon'
-import shell from 'shelljs'
 
 import * as gitmanager from '../../src/utils/gitmanager'
 import * as siigoFile from '../../src/utils/siigoFile'

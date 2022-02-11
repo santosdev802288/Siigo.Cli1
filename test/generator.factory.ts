@@ -4,7 +4,7 @@ import Generator from 'yeoman-generator';
 
 import CicdGenerator from '../src/generators/cicd'
 import NodeMSGenerator from '../src/generators/node'
-import Ak6TestingGenerator from '../src/generators/test.ak6'
+import Ak6TestingGenerator from '../src/generators/test-ak6'
 import DatadogGenerator from '../src/generators/datadog'
 
 
@@ -42,8 +42,8 @@ export function getGenerator(generator: SiigoGenerator): TestGenerator {
       return {
         generatorOrNamespace: Ak6TestingGenerator as Constructor<Generator>,
         settings: {
-          resolved: path.join(__dirname, '../src/generators/test.ak6', 'index.js'),
-          namespace: 'siigo:test.ak6'
+          resolved: path.join(__dirname, '../src/generators/test-ak6', 'index.js'),
+          namespace: 'siigo:test-ak6'
         }
       }
     case SiigoGenerator.TEST_DD:
