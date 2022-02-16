@@ -1,0 +1,15 @@
+{
+  "name": "siigo.core.node.<%= config.nameLowercase %>",
+  "version": "0.0.1",
+  "description": "this is Siigo <%= config.nameCapitalize %> Library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Siigo",
+    "Test"
+  ],
+  "author": "<%= config.userSiigo %>",
+  "license": "MIT"
+}

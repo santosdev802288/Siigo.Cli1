@@ -1,6 +1,6 @@
 trigger:
-- master
-- dev
+  - dev
+  - master
 
 resources:
   repositories:
@@ -10,9 +10,8 @@ resources:
       ref: 'refs/heads/dev'
 
 extends:
-  template: netcore/dotnet-library.yaml@Pipelines
+
+  template: node/node-library.yaml@Pipelines
 
   parameters:
-    projectName: Siigo.Core.<%= config.nameCapitalize %>
-    feedSiigo: 'nuget'
-    minCoverage: 0
+    feedSiigo: 'back'

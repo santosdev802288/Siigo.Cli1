@@ -21,6 +21,7 @@ function getKeyName(value: string) {
 export default class DotnetMSGenerator extends LibraryGenerator {
     appConfig: {
         name?: any,
+        nameLowercase?: any,
         nameCapitalize?: any,
         projectPrefix?: any,
         token?: any,
@@ -45,7 +46,7 @@ export default class DotnetMSGenerator extends LibraryGenerator {
       });
     }
     async initializing() {
-      this.log(siigosay('Siigo Generator .Net Core.'));
+      this.log(siigosay('Siigo Generator Library.'));
     }
 
     async _doPrompting() {
@@ -59,6 +60,7 @@ export default class DotnetMSGenerator extends LibraryGenerator {
         tokenf = await wizardsiigofile(updatetoken);
       this.appConfig = {};
       this.appConfig.name = this.options['name'];
+      this.appConfig.nameLowercase = (this.options['name']).toLowerCase();
       this.appConfig.nameCapitalize = _.upperFirst(this.appConfig.name);
       this.appConfig.type = this.options['language']
       this.appConfig.publishVstsFeed = getKeyName(this.options['language'])

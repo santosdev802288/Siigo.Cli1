@@ -54,18 +54,20 @@ export class LibraryGenerator extends Generator {
                 {
                     type: 'list',
                     name: 'language',
-                    message: 'Select project prefix',
+                    message: 'Select project lenguage',
                     choices: ['Dotnet', 'Node', 'Angular'],
                     default: 'Dotnet',
                 },
             ]);
-            
+
+            const prefixname = getKeyName(this.answers.language) 
+
             this.response = await this.prompt([
                 {
                     type: 'string',
                     name: 'name',
                     message: 'Typing the name for the project',
-                    default: 'TestMS'
+                    default: prefixname
                 },
             ]);
             
@@ -73,7 +75,7 @@ export class LibraryGenerator extends Generator {
             this.options['name'] = name
             this.options['project-name'] = name
             this.options['language'] = this.answers.language
-            const appPath = path.join(process.cwd(), `${getKeyName(this.answers.language)}${name}`)
+            const appPath = path.join(process.cwd(), `${prefixname}${name}`)
             this.destinationRoot(appPath)
             process.chdir(appPath)
         }
