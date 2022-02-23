@@ -16,15 +16,6 @@ function execAndChek(command: string): boolean{
 }
 
 /**
- * Check if there are any local unstaged changes
- * 
- * @returns 
- */
-export function hasUnstagedChanges(): boolean {
-  return !execAndChek('git diff --exit-code')
-}
-
-/**
  * Check if the process is running on a local git repository.
  * 
  * @returns 

@@ -9,7 +9,7 @@ import shell from 'shelljs'
 
 import { saveStatistic } from '../../utils/statistics/statistic'
 import { getProjects } from '../../utils/gitmanager'
-import { hasUnstagedChanges, isInsideGitRepo, remoteExists } from '../../utils/git'
+import { isInsideGitRepo, remoteExists } from '../../utils/git'
 
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -71,7 +71,7 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
     const message = 'For help execute "yo siigo:test-ak6 --help".';
 
     let token = await getParameter('token')
-    token = (token == 'pending') ? await wizardsiigofile() : token
+    token = (token === 'pending') ? await wizardsiigofile() : token
 
     const projects = await getProjects(token)
     const nameProjects = Object.keys(projects)
@@ -172,14 +172,16 @@ export default class Ak6TestingGenerator extends TestingGenerator<Ak6Options> {
       return
     }
     if (!isInsideGitRepo()) {
+      this.log.writeln('Create local git repo')
       super.spawnCommandSync('git', ['init'])
     }
-    if (hasUnstagedChanges()) {
-      super.spawnCommandSync('git', ['add', '-A'])
-      super.spawnCommandSync('git', ['commit', '-m', 'siigo cli: init ak6 test project'])
-    }
+
+    this.log.writeln('Commit changes')
+    shell.exec('git add -A', {silent: true})
+    shell.exec('git commit -m "siigo cli: init ak6 test project"', {silent: true})
 
     if (remoteExists()) {
+      this.log.writeln('Push changes')
       super.spawnCommandSync('git', ['push', '--set-upstream', 'origin', 'master'])
     } else {
       throw new Error('Missing remote branch');
