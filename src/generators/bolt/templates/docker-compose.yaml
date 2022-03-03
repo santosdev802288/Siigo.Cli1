@@ -9,7 +9,7 @@ services:
       dockerfile: .docker/Dockerfile.dev
       args:
         # replace for your personal access token
-        - devops_token=kib3wbzqlhoe5pc4aqdziifdkoddi7yxkbxt76aabymbly4yv5aq
+        - devops_token=<%= config.token %>
     volumes:
     - ./:/app
     privileged: true
