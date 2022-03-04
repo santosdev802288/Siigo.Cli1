@@ -20,26 +20,26 @@ siigo-chart:
 
   # container ports expose by dockerfile. By default exposed port is 5000
   ports:
-    - containerPort: 10000
+    - containerPort: 6000
       name: grpc
       protocol: TCP
 
-    - containerPort: 11000
+    - containerPort: 5000
       name: http
       protocol: TCP
 
   service:
     type: ClusterIP
     ports:
-      - port: 11000
-        targetPort: 11000
+      - port: 5000
+        targetPort: 5000
         protocol: TCP
         name: http
 
       - name: grpc # ¡important!
-        port: 10000
+        port: 6000
         protocol: TCP
-        targetPort: 10000
+        targetPort: 6000
 
   livenessProbe:
     # Sometimes, you have to deal with legacy applications that might require an additional startup time on their first initialization.
@@ -78,7 +78,13 @@ siigo-chart:
   hpa:
     maxReplicas: 2
     minReplicas: 2
-    targetCPUUtilizationPercentage: 70
+    metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
 
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
