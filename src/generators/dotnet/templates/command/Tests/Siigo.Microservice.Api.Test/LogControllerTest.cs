@@ -2,10 +2,12 @@ using Moq;
 
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Controllers.v1;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Models.Logger;
-using Siigo.LogTest.Api.Models.Logger;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Models.Logger;
 using System;
 
 using Xunit;
+using Microsoft.AspNetCore.Mvc;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Service;
 
 namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Test
 {
@@ -22,33 +24,35 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Test
         [Fact]
         public void WriteLog_Success()
         {
+            foreach (LogEntryLevel item in Enum.GetValues(typeof(LogEntryLevel)))
+            {
+                var _logEntry = new PostLogEntry { Message = "Test Message", Level = item, Context = "Test.Context" };
+                var _controller = new LogController(new LoggerServiceCommand());
+
+                // Act
+                var _logResponse = _controller.WriteLog(_logEntry).GetAwaiter().GetResult();
+
+                // Assert
+                Assert.Equal(typeof(OkResult).ToString(), _logResponse.ToString());
+
+            }
+        }
+
+        [Fact]
+        public void WriteLog_Null_Entry()
+        {
+            var _controller = new LogController(new LoggerServiceCommand());
+
             // Arrange
-            _logEntryResult = null;
-            var _logEntry = new PostLogEntry { Message = "Test Message", Level = LogEntryLevel.Information, Context = "Test.Context" };
-            var _controller = new LogController(GetLogServiceMoq());
+            var _logEntry = new PostLogEntry { Message = "Test Message", Level = LogEntryLevel.Information, Context = null };
 
             // Act
-            _controller.WriteLog(_logEntry).Wait();
+            var _logResponse = _controller.WriteLog(_logEntry).GetAwaiter().GetResult();
 
-            // Assert
-            Assert.Equal(_logEntry, _logEntryResult);
+            //Assert
+            Assert.Equal(typeof(OkResult).ToString(), _logResponse.ToString());
+
         }
-
         #endregion Public Methods
-
-        #region Private Methods
-
-        private static ILoggerServiceCommand GetLogServiceMoq()
-        {
-            var _mock = new Mock<ILoggerServiceCommand>();
-
-            _mock.Setup(m => m.WriteLog(It.IsAny<PostLogEntry>())).Returns((LogEntry entry) => new Action(() =>
-                _logEntryResult = entry
-            ));
-
-            return _mock.Object;
-        }
-
-        #endregion Private Methods
     }
 }
