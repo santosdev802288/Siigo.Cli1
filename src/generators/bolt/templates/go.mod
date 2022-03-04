@@ -1,4 +1,4 @@
-module siigo.com/golang
+module siigo.com/<%= config.name %>
 
 go 1.16
 

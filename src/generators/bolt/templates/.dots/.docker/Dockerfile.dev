@@ -6,7 +6,6 @@ ENV LIBRDKAFKA_VERSION=1.5.3
 
 ARG devops_token
 ENV GOPRIVATE=dev.azure.com
-RUN git config --global url."https://anythinggoeshere:$devops_token@dev.azure.com".insteadOf "https://dev.azure.com"
 
 RUN git clone https://github.com/edenhill/librdkafka.git && \
     cd librdkafka && \
@@ -20,3 +19,5 @@ RUN git clone https://github.com/edenhill/librdkafka.git && \
 
 RUN apt update && apt install protobuf-compiler -y && \
     go get -u github.com/cosmtrek/air
+
+RUN git config --global url."https://anythinggoeshere:$devops_token@dev.azure.com".insteadOf "https://dev.azure.com"
