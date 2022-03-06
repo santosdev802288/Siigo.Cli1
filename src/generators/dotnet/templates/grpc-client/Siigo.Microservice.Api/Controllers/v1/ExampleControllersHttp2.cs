@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure;
 
-namespace Siigo.Noticli.Api.Controllers.v1
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Controllers.v1
 {
 
     [ApiController()]
