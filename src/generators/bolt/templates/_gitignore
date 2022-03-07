@@ -370,3 +370,8 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 nuget.config
+
+#golang binanies
+
+bolt
+<%= config.name %>
