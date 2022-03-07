@@ -45,7 +45,7 @@ func CreateGrpcClient() (conn *grpc.ClientConn) {
 	// Create a client connection to the gRPC Server we just started.
 	// This is where the gRPC-Gateway proxies the requests.
 	conn, _ = grpc.DialContext(
-		context.Background(), "dns:///"+"0.0.0.0:10000",
+		context.Background(), "dns:///"+"0.0.0.0:6000",
 		grpc.WithInsecure(),
 		grpc.WithBlock(),
 	)
@@ -83,7 +83,7 @@ func StartGrpcServer(grpcServer *grpc.Server) {
 	// Add Reflection Server
 	reflection.Register(grpcServer)
 
-	addr := "[::]:10000"
+	addr := "[::]:6000"
 	lis, err := net.Listen("tcp", addr)
 
 	if err != nil {

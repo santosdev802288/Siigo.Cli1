@@ -33,7 +33,7 @@ func RunServerMux(serverMux *runtime.ServeMux) {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "11000"
+		port = "5000"
 	}
 	gatewayAddr := "[::]:" + port
 	gwServer := &http.Server{

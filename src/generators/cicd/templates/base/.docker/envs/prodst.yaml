@@ -103,7 +103,13 @@ siigo-chart:
   hpa:
     maxReplicas: 15
     minReplicas: 1
-    targetCPUUtilizationPercentage: 70
+    metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
 
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little

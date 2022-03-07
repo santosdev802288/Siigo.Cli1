@@ -1,0 +1,10 @@
+{
+  "qa": {
+    "baseUrl": "https://servicesqa.siigo.com",
+    "serviceAuthUrl": "auth"
+  },
+  "preprod": {
+    "baseUrl": "https://servicesqa.siigo.com",
+    "serviceAuthUrl": "auth"
+  }
+}

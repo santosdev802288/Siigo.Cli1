@@ -1,0 +1,68 @@
+{
+  "smoke": {
+    "vus": 1,
+    "duration": "1m",
+    "thresholds": {
+      "http_req_duration": [
+        "p(99)<1500"
+      ]
+    }
+  },
+  "load": {
+    "scenarios": {
+      "login_constant": {
+        "executor": "constant-vus",
+        "vus": 150,
+        "duration": "1m",
+        "tags": {
+          "my_custom_tag": "login"
+        }
+      },
+      "login_per_vu": {
+        "executor": "per-vu-iterations",
+        "vus": 100,
+        "iterations": 100,
+        "startTime": "10s",
+        "tags": {
+          "my_custom_tag": "login"
+        }
+      },
+      "login_ramping_arrival_rate": {
+        "executor": "ramping-arrival-rate",
+        "startRate": 50,
+        "timeUnit": "10s",
+        "preAllocatedVUs": 50,
+        "stages": [
+          {
+            "target": 300,
+            "duration": "120s"
+          },
+          {
+            "target": 400,
+            "duration": "120s"
+          },
+          {
+            "target": 550,
+            "duration": "120s"
+          }
+        ]
+      }
+    }
+  },
+  "soak": {
+    "stages": [
+      {
+        "duration": "2m",
+        "target": 400
+      },
+      {
+        "duration": "3h56m",
+        "target": 400
+      },
+      {
+        "duration": "2m",
+        "target": 0
+      }
+    ]
+  }
+}
