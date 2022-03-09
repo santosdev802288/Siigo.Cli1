@@ -34,11 +34,11 @@ load_test_grpc:
 	--skipFirst=0 \
   	--insecure -c 40 -z 60s \
   	--proto proto/services.proto \
-  	 -i third_party/googleapis  localhost:10000
+  	 -i third_party/googleapis  localhost:6000
 
 load_test_http:
 	siege -c40 -t60S \
-	--content-type "application/json" 'http://localhost:11000/api/health'
+	--content-type "application/json" 'http://localhost:5000/api/health'
 
 test:
 	@echo "  >  Running Tests ..."
