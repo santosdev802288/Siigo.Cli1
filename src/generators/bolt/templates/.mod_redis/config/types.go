@@ -10,6 +10,7 @@ type Configuration struct {
 	// https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md
 	Kafka map[string]string  `yaml:"kafka"`
 	Mongo MongoConfiguration `yaml:"mongo"`
+	Redis map[string]string  `yaml:"Redis"`
 }
 
 //
@@ -18,7 +19,6 @@ type MongoConfiguration struct {
 	Database         string `yaml:"database" env:"MONGO_DATABASE"`
 	Collection       string `yaml:"collection" env:"MONGO_COLLECTION"`
 }
-
 type SpringCloudConfiguration struct {
 	Springcloud map[string]string `json:"Spring"`
 }

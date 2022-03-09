@@ -10,6 +10,7 @@ type Configuration struct {
 	// https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md
 	Kafka map[string]string  `yaml:"kafka"`
 	Mongo MongoConfiguration `yaml:"mongo"`
+	Redis map[string]string  `yaml:"Redis"`
 }
 
 //
