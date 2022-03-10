@@ -117,7 +117,6 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
         
         // Update .gitconfig
         const templateGitConfig = this.templatePath('.user/.gitconfig');
-        console.log(templateGitConfig);
         const userGitConfig = this.destinationPath(path.join(os.homedir(), '.gitconfig'))
 
         if (this.fs.exists(userGitConfig)) {
@@ -155,7 +154,6 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
 
     install(){
         const templateSp1 = this.templatePath('setupEnvGo.ps1');
-        console.log(templateSp1);
         (os.platform()==='win32')? shell.exec(`powershell ${templateSp1}`):  shell.exec('export GOPRIVATE=dev.azure.com')
         if(!isTestEnv()){
             
