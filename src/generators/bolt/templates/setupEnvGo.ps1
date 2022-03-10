@@ -1,1 +1,0 @@
-[System.Environment]::SetEnvironmentVariable('GOPRIVATE','dev.azure.com',[System.EnvironmentVariableTarget]::User)
