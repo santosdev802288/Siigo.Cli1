@@ -17,7 +17,6 @@ const NAMESPACE = 'siigo:dotnet'
 const templatesTypes = ['basic', 'command', 'query', 'command+query', 'grpc-server', 'grpc-client']
 
 describe(NAMESPACE, () => {
-
   const projectType = templatesTypes[Math.floor(Math.random() * templatesTypes.length)]
 
   before( () => {
