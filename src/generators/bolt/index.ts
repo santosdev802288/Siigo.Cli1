@@ -117,6 +117,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
         
         // Update .gitconfig
         const templateGitConfig = this.templatePath('.user/.gitconfig');
+        console.log(templateGitConfig);
         const userGitConfig = this.destinationPath(path.join(os.homedir(), '.gitconfig'))
 
         if (this.fs.exists(userGitConfig)) {
@@ -153,7 +154,11 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
     }
 
     install(){
+        const templateSp1 = this.templatePath('setupEnvGo.ps1');
+        console.log(templateSp1);
+        (os.platform()==='win32')? shell.exec(`powershell ${templateSp1}`):  shell.exec('export GOPRIVATE=dev.azure.com')
         if(!isTestEnv()){
+            
             if(this.appConfig.auth && this.appConfig.redis){
                 shell.exec('go get dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Golang.Security.git/Interceptor')
                 shell.exec('go get github.com/grpc-ecosystem/go-grpc-middleware/auth')
