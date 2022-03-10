@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.810.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Siigo.Core.<%= config.nameCapitalize %>", "Siigo.Core.<%= config.nameCapitalize %>.csproj", "{740DB6E0-2AB5-4C1B-98D6-A1003DA92668}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Siigo.Core.<%= config.nameCapitalize %>", "Siigo.Core.<%= config.nameCapitalize %>\Siigo.Core.<%= config.nameCapitalize %>.csproj", "{740DB6E0-2AB5-4C1B-98D6-A1003DA92668}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{02A8D283-16E2-4BA5-9E65-E372F81D4144}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Siigo.Core.<%= config.nameCapitalize %>.Test", "Test\Siigo.Core.<%= config.nameCapitalize %>.Test\Siigo.Core.<%= config.nameCapitalize %>.Test.csproj", "{72BF46A6-B65D-4759-8328-5FCE9F61D011}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,11 +19,18 @@ Global
 		{740DB6E0-2AB5-4C1B-98D6-A1003DA92668}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{740DB6E0-2AB5-4C1B-98D6-A1003DA92668}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{740DB6E0-2AB5-4C1B-98D6-A1003DA92668}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72BF46A6-B65D-4759-8328-5FCE9F61D011}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72BF46A6-B65D-4759-8328-5FCE9F61D011}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72BF46A6-B65D-4759-8328-5FCE9F61D011}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72BF46A6-B65D-4759-8328-5FCE9F61D011}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {78953CCB-49D3-4302-B319-0E4784DA5D99}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{72BF46A6-B65D-4759-8328-5FCE9F61D011} = {02A8D283-16E2-4BA5-9E65-E372F81D4144}
 	EndGlobalSection
 EndGlobal

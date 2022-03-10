@@ -1,10 +1,7 @@
-import rename = require('gulp-rename');
-import path from 'path';
 import { siigosay } from '@nodesiigo/siigosay';
 import _ from 'lodash'
 
 import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile';
-import { getChecksums } from '../../utils/checksum';
 import {LibraryGenerator} from '../../utils/generator/librarySiigo'
 import { saveStatistic } from '../../utils/statistics/statistic';
 
@@ -74,18 +71,23 @@ export default class DotnetMSGenerator extends LibraryGenerator {
 
   _doWriting(): void {
       
-    // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
-    this.queueTransformStream([
-      rename((path: any) => {
-        path.basename = path.basename.replace(/(Library)/g, this.appConfig.name )
-      }),
-    ]);
-      
+    /// / @ts-expect-error FIXME: Missing method on @types/yeoman-generator
+    // this.queueTransformStream([
+    //   rename((path: any) => {
+    //     path.basename = path.basename.replace(/(Library)/g, this.appConfig.name )
+    //   }),
+    // ]);
+
     this.fs.copyTpl(
-      this.templatePath(this.appConfig.type + '/'),
-      this.destinationPath('.'),
-      {config: this.appConfig}
-    ) 
+      this.templatePath(`${this.appConfig.type}/`),
+      this.destinationPath(''),
+      { config: this.appConfig },
+      {},
+      {
+        processDestinationPath: (filePath) => filePath.replace(/(Library)/g, this.appConfig.name), 
+        globOptions: {dot: true}
+      },
+    )
 
   }
     

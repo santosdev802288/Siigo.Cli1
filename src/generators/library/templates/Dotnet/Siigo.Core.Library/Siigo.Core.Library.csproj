@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <Version>0.0.0.1</Version>
+    <TargetFramework>net6.0</TargetFramework>
+    <Version>0.0.1</Version>
     <Authors><%= config.userSiigo %></Authors>
     <Company>Siigo S.A.</Company>
     <Description>Siigo <%= config.nameCapitalize %> library</Description>
     <Copyright>2022</Copyright>
     <PackageReleaseNotes>
-          0.0.0.1 - Initial Commit
+          0.0.1 - Initial Commit
     </PackageReleaseNotes>
   </PropertyGroup>
 
