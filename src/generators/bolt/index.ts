@@ -153,6 +153,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
     }
 
     install(){
+        shell.env['GOPRIVATE'] = 'dev.azure.com';
         if(!isTestEnv()){
             if(this.appConfig.auth && this.appConfig.redis){
                 shell.exec('go get dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Golang.Security.git/Interceptor')
