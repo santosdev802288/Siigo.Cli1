@@ -14,6 +14,7 @@ import _ from 'lodash'
 import { saveStatistic } from '../../utils/statistics/statistic'
 
 import { lastChartVersion, writeChart } from '../../utils/chart'
+import { isTestEnv } from '../../utils/environment/node';
 
 
 const prefixRepo = 'Siigo.Microservice.'

@@ -19,7 +19,7 @@ function getKeyName(value: string) {
 }
 
 export default class DotnetMSGenerator extends LibraryGenerator {
-    appConfig: {
+  appConfig: {
         name?: any,
         nameLowercase?: any,
         nameCapitalize?: any,
@@ -31,66 +31,67 @@ export default class DotnetMSGenerator extends LibraryGenerator {
         nameDev?: any,
     } = {};
     
-    constructor(args: any, opt: any) {
-      super(args, opt);
+  constructor(args: any, opt: any) {
+    super(args, opt);
                 
-      this.option('name', {
-        description: 'Project name',
-        default: this.defaultName,
-        type: String
-      });
-      this.option('project-prefix', {
-        description: 'Use this option to replace the prefix Siigo in the file names',
-        default: 'Siigo',
-        type: String
-      });
-    }
-    async initializing() {
-      this.log(siigosay('Siigo Generator Library.'));
-    }
+    this.option('name', {
+      description: 'Project name',
+      default: this.defaultName,
+      type: String
+    });
+    this.option('project-prefix', {
+      description: 'Use this option to replace the prefix Siigo in the file names',
+      default: 'Siigo',
+      type: String
+    });
+  }
+  async initializing() {
+    this.log(siigosay('Siigo Generator Library.'));
+  }
 
-    async _doPrompting() {
-      const objParameters = await getAllParametersSiigo();
+  async _doPrompting() {
+    const objParameters = await getAllParametersSiigo();
 
-      //saveStatistic('dotnet-'+response.type)
+    // TODO Save statistics
+    //saveStatistic('dotnet-'+response.type)
       
-      let tokenf = objParameters.token;
-      const updatetoken = this.options['token'];
-      if (tokenf == 'pending' || updatetoken != null)
-        tokenf = await wizardsiigofile(updatetoken);
-      this.appConfig = {};
-      this.appConfig.name = this.options['name'];
-      this.appConfig.nameLowercase = (this.options['name']).toLowerCase();
-      this.appConfig.nameCapitalize = _.upperFirst(this.appConfig.name);
-      this.appConfig.type = this.options['language']
-      this.appConfig.publishVstsFeed = getKeyName(this.options['language'])
-      this.appConfig.userSiigo = (objParameters as any).user;
-      this.appConfig.nameDev = (objParameters as any).name;
-      this.appConfig.token = tokenf;
-      this.appConfig.projectPrefix = this.options['project-prefix'];
+    let tokenf = objParameters.token;
+    const updatetoken = this.options['token'];
+    if (tokenf == 'pending' || updatetoken != null)
+      tokenf = await wizardsiigofile(updatetoken);
+    this.appConfig = {};
+    this.appConfig.name = this.options['name'];
+    this.appConfig.nameLowercase = (this.options['name']).toLowerCase();
+    this.appConfig.nameCapitalize = _.upperFirst(this.appConfig.name);
+    this.appConfig.type = this.options['language']
+    this.appConfig.publishVstsFeed = getKeyName(this.options['language'])
+    this.appConfig.userSiigo = (objParameters as any).user;
+    this.appConfig.nameDev = (objParameters as any).name;
+    this.appConfig.token = tokenf;
+    this.appConfig.projectPrefix = this.options['project-prefix'];
       
-    }
+  }
 
-    _doWriting(): void {
+  _doWriting(): void {
       
-      // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
-      this.queueTransformStream([
-          rename((path: any) => {
-              path.basename = path.basename.replace(/(Library)/g, this.appConfig.name )
-          }),
-      ]);
+    // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
+    this.queueTransformStream([
+      rename((path: any) => {
+        path.basename = path.basename.replace(/(Library)/g, this.appConfig.name )
+      }),
+    ]);
       
-      this.fs.copyTpl(
-          this.templatePath(this.appConfig.type + '/'),
-          this.destinationPath('.'),
-          {config: this.appConfig}
-      ) 
+    this.fs.copyTpl(
+      this.templatePath(this.appConfig.type + '/'),
+      this.destinationPath('.'),
+      {config: this.appConfig}
+    ) 
 
-    }
+  }
     
-    end() {
-      this.log(siigosay('Library Created!!'));
-    }
+  end() {
+    this.log(siigosay('Library Created!!'));
+  }
 }
 
 LibraryGenerator.yeomanInheritance(DotnetMSGenerator)
