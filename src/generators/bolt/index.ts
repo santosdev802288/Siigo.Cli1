@@ -6,6 +6,7 @@ import {MicroserviceGenerator} from '../../utils/generator/microservice'
 import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile'
 import { saveStatistic } from '../../utils/statistics/statistic'
 import shell from 'shelljs'
+import { isTestEnv } from '../../utils/environment/node';
 
 
 export default class GolangMSGenerator extends MicroserviceGenerator {
@@ -152,21 +153,22 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
     }
 
     install(){
-        if(this.appConfig.auth && this.appConfig.redis){
-            shell.exec('go get dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Golang.Security.git/Interceptor')
-            shell.exec('go get github.com/grpc-ecosystem/go-grpc-middleware/auth')
-            shell.exec('go get dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Golang.DistributedCache.git/Redis')
-        }else{
-            if(this.appConfig.auth){
+        if(!isTestEnv()){
+            if(this.appConfig.auth && this.appConfig.redis){
                 shell.exec('go get dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Golang.Security.git/Interceptor')
                 shell.exec('go get github.com/grpc-ecosystem/go-grpc-middleware/auth')
-            }
-            if(this.appConfig.redis){
                 shell.exec('go get dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Golang.DistributedCache.git/Redis')
+            }else{
+                if(this.appConfig.auth){
+                    shell.exec('go get dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Golang.Security.git/Interceptor')
+                    shell.exec('go get github.com/grpc-ecosystem/go-grpc-middleware/auth')
+                }
+                if(this.appConfig.redis){
+                    shell.exec('go get dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Golang.DistributedCache.git/Redis')
+                }
+                shell.exec('go mod tidy')
             }
-            shell.exec('go mod tidy')
         }
-        
     }
 
     end(): void {
