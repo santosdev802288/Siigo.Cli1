@@ -1,3 +1,4 @@
+import path from 'path';
 import { siigosay } from '@nodesiigo/siigosay';
 import _ from 'lodash'
 
@@ -48,13 +49,10 @@ export default class DotnetMSGenerator extends LibraryGenerator {
 
   async _doPrompting() {
     const objParameters = await getAllParametersSiigo();
-
-    // TODO Save statistics
-    //saveStatistic('dotnet-'+response.type)
       
     let tokenf = objParameters.token;
     const updatetoken = this.options['token'];
-    if (tokenf == 'pending' || updatetoken != null)
+    if (tokenf === 'pending' || updatetoken != null)
       tokenf = await wizardsiigofile(updatetoken);
     this.appConfig = {};
     this.appConfig.name = this.options['name'];
@@ -62,21 +60,15 @@ export default class DotnetMSGenerator extends LibraryGenerator {
     this.appConfig.nameCapitalize = _.upperFirst(this.appConfig.name);
     this.appConfig.type = this.options['language']
     this.appConfig.publishVstsFeed = getKeyName(this.options['language'])
-    this.appConfig.userSiigo = (objParameters as any).user;
-    this.appConfig.nameDev = (objParameters as any).name;
+    this.appConfig.userSiigo = objParameters.user;
+    this.appConfig.nameDev = objParameters.name;
     this.appConfig.token = tokenf;
     this.appConfig.projectPrefix = this.options['project-prefix'];
-      
+
+    saveStatistic(path.basename(__dirname), {language: this.appConfig.type})
   }
 
   _doWriting(): void {
-      
-    /// / @ts-expect-error FIXME: Missing method on @types/yeoman-generator
-    // this.queueTransformStream([
-    //   rename((path: any) => {
-    //     path.basename = path.basename.replace(/(Library)/g, this.appConfig.name )
-    //   }),
-    // ]);
 
     this.fs.copyTpl(
       this.templatePath(`${this.appConfig.type}/`),
