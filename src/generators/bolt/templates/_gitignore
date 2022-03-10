@@ -4,7 +4,6 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # Binaries for programs and plugins
-bolt
 *.exe
 *.exe~
 *.dll
@@ -373,5 +372,4 @@ nuget.config
 
 #golang binanies
 
-bolt
 <%= config.name %>
