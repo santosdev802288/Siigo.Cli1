@@ -1,0 +1,17 @@
+trigger:
+  - dev
+  - master
+
+resources:
+  repositories:
+    - repository: Pipelines
+      type: git
+      name: "Siigo/Siigo.Pipeline"
+      ref: 'refs/heads/dev'
+
+extends:
+
+  template: node/node-library.yaml@Pipelines
+
+  parameters:
+    feedSiigo: 'back'
