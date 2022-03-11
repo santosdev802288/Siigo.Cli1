@@ -6,22 +6,33 @@ import CicdGenerator from '../src/generators/cicd'
 import NodeMSGenerator from '../src/generators/node'
 import Ak6TestingGenerator from '../src/generators/test-ak6'
 import DatadogGenerator from '../src/generators/datadog'
+import DotnetMSGenerator from '../src/generators/library';
 
 
 export enum SiigoGenerator {
-    MS_CICD,
-    MS_NODE,
-    TEST_AK6,
-    TEST_DD,
+  LIBRARY,
+  MS_CICD,
+  MS_NODE,
+  TEST_AK6,
+  TEST_DD,
+
 }
 
 export interface TestGenerator {
-    readonly generatorOrNamespace: string | Constructor<Generator>,
-    readonly settings?: RunContextSettings
+  readonly generatorOrNamespace: string | Constructor<Generator>,
+  readonly settings?: RunContextSettings
 }
 
 export function getGenerator(generator: SiigoGenerator): TestGenerator {
   switch (generator) {
+    case SiigoGenerator.LIBRARY:
+      return {
+        generatorOrNamespace: DotnetMSGenerator as Constructor<Generator>,
+        settings: {
+          resolved: path.join(__dirname, '../src/generators/library', 'index.js'),
+          namespace: 'siigo:library'
+        }
+      }
     case SiigoGenerator.MS_CICD:
       return {
         generatorOrNamespace: CicdGenerator as Constructor<Generator>,
