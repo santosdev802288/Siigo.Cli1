@@ -9,6 +9,7 @@ interface MigrationOptions {
     domain: string;
     filePath: string
     context: string,
+    replicas: number
     cron: string
 }
 
@@ -77,6 +78,14 @@ export default class MigrationGenerator extends Generator {
             alias: 'c'
         });
 
+        // Replicas
+        this.option('replicas', {
+            type: Number,
+            description: "Replicas number",
+            default: 1,
+            alias: 'r'
+        })
+
 
         // Cron expression for job
         this.option('cron', {
@@ -91,7 +100,8 @@ export default class MigrationGenerator extends Generator {
             domain: this.options.domain || this.options.dn,
             filePath: this.options['file-path'] || this.options.fp,
             context: this.options.context || this.options.c,
-            cron: (this.options.cron || this.options.ce) || ""
+            replicas: this.options.replicas || this.options.r,
+            cron: (this.options.cron || this.options.ce) || "",
         }
 
     }
@@ -151,15 +161,17 @@ export default class MigrationGenerator extends Generator {
         // Read yaml structure & validate.        
         this._checkYamlStructure();
         
+        const basicConfig = { domainName: this.appConfig.domain, data: this._removeBreakLines(this._escapeQuotes(JSON.stringify(this.dataFile, null, ""))), replicas: this.appConfig.replicas }
+
         // Check template type.
         if (this.appConfig.cron) {
              // Write temp yaml                    
-            this.fs.copyTpl(this.templatePath('spark-scheduled.yaml'), this.destinationPath('spark.yaml'), { domainName: this.appConfig.domain, data: this._removeBreakLines(this._escapeQuotes(JSON.stringify(this.dataFile, null, ""))), schedule: this.appConfig.cron })            
+            this.fs.copyTpl(this.templatePath('spark-scheduled.yaml'), this.destinationPath('spark.yaml'), { ...basicConfig, schedule: this.appConfig.cron })            
             return
         } 
 
         // Write temp yaml                    
-        this.fs.copyTpl(this.templatePath('spark-app.yaml'), this.destinationPath('spark.yaml'), { domainName: this.appConfig.domain, data: this._removeBreakLines(this._escapeQuotes(JSON.stringify(this.dataFile, null, ""))) })
+        this.fs.copyTpl(this.templatePath('spark-app.yaml'), this.destinationPath('spark.yaml'), { ...basicConfig })
 
     }
 
