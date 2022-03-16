@@ -188,7 +188,7 @@ export default class MigrationGenerator extends Generator {
         this.spawnCommandSync("kubectl", ['config', 'current-context']);
 
         // Delete old jobs        
-        this.spawnCommandSync("kubectl", ["delete", "-f", "./spark.yaml"])
+        this.spawnCommandSync("kubectl", ["delete", "--ignore-not-found","sparkapp", this.appConfig.domain, "-n", "default"])
 
         // Apply kubectl                      
         this.spawnCommandSync("kubectl", ["apply", "-f", "./spark.yaml"])
