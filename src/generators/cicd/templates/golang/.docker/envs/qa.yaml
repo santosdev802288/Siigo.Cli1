@@ -77,7 +77,7 @@ siigo-chart:
 
   hpa:
     maxReplicas: 2
-    minReplicas: 2
+    minReplicas: 1
     metrics:
     - type: Resource
       resource:
