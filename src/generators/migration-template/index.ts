@@ -15,7 +15,7 @@ enum Formats {
     SQL = "jdbc",
     KAFKA = "kafka",
     CASSANDRA = "org.apache.spark.sql.cassandra",
-    MONGO = "mongo",
+    MONGO = "com.mongodb.spark.sql.DefaultSource",
 
 }
 
@@ -42,7 +42,7 @@ const KafkaConfig : BdConfig = {
     asJson: true,
     saveMode: "append",
     format: Formats.KAFKA,
-    verificationColumn: "",
+    verificationColumn: "Prueba",
     options: {
         "kafka.bootstrap.servers": "qakafka.siigo.com:9094",
         "topic": "example"        
@@ -51,7 +51,7 @@ const KafkaConfig : BdConfig = {
 
 const CassandraConfig : BdConfig = {
     format: Formats.CASSANDRA,    
-    verificationColumn: "",
+    verificationColumn: "Prueba",
     options: {
         "table": "words",
         "keyspace": "test",
@@ -61,7 +61,7 @@ const CassandraConfig : BdConfig = {
 const MongoConfig : BdConfig = {    
     saveMode: "append",
     format: Formats.MONGO,    
-    verificationColumn: "",
+    verificationColumn: "Prueba",
     options: {
         "uri": "mongodb://localhost:27017/test",
         "database": "test",
@@ -73,7 +73,7 @@ const SqlConfig : BdConfig = {
     asJson: true,
     saveMode: "append",
     format: Formats.SQL,
-    verificationColumn: "",
+    verificationColumn: "Prueba",
     options: {
         dbtable: "(select top 10 * from Product) productsTemp"
     }
@@ -100,15 +100,15 @@ export default class MigrationTemplateGenerator extends Generator {
 
     // Pompting
     async prompting(): Promise<void> {        
-        // @ts-expect-error ts-migrate(2769) FIXME: No overload matches this call.
-        const json = JSON.stringify(this.appConfig, false, '\t')
-
+        
         await this._promptsSource();
 
         await this._promtsSink();
 
         await this._promptsSinkValidation();
 
+        // @ts-expect-error ts-migrate(2769) FIXME: No overload matches this call.
+        const json = JSON.stringify(this.userOptions, false, '\t')
         
         this.log(colorize(json, {
             pretty: true,
@@ -138,7 +138,7 @@ export default class MigrationTemplateGenerator extends Generator {
     async configuring(): Promise<void> {
 
         const siigoParams = await getAllParametersSiigo();
-                
+                       
         const yamlParams = {
             user: siigoParams.name,
             tribe: siigoParams.tribe,
@@ -146,7 +146,7 @@ export default class MigrationTemplateGenerator extends Generator {
             multitenant: this.userOptions.multiTenantConfirm.confirm,
             source: this._getBdConfig(this.userOptions.source.type), 
             sink: this._getBdConfig(this.userOptions.sink.type),
-            sinkValidation: this._getBdConfig(this.userOptions.sinkValidation.type)
+            sinkValidation: this.userOptions.sinkValidation?.type ? this._getBdConfig(this.userOptions.sinkValidation.type) : ""
         }
 
          // Write yaml                    
