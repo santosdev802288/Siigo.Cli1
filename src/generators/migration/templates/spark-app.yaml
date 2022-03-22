@@ -3,6 +3,9 @@ kind: SparkApplication
 metadata:
   name: <%= domainName %>
   namespace: default
+  labels:
+    name: <%= name %>
+    tribe: <%= tribe %>
 spec:
   type: Scala
   mode: cluster
@@ -36,7 +39,7 @@ spec:
     instances: <%- replicas %>
     memory: "512m"
     labels:
-      version: 3.1.1
+      version: 3.1.1      
     volumeMounts:
       - name: "test-volume"
         mountPath: "/tmp"

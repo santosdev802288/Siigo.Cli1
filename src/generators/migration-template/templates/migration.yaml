@@ -1,0 +1,36 @@
+owner:
+  name: <%= user %>
+  tribe: <%= tribe %>
+<% if (validation) { %>
+verify: true
+sinkValidation:
+  format: <%= sinkValidation.format %>
+  verificationColumn: <%= sinkValidation.verificationColumn %>
+  options:    
+<% for (const prop in sinkValidation.options){ -%>
+    <%-prop-%>: <%-sinkValidation.options[prop] %>
+<% } -%>
+<% } -%>
+<% if (multitenant) { %>
+multiTenantConfig:
+  sourceRequiredMultiTenantConnections: true
+  multiTenantId: "3"
+  serverPriority: "3"
+  all: false
+<% } %>
+source:
+  format: <%= source.format %>
+  verificationColumn: <%= source.verificationColumn %>
+  options:
+<% for (const prop in source.options){ -%>
+    <%-prop-%>: <%-source.options[prop] %>
+<% } -%>
+      
+sink:
+  asJson: true # If the data is treated as json
+  format: <%= sink.format %>
+  saveMode: <%= sink.verificationColumn %>
+<% for (const prop in sink.options){ -%>
+    <%-prop-%>: <%-sink.options[prop] %>
+<% } -%>
+

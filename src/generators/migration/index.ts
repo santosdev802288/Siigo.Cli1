@@ -1,9 +1,10 @@
-import Generator from "yeoman-generator";
+import Generator from "yeoman-generator"
 import colorize from 'json-colorizer'
 import yaml from 'yaml'
 import cronstrue from 'cronstrue'
 import { siigosay } from '@nodesiigo/siigosay'
-import { saveStatistic } from '../../utils/statistics/statistic';
+import { saveStatistic } from '../../utils/statistics/statistic'
+import { getAllParametersSiigo } from '../../utils/siigoFile'
 
 interface MigrationOptions {
     domain: string;
@@ -152,6 +153,9 @@ export default class MigrationGenerator extends Generator {
     // Configuring
     async configuring(): Promise<void> {
 
+        // Read siigo config file
+        const siigoParams = await getAllParametersSiigo();
+
         // Read file
         const data = this.fs.read(this.appConfig.filePath)
 
@@ -161,7 +165,7 @@ export default class MigrationGenerator extends Generator {
         // Read yaml structure & validate.        
         this._checkYamlStructure();
         
-        const basicConfig = { domainName: this.appConfig.domain, data: this._removeBreakLines(this._escapeQuotes(JSON.stringify(this.dataFile, null, ""))), replicas: this.appConfig.replicas }
+        const basicConfig = { domainName: this.appConfig.domain, data: this._removeBreakLines(this._escapeQuotes(JSON.stringify(this.dataFile, null, ""))), replicas: this.appConfig.replicas, name: siigoParams.name, tribe: siigoParams.tribe }
 
         // Check template type.
         if (this.appConfig.cron) {

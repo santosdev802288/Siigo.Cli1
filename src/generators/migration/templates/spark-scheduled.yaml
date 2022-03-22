@@ -3,6 +3,9 @@ kind: ScheduledSparkApplication
 metadata:
   name: <%= domainName %>
   namespace: default
+  labels:
+    name: <%= name %>
+    tribe: <%= tribe %>
 spec:
   schedule: "<%-schedule %>"
   concurrencyPolicy: Allow
