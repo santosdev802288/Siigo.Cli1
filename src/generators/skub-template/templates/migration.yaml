@@ -7,7 +7,9 @@ verify: true
 sinkValidation:
   format: <%= sinkValidation.format %>
   verificationColumns: 
-    - <%= sinkValidation.verificationColumn %>
+<% for (const index in sinkValidation.verificationColumns){ -%>
+    - <%-sinkValidation.verificationColumns[index] %>
+<% } -%>
   options:    
 <% for (const prop in sinkValidation.options){ -%>
     <%-prop-%>: <%-sinkValidation.options[prop] %>
@@ -21,17 +23,19 @@ multiTenantConfig:
     serverPriority: "3"
     all: false
   controlDB: # Fill the information for SQL connection...
-    user: "" 
-    password: ""
-    server: ""
-    database: ""
-    table: ""
+    user: SIIGOCloudControl
+    password: U5lKcLnoeEdV
+    server: azsql-qa.database.windows.net
+    database: SIIGOCloudControl
+    table: cloudmultitenant
 <% } %>
 source:
   format: <%= source.format %>
-<% if (validation) { %>
+<% if (validation) { -%>
   verificationColumns: 
-    - <%= source.verificationColumn %>
+<% for (const index in source.verificationColumns){ -%>
+    - <%-source.verificationColumns[index] %>
+<% } -%>
 <% } -%>
   options:
 <% for (const prop in source.options){ -%>

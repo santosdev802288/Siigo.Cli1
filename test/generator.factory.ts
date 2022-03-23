@@ -6,7 +6,7 @@ import CicdGenerator from '../src/generators/cicd'
 import NodeMSGenerator from '../src/generators/node'
 import Ak6TestingGenerator from '../src/generators/test-ak6'
 import DatadogGenerator from '../src/generators/datadog'
-import MigrationGenerator from '../src/generators/migration';
+import MigrationGenerator from '../src/generators/skub';
 
 
 export enum SiigoGenerator {
@@ -61,8 +61,8 @@ export function getGenerator(generator: SiigoGenerator): TestGenerator {
       return {
         generatorOrNamespace: MigrationGenerator as Constructor<Generator>,
         settings: {
-          resolved: path.join(__dirname, '../src/generators/migration', 'index.js'),
-          namespace: 'siigo:migration'
+          resolved: path.join(__dirname, '../src/generators/skub', 'index.js'),
+          namespace: 'siigo:skub'
         }
       }
     default:

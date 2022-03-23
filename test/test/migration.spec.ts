@@ -7,7 +7,7 @@ import shell from 'shelljs'
 import { getGenerator, SiigoGenerator } from '../generator.factory'
 import { restore, stub } from 'sinon'
 
-import MigrationGenerator from '../../src/generators/migration'
+import MigrationGenerator from '../../src/generators/skub'
 import { ExpiringAccessTokenCache } from '@azure/storage-blob/node_modules/@azure/core-http'
 
 describe("siigo:migration", () => {

@@ -33,7 +33,7 @@ interface BdConfig {
     asJson?: boolean
     saveMode?: string
     format: string
-    verificationColumn: string
+    verificationColumns: string[]
     options: object
 }
 
@@ -42,7 +42,7 @@ const KafkaConfig : BdConfig = {
     asJson: true,
     saveMode: "append",
     format: Formats.KAFKA,
-    verificationColumn: "Prueba",
+    verificationColumns: ["ProductID", "TenantIdd"],
     options: {
         "kafka.bootstrap.servers": "qakafka.siigo.com:9094",
         "topic": "example"        
@@ -51,7 +51,7 @@ const KafkaConfig : BdConfig = {
 
 const CassandraConfig : BdConfig = {
     format: Formats.CASSANDRA,    
-    verificationColumn: "Prueba",
+    verificationColumns: ["ProductID", "TenantIdd"],
     options: {
         "table": "words",
         "keyspace": "test",
@@ -61,7 +61,7 @@ const CassandraConfig : BdConfig = {
 const MongoConfig : BdConfig = {    
     saveMode: "append",
     format: Formats.MONGO,    
-    verificationColumn: "Prueba",
+    verificationColumns: ["ProductID", "TenantIdd"],
     options: {
         "uri": "mongodb://localhost:27017/test",
         "database": "test",
@@ -73,7 +73,7 @@ const SqlConfig : BdConfig = {
     asJson: true,
     saveMode: "append",
     format: Formats.SQL,
-    verificationColumn: "Prueba",
+    verificationColumns: ["ProductID", "TenantIdd"],
     options: {
         dbtable: "(select top 10 * from Product) productsTemp"
     }
