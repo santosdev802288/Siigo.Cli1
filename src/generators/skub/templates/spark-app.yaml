@@ -26,8 +26,8 @@ spec:
         type: Directory
   driver:
     cores: 1
-    coreLimit: "1200m"
-    memory: "1024m"
+    coreLimit: "3"
+    memory: "3000m"
     labels:
       version: 3.1.1
     serviceAccount: spark
@@ -35,9 +35,9 @@ spec:
       - name: "test-volume"
         mountPath: "/tmp"
   executor:
-    cores: 1
+    cores: 2
     instances: <%- replicas %>
-    memory: "512m"
+    memory: "1024m"
     labels:
       version: 3.1.1      
     volumeMounts:

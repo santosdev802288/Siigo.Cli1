@@ -180,7 +180,7 @@ export default class MigrationGenerator extends Generator {
     }
 
     
-    install(): void {
+    async install() {
 
         // Az login
         this.spawnCommandSync('az', ['login']);
@@ -199,6 +199,12 @@ export default class MigrationGenerator extends Generator {
 
         // Delete temp yaml
         this.fs.delete('./spark.yaml')
+
+        await new Promise(resolve => setTimeout(resolve, 5000));
+
+        this.log(siigosay(`S-Kub job has been started.`))
+
+        this.spawnCommandSync("kubectl", ["logs", `${this.appConfig.domain}-driver`, "-f", "-n", "default"])
     }
 
 
@@ -288,7 +294,7 @@ export default class MigrationGenerator extends Generator {
 
 
     end(): void {
-        this.log(siigosay(`Migration job has been created`))
+        this.log(siigosay(`S-Kub job has been created.`))
     }
 }
 
