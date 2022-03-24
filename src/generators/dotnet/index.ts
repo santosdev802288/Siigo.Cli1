@@ -82,7 +82,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         parsetPath.basename = parsetPath.basename.replace(/(Siigo)/g, this.appConfig.projectPrefix);
       })
     ]);
-    this.fs.copyTpl(this.templatePath('base/*'), this.destinationPath('.'), { config: this.appConfig }, {}, {globOptions: {dot: true}})
+    this.fs.copyTpl(this.templatePath('base/'), this.destinationPath('.'), { config: this.appConfig }, {}, {globOptions: {dot: true}})
 
     this.fs.copyTpl(this.templatePath(nametemplate + '/'), this.destinationPath('.'), { config: this.appConfig });
     this.fs.copyTpl(this.templatePath(nametemplate + '/.*'), this.destinationPath('.'), { config: this.appConfig });

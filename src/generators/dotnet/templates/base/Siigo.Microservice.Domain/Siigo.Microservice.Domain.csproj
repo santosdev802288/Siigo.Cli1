@@ -6,19 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ArchetypeSeedWorkLibrary" Version="0.1.0" />
     <PackageReference Include="Ardalis.GuardClauses" Version="3.0.1" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Serilog" Version="2.10.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
-    <PackageReference Include="Siigo.Core.Database" Version="0.1.0" />
+    <PackageReference Include="Siigo.Core.SeedWork" Version="0.1.*" />
   </ItemGroup>
-
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <!-- Check deprecated or vulnerable dependencies -->
-    <Exec Command="dotnet list package --deprecated" />
-    <Exec Command="dotnet list package --vulnerable" />
-  </Target>
 
 </Project>

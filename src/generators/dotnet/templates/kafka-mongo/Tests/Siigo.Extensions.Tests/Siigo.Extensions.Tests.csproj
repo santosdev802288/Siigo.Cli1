@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Siigo.Core.Database" Version="0.1.0" />
     <PackageReference Include="ArchetypeProviderLibrary" Version="0.1.7" />
     <PackageReference Include="Siigo.Core.Security" Version="0.2.0" />
     <PackageReference Include="FluentAssertions" Version="5.10.3" />

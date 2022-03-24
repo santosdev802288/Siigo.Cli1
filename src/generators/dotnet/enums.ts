@@ -5,7 +5,7 @@ export enum ServerType {
   GRPC = 'grpc-server',
   GRPC_CLIENT = 'grpc-client',
   KAFKA = 'kafka',
-  KAFKA_MONGO = 'kafka+mongo',
-  KAFKA_SQL = 'kafka+sql',
+  KAFKA_MONGO = 'kafka-mongo',
+  KAFKA_SQL = 'kafka-sql',
   REST = 'basic',
 }

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Storage;
-using Siigo.Core.Domain.SeedWork;
+using Siigo.Core.SeedWork;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Extensions;
 using System;
 using System.Data;

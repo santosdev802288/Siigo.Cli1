@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -20,9 +21,10 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Applicati
             _exampleRepository = exampleRepository;
         }
 
-        public async Task<string> Handle(ExampleCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(ExampleCommand command, CancellationToken cancellationToken)
         {
-            Example example = await _exampleRepository.Create(request.ExampleId);
+            Example request = new(){ Id = Guid.NewGuid(), Message = command.Message};
+            Example example = await _exampleRepository.Save(request);
             return $"Repository id {example.Id}";
         }
     }

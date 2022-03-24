@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Siigo.Core.SeedWork;
 
@@ -5,6 +6,8 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Aggreg
 {
     public interface IExampleRepository : IRepository<Example>
     {
-        public Task<Example> Create(int id);
+        public Task<Example> Create(Guid id);
+
+        public Task<Example> Save(Example example);
     }
 }

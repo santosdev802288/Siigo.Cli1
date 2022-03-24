@@ -48,7 +48,6 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastru
                 .RegisterType<ExampleRepository>()
                 .As<IExampleRepository>()
                 .SingleInstance();
-
         }
     }
 }

@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Siigo.Core.Trace;
 using Siigo.Core.Trace.abstracts;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Consumer;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Dto;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastructure.Extensions;
 using SlimMessageBus;
 using SlimMessageBus.Host.AspNetCore;
@@ -24,6 +26,8 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastru
             services.AddSingleton<ITracingEngine, TracingEngine>();
             services.AddSingleton(BuildMessageBus);
             services.AddSingleton<IRequestResponseBus>(svp => svp.GetService<IMessageBus>());
+
+            services.AddSingleton<RequestConsumer>();
         }
 
         private IMessageBus BuildMessageBus(IServiceProvider serviceProvider)
@@ -40,6 +44,9 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastru
             });
             var kafkaProducerConfig = _configuration.GetSection("kafka:producerConfig");
             var kafkaConsumerConfig = _configuration.GetSection("kafka:consumerConfig");
+            IConfigurationSection groups = _configuration.GetSection("kafka:groups");
+            IConfigurationSection topics = _configuration.GetSection("kafka:topics");
+
             return MessageBusBuilder
                 .Create()
                 .WithSerializer(new JsonMessageSerializer())
@@ -59,6 +66,11 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastru
                         config.MaxPollIntervalMs = Int32.Parse(kafkaConsumerConfig.GetSection("MaxPollIntervalMs").Value);
                     }
                 })
+                .Consume<RequestDto>(x => x
+                    .Topic(topics.GetSection("product_domain").Value)
+                    .WithConsumer<RequestConsumer>()
+                    .KafkaGroup(groups.GetSection("product_domain").Value)
+                )
                 // Si se produce el envio de un evento, configurar y retirar los comentarios de las siguientes lineas
                 // a continuación un ejemplo:
                 // .Produce<AccountIntegrationEvent>(x =>
@@ -72,11 +84,7 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastru
                 //         };
                 //     });
                 // })
-                .AttachEvents(events =>
-                {
-                    events.OnMessageProduced = onMessageProduced;
-                    events.OnMessageArrived = onMessageArrived;
-                })
+                
                 .WithDependencyResolver(new AspNetCoreMessageBusDependencyResolver(serviceProvider))
                 .Build();
         }

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
-using Siigo.Core.Domain.SeedWork;
+using Siigo.Core.SeedWork;
 
 namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Extensions
 {
