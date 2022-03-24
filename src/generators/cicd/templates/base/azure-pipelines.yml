@@ -13,9 +13,11 @@ resources:
 extends:
   <% if(config.type == 'netcore' || config.type == 'net5') { %>
   template: netcore/netcore-pipeline.yaml@Pipelines
-  <% } else { %> 
+  <% } else { if(config.type == 'golang' ) { %> 
+  template: go/golang-pipeline.yaml@Pipelines
+  <% } if(config.type == 'node' ) { %>
   template: node/node-pipeline.yaml@Pipelines
-  <% } %> 
+  <% }} %>
   parameters:
     projectName: ms-<%= config.name %>
     environment: <%= config.environment %>

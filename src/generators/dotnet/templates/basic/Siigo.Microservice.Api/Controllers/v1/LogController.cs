@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Models.Logger;
-using Siigo.LogTest.Api.Models.Logger;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Models.Logger;
 using System.Threading.Tasks;
 
 namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Controllers.v1

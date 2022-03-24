@@ -1,6 +1,55 @@
 # Changelog
 All notable changes to this project.
 
+## [3.0.0](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v2.8.1...v3.0.0) (2022-03-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* **test-ak6:** rename generator from test.ak6 to test-ak6
+* **dotnet:** Remove core archetypes
+
+### Features
+
+* **test-ak6:** update dependencies ([8cc7df8](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/8cc7df8759c0336dc24016c612f33461fd760e61))
+* **test-ak6:** update grafana dashboard ([d968335](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/d968335fec54a44381e1759d63be808acb897a60))
+
+
+### Bug Fixes
+
+* :art: bug anf feature ([f901497](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/f901497cf2a4dcf527ba8460e0700f2dc87e60b3))
+* **test-ak6:** add missing login to azure devops ([767803c](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/767803c64810fc15946344d307b1533b90e7ecf8))
+* **test-ak6:** always ask for project name ([20745c6](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/20745c629e52d5dbae85d6cb729acb58fc40e46b))
+* **test-ak6:** try to commit always ([fc9667c](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/fc9667ce138284b65cf79b9524ac55c6a9926e30))
+
+
+### Performance Improvements
+
+* **test-ak6:** reduce default parallelism ([2a2b9d7](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/2a2b9d7ace7f42ed91909a73b23c1d3053c82b9a))
+
+
+### Build System
+
+* delete .npmrc ([05b7bb3](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/05b7bb3891e8dbd1ed1e4327cb9d860dd005b207))
+
+
+### Docs
+
+* **dotnet:** remove core option ([aa88206](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/aa8820633cfe7981b81f8da62e40d58ab7b872fd))
+
+
+### Code Refactoring
+
+* **test-ak6:** rename ak6 generator ([2a17e5a](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/2a17e5a5b6428ae91a6cdd29b102d1edd5552ab3))
+* update ESLint version ([e3f9fc6](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/e3f9fc6c893e012b17fa89edc8730d5b69a31c4e))
+
+
+### Tests
+
+* **dotnet:** add check for outdated dependencies ([dd4f8d6](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/dd4f8d604c8823b8bed16bb73063895e1fb223a3))
+* **test-ak6:** check if test is running on Azure DevOps ([1151d55](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/1151d55090c2c855cb329c5b54592eeea380ca22))
+* **test-ak6:** write test for test-ak6 ([f19433b](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/f19433b728d5b1975d4db2e4bc7a99bc2c45935e))
+
 ### [2.8.1](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v2.8.0...v2.8.1) (2022-01-24)
 
 ## [2.8.0](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v2.7.0...v2.8.0) (2022-01-19)

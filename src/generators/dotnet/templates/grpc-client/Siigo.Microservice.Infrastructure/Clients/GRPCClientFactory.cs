@@ -1,6 +1,7 @@
 using Grpc.Net.Client;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure;
 
-namespace Siigo.DotnetgRPCClient.Infrastructure
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure
 {
     public class GRPCClientFactory : IGRPCClientFactory
     {

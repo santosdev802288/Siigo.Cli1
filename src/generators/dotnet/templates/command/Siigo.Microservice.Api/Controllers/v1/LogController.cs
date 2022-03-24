@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Models.Logger;
-using Siigo.LogTest.Api.Models.Logger;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Models.Logger;
 
 using System;
 using System.Collections.Generic;
@@ -46,9 +46,10 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Controlle
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
-        public async Task WriteLog(PostLogEntry entry)
+        public async Task<IActionResult> WriteLog(PostLogEntry entry)
         {
             await Task.Run(_loggerServiceCommand.WriteLog(entry));
+            return await Task.Run(Ok);
         }
 
         #endregion Public Methods

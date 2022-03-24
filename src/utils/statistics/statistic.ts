@@ -11,17 +11,25 @@ const url: string = '' + process.env.URLMONGO
 
 interface Statistic {
     user: string;
-    option: string;
+    generator: string;
+    options: object;
     createdAt?: Date;
 }
 
 const schema = new Schema<Statistic>({
   user: {type: String, required: true},
-  option: {type: String, required: true},
+  generator: {type: String, required: true},
   createdAt: {type: Date, default: Date.now},
+  options: {type: Object, required: false},
 })
 
-export async function saveStatistic(option:string): Promise<void> {
+/**
+ * Send usage statistics to a MongoDB
+ * 
+ * @param generator Name of the generator.
+ * @param options Options passed to the generator.
+ */
+export async function saveStatistic(generator:string, options?: object): Promise<void> {
   if (!isTestEnv()){
     const siigoParams = await getAllParametersSiigo();
     try {
@@ -30,7 +38,8 @@ export async function saveStatistic(option:string): Promise<void> {
       const statisticModel = model<Statistic>('statistics', schema)
       const stat = new statisticModel({
         user: siigoParams.user,
-        option
+        generator: generator,
+        options: options
       })
       await stat.save()
       await disconnect()

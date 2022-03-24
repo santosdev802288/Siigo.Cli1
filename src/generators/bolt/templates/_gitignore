@@ -4,7 +4,6 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # Binaries for programs and plugins
-bolt
 *.exe
 *.exe~
 *.dll
@@ -370,3 +369,7 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 nuget.config
+
+#golang binanies
+
+<%= config.name %>

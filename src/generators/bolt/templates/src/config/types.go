@@ -18,3 +18,7 @@ type MongoConfiguration struct {
 	Database         string `yaml:"database" env:"MONGO_DATABASE"`
 	Collection       string `yaml:"collection" env:"MONGO_COLLECTION"`
 }
+
+type SpringCloudConfiguration struct {
+	Springcloud map[string]string `json:"Spring"`
+}

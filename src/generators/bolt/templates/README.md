@@ -56,11 +56,11 @@ $ make all
 #### Check Api Ok
 
 ```
-$ https://0.0.0.0:11000/api?name=juan  (HTTP)
+$ https://0.0.0.0:5000/api?name=juan  (HTTP)
 ```
 
 ```
-$ https://0.0.0.0:11000/   (Swagger)
+$ https://0.0.0.0:5000/   (Swagger)
 ```
 
 ```
@@ -212,7 +212,7 @@ _ = consumer.SubscribeTopics([]string{"goTopic", "^aRegex.*[goTt]opic"}, nil)
 ## This Template has Auto Swagger Doc API
 
 ```
-$ https://0.0.0.0:11000/   (Swagger)
+$ https://0.0.0.0:5000/   (Swagger)
 ```
 
 ![Dependencias](./images/swagger.png)
