@@ -41,13 +41,13 @@ verify: true
 sinkValidation:
   format: <%= sinkValidation.format %>
   verificationColumns:
-  <% for (const index in sinkValidation.verificationColumns){ -%>
-  - <%-sinkValidation.verificationColumns[index] %>
-  <% } -%>
+<% for (const index in sinkValidation.verificationColumns){ -%>
+    - <%-sinkValidation.verificationColumns[index] %>
+<% } -%>
   options:
-    <% for (const prop in sinkValidation.options){ -%>
+<% for (const prop in sinkValidation.options){ -%>
     <%-prop-%>: <%-sinkValidation.options[prop] %>
-    <% } -%>
+<% } -%>
 <% } -%>
 
 sink:

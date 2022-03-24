@@ -200,7 +200,7 @@ export default class MigrationGenerator extends Generator {
         // Delete temp yaml
         this.fs.delete('./spark.yaml')
 
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        await new Promise(resolve => setTimeout(resolve, 10000));
 
         this.log(siigosay(`S-Kub job has been started.`))
 
