@@ -2,19 +2,13 @@ domainName: ""
 owner:
   name: <%= user %>
   tribe: <%= tribe %>
-<% if (validation) { %>
-verify: true
-sinkValidation:
-  format: <%= sinkValidation.format %>
-  verificationColumns: 
-<% for (const index in sinkValidation.verificationColumns){ -%>
-    - <%-sinkValidation.verificationColumns[index] %>
-<% } -%>
-  options:    
-<% for (const prop in sinkValidation.options){ -%>
-    <%-prop-%>: <%-sinkValidation.options[prop] %>
-<% } -%>
-<% } -%>
+
+
+jobConfig:
+  options: {}
+  #spark.master: "local[*]"
+
+
 <% if (multitenant) { %>
 multiTenantConfig:
   sourceRequiredMultiTenantConnections: true
@@ -41,7 +35,21 @@ source:
 <% for (const prop in source.options){ -%>
     <%-prop-%>: <%-source.options[prop] %>
 <% } -%>
-      
+  
+<% if (validation) { %>
+verify: true
+sinkValidation:
+  format: <%= sinkValidation.format %>
+  verificationColumns:
+  <% for (const index in sinkValidation.verificationColumns){ -%>
+  - <%-sinkValidation.verificationColumns[index] %>
+  <% } -%>
+  options:
+    <% for (const prop in sinkValidation.options){ -%>
+    <%-prop-%>: <%-sinkValidation.options[prop] %>
+    <% } -%>
+<% } -%>
+
 sink:
   asJson: true # If the data is treated as json
   format: <%= sink.format %>

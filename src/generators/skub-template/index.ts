@@ -61,11 +61,27 @@ const CassandraConfig : BdConfig = {
 const MongoConfig : BdConfig = {    
     saveMode: "append",
     format: Formats.MONGO,    
-    verificationColumns: ["ProductID", "TenantIdd"],
+    verificationColumns: ["ProductID", "TenantId"],
     options: {
-        "uri": "mongodb://localhost:27017/test",
-        "database": "test",
-        "collection": "words",
+        "uri": "mongodb+srv://siigo-catalog-qa-dbProduct:ZS8BfbGpqa7PCvsp@siigo-catalog-qa.u7fhi.azure.mongodb.net/dbProduct?retryWrites=true&w=majority",
+        "database": "dbProduct",
+        "collection": "Product2",
+        "pipeline": `>
+           [
+            {
+              '$project': {
+                'ProductID': 1,
+                'TenantIdd': 1,
+                'Description': 1
+              }
+            },
+            {
+              '$project': {
+                '_id': 0
+              }
+            }
+          ]
+        `
     }
 }
 
@@ -73,7 +89,7 @@ const SqlConfig : BdConfig = {
     asJson: true,
     saveMode: "append",
     format: Formats.SQL,
-    verificationColumns: ["ProductID", "TenantIdd"],
+    verificationColumns: ["ProductID", "TenantId"],
     options: {
         dbtable: "(select top 10 * from Product) productsTemp"
     }
@@ -142,8 +158,8 @@ export default class MigrationTemplateGenerator extends Generator {
         const yamlParams = {
             user: siigoParams.name,
             tribe: siigoParams.tribe,
-            validation: this.userOptions.sinkValidationConfirm.confirm, 
-            multitenant: this.userOptions.multiTenantConfirm.confirm,
+            validation: this.userOptions.sinkValidationConfirm?.confirm,
+            multitenant: this.userOptions.multiTenantConfirm?.confirm,
             source: this._getBdConfig(this.userOptions.source.type), 
             sink: this._getBdConfig(this.userOptions.sink.type),
             sinkValidation: this.userOptions.sinkValidation?.type ? this._getBdConfig(this.userOptions.sinkValidation.type) : ""
