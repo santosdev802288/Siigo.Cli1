@@ -3,12 +3,9 @@ import helpers from 'yeoman-test'
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
-import shell from 'shelljs'
-import { getGenerator, SiigoGenerator } from '../generator.factory'
 import { restore, stub } from 'sinon'
-
+import { getGenerator, SiigoGenerator } from '../generator.factory'
 import MigrationGenerator from '../../src/generators/skub'
-import { ExpiringAccessTokenCache } from '@azure/storage-blob/node_modules/@azure/core-http'
 
 describe("siigo:migration", () => {
 
@@ -17,7 +14,7 @@ describe("siigo:migration", () => {
     before(() => {
         // stubs
         stub(MigrationGenerator.prototype, "install").callsFake(() => {
-            return 
+            return new Promise((resolve) => {resolve()});
         })
     })
 
