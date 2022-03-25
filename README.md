@@ -403,14 +403,14 @@ These commands allow automation and easy handling of the S-Kub tool and implemen
 
 ### Using
 
-For the use it consists of two steps mainly.
-1. The generation of the YAML configuration file, where the configuration of the source, sink and sink validation will be specified for the correct operation of the process.
+For the use, it consists of two steps mainly:
+1. The generation of the YAML configuration file, where the source configuration, sink and sink validation, will be specified for the correct process operation.
 
-    First fenerate a S-Kub yaml configuration file in your current path.  
+    First, generate a S-Kub yaml configuration file in your current path.  
     
         yo siigo:skub-template
 
-    Next, the option to select the source between SQL, Mongo and Cassandra will be shown. Later it will ask you if the SQL connection is a connection to the multitenant.
+    Next, you have to choose the source between SQL, MongoDB, and Cassandra. If you select the SQL option, the system will ask you if a multitenant connection is needed.
 
         ╭━━━╮           ╭╮   ╭╮  ╭╮╭━━━╮
         ┃╭━╮┃           ┃┃   ┃╰╮╭╯┃┃╭━╮┃
@@ -424,8 +424,7 @@ For the use it consists of two steps mainly.
                 ╰──────────────────────────╯
 
         ? Select the source (Use arrow keys)
-        ❯ SQL 
-        KAFKA 
+        ❯ SQL  
         MONGO 
         CASSANDRA 
 
@@ -471,8 +470,7 @@ For the use it consists of two steps mainly.
         ❯ MONGO 
         CASSANDRA 
 
-    Once the selection is finished, the command will generate a predefined YAML configuration file, you must enter and change the corresponding information (Columns, Connection strings, Multitenant configuration, Queries, etc.)
-
+    Once the selection process is over, the system will generate a predefined YAML configuration file. You must update the corresponding information like columns, connection strings, multitenant configuration, Queries, etc.
 
 2. Start-up or execution of the S-Kub process, once the YAML file has been verified and configured, it will be executed and published in K8's. There are two configurations, recurring executions or single execution. For recurring executions it is necessary to specify the cron job expression with the necessary frequency.
 
