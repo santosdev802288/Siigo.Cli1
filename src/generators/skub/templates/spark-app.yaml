@@ -1,0 +1,45 @@
+apiVersion: "sparkoperator.k8s.io/v1beta2"
+kind: SparkApplication
+metadata:
+  name: <%= domainName %>
+  namespace: default
+  labels:
+    name: <%= name %>
+    tribe: <%= tribe %>
+spec:
+  type: Scala
+  mode: cluster
+  image: "acraksqa.azurecr.io/siigration:latest"
+  imagePullPolicy: Always
+  mainClass: org.siigo.Main
+  mainApplicationFile: "local:///job/Siigration-assembly-1.0-SNAPSHOT.jar"
+  sparkVersion: "2.4.5"
+  arguments:
+    - "-conf"
+    - "<%- data %>"
+  restartPolicy:
+    type: Never
+  volumes:
+    - name: "test-volume"
+      hostPath:
+        path: "/tmp"
+        type: Directory
+  driver:
+    cores: 1
+    coreLimit: "3"
+    memory: "3000m"
+    labels:
+      version: 3.1.1
+    serviceAccount: spark
+    volumeMounts:
+      - name: "test-volume"
+        mountPath: "/tmp"
+  executor:
+    cores: 2
+    instances: <%- replicas %>
+    memory: "1024m"
+    labels:
+      version: 3.1.1      
+    volumeMounts:
+      - name: "test-volume"
+        mountPath: "/tmp"
