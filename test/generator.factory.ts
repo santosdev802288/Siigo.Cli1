@@ -6,8 +6,8 @@ import CicdGenerator from '../src/generators/cicd'
 import NodeMSGenerator from '../src/generators/node'
 import Ak6TestingGenerator from '../src/generators/test-ak6'
 import DatadogGenerator from '../src/generators/datadog'
+import MigrationGenerator from '../src/generators/skub';
 import DotnetMSGenerator from '../src/generators/library';
-
 
 export enum SiigoGenerator {
   LIBRARY,
@@ -15,9 +15,9 @@ export enum SiigoGenerator {
   MS_NODE,
   TEST_AK6,
   TEST_DD,
+  TEST_MIGRATION
 
 }
-
 export interface TestGenerator {
   readonly generatorOrNamespace: string | Constructor<Generator>,
   readonly settings?: RunContextSettings
@@ -63,6 +63,15 @@ export function getGenerator(generator: SiigoGenerator): TestGenerator {
         settings: {
           resolved: path.join(__dirname, '../src/generators/datadog', 'index.js'),
           namespace: 'siigo:datadog'
+        }
+      }
+
+    case SiigoGenerator.TEST_MIGRATION:
+      return {
+        generatorOrNamespace: MigrationGenerator as Constructor<Generator>,
+        settings: {
+          resolved: path.join(__dirname, '../src/generators/skub', 'index.js'),
+          namespace: 'siigo:skub'
         }
       }
     default:

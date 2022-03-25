@@ -1,0 +1,61 @@
+domainName: ""
+owner:
+  name: <%= user %>
+  tribe: <%= tribe %>
+
+
+jobConfig:
+  options: {}
+  #spark.master: "local[*]"
+
+
+<% if (multitenant) { %>
+multiTenantConfig:
+  sourceRequiredMultiTenantConnections: true
+  filter:
+    multiTenantId: "3"
+    serverPriority: "3"
+    all: false
+  controlDB: # Fill the information for SQL connection...
+    user: SIIGOCloudControl
+    password: U5lKcLnoeEdV
+    server: azsql-qa.database.windows.net
+    database: SIIGOCloudControl
+    table: cloudmultitenant
+<% } %>
+source:
+  format: <%= source.format %>
+<% if (validation) { -%>
+  verificationColumns: 
+<% for (const index in source.verificationColumns){ -%>
+    - <%-source.verificationColumns[index] %>
+<% } -%>
+<% } -%>
+  options:
+<% for (const prop in source.options){ -%>
+    <%-prop-%>: <%-source.options[prop] %>
+<% } -%>
+  
+<% if (validation) { %>
+verify: true
+sinkValidation:
+  format: <%= sinkValidation.format %>
+  verificationColumns:
+<% for (const index in sinkValidation.verificationColumns){ -%>
+    - <%-sinkValidation.verificationColumns[index] %>
+<% } -%>
+  options:
+<% for (const prop in sinkValidation.options){ -%>
+    <%-prop-%>: <%-sinkValidation.options[prop] %>
+<% } -%>
+<% } -%>
+
+sink:
+  asJson: true # If the data is treated as json
+  format: <%= sink.format %>
+  saveMode: append # Change if is neccesary. (overwrite, ignore, append)
+  options:
+<% for (const prop in sink.options){ -%>
+    <%-prop-%>: <%-sink.options[prop] %>
+<% } -%>
+

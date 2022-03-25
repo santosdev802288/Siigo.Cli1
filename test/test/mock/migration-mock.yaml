@@ -1,0 +1,22 @@
+verify: false
+
+multiTenantConfig:
+  sourceRequiredMultiTenantConnections: true
+  multiTenantId: "3"
+  serverPriority: "3"
+  all: false
+
+source:
+  format: jdbc
+  verificationColumn: ProductID
+  options:
+    dbtable: |
+      (select top 20 * from Product) productsTemp
+sink:
+  asJson: true
+  saveMode: "append"
+  format: kafka
+  options:
+    kafka.bootstrap.servers: qakafka.siigo.com:9094
+    topic: example
+    collection: persons
