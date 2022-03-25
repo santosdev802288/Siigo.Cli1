@@ -14,10 +14,10 @@ using Serilog.Exceptions;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastructure.AutofacModules;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastructure.Extensions;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.SeedWork;
-using Siigo.Core.Infraestructure.AutofacModules;
+using Siigo.Core.Provider.Infraestructure.AutofacModules;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Siigo.Core.Filter;
-using Siigo.Core.Manager;
+using Siigo.Core.Security.Filter;
+using Siigo.Core.Security.Manager;
 using Serilog.Formatting.Json;
 using Microsoft.Extensions.Logging;
 

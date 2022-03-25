@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using MediatR;
@@ -22,10 +23,10 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Controlle
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
-        public async Task<string> ExampleQuery(int id) => await _mediator.Send(new ExampleQuery(id));
+        public async Task<string> ExampleQuery(Guid id) => await _mediator.Send(new ExampleQuery(id));
 
         [HttpPost("{id}")]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.Created)]
-        public async Task<string> ExampleCommand(int id) => await _mediator.Send(new ExampleCommand(id));
+        public async Task<string> ExampleCommand(Guid id) => await _mediator.Send(new ExampleCommand(id));
     }
 }

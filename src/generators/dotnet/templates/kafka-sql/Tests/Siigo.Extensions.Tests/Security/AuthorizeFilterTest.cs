@@ -2,8 +2,8 @@ using System;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Moq;
-using Siigo.Core.Filter;
-using Siigo.Core.Manager;
+using Siigo.Core.Security.Filter;
+using Siigo.Core.Security.Manager;
 using System.Threading.Tasks;
 using Xunit;
 

@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using Microsoft.Extensions.Configuration;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure;
-using Siigo.Core.Interface;
-using Siigo.Core.Provider;
+using Siigo.Core.Provider.Interface;
+using Siigo.Core.Provider.Providers;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.AggregateModel.ExampleAggregate;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Finder;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Repository;

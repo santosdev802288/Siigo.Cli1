@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
-using Siigo.Core.Domain.SeedWork;
+using Siigo.Core.SeedWork;
 
 namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure
 {

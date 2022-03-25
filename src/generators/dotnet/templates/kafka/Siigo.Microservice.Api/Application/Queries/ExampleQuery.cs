@@ -1,3 +1,4 @@
+using System;
 using MediatR;
 
 namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Application.Queries
@@ -8,9 +9,9 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Applicati
     /// </summary>
     public class ExampleQuery : IRequest<string> // replace object with your class
     {
-        public int Id { get; }
+        public Guid Id { get; }
 
-        public ExampleQuery(int id)
+        public ExampleQuery(Guid id)
         {
             Id = id;
         }

@@ -22,7 +22,7 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Applicati
 
         public async Task<string> Handle(ExampleCommand request, CancellationToken cancellationToken)
         {
-            Example example = await _exampleRepository.Create(request.ExampleId);
+            Example example = await _exampleRepository.Create(request.Id);
             return $"Repository id {example.Id}";
         }
     }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Siigo.Core.Extensions;
+using Siigo.Core.Security.Extensions;
 using Steeltoe.Extensions.Configuration.ConfigServer;
 
 namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api

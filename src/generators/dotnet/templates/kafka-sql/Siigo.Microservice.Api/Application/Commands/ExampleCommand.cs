@@ -1,3 +1,4 @@
+using System;
 using FluentValidation;
 using MediatR;
 
@@ -8,15 +9,13 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Applicati
     /// </summary>
     public class ExampleCommand : IRequest<string>
     {
-        public int ExampleId { get; set; }
+        public Guid Id { get; set; }
+        public string Message { get; set; }
 
-        protected ExampleCommand()
+        public ExampleCommand(Guid id, string message = "")
         {
-        }
-
-        public ExampleCommand(int id)
-        {
-            ExampleId = id;
+            Id = id;
+            Message = message;
         }
 
 
@@ -24,8 +23,8 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Applicati
         {
             public ExampleCommandValidator()
             {
-                _ = RuleFor(m => m.ExampleId).GreaterThan(0)
-                    .WithMessage("ExampleId  must be greater than 0}");
+                _ = RuleFor(m => m.Message).NotEmpty()
+                    .WithMessage("Message must not be empty");
             }
         }
     }

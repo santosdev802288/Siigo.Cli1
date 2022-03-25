@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ArchetypeProviderLibrary" Version="0.1.7" />
     <PackageReference Include="Dapper" Version="2.0.78" />
     <PackageReference Include="DataAbstractions.Dapper" Version="3.0.0" />
     <PackageReference Include="Flurl.Http" Version="3.0.1" />
@@ -15,18 +14,13 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.11.5" />
-    <PackageReference Include="Siigo.Core.Database" Version="0.1.0" />
+    <PackageReference Include="Siigo.Core.Database" Version="0.1.*" />
+    <PackageReference Include="Siigo.Core.Provider" Version="0.1.*" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.csproj" />
   </ItemGroup>
-
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <!-- Check deprecated or vulnerable dependencies -->
-    <Exec Command="dotnet list package --deprecated" />
-    <Exec Command="dotnet list package --vulnerable" />
-  </Target>
 
 </Project>

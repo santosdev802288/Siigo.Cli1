@@ -3,8 +3,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Siigo.Core.Interface;
-using Siigo.Core.Provider;
+using Siigo.Core.Provider.Interface;
+using Siigo.Core.Provider.Providers;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastructure.Extensions;
 
 namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastructure.ServiceRegistrations

@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Serilog;
-using Siigo.Core.Manager;
-using Siigo.Core.Models;
+using Siigo.Core.Security.Manager;
+using Siigo.Core.Security.Models;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Exception;
 
 

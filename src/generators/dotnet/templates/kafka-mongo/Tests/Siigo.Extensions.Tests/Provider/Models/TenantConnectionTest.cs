@@ -1,4 +1,4 @@
-using Siigo.Core.Models;
+using Siigo.Core.Provider.Models;
 using Xunit;
 
 namespace <%= config.projectPrefix %>.Extensions.Tests.Provider.Models

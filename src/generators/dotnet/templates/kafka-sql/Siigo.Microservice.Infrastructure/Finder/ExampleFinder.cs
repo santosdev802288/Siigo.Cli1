@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.AggregateModel.ExampleAggregate;
 
@@ -6,10 +7,10 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructur
     public class ExampleFinder: IExampleFinder
     {
 
-        public Task<Domain.AggregateModel.ExampleAggregate.Example> FindByIdAsync(int id)
+        public Task<Example> FindByIdAsync(Guid id)
         {
             // TODO
-            return Task.FromResult(new Domain.AggregateModel.ExampleAggregate.Example(id));
+            return Task.FromResult(new Example(){Id = id});
         }
     }
 }
