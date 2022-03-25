@@ -158,7 +158,7 @@ export default class MigrationTemplateGenerator extends Generator {
             type: 'list',
             name: 'type',
             message: 'Select the source',
-            choices: Object.values(Options),
+            choices: Object.values(Options).filter(option => option !== Options.KAFKA),
         }])
 
         if (this.userOptions.source.type == Options.SQL) {

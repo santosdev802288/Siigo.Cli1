@@ -393,6 +393,128 @@ Generate a new ak6 project with monitoring and distributed testing
 
         yo siigo:test-ak6     
 
+
+## 📡 S-Kub
+[SKub](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.SKub) It is a service for large data transfer, it is distributed, available and reliable. Its architecture is inspired by Apache Flume and is made with Apache Spark. It has two concepts that allow its operation. Source and Sinks.For more information check the project documentation
+
+### Motivation
+
+These commands allow automation and easy handling of the S-Kub tool and implementation. Allowing integration with the Spark operator in Kubernetes, its configuration and use being transparent for developers
+
+### Using
+
+For the use, it consists of two steps mainly:
+1. The generation of the YAML configuration file, where the source configuration, sink and sink validation, will be specified for the correct process operation.
+
+    First, generate a S-Kub yaml configuration file in your current path.  
+    
+        yo siigo:skub-template
+
+    Next, you have to choose the source between SQL, MongoDB, and Cassandra. If you select the SQL option, the system will ask you if a multitenant connection is needed.
+
+        ╭━━━╮           ╭╮   ╭╮  ╭╮╭━━━╮
+        ┃╭━╮┃           ┃┃   ┃╰╮╭╯┃┃╭━╮┃
+        ┃╰━━┳┳┳━━┳━━╮╭━━┫┃╭╮ ╰╮┃┃╭╯╰╯╭╯┃
+        ╰━━╮┣╋┫╭╮┃╭╮┃┃╭━┫┃┣┫  ┃╰╯┃ ╭━╯╭╯
+        ┃╰━╯┃┃┃╰╯┃╰╯┣┫╰━┫╰┫┃  ╰╮╭╯ ┃┃╰━╮
+        ╰━━━┻┻┻━╮┣━━┻┻━━┻━┻╯   ╰╯  ╰━━━╯
+            ╭━╯┃╭──────────────────────────╮
+            ╰━━╯│      Siigo generator     │
+                │  Migration job template. │
+                ╰──────────────────────────╯
+
+        ? Select the source (Use arrow keys)
+        ❯ SQL  
+        MONGO 
+        CASSANDRA 
+
+    Next, you will select the Sink (Kafka, SQL, Mongo and Cassandra).
+
+        ╭━━━╮           ╭╮   ╭╮  ╭╮╭━━━╮
+        ┃╭━╮┃           ┃┃   ┃╰╮╭╯┃┃╭━╮┃
+        ┃╰━━┳┳┳━━┳━━╮╭━━┫┃╭╮ ╰╮┃┃╭╯╰╯╭╯┃
+        ╰━━╮┣╋┫╭╮┃╭╮┃┃╭━┫┃┣┫  ┃╰╯┃ ╭━╯╭╯
+        ┃╰━╯┃┃┃╰╯┃╰╯┣┫╰━┫╰┫┃  ╰╮╭╯ ┃┃╰━╮
+        ╰━━━┻┻┻━╮┣━━┻┻━━┻━┻╯   ╰╯  ╰━━━╯
+            ╭━╯┃╭──────────────────────────╮
+            ╰━━╯│      Siigo generator     │
+                │  Migration job template. │
+                ╰──────────────────────────╯
+
+        ? Select the source SQL
+        ? Select the target (sink) (Use arrow keys)
+        ❯ SQL 
+        KAFKA 
+        MONGO 
+        CASSANDRA 
+
+    If the migration requires Sink Validation, it will show you the corresponding options (Kafka, SQL, Mongo and Cassandra).
+
+        ╭━━━╮           ╭╮   ╭╮  ╭╮╭━━━╮
+        ┃╭━╮┃           ┃┃   ┃╰╮╭╯┃┃╭━╮┃
+        ┃╰━━┳┳┳━━┳━━╮╭━━┫┃╭╮ ╰╮┃┃╭╯╰╯╭╯┃
+        ╰━━╮┣╋┫╭╮┃╭╮┃┃╭━┫┃┣┫  ┃╰╯┃ ╭━╯╭╯
+        ┃╰━╯┃┃┃╰╯┃╰╯┣┫╰━┫╰┫┃  ╰╮╭╯ ┃┃╰━╮
+        ╰━━━┻┻┻━╮┣━━┻┻━━┻━┻╯   ╰╯  ╰━━━╯
+            ╭━╯┃╭──────────────────────────╮
+            ╰━━╯│      Siigo generator     │
+                │  Migration job template. │
+                ╰──────────────────────────╯
+
+        ? Select the source KAFKA
+        ? Select the target (sink) KAFKA
+        ? Do yo want to validate the target (sink)? Yes
+        ? Select the target to validate (sink - validation) 
+        SQL 
+        KAFKA 
+        ❯ MONGO 
+        CASSANDRA 
+
+    Once the selection process is over, the system will generate a predefined YAML configuration file. You must update the corresponding information like columns, connection strings, multitenant configuration, Queries, etc.
+
+2. Start-up or execution of the S-Kub process, once the YAML file has been verified and configured, it will be executed and published in K8's. There are two configurations, recurring executions or single execution. For recurring executions it is necessary to specify the cron job expression with the necessary frequency.
+
+        ╭━━━╮           ╭╮   ╭╮  ╭╮╭━━━╮
+        ┃╭━╮┃           ┃┃   ┃╰╮╭╯┃┃╭━╮┃
+        ┃╰━━┳┳┳━━┳━━╮╭━━┫┃╭╮ ╰╮┃┃╭╯╰╯╭╯┃
+        ╰━━╮┣╋┫╭╮┃╭╮┃┃╭━┫┃┣┫  ┃╰╯┃ ╭━╯╭╯
+        ┃╰━╯┃┃┃╰╯┃╰╯┣┫╰━┫╰┫┃  ╰╮╭╯ ┃┃╰━╮
+        ╰━━━┻┻┻━╮┣━━┻┻━━┻━┻╯   ╰╯  ╰━━━╯
+        ╭━╯┃
+        ╰━━╯╭──────────────────────────╮
+        │  Siigo Skub generator. │
+        ╰──────────────────────────╯
+
+        Usage:
+        yo siigo:skub [options]
+
+        Options:
+        -h,    --help           # Print the generator's options and usage
+                --skip-cache     # Do not remember prompt answers               Default: false
+                --skip-install   # Do not automatically install dependencies    Default: false
+                --force-install  # Fail on install dependencies error           Default: false
+                --ask-answered   # Show prompts for already configured options  Default: false
+        -dn,   --domain         # Domain name.
+        -fp,   --file-path      # Yaml configuration file path.
+        -c,    --context        # Cluster context
+        -r,    --replicas       # Replicas number                              Default: 1
+        -ce,   --cron           # Cron expression
+
+
+    Example:
+
+        yo siigo:skub --dn evil --fp migration.yaml --context QACOLCrossPlaneCluster --replicas 3
+
+### Example 
+In the following [example](https://asciinema.org/a/MR6AnoIdF94sdfQx9VbtDDlyY?speed=2) you can see the step by step how to generate a SKub configuration file
+
+
+### Flags and description
+Run *_yo siigo:skub --help_* to see the configuration description, data type and default value for all the parameters.
+
+### Did something go wrong?
+If for some reason the deployment process fails, you should verify the correct structure and values within the migration.yaml configuration file and run the process again.
+
 ## Contributing
 
 ### Requirements
