@@ -10,11 +10,12 @@ import * as siigoFile from '../../src/utils/siigoFile'
 import DotnetMSGenerator from '../../src/generators/dotnet'
 import { runningOnAzurePipeline } from '../azureDevOps'
 import { assertNoOutdatedPackages, dotnetBuild } from '../helper/dotnetUtils'
+import { ServerType } from '../../src/generators/dotnet/enums'
 
 const GENERATOR_FOLDER = '../../src/generators/dotnet'
 const NAMESPACE = 'siigo:dotnet'
 
-const templatesTypes = ['basic', 'command', 'query', 'command+query', 'grpc-server', 'grpc-client']
+const templatesTypes = Object.values(ServerType);
 
 describe(NAMESPACE, () => {
   const projectType = templatesTypes[Math.floor(Math.random() * templatesTypes.length)]

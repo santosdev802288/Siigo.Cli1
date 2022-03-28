@@ -1,6 +1,6 @@
 #!/bin/bash
 
-local_token="94bf3dad1d42f1c6cc7b67427415ee7543a5e290"
+local_token="920f45e9518a9d6289d99f33d9ea19a05ce7840d"
 local_host="http://localhost:9200"
 
 dir="$(pwd)"

@@ -12,6 +12,7 @@ export function assertNoOutdatedPackages() {
   const commands: { [key: string]: string[]; } = {
     'Deprecated': ['dotnet list package --deprecated', '>'],
     'Vulnerable': ['dotnet list package --vulnerable', '>'],
+    'Outdated Archetype': [outdated, '> Archetype'],
     'Outdated Siigo': [outdated, '> Siigo'],
   }
 
