@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
-using Serilog;
-using Siigo.Core.Manager;
-using Siigo.Core.Models;
+using Siigo.Core.Logs;
+using Siigo.Core.Security.Manager;
+using Siigo.Core.Security.Models;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Exception;
 
 
@@ -29,7 +29,7 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Filter
 
         public AuthorizeFilter(IConfiguration Configuration, params string[] claim)
         {
-            Log.Information("Claims are: ", claim.ToString());
+            SiigoLog.LogInformation("Claims are: ", claim.ToString());
             this.Configuration = Configuration;
         }
 

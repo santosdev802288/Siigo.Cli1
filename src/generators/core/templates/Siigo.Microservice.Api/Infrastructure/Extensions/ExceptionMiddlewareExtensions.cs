@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using Serilog;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.SeedWork;
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Exception;
 using System.Collections.Generic;
@@ -41,10 +40,6 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastru
                             messages = string.Join('|', errorDetails.Errors.Select(error => error.Message));
                             details = string.Join('|', errorDetails.Errors.Select(error => error.Detail));
                         }
-
-                        Log.Error("{appName} {timeStamp} {statusCode} {message} {exception} {detail}",
-                            appName, DateTime.UtcNow, codes, messages,
-                            contextFeature.Error, details);
 
                         await context.Response.WriteAsync(errorDetails.ToString());
                     }

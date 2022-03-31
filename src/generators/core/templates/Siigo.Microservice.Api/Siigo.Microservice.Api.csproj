@@ -25,7 +25,8 @@
   <ItemGroup>
     <PackageReference Include="ArchetypeProviderLibrary" Version="0.1.7" />
     <PackageReference Include="Siigo.Core.Trace" Version="0.1.0" />
-    <PackageReference Include="Siigo.Core.Security" Version="0.2.0" />
+    <PackageReference Include="Siigo.Core.Security" Version="1.0.*" />
+    <PackageReference Include="Siigo.Core.Logs" Version="0.1.*" />
     <PackageReference Include="Autofac" Version="6.1.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="coverlet.msbuild" Version="2.9.0">

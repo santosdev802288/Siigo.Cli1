@@ -1,7 +1,6 @@
 using System;
 using System.Runtime.Serialization;
 using Microsoft.AspNetCore.Http;
-using Serilog;
 
 namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Exception
 {
