@@ -14,10 +14,4 @@
     <PackageReference Include="Siigo.Core.Database" Version="0.1.0" />
   </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <!-- Check deprecated or vulnerable dependencies -->
-    <Exec Command="dotnet list package --deprecated" />
-    <Exec Command="dotnet list package --vulnerable" />
-  </Target>
-
 </Project>

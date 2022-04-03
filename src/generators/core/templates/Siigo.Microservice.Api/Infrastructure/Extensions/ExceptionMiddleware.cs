@@ -11,7 +11,7 @@ using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Ex
 using Siigo.Core.Logs;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Siigo.Parameters.Api.Infrastructure.Extensions
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastructure.Extensions
 {
     [ExcludeFromCodeCoverage]
     public class ExceptionMiddleware

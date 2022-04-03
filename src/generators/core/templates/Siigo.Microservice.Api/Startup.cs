@@ -80,12 +80,6 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api
 
             app.UseCors("CorsPolicy");
 
-            app.UseSerilogRequestLogging(opts =>
-            {
-                opts.EnrichDiagnosticContext = LogHelper.EnrichFromRequest;
-                opts.GetLevel = LogHelper.ExcludeHealthChecks; // Use the custom level
-            });
-
             app.ConfigureExceptionHandler(_configuration);
 
             app.UseAuthorization();
