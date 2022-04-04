@@ -11,20 +11,19 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Applicati
     // This approach provides great flexibility and productivity for the developers creating or updating the queries.
     public class ExampleQueryHandler : IRequestHandler<ExampleQuery, string>
     {
-        private readonly IExampleFinder _exampleFinder;
+        private readonly ExampleProcess _process;
 
-        public ExampleQueryHandler(IExampleFinder exampleFinder)
+        public ExampleQueryHandler(ExampleProcess process)
         {
-            _exampleFinder = exampleFinder;
+            _process = process;
         }
 
         public async Task<string> Handle(ExampleQuery request, CancellationToken cancellationToken)
         {
-            // use your finder
             // map response with Mapster
 
-            Example example = await _exampleFinder.FindByIdAsync(request.Id);
-            return "Finder Id -> " + example.Id;
+            Example example = await _process.FindExample(request.Id);
+            return $"Id {example.Id}. Message: {example.Message}";
         }
 
     }

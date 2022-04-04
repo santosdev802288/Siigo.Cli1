@@ -35,9 +35,6 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Infrastru
             //  Repository’s lifetime should usually be set as scoped
 
             _ = builder.RegisterInstance(_configuration).As<IConfiguration>();
-            _ = builder.RegisterType<TenantProvider>()
-                .As<ITenantProvider>()
-                .SingleInstance();
 
             _ = builder
                 .RegisterType<ExampleFinder>()

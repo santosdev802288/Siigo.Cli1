@@ -5,12 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.msbuild" Version="2.9.0">
+    <PackageReference Include="Grpc.Tools" Version="2.38.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.msbuild" Version="3.1.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="5.0.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
     <PackageReference Include="Moq" Version="4.15.2" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -23,6 +27,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\..\<%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api\Proto\example.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>

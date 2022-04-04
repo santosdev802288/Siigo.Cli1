@@ -23,12 +23,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.38.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.15" />
     <PackageReference Include="Siigo.Core.Trace" Version="0.1.*" />
     <PackageReference Include="Siigo.Core.Security" Version="1.0.*" />
     <PackageReference Include="Autofac" Version="6.1.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
-    <PackageReference Include="coverlet.msbuild" Version="2.9.0">
-    </PackageReference>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="FluentValidation" Version="9.3.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="9.3.0" />
@@ -56,7 +56,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
     <PackageReference Include="librdkafka.redist" Version="1.5.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.0.0" />
+  </ItemGroup>
 
+  <ItemGroup>
+    <Protobuf Include="Proto\example.proto" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>
