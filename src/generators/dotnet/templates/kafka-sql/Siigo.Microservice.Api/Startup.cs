@@ -20,6 +20,14 @@ using Siigo.Core.Security.Filter;
 using Siigo.Core.Security.Manager;
 using Serilog.Formatting.Json;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Controllers.v1;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Filter;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Service;
+
 
 namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api
 {
@@ -50,11 +58,34 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api
         {
             services.AddServicesInAssembly(_configuration);
 
+            services.AddDomain();
+
             services.AddControllers();
             services.AddHttpContextAccessor();
             services.AddHttpContextAccessor();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme);
+            services.AddGrpc();
+
+            // gRPC Authentication 
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(o =>
+            {
+                var validator = new JwtTokenValidator(_configuration);
+                o.SecurityTokenValidators.Add(validator);
+            });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("TokenAuthorize", policy =>
+                {
+                    policy.AddRequirements(new GrpcRequireemnt());
+                });
+            });
+            services.AddSingleton<IAuthorizationHandler, GrpcHandler>();
+
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddValidatorsFromAssemblyContaining(typeof(Startup));
@@ -63,7 +94,7 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddSingleton<ITokenManager, TokenManager>();
-            services.AddSingleton<IAsyncAuthorizationFilter, AuthorizeFilter>();
+            services.AddSingleton<IAsyncAuthorizationFilter, Core.Security.Filter.AuthorizeFilter>();
 
             //configure autofac
             var container = new ContainerBuilder();
@@ -96,11 +127,14 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api
 
             app.ConfigureExceptionHandler(_configuration);
 
+            app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapHealthChecks("/health");
+                endpoints.MapGrpcService<ExampleService>();
             });
 
             loggerFactory.AddSerilog();
