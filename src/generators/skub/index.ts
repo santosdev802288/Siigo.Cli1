@@ -2,6 +2,7 @@ import Generator from "yeoman-generator"
 import colorize from 'json-colorizer'
 import yaml from 'yaml'
 import cronstrue from 'cronstrue'
+import fs from 'fs'
 import {siigosay} from '@nodesiigo/siigosay'
 import {saveStatistic} from '../../utils/statistics/statistic'
 import {getAllParametersSiigo} from '../../utils/siigoFile'
@@ -206,7 +207,8 @@ export default class MigrationGenerator extends Generator {
         this.spawnCommandSync("kubectl", ["apply", "-f", "./spark.yaml"])
 
         // Delete temp yaml
-        this.fs.delete('./spark.yaml')
+        //this.fs.delete('./spark.yaml')
+        fs.unlinkSync('./spark.yaml')
 
         await new Promise(resolve => setTimeout(resolve, 10000));
 

@@ -442,9 +442,8 @@ For the use, it consists of two steps mainly:
                 ╰──────────────────────────╯
 
         ? Select the source SQL
-        ? Select the target (sink) (Use arrow keys)
-        ❯ SQL 
-        KAFKA 
+        ? Select the target (sink) (Use arrow keys)        
+        ❯ KAFKA 
         MONGO 
         CASSANDRA 
 
@@ -465,8 +464,7 @@ For the use, it consists of two steps mainly:
         ? Select the target (sink) KAFKA
         ? Do yo want to validate the target (sink)? Yes
         ? Select the target to validate (sink - validation) 
-        SQL 
-        KAFKA 
+        SQL         
         ❯ MONGO 
         CASSANDRA 
 
@@ -503,7 +501,58 @@ For the use, it consists of two steps mainly:
 
     Example:
 
-        yo siigo:skub --dn evil --fp migration.yaml --context QACOLCrossPlaneCluster --replicas 3
+        yo siigo:skub --dn domainname --fp migration.yaml --context myk8scontext --replicas 3
+
+
+    ### Scheduled S-Kub Job
+    
+    If your SKub execution is scheduled (ScheduledSparkApplication) you must specify the --cron or -ce parameter along with the Cron expression ([see the following link](https://crontab.guru/)). This will specify to S-Kub how often you want to run the migration
+
+    Example:
+
+        yo siigo:skub --dn mydomainname --fp migration.yaml --context myk8scontext --replicas 3 --cron "5 4 * * *"
+
+    Once this is done you will be shown the configuration options along with the cron expression in human language to confirm
+
+        ╭━━━╮           ╭╮   ╭╮  ╭╮╭━━━╮
+        ┃╭━╮┃           ┃┃   ┃╰╮╭╯┃┃╭━╮┃
+        ┃╰━━┳┳┳━━┳━━╮╭━━┫┃╭╮ ╰╮┃┃╭╯╰╯╭╯┃
+        ╰━━╮┣╋┫╭╮┃╭╮┃┃╭━┫┃┣┫  ┃╰╯┃ ╭━╯╭╯
+        ┃╰━╯┃┃┃╰╯┃╰╯┣┫╰━┫╰┫┃  ╰╮╭╯ ┃┃╰━╮
+        ╰━━━┻┻┻━╮┣━━┻┻━━┻━┻╯   ╰╯  ╰━━━╯
+              ╭━╯┃╭──────────────────────────╮
+              ╰━━╯│      Siigo generator     │
+                  │      Migration job.      │
+                  ╰──────────────────────────╯
+
+        {
+          "domain": "mydomainname",
+          "filePath": "migration.yaml",
+          "context": "myk8scontext",
+          "replicas": 3,
+          "cron": "At 04:05 AM"
+        }
+        ? Is the configuration correct? (Y/n)
+
+    Once the command is executed, the job will run according to the 
+    frequency of the cron expression.
+
+    ### Delete scheduled S-Kub job
+
+    If you want to remove the scheduled S-Kub, you have to do it using the following command
+
+        yo siigo:skub-delete --context myk8scontext --dn mydomainname
+
+    ### Watch scheduled S-Kub job logs
+
+    If you want to see the logs of your scheduled S-Kub job you can go directly to the cluster (using k9s), or you can do it using the following command
+
+        kubectl logs mydomainname-driver -f -n default 
+
+    It is necessary that your domain name is preceded by -driver
+
+
+
 
 ### Example 
 In the following [example](https://asciinema.org/a/MR6AnoIdF94sdfQx9VbtDDlyY?speed=2) you can see the step by step how to generate a SKub configuration file
