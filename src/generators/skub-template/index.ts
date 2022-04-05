@@ -194,7 +194,7 @@ export default class MigrationTemplateGenerator extends Generator {
                 type: 'list',
                 name: 'type',
                 message: 'Select the target to validate (sink - validation)',
-                choices: Object.values(Options),
+                choices: Object.values(Options).filter(option => option !== Options.KAFKA),
             }])
         }
     }
