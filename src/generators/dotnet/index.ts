@@ -7,18 +7,21 @@ import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile';
 import { getChecksums } from '../../utils/checksum';
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
 import { saveStatistic } from '../../utils/statistics/statistic';
+import { ServerType } from './enums';
 
+const ServerTypes = Object.values(ServerType)
 
 export default class DotnetMSGenerator extends MicroserviceGenerator {
-  appConfig: {
-        name?: any,
-        nameCapitalize?: any,
-        projectPrefix?: any,
-        token?: any,
-        type?: any,
-        userSiigo?: any,
-        nameDev?: any,
-    } = {};
+  
+  appConfig !: {
+    name: string;
+    nameCapitalize: string;
+    projectPrefix: string;
+    token: string;
+    type: ServerType;
+    userSiigo: string;
+    nameDev: string;
+  };
     
   constructor(args: any, opt: any) {
     super(args, opt);
@@ -44,8 +47,9 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
       {
         type: 'list',
         name: 'type',
-        message: 'what do you want to generate?',
-        choices: ['basic', 'command', 'query', 'command+query', 'grpc-server', 'grpc-client']
+        message: '¿what do you want to generate?',
+        choices: ServerTypes,
+        default: ServerTypes.indexOf(ServerType.REST)
       }
     ])
     saveStatistic('dotnet', {type: response.type})
@@ -53,18 +57,19 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
     const updatetoken = this.options['token'];
     if (tokenf == 'pending' || updatetoken != null)
       tokenf = await wizardsiigofile(updatetoken);
-    this.appConfig = {};
-    this.appConfig.name = this.options['name'];
-    this.appConfig.nameCapitalize = _.upperFirst(this.appConfig.name);
-    this.appConfig.type = response.type;
-    this.appConfig.userSiigo = (objParameters as any).user;
-    this.appConfig.nameDev = (objParameters as any).name;
-    this.appConfig.token = tokenf;
-    this.appConfig.projectPrefix = this.options['project-prefix'];
+    this.appConfig = {
+      name: this.options['name'],
+      nameCapitalize: _.upperFirst(this.options['name']),
+      type: response.type,
+      userSiigo: (objParameters as any).user,
+      nameDev: (objParameters as any).name,
+      token: _.defaultTo(tokenf, ''),
+      projectPrefix: this.options['project-prefix'],
+    }
   }
 
   _doWriting(): void {
-    const nametemplate = (this.appConfig.type == 'command+query') ? 'commandquery' : this.appConfig.type;
+    const nametemplate = (this.appConfig.type === ServerType.CQRS) ? 'commandquery' : this.appConfig.type;
     // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
     this.queueTransformStream([
       rename((parsetPath) => {
@@ -77,7 +82,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         parsetPath.basename = parsetPath.basename.replace(/(Siigo)/g, this.appConfig.projectPrefix);
       })
     ]);
-    this.fs.copyTpl(this.templatePath('base/*'), this.destinationPath('.'), { config: this.appConfig }, {}, {globOptions: {dot: true}})
+    this.fs.copyTpl(this.templatePath('base/'), this.destinationPath('.'), { config: this.appConfig }, {}, {globOptions: {dot: true}})
 
     this.fs.copyTpl(this.templatePath(nametemplate + '/'), this.destinationPath('.'), { config: this.appConfig });
     this.fs.copyTpl(this.templatePath(nametemplate + '/.*'), this.destinationPath('.'), { config: this.appConfig });

@@ -2,9 +2,9 @@ import Generator from "yeoman-generator"
 import colorize from 'json-colorizer'
 import yaml from 'yaml'
 import cronstrue from 'cronstrue'
-import { siigosay } from '@nodesiigo/siigosay'
-import { saveStatistic } from '../../utils/statistics/statistic'
-import { getAllParametersSiigo } from '../../utils/siigoFile'
+import {siigosay} from '@nodesiigo/siigosay'
+import {saveStatistic} from '../../utils/statistics/statistic'
+import {getAllParametersSiigo} from '../../utils/siigoFile'
 
 interface MigrationOptions {
     domain: string;
@@ -112,8 +112,8 @@ export default class MigrationGenerator extends Generator {
         this._checkMandatory()
 
         // Check cron expression if is provided
-        if (this.appConfig.cron) {            
-            this._checkCronExpression(this.appConfig.cron)        
+        if (this.appConfig.cron) {
+            this._checkCronExpression(this.appConfig.cron)
         }
     }
 
@@ -123,8 +123,7 @@ export default class MigrationGenerator extends Generator {
         const humanCron = this.appConfig.cron ? cronstrue.toString(this.appConfig.cron) : '';
         // @ts-expect-error ts-migrate(2769) FIXME: No overload matches this call.
         const json = JSON.stringify({...this.appConfig, cron: humanCron}, false, '\t')
-        
-        
+
 
         this.log(colorize(json, {
             pretty: true,
@@ -164,22 +163,31 @@ export default class MigrationGenerator extends Generator {
 
         // Read yaml structure & validate.        
         this._checkYamlStructure();
-        
-        const basicConfig = { domainName: this.appConfig.domain, data: this._removeBreakLines(this._escapeQuotes(JSON.stringify(this.dataFile, null, ""))), replicas: this.appConfig.replicas, name: siigoParams.name, tribe: siigoParams.tribe }
+
+        const basicConfig = {
+            domainName: this.appConfig.domain,
+            data: this._removeBreakLines(this._escapeQuotes(JSON.stringify(this.dataFile, null, ""))),
+            replicas: this.appConfig.replicas,
+            name: siigoParams.name,
+            tribe: siigoParams.tribe
+        }
 
         // Check template type.
         if (this.appConfig.cron) {
-             // Write temp yaml                    
-            this.fs.copyTpl(this.templatePath('spark-scheduled.yaml'), this.destinationPath('spark.yaml'), { ...basicConfig, schedule: this.appConfig.cron })            
+            // Write temp yaml
+            this.fs.copyTpl(this.templatePath('spark-scheduled.yaml'), this.destinationPath('spark.yaml'), {
+                ...basicConfig,
+                schedule: this.appConfig.cron
+            })
             return
-        } 
+        }
 
         // Write temp yaml                    
-        this.fs.copyTpl(this.templatePath('spark-app.yaml'), this.destinationPath('spark.yaml'), { ...basicConfig })
+        this.fs.copyTpl(this.templatePath('spark-app.yaml'), this.destinationPath('spark.yaml'), {...basicConfig})
 
     }
 
-    
+
     async install() {
 
         // Az login
@@ -192,7 +200,7 @@ export default class MigrationGenerator extends Generator {
         this.spawnCommandSync("kubectl", ['config', 'current-context']);
 
         // Delete old jobs        
-        this.spawnCommandSync("kubectl", ["delete", "--ignore-not-found","sparkapp", this.appConfig.domain, "-n", "default"])
+        this.spawnCommandSync("kubectl", ["delete", "--ignore-not-found", "sparkapp", this.appConfig.domain, "-n", "default"])
 
         // Apply kubectl                      
         this.spawnCommandSync("kubectl", ["apply", "-f", "./spark.yaml"])
@@ -204,7 +212,9 @@ export default class MigrationGenerator extends Generator {
 
         this.log(siigosay(`S-Kub job has been started.`))
 
-        this.spawnCommandSync("kubectl", ["logs", `${this.appConfig.domain}-driver`, "-f", "-n", "default"])
+        if (!this.appConfig.cron) {
+            this.spawnCommandSync("kubectl", ["logs", `${this.appConfig.domain}-driver`, "-f", "-n", "default"])
+        }
     }
 
 
@@ -230,33 +240,32 @@ export default class MigrationGenerator extends Generator {
     }
 
 
-
     _checkYamlStructure(): boolean {
 
         if (!this.dataFile.source) {
             throw new Error('source is required')
         }
 
-        if(!this.dataFile.source.format) {
+        if (!this.dataFile.source.format) {
             throw new Error('source.format is required')
         }
- 
-        if(Object.keys(this.dataFile.source.options).length === 0){
+
+        if (Object.keys(this.dataFile.source.options).length === 0) {
             throw new Error('source.options is required')
         }
-        
+
         if (!this.dataFile.sink) {
             throw new Error('sink is required')
         }
 
-        if(!this.dataFile.sink.format) {
+        if (!this.dataFile.sink.format) {
             throw new Error('sink.format is required')
         }
- 
-        if(Object.keys(this.dataFile.sink.options).length === 0){
+
+        if (Object.keys(this.dataFile.sink.options).length === 0) {
             throw new Error('sink.options is required')
         }
-        
+
         /*if (!this.dataFile.verify) {
             throw new Error('verify is required')
         }*/
@@ -271,7 +280,7 @@ export default class MigrationGenerator extends Generator {
         if (!this.dataFile.multiTenantConfig) {
             throw new Error('multiTenantConfig is required')
         }*/
-            
+
         return true
     }
 
