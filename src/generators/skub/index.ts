@@ -16,6 +16,7 @@ interface MigrationOptions {
 }
 
 interface MigrationYaml {
+    domainName: string,
     verify: boolean
     multiTenantConfig: MTConfiguration
     jobConfig: JobConfig
@@ -161,6 +162,9 @@ export default class MigrationGenerator extends Generator {
 
         // Parse yaml data        
         this.dataFile = yaml.parse(data)
+
+        // Set domain name
+        this.dataFile.domainName = this.appConfig.domain
 
         // Read yaml structure & validate.        
         this._checkYamlStructure();

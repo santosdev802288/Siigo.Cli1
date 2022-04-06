@@ -1,4 +1,3 @@
-domainName: ""
 owner:
   name: <%= user %>
   tribe: <%= tribe %>
