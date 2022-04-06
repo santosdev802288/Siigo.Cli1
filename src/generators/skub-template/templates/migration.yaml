@@ -3,11 +3,12 @@ owner:
   name: <%= user %>
   tribe: <%= tribe %>
 
+tracker:
+  url: https://servicesqa.siigo.com/cross/api/v1/checker/domain/jobs
 
 jobConfig:
   options: {}
   #spark.master: "local[*]"
-
 
 <% if (multitenant) { %>
 multiTenantConfig:
@@ -51,7 +52,7 @@ sinkValidation:
 <% } -%>
 
 sink:
-  asJson: true # If the data is treated as json
+  asJson: false # If the data is treated as json
   format: <%= sink.format %>
   saveMode: append # Change if is neccesary. (overwrite, ignore, append)
   options:
