@@ -428,7 +428,7 @@ For the use, it consists of two steps mainly:
         MONGO 
         CASSANDRA 
 
-    Next, you will select the Sink (Kafka, SQL, Mongo and Cassandra).
+    Next, you will select the Sink (Kafka, Mongo and Cassandra).
 
         ╭━━━╮           ╭╮   ╭╮  ╭╮╭━━━╮
         ┃╭━╮┃           ┃┃   ┃╰╮╭╯┃┃╭━╮┃
@@ -447,7 +447,7 @@ For the use, it consists of two steps mainly:
         MONGO 
         CASSANDRA 
 
-    If the migration requires Sink Validation, it will show you the corresponding options (Kafka, SQL, Mongo and Cassandra).
+    If the migration requires Sink Validation, it will show you the corresponding options (SQL, Mongo and Cassandra).
 
         ╭━━━╮           ╭╮   ╭╮  ╭╮╭━━━╮
         ┃╭━╮┃           ┃┃   ┃╰╮╭╯┃┃╭━╮┃
