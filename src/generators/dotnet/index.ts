@@ -21,6 +21,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
     type: ServerType;
     userSiigo: string;
     nameDev: string;
+    auth: any
   };
     
   constructor(args: any, opt: any) {
@@ -49,9 +50,18 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         name: 'type',
         message: '¿what do you want to generate?',
         choices: ServerTypes,
-        default: ServerTypes.indexOf(ServerType.REST)
+        default: ServerTypes.indexOf(ServerType.FULL)
       }
     ])
+
+    const responseAuth = await this.prompt([
+      {
+          type: 'confirm',
+          name: 'auth',
+          message: 'Do you want to add the GRPC authentication?'
+      }
+    ]);
+
     saveStatistic('dotnet', {type: response.type})
     let tokenf = objParameters.token;
     const updatetoken = this.options['token'];
@@ -65,6 +75,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
       nameDev: (objParameters as any).name,
       token: _.defaultTo(tokenf, ''),
       projectPrefix: this.options['project-prefix'],
+      auth: responseAuth.auth
     }
   }
 
@@ -88,8 +99,17 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
     this.fs.copyTpl(this.templatePath(nametemplate + '/.*'), this.destinationPath('.'), { config: this.appConfig });
     const checksums = getChecksums(this.destinationPath());
     this.fs.write(path.join(this.destinationPath(), 'checksums.sha256'), checksums);
+    if(this.appConfig.auth){
+      this.fs.copyTpl(this.templatePath('full/.auth/Controllers'),this.destinationPath(`${this.appConfig.projectPrefix}.${_.upperFirst(this.appConfig.name)}.Api/Controllers/v1`),{config: this.appConfig})
+      this.fs.copyTpl(this.templatePath('full/.auth/Finder'),this.destinationPath(`${this.appConfig.projectPrefix}.${_.upperFirst(this.appConfig.name)}.Infrastructure/Finder`),{config: this.appConfig})
+    }else{
+      this.fs.copyTpl(this.templatePath('full/.withoutAuth/Controllers'),this.destinationPath(`${this.appConfig.projectPrefix}.${_.upperFirst(this.appConfig.name)}.Api/Controllers/v1`),{config: this.appConfig})
+      this.fs.copyTpl(this.templatePath('full/.withoutAuth/Finder'),this.destinationPath(`${this.appConfig.projectPrefix}.${_.upperFirst(this.appConfig.name)}.Infrastructure/Finder`),{config: this.appConfig})
+    }
   }
-    
+
+
+
   end() {
     this.log(siigosay('Project Created!!'));
   }

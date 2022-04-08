@@ -2,6 +2,7 @@ export enum ServerType {
   CQRS_COMMAND = 'command',
   CQRS_QUERY = 'query',
   CQRS = 'command+query',
+  FULL = 'full',
   GRPC = 'grpc-server',
   GRPC_CLIENT = 'grpc-client',
   KAFKA = 'kafka',
