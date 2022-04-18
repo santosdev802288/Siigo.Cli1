@@ -7,13 +7,20 @@ package config
 
 import (
 	"fmt"
+	"os"
+
+	springcloud "dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Golang.Configuration.git/Springcloud"
 	"github.com/ilyakaznacheev/cleanenv"
 	log "github.com/sirupsen/logrus"
-	"os"
 )
 
 const KEY_ENV = "GO_ENV"
 const defaultEnv = "Development"
+
+var (
+	ReadConfiguration = cleanenv.ReadConfig
+	LookUpEnviroment  = os.LookupEnv
+)
 
 // New Clean Env Configuration
 func NewConfiguration() *Configuration {
@@ -38,6 +45,26 @@ func NewConfiguration() *Configuration {
 
 	// build path of the configuration by environment
 	configPath := fmt.Sprintf("%s/configuration/config.%s.yaml", dir, environment)
+
+	if environment != defaultEnv {
+		var temporalConfig SpringCloudConfiguration
+		temporalConfigPath := fmt.Sprintf("%s/Configuration/appsettings.%s.json", dir, environment)
+		// read config file and set struct values
+		err = ReadConfiguration(temporalConfigPath, &temporalConfig)
+		if err != nil {
+			panic(err.Error())
+		}
+		fmt.Printf("Config: %v", temporalConfig)
+
+		var springcloudhandler = springcloud.NewHandler(temporalConfig.Springcloud["Uri"], temporalConfig.Springcloud["Name"], temporalConfig.Springcloud["Env"])
+		wasConfigFound, err := springcloudhandler.InvalidateConfig(configPath, "")
+		if !wasConfigFound {
+			log.Printf("%v: No config record found to: %v\n ", wasConfigFound, temporalConfig.Springcloud)
+		}
+		if err != nil {
+			log.Printf("%v: No config record found to: %v\n ", wasConfigFound, err)
+		}
+	}
 
 	// read config file and set struct values
 	err = cleanenv.ReadConfig(configPath, &cfg)

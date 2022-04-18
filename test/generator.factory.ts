@@ -1,27 +1,40 @@
 import path from 'path'
-import { Constructor, RunContextSettings } from 'yeoman-test';
-import Generator from 'yeoman-generator';
+import { Constructor, RunContextSettings } from 'yeoman-test'
+import Generator from 'yeoman-generator'
 
 import CicdGenerator from '../src/generators/cicd'
 import NodeMSGenerator from '../src/generators/node'
+import CoreMSGenerator from '../src/generators/core'
 import Ak6TestingGenerator from '../src/generators/test-ak6'
 import DatadogGenerator from '../src/generators/datadog'
-
+import MigrationGenerator from '../src/generators/skub'
+import DotnetMSGenerator from '../src/generators/library'
 
 export enum SiigoGenerator {
-    MS_CICD,
-    MS_NODE,
-    TEST_AK6,
-    TEST_DD,
-}
+  LIBRARY,
+  MS_CICD,
+  MS_CORE,
+  MS_NODE,
+  TEST_AK6,
+  TEST_DD,
+  TEST_MIGRATION
 
+}
 export interface TestGenerator {
-    readonly generatorOrNamespace: string | Constructor<Generator>,
-    readonly settings?: RunContextSettings
+  readonly generatorOrNamespace: string | Constructor<Generator>,
+  readonly settings?: RunContextSettings
 }
 
 export function getGenerator(generator: SiigoGenerator): TestGenerator {
   switch (generator) {
+    case SiigoGenerator.LIBRARY:
+      return {
+        generatorOrNamespace: DotnetMSGenerator as Constructor<Generator>,
+        settings: {
+          resolved: path.join(__dirname, '../src/generators/library', 'index.js'),
+          namespace: 'siigo:library'
+        }
+      }
     case SiigoGenerator.MS_CICD:
       return {
         generatorOrNamespace: CicdGenerator as Constructor<Generator>,
@@ -30,6 +43,14 @@ export function getGenerator(generator: SiigoGenerator): TestGenerator {
           namespace: 'siigo:cicd'
         }
       }
+      case SiigoGenerator.MS_CORE:
+        return {
+            generatorOrNamespace: CoreMSGenerator as Constructor<Generator>,
+            settings: {
+                resolved: path.join(__dirname, '../src/generators/core', 'index.js'),
+                namespace: 'siigo:core'
+            }
+        }
     case SiigoGenerator.MS_NODE:
       return {
         generatorOrNamespace: NodeMSGenerator as Constructor<Generator>,
@@ -52,6 +73,15 @@ export function getGenerator(generator: SiigoGenerator): TestGenerator {
         settings: {
           resolved: path.join(__dirname, '../src/generators/datadog', 'index.js'),
           namespace: 'siigo:datadog'
+        }
+      }
+
+    case SiigoGenerator.TEST_MIGRATION:
+      return {
+        generatorOrNamespace: MigrationGenerator as Constructor<Generator>,
+        settings: {
+          resolved: path.join(__dirname, '../src/generators/skub', 'index.js'),
+          namespace: 'siigo:skub'
         }
       }
     default:

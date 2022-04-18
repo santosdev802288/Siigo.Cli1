@@ -4,5 +4,5 @@ module.exports = {
     bail: true, // stop on first failure
     extension: ["ts"],
     require: "ts-node/register",
-    timeout: 60000,
+    timeout: 120000,
 }

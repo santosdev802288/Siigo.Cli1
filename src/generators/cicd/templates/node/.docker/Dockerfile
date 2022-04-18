@@ -28,7 +28,7 @@ FROM siigo.azurecr.io/node-runtime:3 as runtime
 WORKDIR /app
 
 # Copiar binario construido en la imagén anteior
-COPY --from=build /app/binary ./
+COPY --from=build /app/dist/binary ./
 
 EXPOSE 5000
 CMD ["/app/binary"]

@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Moq;
-using Siigo.DotnetgRPCClient.Infrastructure;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure;
 using Xunit;
 
-namespace Siigo.DotnetgRPCClient.Api.Test
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Test
 {
     public class GrpcClientTest
     {

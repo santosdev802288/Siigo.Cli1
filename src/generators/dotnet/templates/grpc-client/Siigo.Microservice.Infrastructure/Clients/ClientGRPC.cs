@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Mapster;
 using Grpc.Core;
 using Grpc.Net.Client;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure;
 
 namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure
 {

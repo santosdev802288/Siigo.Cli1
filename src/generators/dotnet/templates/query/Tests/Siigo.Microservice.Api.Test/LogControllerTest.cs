@@ -1,8 +1,7 @@
 using Moq;
 
 using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Controllers.v1;
-using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Models.Logger;
-using Siigo.LogTest.Api.Models.Logger;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Service;
 using System;
 
 using Xunit;
@@ -23,7 +22,7 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Test
         {
             // Arrange
             var _listEmun = new List<string>() { "Trace", "Debug", "Information", "Warning", "Error", "Critial" };
-            var _controller = new LogController(GetEmunServiceLogs());
+            var _controller = new LogController(new LoggerServiceQuery());
 
             // Act
             var _listResult = _controller.ReadLogEntryLevel();
@@ -33,18 +32,5 @@ namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api.Test
         }
 
         #endregion Public Methods
-
-        #region Private Methods
-
-        private static ILoggerServiceQuery GetEmunServiceLogs()
-        {
-            var _mock = new Mock<ILoggerServiceQuery>();
-
-            _mock.Setup(m => m.ReadLogEntryLevel()).Returns(new List<string>() { "Trace", "Debug", "Information", "Warning", "Error", "Critial" } );
-
-            return _mock.Object;
-        }
-
-        #endregion Private Methods
     }
 }
