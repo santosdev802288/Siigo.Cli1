@@ -1,6 +1,68 @@
 # Changelog
 All notable changes to this project.
 
+## [3.1.0](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v3.0.0...v3.1.0) (2022-04-12)
+
+
+### Features
+
+* **dotnet:** add Kafka + Sql archetype ([690324e](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/690324e5360a90380c17cc2fb64ce34e06bc92b5))
+* **dotnet:** add Kafka archetypes ([d0156dc](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/d0156dc51d9cc25cbb8103c77d0c65f7d4429504))
+* **dotnet:** add Kafka with Mongo archetype ([511e6f5](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/511e6f561db19c3cd7339e352ff83066e546e8a8))
+* **dotnet:** add kafka-sql-grpc archetype ([883f9d1](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/883f9d1c8ce07758df9f0b705d68d43f605eff7e))
+* **generator:** add migration generator, tests ([412ede3](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/412ede3a89da007fbda4bed2e292ac7e40ff001a))
+* **generators:** add migration template generator && labels owner's ([1b0e6ac](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/1b0e6ac879e1c3894f73b9871afab4581a511582))
+* **library:** add unit test to dotnet library ([75053a6](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/75053a6fd45e1bebf49d35c93e5ef44140ab7672))
+* **migration-template:** add yaml props ([1403570](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/14035701773af7d77959140b3190a6913440abb6))
+* **migration:** add replicas flag. increased memory ([e78b3db](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/e78b3db806cf188326ce047a2a508efd55928e18))
+* **skub-template:** Add filter kafka for sink validation ([9740819](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/9740819f598d2ce647d99306c9d5b406a2abf76e))
+* **skub:** Add skub-delete, update readme.md && fix some skub things ([c88f2fa](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/c88f2fa8724f6f239068dea81937ec829c838d16))
+* **skub:** add yaml properties ([7d8ca89](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/7d8ca89cd712be120f8a8b278f27297cc95e0d9c))
+* **skub:** Change templates values && change command name skub ([1750d40](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/1750d405414644240963bec28c4eed64ea253a4c))
+
+
+### Bug Fixes
+
+* Fix conflict ([8dafc43](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/8dafc43e176cfe192ac66896eaa5f8c9cc569275))
+* **generators:** Add ts exception rule ([e6b7150](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/e6b71501fe487080bdfc4baf251d3b26aa7e2455))
+* **node:** update hpa structure ([accaac1](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/accaac13c770da540858ba3e3eac13331f60a168))
+* **skub:** Fix domain name propertie ([284f6b2](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/284f6b2df872ad83d8111e75587843b66794700f))
+* **test-ak6:** update vulnerable dependencies ([9dbdb57](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/9dbdb576619f281a1d0478eb5edc994ad05499b4))
+* update minimist to solve vulnerability ([1da8c1f](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/1da8c1f6f9b685b12dd79b860b8e198a6c9555c8))
+
+
+### Others
+
+* new format for statistics ([85f9610](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/85f96107f6ff8b38b112412f9515177be6940de7))
+
+
+### Code Refactoring
+
+* **src:** Remove unused files ([706ccd0](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/706ccd095052091f8c1ec8181755fb0f2ac668c9))
+
+
+### Tests
+
+* **library:** add test for dotnet library ([b0b4108](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/b0b41086701bb52c4d6dc21975fe582b615671f3))
+* **migration:** Fix test migration ([5bf2dfa](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/5bf2dfac6afc0a9e89654daf6c14c544b55ae354))
+
+
+### Build System
+
+* **npm:** Fix vuln dependecies ([12dbaa8](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/12dbaa8aaed8e0c516422fe3f3d6691f42782750))
+* **package-lock.json:** Fix vulnerabilty ([113c4dd](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/113c4dd149ba97c878608bf20f6db5afbbd5fa3d))
+* **package-lock.json:** Fixed package vuln ([12d5f21](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/12d5f214493ac11f680c68cb870cddf2f17b5d27))
+* **package:** change version mocha for vulnerabilty ([620f0ea](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/620f0ea4aeb8b48094c148ecb1bc476acde4cfe5))
+* update nested dependencies ([361b3ee](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/361b3ee86ac66d5e531e7d30b8b5f26df312e6a1))
+* **yarn:** Restore yarn file ([c3a2155](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/c3a21550f24bb52ff80b7a3af12522ca4fb6098a))
+
+
+### Docs
+
+* **readme.md:** update s-kub readme ([83125d2](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/83125d280414c0b9ac61835017d02b3a994573d5))
+* **README:** Add skub documentation command ([0d1e215](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/0d1e215914d72155693bd9c06aff31302087a57b))
+* **README:** Correciones readme skub ([261bda5](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/261bda5807eb15f03c8ced4cadfbe25b02b2cdd4))
+
 ## [3.0.0](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v2.8.1...v3.0.0) (2022-03-04)
 
 
