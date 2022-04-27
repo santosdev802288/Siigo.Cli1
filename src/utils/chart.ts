@@ -23,7 +23,7 @@ export async function writeChart(token:string, projectName:string, tagOwner:stri
     },
     redirect: 'follow'
   }
-  const url = 'https://dev.azure.com/SiigoDevOps/Siigo/_apis/git/repositories/Siigo.Chart/items?path=values.yaml&download=true&api-version=6.0'
+  const url = 'https://dev.azure.com/SiigoDevOps/Siigo/_apis/git/repositories/Siigo.Chart/items?path=/ChartOps/values.yaml&download=true&api-version=6.0'
   const response = await fetch(url, requestOptions)
   let stringResponse:string = await response.text()
   stringResponse = stringResponse.replace('com: {}',
