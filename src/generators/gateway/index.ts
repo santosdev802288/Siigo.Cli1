@@ -8,6 +8,7 @@ import {siigosay} from '@nodesiigo/siigosay'
 import { saveStatistic } from '../../utils/statistics/statistic';
 import { lastChartVersion } from '../../utils/chart';
 import { getParameter } from '../../utils/siigoFile';
+import { verifyNewVersion } from '../../utils/notification';
 
 interface AppConfig {
     organization: any; 
@@ -32,6 +33,7 @@ export default class GatewayGenerator extends Generator {
     constructor(args: any, opt: any) {
         super(args, opt);
         saveStatistic('gateway')
+        verifyNewVersion()
 
         const currentPath = path.basename(process.cwd())
         
@@ -53,7 +55,7 @@ export default class GatewayGenerator extends Generator {
         this.option("pipeline-name", {
             type: String,
             description: "Pipeline name in azure devops.",
-            default: `"${currentPath} CICD"`,
+            default: `${currentPath} CICD`,
             alias: 'pn'
         });
         
