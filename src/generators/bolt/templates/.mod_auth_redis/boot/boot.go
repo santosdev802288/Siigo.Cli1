@@ -35,7 +35,7 @@ func CreateGrpcServer() *grpc.Server {
 		grpc.UnaryInterceptor(
 			middleware.ChainUnaryServer(
 				grape.UnaryServerInterceptor(logger),
-				grpc_auth.UnaryServerInterceptor(interceptor.TokenValidation),
+				grpc_auth.UnaryServerInterceptor(interceptor.TokenValidation()),
 			),
 		),
 	)
