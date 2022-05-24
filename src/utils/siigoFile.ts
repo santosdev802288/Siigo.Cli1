@@ -92,7 +92,13 @@ export async function getParameter(parameter: keyof SiigoParameter) {
     listPar.forEach((ele: any) => {if (ele.includes(parameter+'=')){ temp=ele}})
     let resul = temp.replace(parameter+'=','')
     if(resul=='\n' || resul=='') { resul = 'pending' }
-    return resul.replace('\n','').replace(' \r','').replace('\r','');
+    let value = resul.replace('\n','').replace(' \r','').replace('\r','');
+    
+    if (parameter == 'user'){
+      value = value.substring(0, value.indexOf('@'))
+    } 
+    
+    return value
   }else {
     return 'pending'
   }

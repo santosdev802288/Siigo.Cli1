@@ -1,16 +1,13 @@
-FROM devopsfaith/krakend:1.1
+FROM siigo.azurecr.io/krakend:1
 
-USER root
+ENV FC_ENABLE=1
+ENV FC_PARTIALS="/app/partials"
 
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y vim nmap iputils-ping procps net-tools\
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN adduser --disabled-password --gecos "" app -u 1000
-USER 1000
+WORKDIR /app
 
 COPY krakend.json /etc/krakend/krakend.json
 
+COPY ./partials ./partials
+
 # Validate the config (https://www.krakend.io/docs/commands/check/)
-RUN krakend check --debug --config /etc/krakend/krakend.json
+RUN krakend check --config /etc/krakend/krakend.json

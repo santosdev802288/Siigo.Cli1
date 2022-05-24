@@ -4,11 +4,13 @@ import rename from 'gulp-rename';
 import {exec as spawn} from 'child_process';
 import colorize from 'json-colorizer';
 import {siigosay} from '@nodesiigo/siigosay'
+//import shell from 'shelljs'
 
 import { saveStatistic } from '../../utils/statistics/statistic';
 import { lastChartVersion } from '../../utils/chart';
 import { getParameter } from '../../utils/siigoFile';
 import { verifyNewVersion } from '../../utils/notification';
+import shell from '../../utils/shell';
 
 interface AppConfig {
     organization: any; 
@@ -17,7 +19,7 @@ interface AppConfig {
     namespace: any; 
     folder: any; 
     port: any; 
-    pipelineName: any; 
+    pipelineName: string; 
     name: any; 
     chartVersion: any;
     owner: {
@@ -175,21 +177,27 @@ export default class GatewayGenerator extends Generator {
     }
             
     install() {
-        this.spawnCommandSync('git', ['checkout', '-b', 'cicd']);
+        if (shell.exec('git checkout -b cicd').code !=0){
+            shell.exec('git checkout cicd');
+        }
+            
         this.spawnCommandSync('git', ['add', '-A']);
-        this.spawnCommandSync('git', ['commit', '-m', 'cicd configuration']);
+        shell.exec('git commit -m "cicd configuration"', {silent: true})
         this.spawnCommandSync('git', ['push', 'origin', 'cicd']);
         
-        this.spawnCommandSync('az', ['login']);
+        if (shell.exec('az account show').code != 0){
+            shell.exec('az login');
+        }
         this.spawnCommandSync('az', ['extension', 'add', '--name', 'azure-devops']);
         spawn(
             `az devops configure --defaults organization='${this.appConfig.organization}' project='${this.appConfig.project}'`
         );
+
         this.spawnCommandSync('az', [
             'pipelines',
             'create',
             '--name',
-            this.appConfig.pipelineName,
+            `"${this.appConfig.pipelineName}"`,
             '--yml-path',
             'azure-pipelines.yml',
             '--folder-path',
