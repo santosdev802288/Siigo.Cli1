@@ -131,8 +131,8 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
         }
         
         // Copy all dotfiles
-        this.fs.copy( this.templatePath('.dots/.*'), this.destinationRoot(),{},{config: this.appConfig});
-        this.fs.copy(this.templatePath('.dots/.**/**'),this.destinationRoot(),{},{config: this.appConfig})
+        this.fs.copyTpl(this.templatePath('.dots/.*'), this.destinationRoot(), {config: this.appConfig});
+        this.fs.copyTpl(this.templatePath('.dots/.**/**'), this.destinationRoot(), {config: this.appConfig})
 
         if(this.appConfig.auth && this.appConfig.redis){
             this._copyFilesModules('mod_auth_redis',['boot','config','fxmodule']);
