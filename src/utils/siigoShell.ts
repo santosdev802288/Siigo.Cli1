@@ -2,6 +2,10 @@ import _ from 'lodash';
 import shelljs, { ExecOptions, ShellString } from 'shelljs';
 import winston, { format } from 'winston';
 
+export enum ExitCode {
+  OK = 0
+}
+
 const alignedWithColorsAndTime = format.combine(
   format.colorize({all: true}),
   format.timestamp(),
@@ -16,7 +20,7 @@ const logger = winston.createLogger({
   ]
 });
 
-export class SiigoShell {
+class SiigoShell {
 
   exec(command: string): ShellString;
   exec(command: string, options: ExecOptions): ShellString
@@ -33,13 +37,13 @@ export class SiigoShell {
     const output = _.trim(_.isEmpty(shellString.stdout) ? shellString.stderr : shellString.stdout)
     const message = `[${command}]  ${output}`
     
-    shellString.code == 0 ? logger.info(message) : logger.warn(message)
+    shellString.code === ExitCode.OK ? logger.info(message) : logger.warn(message)
     
     return shellString;
   }
 }
 
 
-const shell: SiigoShell = new SiigoShell()
-export default shell
+const siigoShell: SiigoShell = new SiigoShell()
+export default siigoShell
 
