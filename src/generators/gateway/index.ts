@@ -3,6 +3,7 @@ import Generator = require('yeoman-generator');
 import rename from 'gulp-rename';
 import {exec as spawn} from 'child_process';
 import colorize from 'json-colorizer';
+import _ from 'lodash';
 import {siigosay} from '@nodesiigo/siigosay'
 
 import { saveStatistic } from '../../utils/statistics/statistic';
@@ -11,24 +12,28 @@ import { getParameter } from '../../utils/siigoFile';
 import { verifyNewVersion } from '../../utils/notification';
 import siigoShell, { ExitCode } from '../../utils/siigoShell';
 
+
 interface AppConfig {
     organization: any; 
     project: any; 
-    environment: any; 
+    environment: any;
+    name: string;
     namespace: any; 
     folder: any; 
     port: any; 
     pipelineName: string; 
-    name: any; 
     chartVersion: any;
     owner: {
-        user: string;
-        tribe: string;
+      user: string;
+      tribe: string;
+    },
+    repo: {
+      url: string
     }
 }
 
 export default class GatewayGenerator extends Generator {
-  appConfig: Partial<AppConfig> = {};
+  appConfig: AppConfig = {} as AppConfig;
   answers: any;
 
   constructor(args: any, opt: any) {
@@ -56,7 +61,7 @@ export default class GatewayGenerator extends Generator {
     this.option('pipeline-name', {
       type: String,
       description: 'Pipeline name in azure devops.',
-      default: `${currentPath} CICD`,
+      default: `${currentPath}`,
       alias: 'pn'
     });
         
@@ -102,7 +107,7 @@ export default class GatewayGenerator extends Generator {
     
   async initializing() {
     this.log(siigosay('Siigo Generator Api Gateway.'))
-    const message = 'For more information execute yo siigo:cicd --help'
+    const message = 'For more information execute yo siigo:gateway --help'
         
     if (!this.options['project-name'] || this.options['project-name'] === 'true')
       throw new Error('--project-name is required or it should not be empty.\n ' + message)
@@ -123,11 +128,14 @@ export default class GatewayGenerator extends Generator {
       folder,
       port,
       pipelineName: this.options['pipeline-name'],
-      name: this.options['project-name'],
+      name: _.kebabCase(this.options['project-name']),
       chartVersion: this.options['chart-version'],
       owner: {
         user: await getParameter('user'),
         tribe: await getParameter('tribe')
+      },
+      repo: {
+        url: _.trim(siigoShell.exec('git config --get remote.origin.url', {silent: true}).stdout)
       }
     };
         
@@ -176,6 +184,9 @@ export default class GatewayGenerator extends Generator {
   }
             
   install() {
+    if (this.options['skip-install-step']){
+      return
+    }
     if (siigoShell.exec('git checkout -b cicd').code !== ExitCode.OK){
       siigoShell.exec('git checkout cicd');
     }
@@ -196,11 +207,11 @@ export default class GatewayGenerator extends Generator {
       'pipelines',
       'create',
       '--name',
-      `"${this.appConfig.pipelineName}"`,
+      `${this.appConfig.pipelineName}`,
       '--yml-path',
       'azure-pipelines.yml',
-      '--folder-path',
-      this.appConfig.folder,
+      '--repository',
+      this.appConfig.repo.url,
     ]);
   }
         

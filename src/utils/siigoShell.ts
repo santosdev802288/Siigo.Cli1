@@ -14,30 +14,41 @@ const alignedWithColorsAndTime = format.combine(
 );
 
 const logger = winston.createLogger({
+  level: 'info',
   format: alignedWithColorsAndTime,
   transports: [
     new winston.transports.Console(),
   ]
 });
 
+function _extractOutput(shellString: ShellString): string{
+  return _.trim(_.isEmpty(shellString.stdout) ? shellString.stderr : shellString.stdout)
+}
+
 class SiigoShell {
+
 
   exec(command: string): ShellString;
   exec(command: string, options: ExecOptions): ShellString
   exec(command: string, options?: ExecOptions): ShellString {
     let shellString;
 
+    if (options?.fatal || options?.silent) {
+      logger.info(command)
+    }
+
     if (_.isNil(options)) {
       shellString = shelljs.exec(command, { async: false, silent: true })
     } else {
-      options.silent = !options.fatal
       shellString = shelljs.exec(command, { ...options, async: false })
     }
 
-    const output = _.trim(_.isEmpty(shellString.stdout) ? shellString.stderr : shellString.stdout)
-    const message = `[${command}]  ${output}`
-    
-    shellString.code === ExitCode.OK ? logger.info(message) : logger.warn(message)
+    const output = _extractOutput(shellString)
+    const message = `${command}  =>  ${output}`
+
+    if (!options?.silent){
+      shellString.code === ExitCode.OK ? logger.info(message) : logger.warn(message)
+    }
     
     return shellString;
   }
