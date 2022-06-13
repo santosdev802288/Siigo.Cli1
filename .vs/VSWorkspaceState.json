@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\generators",
+    "\\src\\generators\\dotnet\\templates"
+  ],
+  "SelectedNode": "\\src\\generators\\dotnet",
+  "PreviewInSolutionExplorer": false
+}
