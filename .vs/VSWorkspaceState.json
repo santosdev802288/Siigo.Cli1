@@ -3,8 +3,10 @@
     "",
     "\\src",
     "\\src\\generators",
-    "\\src\\generators\\dotnet\\templates"
+    "\\src\\generators\\dotnet",
+    "\\src\\generators\\dotnet\\templates",
+    "\\src\\generators\\dotnet\\templates\\microservice",
+    "\\src\\generators\\spark"
   ],
-  "SelectedNode": "\\src\\generators\\dotnet",
   "PreviewInSolutionExplorer": false
 }
