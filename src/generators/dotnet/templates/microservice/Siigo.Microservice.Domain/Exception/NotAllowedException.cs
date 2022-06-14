@@ -2,7 +2,7 @@ using System;
 using System.Runtime.Serialization;
 using Microsoft.AspNetCore.Http;
 
-namespace Siigo.FixedML.Domain.Exception
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Exception
 {
     [Serializable]
     public sealed class NotAllowedException : ClientErrorException

@@ -1,11 +1,11 @@
 using EventStore.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Siigo.FixedML.Domain.SeedWork.Interfaces;
-using Siigo.FixedML.Infrastructure.Events;
-using Siigo.FixedML.Infrastructure.Repositories;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.SeedWork.Interfaces;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Events;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Repositories;
 
-namespace Siigo.FixedML.Infrastructure
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure
 {
     public static class ServiceCollectionExtension
     {

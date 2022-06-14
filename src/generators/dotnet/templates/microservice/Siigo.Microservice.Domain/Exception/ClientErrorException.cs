@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Siigo.FixedML.Domain.Exception
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Exception
 {
     [Serializable]
     public abstract class ClientErrorException : System.Exception

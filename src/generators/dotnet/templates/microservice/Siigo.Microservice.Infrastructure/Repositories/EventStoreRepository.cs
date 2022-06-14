@@ -2,9 +2,9 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using EventStore.Client;
 using Siigo.Core;
-using Siigo.FixedML.Domain.SeedWork.Interfaces;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.SeedWork.Interfaces;
 
-namespace Siigo.FixedML.Infrastructure.Repositories
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Infrastructure.Repositories
 {
     public class EventStoreRepository : IEventStoreRepository
     {

@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.Serialization;
-using Siigo.FixedML.Domain.SeedWork;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.SeedWork;
 
-namespace Siigo.FixedML.Domain.Exception
+namespace <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Domain.Exception
 {
     [Serializable]
     public class DomainRuleValidationException : System.Exception

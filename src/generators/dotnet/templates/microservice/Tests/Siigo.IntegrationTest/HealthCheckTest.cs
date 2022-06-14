@@ -2,7 +2,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Siigo.IntegrationTest.Fixtures;
-using Siigo.FixedML.Api;
+using <%= config.projectPrefix %>.<%= config.nameCapitalize %>.Api;
 using Xunit;
 
 namespace Siigo.IntegrationTest
