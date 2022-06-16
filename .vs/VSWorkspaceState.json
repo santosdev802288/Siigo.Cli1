@@ -1,12 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src",
     "\\src\\generators",
     "\\src\\generators\\dotnet",
     "\\src\\generators\\dotnet\\templates",
-    "\\src\\generators\\dotnet\\templates\\microservice",
-    "\\src\\generators\\dotnet\\templates\\microservice\\Tests",
     "\\src\\generators\\spark"
   ],
   "PreviewInSolutionExplorer": false
