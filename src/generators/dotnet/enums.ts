@@ -1,3 +1,3 @@
 export enum ServerType {
-  MICROSERVICE = 'microservice',
+  MICROSERVICE_DDD = 'ddd',
 }

@@ -49,7 +49,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         name: 'type',
         message: '¿what do you want to generate?',
         choices: ServerTypes,
-        default: ServerTypes.indexOf(ServerType.MICROSERVICE)
+        default: ServerTypes.indexOf(ServerType.MICROSERVICE_DDD)
       }
     ])
     saveStatistic('dotnet', {type: response.type})

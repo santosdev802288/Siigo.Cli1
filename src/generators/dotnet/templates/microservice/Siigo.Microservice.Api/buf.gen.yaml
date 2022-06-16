@@ -1,8 +1,0 @@
-version: v1
-plugins:
-
-  - remote: buf.build/grpc/plugins/csharp:v1.45.2-1
-    out: Proto
-
-  - name: csharp
-    out: Proto
