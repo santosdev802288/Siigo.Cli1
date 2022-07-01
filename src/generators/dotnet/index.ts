@@ -49,7 +49,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         name: 'type',
         message: '¿what do you want to generate?',
         choices: ServerTypes,
-        default: ServerTypes.indexOf(ServerType.MICROLITH)
+        default: ServerTypes.indexOf(ServerType.MICROSERVICE_DDD)
       }
     ])
     saveStatistic('dotnet', {type: response.type})
@@ -83,8 +83,8 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
     ]);
     this.fs.copyTpl(this.templatePath('base/'), this.destinationPath('.'), { config: this.appConfig }, {}, {globOptions: {dot: true}})
 
-    this.fs.copyTpl(this.templatePath(this.appConfig.type + '/'), this.destinationPath('.'), { config: this.appConfig });
-    this.fs.copyTpl(this.templatePath(this.appConfig.type + '/.*'), this.destinationPath('.'), { config: this.appConfig });
+      this.fs.copyTpl(this.templatePath(this.appConfig.type + '/'), this.destinationPath('.'), { config: this.appConfig });
+      this.fs.copyTpl(this.templatePath(this.appConfig.type + '/.*'), this.destinationPath('.'), { config: this.appConfig });
     const checksums = getChecksums(this.destinationPath());
     this.fs.write(path.join(this.destinationPath(), 'checksums.sha256'), checksums);
   }
