@@ -1,6 +1,26 @@
 # Changelog
 All notable changes to this project.
 
+## [3.2.0](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v3.1.0...v3.2.0) (2022-07-05)
+
+
+### Features
+
+* **gateway:** use custom krakend image ([f7b05b6](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/f7b05b60f134cbc4c726ca08a9612f07fd1fc808))
+
+
+### Bug Fixes
+
+* **gateway:** get repository url ([8edbacb](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/8edbacb189aeb15ec47a54e0553260e388269c20))
+* **gateway:** remove quotes from pipeline name ([117775b](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/117775b4f3e18ae1ac4db07ce23f9e6f31ca228b))
+* **golang:** correct call to tokenValidation func ([c8ac71b](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/c8ac71b8b67c978f681bdee1b9e168f9fc19b22a))
+* **golang:** fix golang ports ([fac1aad](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/fac1aad6226091ffb914c39daffaf6329b39ed70))
+* **library:** add missing nuget.config ([6d45f6f](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/6d45f6fb105d199b332e9ac6158f7659424772dd))
+* remove prompt vulnerable dependency ([1f963a6](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/1f963a61727160355a0b74eff9edf71590779490))
+* update path ([cb276d1](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/commit/cb276d11f6f27fc6d5255453354e702ebfc6416c))
+
+### [3.0.1](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v3.0.0...v3.0.1) (2022-03-07)
+
 ### [3.1.1](https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Cli/compare/v3.1.0...v3.1.1) (2022-04-27)
 
 
