@@ -3,7 +3,8 @@ import shelljs, { ExecOptions, ShellString } from 'shelljs';
 import winston, { format } from 'winston';
 
 export enum ExitCode {
-  OK = 0
+  OK = 0,
+  FAIL = 1
 }
 
 const alignedWithColorsAndTime = format.combine(
