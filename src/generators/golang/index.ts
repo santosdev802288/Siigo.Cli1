@@ -1,5 +1,5 @@
 import os  from 'os'
-import path  from 'path'
+import path from 'path';
 import colorize from'json-colorizer'
 import {siigosay} from'@nodesiigo/siigosay'
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
@@ -7,12 +7,14 @@ import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile'
 import { saveStatistic } from '../../utils/statistics/statistic'
 import shell from 'shelljs'
 import { isTestEnv } from '../../utils/environment/node';
+import _ from "lodash";
+import rename = require('gulp-rename');
 
 
 export default class GolangMSGenerator extends MicroserviceGenerator {
 
-    appConfig: { description?: any; author?: any; name?: any; token?: any; auth?: any; redis?: any; email?: any } = {}
-
+    appConfig: { description?: any; author?: any; name?: any; nameUpper?: any; token?: any; auth?: any; redis?: any; email?: any } = {}
+    
     constructor(args: any, opt: any) {
         super(args, opt)
         saveStatistic('bolt')
@@ -49,6 +51,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
     }
 
     async _doPrompting() {
+                
         const siigoParams = await getAllParametersSiigo();
 
         if (siigoParams.token === 'pending' || this.options['personal-token'] != null) {
@@ -63,6 +66,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
             email: siigoParams.user,
             author: siigoParams.name,
             name: this.options['project-name'].toLowerCase(),
+            nameUpper: _.upperFirst(this.options['project-name']),
             token: this.options['personal-token'],
         };
         
@@ -78,22 +82,6 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
                 NUMBER_LITERAL: '#FF0000'
             }
         }))
-
-        const response = await this.prompt([
-            {
-                type: 'confirm',
-                name: 'auth',
-                message: 'Do you want to add the module SECURITY?'
-            }
-        ]);
-
-        const respRedis = await this.prompt([
-            {
-                type: 'confirm',
-                name: 'redis',
-                message: 'Do you want to add the module REDIS?'
-            }
-        ]);
         
         this.answers = await this.prompt([
             {
@@ -103,55 +91,26 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
             }
         ]);
 
-        this.appConfig.auth =  response.auth;      
-        this.appConfig.redis =  respRedis.redis; 
-
         if (!this.answers.ready)
             this.cancelCancellableTasks()
     }
 
-    _doWriting() {
+    // @ts-ignore
+    _doWriting(): void {
+        // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
+            this.queueTransformStream([
+            rename((parsetPath) => {
+                const prefixChart = 'ms-';
+                parsetPath.dirname = parsetPath.dirname.includes(prefixChart) ?
+                parsetPath.dirname.replace(/(Microservice)/g, this.appConfig.name) :
+                parsetPath.dirname.replace(/(Microservice)/g, _.upperFirst(this.appConfig.name));
+                parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.name));
+            })
+        ]);
+        this.fs.copyTpl(this.templatePath('.'), this.destinationPath('/.'), { config: this.appConfig });
         
-        this.fs.copyTpl(this.templatePath(''),this.destinationRoot(),{config: this.appConfig},)
-        this.fs.copyTpl(this.templatePath('.third_party'),this.destinationPath('third_party'),{config: this.appConfig})
-        
-        // Update .gitconfig
-        const templateGitConfig = this.templatePath('.user/.gitconfig');
-        const userGitConfig = this.destinationPath(path.join(os.homedir(), '.gitconfig'))
-
-        if (this.fs.exists(userGitConfig)) {
-            const gitConfig = this.fs.read(userGitConfig)
-            if (!gitConfig.includes('insteadOf = https://dev.azure.com/SiigoDevOps')){
-                const templateContent = this.fs.read(templateGitConfig)
-                // @ts-expect-error FIXME: Missing method on @types
-                this.fs.appendTpl(userGitConfig, templateContent, {config: this.appConfig})
-            }
-        } else {
-            this.fs.copyTpl(templateGitConfig, userGitConfig, {config: this.appConfig})
-        }
-        
-        // Copy all dotfiles
-        this.fs.copy( this.templatePath('.dots/.*'), this.destinationRoot(),{},{config: this.appConfig});
-        this.fs.copy(this.templatePath('.dots/.**/**'),this.destinationRoot(),{},{config: this.appConfig})
-
-        if(this.appConfig.auth && this.appConfig.redis){
-            this._copyFilesModules('mod_auth_redis',['boot','config','fxmodule']);
-        }else{
-            if(this.appConfig.auth){
-                this._copyFilesModules('mod_auth',['boot']);
-            }
-            if(this.appConfig.redis){
-                this._copyFilesModules('mod_redis',['config','fxmodule']);
-            }
-        }
     }
-
-    _copyFilesModules(path:string , files:string[]){
-        files.forEach(file => {
-            this.fs.copyTpl(this.templatePath(`.${path}/${file}`),this.destinationPath(`src/${file}/`),{config: this.appConfig})
-        })
-    }
-
+    
     install(){
         shell.env['GOPRIVATE'] = 'dev.azure.com';
         if(!isTestEnv()){
