@@ -14,6 +14,9 @@
             },
             "strategy": "always"
           }
+        },
+        "siigo/validator": {
+          "enabled": false
         }
       },
       "backend": [
@@ -22,7 +25,8 @@
           "host": ["http://localhost:<%= config.port %>"]
         }
       ]
-    }
+    },
+    {{ include "ms-logger/logger.json" }}
   ],
   "extra_config": {
     "github_com/devopsfaith/krakend-cors": {

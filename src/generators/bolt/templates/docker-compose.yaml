@@ -4,12 +4,13 @@ services:
   app:
     ports:
       - "5000:5000"
+      - "6000:6000"
     build:
       context: .
       dockerfile: .docker/Dockerfile.dev
       args:
-        # replace for your personal access token
-        - devops_token=<%= config.token %>
+        # Update your personal access token and run "docker-compose up --build"
+        - DEV_OPS_TOKEN=<%= config.token %>
     volumes:
     - ./:/app
     privileged: true

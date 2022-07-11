@@ -13,7 +13,7 @@ inputs = {
       "type" : "metric",
       "description" : "",
       "numerator" : "(sum:trace.aspnet_core.request.hits{env:aksqa AND service:ms-<%= config.microserviceName %> AND (http.status_code:2* OR http.status_code:3*) AND NOT resource_name:get_/health}.as_count())",
-      "denominator" : "(sum:trace.aspnet_core.request.hits{env:aksqa,service:ms-<%= config.microserviceName %>,http.status_code:*,!resource_name:get_/health}.as_count())",
+      "denominator" : "(sum:trace.aspnet_core.request.hits{env:aksqa AND service:ms-<%= config.microserviceName %> AND (http.status_code:1* OR http.status_code:2* OR http.status_code:3* OR http.status_code:5*) AND NOT resource_name:get_/health}.as_count())",
       "thresholds" = [
         {
           "timeframe" : "7d",

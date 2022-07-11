@@ -1,20 +1,13 @@
-FROM devopsfaith/krakend:1.4
+FROM siigo.azurecr.io/krakend:1
 
-USER root
+ENV FC_ENABLE=1
+ENV FC_PARTIALS="/app/partials"
 
-ENV COMPlus_EnableDiagnostics=0
-
-RUN apt-get update
-RUN apt-get install vim -y
-RUN apt-get install nmap -y
-RUN apt-get install iputils-ping -y
-RUN apt-get install procps -y
-RUN apt-get install net-tools -y
-
-RUN adduser --disabled-password --gecos "" app -u 1000
-USER 1000
+WORKDIR /app
 
 COPY krakend.json /etc/krakend/krakend.json
 
+COPY ./partials ./partials
+
 # Validate the config (https://www.krakend.io/docs/commands/check/)
-RUN krakend check --test-gin-routes --config /etc/krakend/krakend.json
+RUN krakend check --config /etc/krakend/krakend.json

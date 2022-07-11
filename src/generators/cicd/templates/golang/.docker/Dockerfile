@@ -7,10 +7,14 @@ FROM siigo.azurecr.io/golang-build:1 as build
 
 WORKDIR /app
 
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
+
 COPY . .
 
 # Build binary
-RUN go mod download && go mod tidy && go mod verify && go mod why
+RUN go mod tidy && go mod verify && go mod why
 RUN GOOS=linux go build -a -o golang-app .
 RUN chmod +x ./golang-app
 
@@ -25,5 +29,5 @@ WORKDIR /app
 COPY --from=build /app/configuration ./configuration
 COPY --from=build /app/golang-app ./
 
-EXPOSE 11000 10000
+EXPOSE 5000 6000
 ENTRYPOINT ["./golang-app"]

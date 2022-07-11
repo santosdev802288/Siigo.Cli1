@@ -1,0 +1,65 @@
+{
+    "endpoint": "/logger/api/v1/Log/WriteLog",
+    "output_encoding": "no-op",
+    "headers_to_pass": [ "*" ],
+    "querystring_params": [ "*" ],
+    "method": "POST",
+    "backend": [
+        {
+            "host": [ "http://ms-logger.siigo-cross:5000" ],
+            "url_pattern": "/api/v1/Log/WriteLog",
+            "encoding": "no-op"
+        }
+    ],
+    "concurrent_calls": 1
+},
+{
+    "endpoint": "/logger/api/v1/Log/ThrowException",
+    "output_encoding": "no-op",
+    "headers_to_pass": [ "*" ],
+    "querystring_params": [ "*" ],
+    "method": "GET",
+    "backend": [
+        {
+            "host": [ "http://ms-logger.siigo-cross:5000" ],
+            "url_pattern": "/api/v1/Log/ThrowException",
+            "encoding": "no-op"
+        }
+    ],
+    "concurrent_calls": 1
+},
+{
+    "endpoint": "/logger/api/v1/Request/Headers",
+    "output_encoding": "no-op",
+    "headers_to_pass": [ "*" ],
+    "querystring_params": [ "*" ],
+    "method": "POST",
+    "concurrent_calls": 1,
+    "backend": [
+        {
+          "host": [ "http://ms-logger.siigo-cross:5000" ],
+          "url_pattern": "/api/v1/Request/Headers",
+          "encoding": "no-op"
+        }
+    ]
+},
+{
+    "endpoint": "/logger/api/v1/Request/Headers/disabled",
+    "output_encoding": "no-op",
+    "headers_to_pass": [ "*" ],
+    "querystring_params": [ "*" ],
+    "method": "POST",
+    "concurrent_calls": 1,
+    "extra_config": {
+        "siigo/validator": {
+            "enabled": false
+        }
+    },
+    "backend": [
+        {
+          "host": [ "http://ms-logger.siigo-cross:5000" ],
+          "url_pattern": "/api/v1/Request/Headers",
+          "encoding": "no-op"
+        }
+    ]
+}
