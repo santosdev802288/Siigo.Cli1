@@ -95,7 +95,6 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
             this.cancelCancellableTasks()
     }
 
-    // @ts-ignore
     _doWriting(): void {
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
             this.queueTransformStream([
