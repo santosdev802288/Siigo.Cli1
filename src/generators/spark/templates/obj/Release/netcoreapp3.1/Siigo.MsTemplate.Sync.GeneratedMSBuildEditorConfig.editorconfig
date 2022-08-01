@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = Siigo.MsTemplate.Sync
+build_property.ProjectDir = C:\Development\GIT\Siigo\Siigo.Cli\src\generators\spark\templates\
