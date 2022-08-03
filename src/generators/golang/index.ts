@@ -106,30 +106,10 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
                 parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.name));
             })
         ]);
-        this.fs.copyTpl(this.templatePath('.'), this.destinationPath('/.'), { config: this.appConfig });
+        this.fs.copyTpl(this.templatePath(''), this.destinationRoot(), { config: this.appConfig });
         
     }
     
-    install(){
-        shell.env['GOPRIVATE'] = 'dev.azure.com';
-        if(!isTestEnv()){
-            if(this.appConfig.auth && this.appConfig.redis){
-                shell.exec('go get dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Golang.Security.git/Interceptor')
-                shell.exec('go get github.com/grpc-ecosystem/go-grpc-middleware/auth')
-                shell.exec('go get dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Golang.DistributedCache.git/Redis')
-            }else{
-                if(this.appConfig.auth){
-                    shell.exec('go get dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Golang.Security.git/Interceptor')
-                    shell.exec('go get github.com/grpc-ecosystem/go-grpc-middleware/auth')
-                }
-                if(this.appConfig.redis){
-                    shell.exec('go get dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Golang.DistributedCache.git/Redis')
-                }
-                shell.exec('go mod tidy')
-            }
-        }
-    }
-
     end(): void {
 
         this.log(siigosay("Execute 'make all' and Enjoy!!"))

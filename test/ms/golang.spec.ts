@@ -3,7 +3,7 @@ import helpers from 'yeoman-test'
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
-import sinon from 'sinon'
+import { restore, stub } from 'sinon'
 
 import * as siigoFile from '../../src/utils/siigoFile'
 
@@ -15,7 +15,7 @@ const NAMESPACE = 'siigo:golang'
 describe(NAMESPACE, () => {
 
   before( () => {
-    sinon.stub(siigoFile, 'wizardsiigofile').returns(Promise.resolve('mockToken'))
+    stub(siigoFile, 'wizardsiigofile').returns(Promise.resolve('mockToken'))
   }) 
 
   it('Generates a project', () => {
@@ -29,7 +29,6 @@ describe(NAMESPACE, () => {
       .then(() => {
         // assert something about the generator
         assert.file('.gitignore');
-        assert.file('.golangci.yml');
         assert.file('third_party/embed.go')
       });
   });
@@ -48,8 +47,6 @@ describe(NAMESPACE, () => {
         assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
         // assert something about the generator
         assert.file('.gitignore');
-        assert.file('.golangci.yml');
-
         assert.file('third_party/embed.go')
       });
   });
@@ -69,6 +66,6 @@ describe(NAMESPACE, () => {
   });
 
   after(() => {
-    sinon.restore()
+    restore()
   })
 });
