@@ -7,10 +7,10 @@ import sinon from 'sinon'
 
 import * as siigoFile from '../../src/utils/siigoFile'
 
-import GolangMSGenerator from '../../src/generators/bolt'
+import GolangMSGenerator from '../../src/generators/golang'
 
-const GENERATOR_FOLDER = '../../src/generators/bolt'
-const NAMESPACE = 'siigo:bolt'
+const GENERATOR_FOLDER = '../../src/generators/golang'
+const NAMESPACE = 'siigo:golang'
 
 describe(NAMESPACE, () => {
 
@@ -24,14 +24,12 @@ describe(NAMESPACE, () => {
 
     return helpers.run(GolangMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
       .inDir(dir)
-      .withOptions({ 'personal-token': 'myToken' })      // Mock options passed in
+      .withOptions({ 'token': 'myToken' })      // Mock options passed in
       .withPrompts({ ready: true })   // Mock the prompt answers
       .then(() => {
         // assert something about the generator
-        assert.file('.air.toml');
         assert.file('.gitignore');
         assert.file('.golangci.yml');
-
         assert.file('third_party/embed.go')
       });
   });
@@ -44,12 +42,11 @@ describe(NAMESPACE, () => {
 
     return helpers.run(GolangMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
       .inDir(dir)
-      .withOptions({ 'personal-token': 'myToken','project-name': name })
+      .withOptions({ 'token': 'myToken','project-name': name })
       .withPrompts({ ready: true, prefix: folderPrefix, name: name})   // Mock the prompt answers
       .then(() => {                
         assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
         // assert something about the generator
-        assert.file('.air.toml');
         assert.file('.gitignore');
         assert.file('.golangci.yml');
 
