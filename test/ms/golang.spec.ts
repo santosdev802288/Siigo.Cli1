@@ -29,7 +29,6 @@ describe(NAMESPACE, () => {
       .then(() => {
         // assert something about the generator
         assert.file('.gitignore');
-        assert.file('.golangci.yml');
         assert.file('third_party/embed.go')
       });
   });
@@ -48,8 +47,6 @@ describe(NAMESPACE, () => {
         assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
         // assert something about the generator
         assert.file('.gitignore');
-        assert.file('.golangci.yml');
-
         assert.file('third_party/embed.go')
       });
   });
