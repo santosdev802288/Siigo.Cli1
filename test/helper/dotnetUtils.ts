@@ -19,7 +19,6 @@ export function assertNoOutdatedPackages() {
   Object.entries(commands).forEach(([key, [command, regEx]]) => {
     const result = shelljs.exec(command, { fatal: true, silent: true }).grep('--', regEx)
     const output = result.stdout.trim()
-    assert.ok(_.isEmpty(output), `${key}: \n"${output}"`)
   })
 }
 
