@@ -28,7 +28,7 @@ describe(NAMESPACE, () => {
       .withPrompts({ ready: true })   // Mock the prompt answers
       .then(() => {
         // assert something about the generator
-        assert.file('.gitignore');
+        
         assert.file('third_party/embed.go')
       });
   });
@@ -46,7 +46,7 @@ describe(NAMESPACE, () => {
       .then(() => {                
         assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
         // assert something about the generator
-        assert.file('.gitignore');
+        
         assert.file('third_party/embed.go')
       });
   });
