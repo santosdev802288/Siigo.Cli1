@@ -95,7 +95,6 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
             this.cancelCancellableTasks()
     }
 
-    // @ts-ignore
     _doWriting(): void {
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
             this.queueTransformStream([
@@ -107,6 +106,11 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
                 parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.name));
             })
         ]);
+        const templateGitConfig = this.templatePath('_gitignore');
+        const userGitConfig = this.destinationPath(path.join(os.homedir(), '_gitignore'))
+
+        this.fs.copyTpl(templateGitConfig, userGitConfig, {config: this.appConfig})
+        
         this.fs.copyTpl(this.templatePath(''), this.destinationRoot(), { config: this.appConfig });
         
     }
