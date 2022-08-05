@@ -108,6 +108,10 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
         ]);
         this.fs.copyTpl(this.templatePath(''), this.destinationRoot(), { config: this.appConfig });
         this.fs.copyTpl(this.templatePath('.gitignore'), this.destinationPath('_gitignore'), { config: this.appConfig });
+        this.fs.copyTpl(this.templatePath('.docker/'), this.destinationPath('.docker/'), { config: this.appConfig });
+        this.fs.copyTpl(this.templatePath('.scannerwork/'), this.destinationPath('.scannerwork/'), { config: this.appConfig });
+        this.fs.copyTpl(this.templatePath('.air.toml'), this.destinationPath('.air.toml'), { config: this.appConfig });
+        this.fs.copyTpl(this.templatePath('.golangci.yml'), this.destinationPath('golangci.yml'), { config: this.appConfig });
     }
     
     end(): void {
