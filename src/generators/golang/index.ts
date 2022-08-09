@@ -112,7 +112,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
         //Copiado de carpetas ocultas
         this.fs.copyTpl(this.templatePath('.*'),this.destinationPath(),{ config: this.appConfig });
         
-        this.fs.copyTpl(this.templatePath('.gitignore'), this.destinationPath('_gitignore'), { config: this.appConfig });
+        this.fs.copyTpl(this.templatePath('_gitignore'), this.destinationPath('.gitignore'), { config: this.appConfig });
 
     }
     
