@@ -103,6 +103,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
                 parsetPath.dirname = parsetPath.dirname.includes(prefixChart) ?
                 parsetPath.dirname.replace(/(Microservice)/g, this.appConfig.name) :
                 parsetPath.dirname.replace(/(Microservice)/g, _.upperFirst(this.appConfig.name));
+                parsetPath.dirname.replace(/(Swagger)/g, this.appConfig.name);
                 parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.name));
             })
         ]);
