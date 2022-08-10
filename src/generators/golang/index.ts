@@ -101,12 +101,26 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
             rename((parsetPath) => {
                 const prefixChart = 'ms-';
                 parsetPath.dirname = parsetPath.dirname.includes(prefixChart) ?
-                parsetPath.dirname.replace(/(Microservice)/g, this.appConfig.name) :
-                parsetPath.dirname.replace(/(Microservice)/g, _.upperFirst(this.appConfig.name));
-                parsetPath.dirname.replace(/(Swagger)/g, this.appConfig.name);
-                parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.name));
+                parsetPath.dirname.replace(/(microservice)/g, this.appConfig.name) :
+                parsetPath.dirname.replace(/(Microservice)/g, _.upperFirst(this.appConfig.nameUpper));
+                parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.nameUpper));
+                parsetPath.dirname.replace(/(microservice)/g, (this.appConfig.name));
             })
         ]);
+            
+        // @ts-expect-error FIXME: Missing method on @types/yeoman-generator    
+        this.queueTransformStream([
+            rename((parsetPath) => {
+                const prefixChart = 'microservice';
+                parsetPath.dirname = parsetPath.dirname.includes(prefixChart) ? 
+                parsetPath.dirname.replace(/(microservice)/g, this.appConfig.name) : 
+                parsetPath.dirname.replace(/(Microservice)/g, _.upperFirst(this.appConfig.nameUpper));    
+                parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.nameUpper));
+                parsetPath.basename = parsetPath.basename.replace(/(microservice)/g, this.appConfig.name);
+
+            })
+        ]);  
+        
         this.fs.copyTpl(this.templatePath(''), this.destinationRoot(), { config: this.appConfig });
 
         //Copiado de carpetas ocultas
