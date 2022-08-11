@@ -8,7 +8,7 @@ FROM siigo.azurecr.io/golang-build:1.18 as builder
 COPY . .
 
 # validate and generate protobuf code
-# RUN buf lint && buf mod update && buf generate
+RUN buf lint && buf mod update && buf generate
 
 # Build binary
 RUN go get -v ./...
