@@ -1,23 +1,25 @@
-import os  from 'os'
-import path from 'path';
-import colorize from'json-colorizer'
-import {siigosay} from'@nodesiigo/siigosay'
+import os from 'os'
+import colorize from 'json-colorizer'
+import {siigosay} from '@nodesiigo/siigosay'
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
-import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile'
-import { saveStatistic } from '../../utils/statistics/statistic'
-import shell from 'shelljs'
-import { isTestEnv } from '../../utils/environment/node';
+import {getAllParametersSiigo, wizardsiigofile} from '../../utils/siigoFile'
+import {saveStatistic} from '../../utils/statistics/statistic'
 import _ from "lodash";
+import {TOOLS, toolsRequired} from '../../utils/required-tools'
 import rename = require('gulp-rename');
-
 
 export default class GolangMSGenerator extends MicroserviceGenerator {
 
     appConfig: { description?: any; author?: any; name?: any; nameUpper?: any; token?: any; auth?: any; redis?: any; email?: any } = {}
     
     constructor(args: any, opt: any) {
+
         super(args, opt)
-        saveStatistic('bolt')
+
+        saveStatistic('golang').then()
+
+        toolsRequired(TOOLS.BUF)(TOOLS.GIT)(TOOLS.DOCKER)(TOOLS.TELEPRESENCE)
+
         // optionals
         this.option('project-name', {
             type: String,
