@@ -3,31 +3,28 @@
 #
 # To access the images locally run: "az acr login -n siigo"
 #
-FROM siigo.azurecr.io/golang-build:1 as build
+FROM siigo.azurecr.io/golang-build:1.18-beta as builder
 
-WORKDIR /app
-
-COPY go.mod ./
-COPY go.sum ./
-RUN go mod download
+ARG PAT
+ENV GOPRIVATE=dev.azure.com
+RUN git config --global url."https://anythinggoeshere:$PAT@dev.azure.com".insteadOf "https://dev.azure.com"
 
 COPY . .
 
+# validate and generate protobuf code
+# RUN buf lint && buf mod update && buf generate
+
 # Build binary
-RUN go mod tidy && go mod verify && go mod why
-RUN GOOS=linux go build -a -o golang-app .
-RUN chmod +x ./golang-app
+RUN go get -v ./...
+RUN go mod download
+RUN go mod tidy
+RUN GOARCH=amd64 GOOS=linux go build -v -o golang-app .
 
 #
 # Runtime image
 #
-FROM siigo.azurecr.io/golang-runtime:1 as runtime
+FROM siigo.azurecr.io/golang-runtime:1.18-beta as runtime
 
-WORKDIR /app
+COPY --from=builder --chown=app:app /app/ ./
 
-# Copy configuration and binary
-COPY --from=build /app/configuration ./configuration
-COPY --from=build /app/golang-app ./
-
-EXPOSE 5000 6000
 ENTRYPOINT ["./golang-app"]
