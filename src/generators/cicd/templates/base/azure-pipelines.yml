@@ -23,6 +23,6 @@ extends:
     environment: <%= config.environment %>
     namespace: <%= config.namespace %>
     <% if(config.type == 'golang' { %>
-    golangVersion: 1.18: netcore/netcore-pipeline.yaml@Pipelines
+    golangVersion: 1.18
     <% } %>
 
