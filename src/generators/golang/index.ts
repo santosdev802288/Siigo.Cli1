@@ -8,6 +8,7 @@ import {saveStatistic} from '../../utils/statistics/statistic'
 import _ from "lodash";
 import {TOOLS, toolsRequired} from '../../utils/required-tools'
 import rename = require('gulp-rename');
+const replace = require('replace-in-file');
 
 export default class GolangMSGenerator extends MicroserviceGenerator {
 
@@ -98,38 +99,55 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
             this.cancelCancellableTasks()
     }
 
-    _doWriting(): void {
+    async _doWriting() {
+
+        // replace contract label with ejs templating
+        const optionsLowwerCase = {
+         files: [`${this.templatePath()}/**/*.*`, `${this.templatePath()}/**`],
+         from: /contract/g,
+         to: '<%= config.name %>',
+        };
+
+        const optionsUpperCase = {
+          files: [`${this.templatePath()}/**/*.*`, `${this.templatePath()}/**`],
+          from: /Contract/g,
+          to: '<%= config.nameUpper %>',
+        };
+
+        replace.sync(optionsLowwerCase)
+        replace.sync(optionsUpperCase)
+        
+        
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
-            this.queueTransformStream([
+        this.queueTransformStream([
             rename((parsetPath) => {
                 const prefixChart = 'ms-';
                 parsetPath.dirname = parsetPath.dirname.includes(prefixChart) ?
-                parsetPath.dirname.replace(/(microservice)/g, this.appConfig.name) :
-                parsetPath.dirname.replace(/(Microservice)/g, _.upperFirst(this.appConfig.nameUpper));
-                parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.nameUpper));
-                parsetPath.dirname.replace(/(microservice)/g, (this.appConfig.name));
+                parsetPath.dirname.replace(/(contract)/g, this.appConfig.name) :
+                parsetPath.dirname.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));
+                parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));
+                parsetPath.dirname.replace(/(contract)/g, (this.appConfig.name));
             })
         ]);
             
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator    
         this.queueTransformStream([
             rename((parsetPath) => {
-                const prefixChart = 'microservice';
+                const prefixChart = 'contract';
                 parsetPath.dirname = parsetPath.dirname.includes(prefixChart) ? 
-                parsetPath.dirname.replace(/(microservice)/g, this.appConfig.name) : 
-                parsetPath.dirname.replace(/(Microservice)/g, _.upperFirst(this.appConfig.nameUpper));    
-                parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.nameUpper));
-                parsetPath.basename = parsetPath.basename.replace(/(microservice)/g, this.appConfig.name);
-
+                parsetPath.dirname.replace(/(contract)/g, this.appConfig.name) : 
+                parsetPath.dirname.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));    
+                parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));
+                parsetPath.basename = parsetPath.basename.replace(/(contract)/g, this.appConfig.name);
             })
-        ]);  
+        ]);
 
         // copy template into current folder
         this.fs.copyTpl(
             [
                 this.templatePath(),
-                `!${this.templatePath(".git")}`,
-                `!${this.templatePath(".docker")}`,
+                `!${this.templatePath(".git/")}`,
+                `!${this.templatePath(".docker/")}`,
                 `!${this.templatePath("azure-pipelines.yml")}`,
             ],
             this.destinationPath(),
