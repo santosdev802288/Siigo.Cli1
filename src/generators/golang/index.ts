@@ -1,4 +1,5 @@
 import os from 'os'
+import fs from 'fs'
 import colorize from 'json-colorizer'
 import {siigosay} from '@nodesiigo/siigosay'
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
@@ -18,7 +19,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
 
         saveStatistic('golang').then()
 
-        toolsRequired(TOOLS.BUF)(TOOLS.GIT)(TOOLS.DOCKER)(TOOLS.TELEPRESENCE)
+        toolsRequired(TOOLS.BUF)(TOOLS.GIT)(TOOLS.TELEPRESENCE)
 
         // optionals
         this.option('project-name', {
@@ -122,19 +123,30 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
 
             })
         ]);  
-        
-        this.fs.copyTpl(this.templatePath(''), this.destinationRoot(), { config: this.appConfig });
 
-        //Copiado de carpetas ocultas
-        this.fs.copyTpl(this.templatePath('.*'),this.destinationPath(),{ config: this.appConfig });
+        // copy template into current folder
+        this.fs.copyTpl(
+            [
+                this.templatePath(),
+                `!${this.templatePath(".git")}`,
+                `!${this.templatePath(".docker")}`,
+                `!${this.templatePath("azure-pipelines.yml")}`,
+            ],
+            this.destinationPath(),
+            { config: this.appConfig }, 
+            {}, 
+            { globOptions: { dot: true  } }
+        );
         
-        this.fs.copyTpl(this.templatePath('_gitignore'), this.destinationPath('.gitignore'), { config: this.appConfig });
-
     }
     
     end(): void {
 
-        this.log(siigosay("Execute 'make all' and Enjoy!!"))
+        if (/^win/i.test(process.platform)) {
+            this.log(siigosay("Execute 'docker-compose up' to start"))
+        } else {
+            this.log(siigosay("Execute 'make all' to start"))
+        }
     }
 }
 
