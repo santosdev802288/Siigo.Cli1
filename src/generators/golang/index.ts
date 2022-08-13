@@ -1,4 +1,5 @@
 import os from 'os'
+import fs from 'fs'
 import colorize from 'json-colorizer'
 import {siigosay} from '@nodesiigo/siigosay'
 import {MicroserviceGenerator} from '../../utils/generator/microservice'
@@ -7,6 +8,7 @@ import {saveStatistic} from '../../utils/statistics/statistic'
 import _ from "lodash";
 import {TOOLS, toolsRequired} from '../../utils/required-tools'
 import rename = require('gulp-rename');
+const replace = require('replace-in-file');
 
 export default class GolangMSGenerator extends MicroserviceGenerator {
 
@@ -18,7 +20,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
 
         saveStatistic('golang').then()
 
-        toolsRequired(TOOLS.BUF)(TOOLS.GIT)(TOOLS.DOCKER)(TOOLS.TELEPRESENCE)
+        toolsRequired(TOOLS.BUF)(TOOLS.GIT)(TOOLS.TELEPRESENCE)
 
         // optionals
         this.option('project-name', {
@@ -97,44 +99,72 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
             this.cancelCancellableTasks()
     }
 
-    _doWriting(): void {
+    async _doWriting() {
+
+        // replace contract label with ejs templating
+        const optionsLowwerCase = {
+         files: [`${this.templatePath()}/**/*.*`, `${this.templatePath()}/**`],
+         from: /contract/g,
+         to: '<%= config.name %>',
+        };
+
+        const optionsUpperCase = {
+          files: [`${this.templatePath()}/**/*.*`, `${this.templatePath()}/**`],
+          from: /Contract/g,
+          to: '<%= config.nameUpper %>',
+        };
+
+        replace.sync(optionsLowwerCase)
+        replace.sync(optionsUpperCase)
+        
+        
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
-            this.queueTransformStream([
+        this.queueTransformStream([
             rename((parsetPath) => {
                 const prefixChart = 'ms-';
                 parsetPath.dirname = parsetPath.dirname.includes(prefixChart) ?
-                parsetPath.dirname.replace(/(microservice)/g, this.appConfig.name) :
-                parsetPath.dirname.replace(/(Microservice)/g, _.upperFirst(this.appConfig.nameUpper));
-                parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.nameUpper));
-                parsetPath.dirname.replace(/(microservice)/g, (this.appConfig.name));
+                parsetPath.dirname.replace(/(contract)/g, this.appConfig.name) :
+                parsetPath.dirname.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));
+                parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));
+                parsetPath.dirname.replace(/(contract)/g, (this.appConfig.name));
             })
         ]);
             
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator    
         this.queueTransformStream([
             rename((parsetPath) => {
-                const prefixChart = 'microservice';
+                const prefixChart = 'contract';
                 parsetPath.dirname = parsetPath.dirname.includes(prefixChart) ? 
-                parsetPath.dirname.replace(/(microservice)/g, this.appConfig.name) : 
-                parsetPath.dirname.replace(/(Microservice)/g, _.upperFirst(this.appConfig.nameUpper));    
-                parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.nameUpper));
-                parsetPath.basename = parsetPath.basename.replace(/(microservice)/g, this.appConfig.name);
-
+                parsetPath.dirname.replace(/(contract)/g, this.appConfig.name) : 
+                parsetPath.dirname.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));    
+                parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));
+                parsetPath.basename = parsetPath.basename.replace(/(contract)/g, this.appConfig.name);
             })
-        ]);  
-        
-        this.fs.copyTpl(this.templatePath(''), this.destinationRoot(), { config: this.appConfig });
+        ]);
 
-        //Copiado de carpetas ocultas
-        this.fs.copyTpl(this.templatePath('.*'),this.destinationPath(),{ config: this.appConfig });
+        // copy template into current folder
+        this.fs.copyTpl(
+            [
+                this.templatePath(),
+                `!${this.templatePath(".git/")}`,
+                `!${this.templatePath(".docker/")}`,
+                `!${this.templatePath("azure-pipelines.yml")}`,
+            ],
+            this.destinationPath(),
+            { config: this.appConfig }, 
+            {}, 
+            { globOptions: { dot: true  } }
+        );
         
-        this.fs.copyTpl(this.templatePath('_gitignore'), this.destinationPath('.gitignore'), { config: this.appConfig });
-
     }
     
     end(): void {
 
-        this.log(siigosay("Execute 'make all' and Enjoy!!"))
+        if (/^win/i.test(process.platform)) {
+            this.log(siigosay("Execute 'docker-compose up' to start"))
+        } else {
+            this.log(siigosay("Execute 'make all' to start"))
+        }
     }
 }
 

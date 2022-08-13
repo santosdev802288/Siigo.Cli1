@@ -55,7 +55,7 @@
     "lodash": "^4.17.21",
     "mongoose": "^6.0.9",
     "node-fetch": "^2.6.7",
-    "replace-in-file": "^4.2.0",
+    "replace-in-file": "^4.3.1",
     "shelljs": "^0.8.5",
     "update-notifier": "^5.1.0",
     "uppercamelcase": "^3.0.0",

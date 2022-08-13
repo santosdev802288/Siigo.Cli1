@@ -60,9 +60,4 @@ export function req() {
         shell.exit(1);
     }
 
-    if (!shell.which('docker')) {
-        shell.echo('Please install Docker. https://docs.docker.com/engine/install/');
-        shell.exit(1);
-    }
-
 }
