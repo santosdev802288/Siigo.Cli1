@@ -1,26 +1,26 @@
 import os from 'os'
 import fs from 'fs'
 import colorize from 'json-colorizer'
-import {siigosay} from '@nodesiigo/siigosay'
-import {MicroserviceGenerator} from '../../utils/generator/microservice'
-import {getAllParametersSiigo, wizardsiigofile} from '../../utils/siigoFile'
-import {saveStatistic} from '../../utils/statistics/statistic'
+import { siigosay } from '@nodesiigo/siigosay'
+import { MicroserviceGenerator } from '../../utils/generator/microservice'
+import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile'
+import { saveStatistic } from '../../utils/statistics/statistic'
 import _ from "lodash";
-import {TOOLS, toolsRequired} from '../../utils/required-tools'
+import { TOOLS, toolsRequired } from '../../utils/required-tools'
 import rename = require('gulp-rename');
 import replace = require('replace-in-file');
 
 export default class GolangMSGenerator extends MicroserviceGenerator {
 
     appConfig: { description?: any; author?: any; name?: any; nameUpper?: any; token?: any; auth?: any; redis?: any; email?: any } = {}
-    
+
     constructor(args: any, opt: any) {
 
         super(args, opt)
 
         saveStatistic('golang').then()
 
-        toolsRequired(TOOLS.BUF)(TOOLS.GIT)(TOOLS.TELEPRESENCE)
+        toolsRequired([TOOLS.BUF, TOOLS.GIT, TOOLS.TELEPRESENCE])
 
         // optionals
         this.option('project-name', {
@@ -50,21 +50,21 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
     }
 
 
-    async initializing(){
+    async initializing() {
         this.log(siigosay('Siigo Generator Golang.'))
     }
 
     async _doPrompting() {
-                
+
         const siigoParams = await getAllParametersSiigo();
 
         if (siigoParams.token === 'pending' || this.options['personal-token'] != null) {
             this.options['personal-token'] = await wizardsiigofile(this.options['personal-token']);
-        }else {
+        } else {
             this.options['personal-token'] = siigoParams.token
         }
 
-        const {description} = this.options
+        const { description } = this.options
         this.appConfig = {
             description,
             email: siigoParams.user,
@@ -73,7 +73,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
             nameUpper: _.upperFirst(this.options['project-name']),
             token: this.options['personal-token'],
         };
-        
+
 
         // @ts-expect-error ts-migrate(2769) FIXME: No overload matches this call.
         const json = JSON.stringify(this.appConfig, false, '\t')
@@ -86,7 +86,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
                 NUMBER_LITERAL: '#FF0000'
             }
         }))
-        
+
         this.answers = await this.prompt([
             {
                 type: 'confirm',
@@ -103,15 +103,15 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
 
         // replace contract label with ejs templating
         const optionsLowwerCase = {
-         files: [`${this.templatePath()}/**/*.*`, `${this.templatePath()}/**`],
-         from: /contract/g,
-         to: '<%= config.name %>',
+            files: [`${this.templatePath()}/**/*.*`, `${this.templatePath()}/**`],
+            from: /contract/g,
+            to: '<%= config.name %>',
         };
 
         const optionsUpperCase = {
-          files: [`${this.templatePath()}/**/*.*`, `${this.templatePath()}/**`],
-          from: /Contract/g,
-          to: '<%= config.nameUpper %>',
+            files: [`${this.templatePath()}/**/*.*`, `${this.templatePath()}/**`],
+            from: /Contract/g,
+            to: '<%= config.nameUpper %>',
         };
 
         replace.default.sync(optionsLowwerCase)
@@ -122,20 +122,20 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
             rename((parsetPath) => {
                 const prefixChart = 'ms-';
                 parsetPath.dirname = parsetPath.dirname.includes(prefixChart) ?
-                parsetPath.dirname.replace(/(contract)/g, this.appConfig.name) :
-                parsetPath.dirname.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));
+                    parsetPath.dirname.replace(/(contract)/g, this.appConfig.name) :
+                    parsetPath.dirname.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));
                 parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));
                 parsetPath.dirname.replace(/(contract)/g, (this.appConfig.name));
             })
         ]);
-            
+
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator    
         this.queueTransformStream([
             rename((parsetPath) => {
                 const prefixChart = 'contract';
-                parsetPath.dirname = parsetPath.dirname.includes(prefixChart) ? 
-                parsetPath.dirname.replace(/(contract)/g, this.appConfig.name) : 
-                parsetPath.dirname.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));    
+                parsetPath.dirname = parsetPath.dirname.includes(prefixChart) ?
+                    parsetPath.dirname.replace(/(contract)/g, this.appConfig.name) :
+                    parsetPath.dirname.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));
                 parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));
                 parsetPath.basename = parsetPath.basename.replace(/(contract)/g, this.appConfig.name);
             })
@@ -150,13 +150,13 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
                 `!${this.templatePath("azure-pipelines.yml")}`,
             ],
             this.destinationPath(),
-            { config: this.appConfig }, 
-            {}, 
-            { globOptions: { dot: true  } }
+            { config: this.appConfig },
+            {},
+            { globOptions: { dot: true } }
         );
-        
+
     }
-    
+
     end(): void {
 
         if (/^win/i.test(process.platform)) {
