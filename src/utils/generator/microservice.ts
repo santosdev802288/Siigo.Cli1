@@ -82,9 +82,9 @@ export class MicroserviceGenerator extends Generator {
         this._doWriting()
 
         // Rename gitignore
-        this.fs.move(
+        /*this.fs.move(
             this.destinationPath('_gitignore'),
             this.destinationPath('.gitignore')
-        );
+        );*/
     }
 }
