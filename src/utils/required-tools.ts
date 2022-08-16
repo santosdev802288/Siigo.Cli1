@@ -15,7 +15,7 @@ const TOOLS_LIST = new Map<TOOLS, string>([
     [TOOLS.AZ, 'https://docs.microsoft.com/en-us/cli/azure/install-azure-cli'],
     [TOOLS.NODE, 'https://nodejs.org/en/download/'],
     [TOOLS.BUF, 'https://docs.buf.build/installation'],
-    //[TOOLS.TELEPRESENCE, 'https://www.telepresence.io/docs/v1/reference/install/'],
+    [TOOLS.TELEPRESENCE, 'https://www.telepresence.io/docs/v1/reference/install/'],
     [TOOLS.DOCKER, 'https://docs.docker.com/engine/install/'],
 ])
 
