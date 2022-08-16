@@ -72,6 +72,89 @@ COPY --from=build-env --chown=app:app /app/out $APP_HOME
 
 ENTRYPOINT ["dotnet", "<%= config.mainProject %>.dll"]
 
+<% } else if (config.type == 'net6') { %>
+FROM siigo.azurecr.io/dotnet6-build AS build-env
+
+COPY . .
+
+RUN dotnet publish -c Release -o ./out --self-contained true --runtime linux-x64 --framework net6.0 /p:RuntimeFrameworkVersion=6.0.0
+
+#----------------
+FROM siigo.azurecr.io/dotnet6-runtime
+
+WORKDIR /app/out
+
+COPY --from=build-env --chown=app:app /app/out .
+
+ENTRYPOINT ["./<%= config.mainProject %>"]
+
+<% } else if (config.type == 'golang') { %>
+
+#
+# Build image
+#
+# To access the images locally run: "az acr login -n siigo"
+#
+FROM siigo.azurecr.io/golang-build:1.18 as builder
+
+COPY . .
+
+# validate and generate protobuf code
+RUN buf lint && buf mod update && buf generate
+
+# Build binary
+RUN go get -v ./...
+RUN go mod download
+RUN go mod tidy
+RUN GOARCH=amd64 GOOS=linux go build -v -o golang-app .
+
+#
+# Runtime image
+#
+FROM siigo.azurecr.io/golang-runtime:1.18 as runtime
+
+COPY --from=builder --chown=app:app /app/ ./
+
+ENTRYPOINT ["./golang-app"]
+
+<% } else if (config.type == 'node') { %>
+
+#
+# Imagen base para Node
+# Para acceder a las imágenes siigo localmente ejecutar: "az acr login -n siigo"
+#
+FROM siigo.azurecr.io/node-build:2 as build
+
+WORKDIR /app
+
+COPY .npmrc .npmrc
+COPY package*.json ./
+
+RUN npm ci
+
+COPY . .
+
+RUN npm run build
+
+RUN npm prune --production
+
+# Compilar a binario, ver https://github.com/vercel/pkg
+RUN pkg -c package.json -t node14-alpine-x64 --o dist/binary --compress GZip dist/main.js
+
+#
+# Imagen de ejecución
+#
+FROM siigo.azurecr.io/node-runtime:3 as runtime
+
+WORKDIR /app
+
+# Copiar binario construido en la imagén anteior
+COPY --from=build /app/dist/binary ./
+
+EXPOSE 5000
+CMD ["/app/binary"]
+
+
 <% } else { %>
 # Unkwon type. Unable to generate Dockerfile content
 <% } %>
