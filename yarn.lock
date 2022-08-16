@@ -296,6 +296,20 @@
     "@babel/helper-validator-identifier" "^7.14.5"
     "to-fast-properties" "^2.0.0"
 
+"@colors/colors@1.5.0":
+  "integrity" "sha1-u1BFecHK6SPmV2pPXaQ9Jfl729k="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/@colors/colors/-/colors-1.5.0.tgz"
+  "version" "1.5.0"
+
+"@dabh/diagnostics@^2.0.2":
+  "integrity" "sha1-f36X7ppyXf/HgI2TZozJhOHcR3o="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/@dabh/diagnostics/-/diagnostics-2.0.3.tgz"
+  "version" "2.0.3"
+  dependencies:
+    "colorspace" "1.1.x"
+    "enabled" "2.0.x"
+    "kuler" "^2.0.0"
+
 "@es-joy/jsdoccomment@~0.18.0":
   "integrity" "sha1-JTKy7LhXbWlAEbFXxEftaxJTTHA="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/@es-joy/jsdoccomment/-/jsdoccomment-0.18.0.tgz"
@@ -1289,15 +1303,10 @@
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/asap/-/asap-2.0.6.tgz"
   "version" "2.0.6"
 
-"async@~0.9.0", "async@0.9.x":
-  "integrity" "sha1-rqdNXmHB+JlhO/ZL2mbUx48v0X0="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/async/-/async-0.9.2.tgz"
-  "version" "0.9.2"
-
-"async@~1.0.0":
-  "integrity" "sha1-+PwEyjoTeErenhZBr5hXjPvWR6k="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/async/-/async-1.0.0.tgz"
-  "version" "1.0.0"
+"async@^3.2.3":
+  "integrity" "sha1-rFPa/T9HIO6eihYGKPGOqR3xlsk="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/async/-/async-3.2.3.tgz"
+  "version" "3.2.3"
 
 "asynckit@^0.4.0":
   "integrity" "sha1-x57Zf380y48robyXkLzDZkdLS3k="
@@ -1340,6 +1349,11 @@
   "integrity" "sha1-xjpQLgB4/xsOmwCp9008Kw+L0y4="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/binaryextensions/-/binaryextensions-4.15.0.tgz"
   "version" "4.15.0"
+
+"binaryextensions@^4.16.0":
+  "integrity" "sha1-Iq6totFN4GLGDoylmlBKVjanbOs="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/binaryextensions/-/binaryextensions-4.18.0.tgz"
+  "version" "4.18.0"
 
 "bl@^1.0.0":
   "integrity" "sha1-Ho3YAULqyA1xWMnczAR/tiDgNec="
@@ -1393,6 +1407,13 @@
   dependencies:
     "balanced-match" "^1.0.0"
     "concat-map" "0.0.1"
+
+"brace-expansion@^2.0.1":
+  "integrity" "sha1-HtxFng8MVISG7Pn8mfIiE2S5oK4="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/brace-expansion/-/brace-expansion-2.0.1.tgz"
+  "version" "2.0.1"
+  dependencies:
+    "balanced-match" "^1.0.0"
 
 "braces@^3.0.1", "braces@~3.0.2":
   "integrity" "sha1-NFThpGLujVmeI23zNs2epPiv4Qc="
@@ -1623,6 +1644,14 @@
     "ansi-styles" "^4.1.0"
     "supports-color" "^7.1.0"
 
+"chalk@^4.0.2":
+  "integrity" "sha1-qsTit3NKdAhnrrFr8CqtVWoeegE="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/chalk/-/chalk-4.1.2.tgz"
+  "version" "4.1.2"
+  dependencies:
+    "ansi-styles" "^4.1.0"
+    "supports-color" "^7.1.0"
+
 "chalk@^4.1.0":
   "integrity" "sha1-yAs/qyi/Y3HmhjMl7uZ+YYt35q0="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/chalk/-/chalk-4.1.1.tgz"
@@ -1794,7 +1823,7 @@
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/code-point-at/-/code-point-at-1.1.0.tgz"
   "version" "1.1.0"
 
-"color-convert@^1.9.0":
+"color-convert@^1.9.0", "color-convert@^1.9.3":
   "integrity" "sha1-u3GFBpDh8TZWfeYp0tVHHe2kweg="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/color-convert/-/color-convert-1.9.3.tgz"
   "version" "1.9.3"
@@ -1808,27 +1837,43 @@
   dependencies:
     "color-name" "~1.1.4"
 
+"color-name@^1.0.0", "color-name@1.1.3":
+  "integrity" "sha1-p9BVi9icQveV3UIyj3QIMcpTvCU="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/color-name/-/color-name-1.1.3.tgz"
+  "version" "1.1.3"
+
 "color-name@~1.1.4":
   "integrity" "sha1-wqCah6y95pVD3m9j+jmVyCbFNqI="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/color-name/-/color-name-1.1.4.tgz"
   "version" "1.1.4"
 
-"color-name@1.1.3":
-  "integrity" "sha1-p9BVi9icQveV3UIyj3QIMcpTvCU="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/color-name/-/color-name-1.1.3.tgz"
-  "version" "1.1.3"
+"color-string@^1.6.0":
+  "integrity" "sha1-RGf5FG8Db4Vbdk37W/hYK/NCx6Q="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/color-string/-/color-string-1.9.1.tgz"
+  "version" "1.9.1"
+  dependencies:
+    "color-name" "^1.0.0"
+    "simple-swizzle" "^0.2.2"
 
 "color-support@^1.1.2", "color-support@^1.1.3":
   "integrity" "sha1-k4NDeaHMmgxh+C9S8NBDIiUb1aI="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/color-support/-/color-support-1.1.3.tgz"
   "version" "1.1.3"
 
+"color@^3.1.3":
+  "integrity" "sha1-NUTcGYyvRJDD7MmnkLVP6f9F4WQ="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/color/-/color-3.2.1.tgz"
+  "version" "3.2.1"
+  dependencies:
+    "color-convert" "^1.9.3"
+    "color-string" "^1.6.0"
+
 "colorette@^1.2.2":
   "integrity" "sha1-y8x51emcrqLb8Q6zom/Ys+as+pQ="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/colorette/-/colorette-1.2.2.tgz"
   "version" "1.2.2"
 
-"colors@^1.1.2", "colors@^1.4.0":
+"colors@^1.4.0":
   "integrity" "sha1-xQSRR51MG9rtLJztMs98fcI2D3g="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/colors/-/colors-1.4.0.tgz"
   "version" "1.4.0"
@@ -1838,10 +1883,13 @@
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/colors/-/colors-1.0.3.tgz"
   "version" "1.0.3"
 
-"colors@1.0.x":
-  "integrity" "sha1-BDP0TYCWgP3rYO0mDxsMJi6CpAs="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/colors/-/colors-1.0.3.tgz"
-  "version" "1.0.3"
+"colorspace@1.1.x":
+  "integrity" "sha1-jUQtEYYVL2BFO/gHDNZus2TlkkM="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/colorspace/-/colorspace-1.1.4.tgz"
+  "version" "1.1.4"
+  dependencies:
+    "color" "^3.1.3"
+    "text-hex" "1.0.x"
 
 "combined-stream@^1.0.8":
   "integrity" "sha1-w9RaizT9cwYxoRCoolIGgrMdWn8="
@@ -2135,11 +2183,6 @@
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/crypto-random-string/-/crypto-random-string-2.0.0.tgz"
   "version" "2.0.0"
 
-"cycle@1.0.x":
-  "integrity" "sha1-IegLK+hYD5i0aPN5QwZisEbDStI="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/cycle/-/cycle-1.0.3.tgz"
-  "version" "1.0.3"
-
 "dargs@^7.0.0":
   "integrity" "sha1-BAFcQd4Ly2nshAUPPZvgyvjW1cw="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/dargs/-/dargs-7.0.0.tgz"
@@ -2299,11 +2342,6 @@
     "pify" "^2.3.0"
     "strip-dirs" "^2.0.0"
 
-"deep-equal@~0.2.1":
-  "integrity" "sha1-hLdFiW80xoTpjyzg5Cq69Du6AX0="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/deep-equal/-/deep-equal-0.2.2.tgz"
-  "version" "0.2.2"
-
 "deep-extend@^0.6.0":
   "integrity" "sha1-xPp8lUBKF6nD6Mp+FTcxK3NjMKw="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/deep-extend/-/deep-extend-0.6.0.tgz"
@@ -2462,11 +2500,11 @@
   "version" "0.1.4"
 
 "ejs@^3.1.6":
-  "integrity" "sha1-W/0KBol0O7UmizVQzO7rvBcCgio="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/ejs/-/ejs-3.1.6.tgz"
-  "version" "3.1.6"
+  "integrity" "sha1-xUTZx/cVeD3ZLwvdz3Olnmli0AY="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/ejs/-/ejs-3.1.7.tgz"
+  "version" "3.1.7"
   dependencies:
-    "jake" "^10.6.1"
+    "jake" "^10.8.5"
 
 "electron-to-chromium@^1.3.723":
   "integrity" "sha1-sNZS03aDFHCkwjC6ch2iQnv7mWo="
@@ -2477,6 +2515,11 @@
   "integrity" "sha1-6Bj9ac5cz8tARZT4QpY79TFkzDc="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/emoji-regex/-/emoji-regex-8.0.0.tgz"
   "version" "8.0.0"
+
+"enabled@2.0.x":
+  "integrity" "sha1-+d2S7C1vS7wNXR5k4h1hzUZl58I="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/enabled/-/enabled-2.0.0.tgz"
+  "version" "2.0.0"
 
 "encoding@^0.1.0", "encoding@^0.1.12":
   "integrity" "sha1-VldK/deR9UqOmyeFwFgqLSYhD6k="
@@ -2861,11 +2904,6 @@
     "iconv-lite" "^0.4.24"
     "tmp" "^0.0.33"
 
-"eyes@0.1.x":
-  "integrity" "sha1-Ys8SAjTGg3hdkCNIqADvPgzCC8A="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/eyes/-/eyes-0.1.8.tgz"
-  "version" "0.1.8"
-
 "fancy-log@^1.3.3":
   "integrity" "sha1-28GRVPVYaQFQojlToK29A1vkX8c="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/fancy-log/-/fancy-log-1.3.3.tgz"
@@ -2917,6 +2955,11 @@
   dependencies:
     "pend" "~1.2.0"
 
+"fecha@^4.2.0":
+  "integrity" "sha1-TZzNvGHoYpsln9ymfmWJFEjVaf0="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/fecha/-/fecha-4.2.3.tgz"
+  "version" "4.2.3"
+
 "figures@^3.0.0", "figures@^3.1.0", "figures@^3.2.0":
   "integrity" "sha1-YlwYvSk8YE3EqN2y/r8MiDQXRq8="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/figures/-/figures-3.2.0.tgz"
@@ -2947,11 +2990,11 @@
   "version" "6.2.0"
 
 "filelist@^1.0.1":
-  "integrity" "sha1-gCAvIUYtTRwuIUEZsYB8G8A4Dls="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/filelist/-/filelist-1.0.2.tgz"
-  "version" "1.0.2"
+  "integrity" "sha1-RIYHdQN2SEky9n7xuf8HOGsDbIM="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/filelist/-/filelist-1.0.3.tgz"
+  "version" "1.0.3"
   dependencies:
-    "minimatch" "^3.0.4"
+    "minimatch" "^5.0.1"
 
 "filename-reserved-regex@^2.0.0":
   "integrity" "sha1-q/c9+rc10EVECr/qLZHzieu/oik="
@@ -3061,6 +3104,11 @@
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/flatted/-/flatted-3.2.5.tgz"
   "version" "3.2.5"
 
+"fn.name@1.x.x":
+  "integrity" "sha1-JsrYAXlnrqhzG8QpYdBKPVmIrMw="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/fn.name/-/fn.name-1.1.0.tgz"
+  "version" "1.1.0"
+
 "foreground-child@^2.0.0":
   "integrity" "sha1-cbMoAMnxWqjy+D9Ka9m/812GGlM="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/foreground-child/-/foreground-child-2.0.0.tgz"
@@ -3106,6 +3154,11 @@
   "integrity" "sha1-FQStJSMVjKpA20onh8sBQRmU6k8="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
+
+"fsevents@~2.3.1", "fsevents@~2.3.2":
+  "integrity" "sha1-ilJveLj99GI7cJ4Ll1xSwkwC/Ro="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/fsevents/-/fsevents-2.3.2.tgz"
+  "version" "2.3.2"
 
 "function-bind@^1.1.1":
   "integrity" "sha1-pWiZ0+o8m6uHS7l3O3xe3pL0iV0="
@@ -3579,11 +3632,6 @@
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/husky/-/husky-7.0.2.tgz"
   "version" "7.0.2"
 
-"i@0.3.x":
-  "integrity" "sha1-2WyScyB28HJxG2sQ/X1PZa2O4j0="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/i/-/i-0.3.6.tgz"
-  "version" "0.3.6"
-
 "iconv-lite@^0.4.24":
   "integrity" "sha1-ICK0sl+93CHS9SSXSkdKr+czkIs="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/iconv-lite/-/iconv-lite-0.4.24.tgz"
@@ -3755,6 +3803,11 @@
   "integrity" "sha1-d8mYQFJ6qOyxqLppe4BkWnqSap0="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/is-arrayish/-/is-arrayish-0.2.1.tgz"
   "version" "0.2.1"
+
+"is-arrayish@^0.3.1":
+  "integrity" "sha1-RXSirlb3qyBolvtDHq7tBm/fjwM="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/is-arrayish/-/is-arrayish-0.3.2.tgz"
+  "version" "0.3.2"
 
 "is-bigint@^1.0.1":
   "integrity" "sha1-CBR6GHW8KzIAXUHM2Ckd/8ZpHfM="
@@ -4044,19 +4097,14 @@
   "version" "0.0.1"
 
 "isbinaryfile@^4.0.8":
-  "integrity" "sha1-XTS5SGW9SUZjPsx4oCb8dsWxH88="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/isbinaryfile/-/isbinaryfile-4.0.8.tgz"
-  "version" "4.0.8"
+  "integrity" "sha1-DFteMMJVei8G/r03tzIpRqruQrM="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/isbinaryfile/-/isbinaryfile-4.0.10.tgz"
+  "version" "4.0.10"
 
 "isexe@^2.0.0":
   "integrity" "sha1-6PvzdNxVb/iUehDcsFctYz8s+hA="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/isexe/-/isexe-2.0.0.tgz"
   "version" "2.0.0"
-
-"isstream@0.1.x":
-  "integrity" "sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/isstream/-/isstream-0.1.2.tgz"
-  "version" "0.1.2"
 
 "istanbul-lib-coverage@^3.0.0", "istanbul-lib-coverage@^3.0.0-alpha.1":
   "integrity" "sha1-9ZRKN8cLVQsCp4pcOyBVsoDOyOw="
@@ -4127,13 +4175,13 @@
     "has-to-string-tag-x" "^1.2.0"
     "is-object" "^1.0.1"
 
-"jake@^10.6.1":
-  "integrity" "sha1-68nehVgWCmbYLQ6txqLlj7xQCns="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/jake/-/jake-10.8.2.tgz"
-  "version" "10.8.2"
+"jake@^10.8.5":
+  "integrity" "sha1-8hg9LFk4LLJ0ImA0VDucA7gWTEY="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/jake/-/jake-10.8.5.tgz"
+  "version" "10.8.5"
   dependencies:
-    "async" "0.9.x"
-    "chalk" "^2.4.2"
+    "async" "^3.2.3"
+    "chalk" "^4.0.2"
     "filelist" "^1.0.1"
     "minimatch" "^3.0.4"
 
@@ -4286,6 +4334,11 @@
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/kind-of/-/kind-of-6.0.3.tgz"
   "version" "6.0.3"
 
+"kuler@^2.0.0":
+  "integrity" "sha1-4sVwo4ADiPtEQH6FFTHB1nCwYbM="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/kuler/-/kuler-2.0.0.tgz"
+  "version" "2.0.0"
+
 "latest-version@^5.0.0", "latest-version@^5.1.0":
   "integrity" "sha1-EZ3+kI/jjRXfpD7NE/oS7Igy+s4="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/latest-version/-/latest-version-5.1.0.tgz"
@@ -4404,6 +4457,17 @@
     "chalk" "^4.1.0"
     "is-unicode-supported" "^0.1.0"
 
+"logform@^2.3.2", "logform@^2.4.0":
+  "integrity" "sha1-ExZRcVoX1Q8JwqLBpST/GkFkvP4="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/logform/-/logform-2.4.0.tgz"
+  "version" "2.4.0"
+  dependencies:
+    "@colors/colors" "1.5.0"
+    "fecha" "^4.2.0"
+    "ms" "^2.1.1"
+    "safe-stable-stringify" "^2.3.1"
+    "triple-beam" "^1.3.0"
+
 "lowercase-keys@^1.0.0", "lowercase-keys@^1.0.1":
   "integrity" "sha1-b54wtHCE2XGnyCD/FabFFnt0wm8="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/lowercase-keys/-/lowercase-keys-1.0.1.tgz"
@@ -4473,19 +4537,20 @@
   "version" "4.2.1"
 
 "mem-fs-editor@^8.1.2 || ^9.0.0", "mem-fs-editor@^9.0.0":
-  "integrity" "sha1-xwARdHb/AEzaz1+mb0/RtUELI8k="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/mem-fs-editor/-/mem-fs-editor-9.0.1.tgz"
-  "version" "9.0.1"
+  "integrity" "sha1-DMHPYTUOM8Jfw2TJf7BVHrMrjJs="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/mem-fs-editor/-/mem-fs-editor-9.4.0.tgz"
+  "version" "9.4.0"
   dependencies:
-    "binaryextensions" "^4.15.0"
+    "binaryextensions" "^4.16.0"
     "commondir" "^1.0.1"
     "deep-extend" "^0.6.0"
     "ejs" "^3.1.6"
     "globby" "^11.0.3"
     "isbinaryfile" "^4.0.8"
+    "minimatch" "^3.0.4"
     "multimatch" "^5.0.0"
     "normalize-path" "^3.0.0"
-    "textextensions" "^5.12.0"
+    "textextensions" "^5.13.0"
 
 "mem-fs@^1.2.0 || ^2.0.0", "mem-fs@^2.1.0":
   "integrity" "sha1-yHvIpT+xeXGxKdS81ZqRSft4xbE="
@@ -4588,6 +4653,13 @@
   dependencies:
     "brace-expansion" "^1.1.7"
 
+"minimatch@^5.0.1":
+  "integrity" "sha1-+5Ai91KBJRh8kr2em2NmvhzzQVs="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/minimatch/-/minimatch-5.0.1.tgz"
+  "version" "5.0.1"
+  dependencies:
+    "brace-expansion" "^2.0.1"
+
 "minimatch@4.2.1":
   "integrity" "sha512-9Uq1ChtSZO+Mxa/CL1eGizn2vRn3MlLgzhT0Iz8zaY8NdvxvB0d5QdPFmCKf7JKA9Lerx5vRrnwO03jsSfGG9g=="
   "resolved" "https://registry.npmjs.org/minimatch/-/minimatch-4.2.1.tgz"
@@ -4689,13 +4761,6 @@
   "integrity" "sha1-PrXtYmInVteaXw4qIh3+utdcL34="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/mkdirp/-/mkdirp-1.0.4.tgz"
   "version" "1.0.4"
-
-"mkdirp@0.x.x":
-  "integrity" "sha1-2Rzv1i0UNsoPQWIOJRKI1CAJne8="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/mkdirp/-/mkdirp-0.5.5.tgz"
-  "version" "0.5.5"
-  dependencies:
-    "minimist" "^1.2.5"
 
 "mocha@^9.2.2":
   "integrity" "sha512-L6XC3EdwT6YrIk0yXpavvLkn8h+EU+Y5UcCHKECyMbdUIxyMuZj4bX4U9e1nvnvUUvQVsV2VHQr5zLdcUkhW/g=="
@@ -4806,7 +4871,7 @@
     "arrify" "^2.0.1"
     "minimatch" "^3.0.4"
 
-"mute-stream@~0.0.4", "mute-stream@0.0.8":
+"mute-stream@0.0.8":
   "integrity" "sha1-FjDEKyJR/4HiooPelqVJfqkuXg0="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/mute-stream/-/mute-stream-0.0.8.tgz"
   "version" "0.0.8"
@@ -4820,11 +4885,6 @@
   "integrity" "sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/natural-compare/-/natural-compare-1.4.0.tgz"
   "version" "1.4.0"
-
-"ncp@1.0.x":
-  "integrity" "sha1-0VNn5cuHQyuhF9K/gP30Wuz7QkY="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/ncp/-/ncp-1.0.1.tgz"
-  "version" "1.0.1"
 
 "negotiator@^0.6.2":
   "integrity" "sha1-/qz3zPUlp3rpY0Q2pkiD/+yjRvs="
@@ -5120,6 +5180,13 @@
   "version" "1.4.0"
   dependencies:
     "wrappy" "1"
+
+"one-time@^1.0.0":
+  "integrity" "sha1-4GvBdK7SFO1Y7e3lc7Qzu/gny0U="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/one-time/-/one-time-1.0.0.tgz"
+  "version" "1.0.0"
+  dependencies:
+    "fn.name" "1.x.x"
 
 "onetime@^5.1.0", "onetime@^5.1.2":
   "integrity" "sha1-0Oluu1awdHbfHdnEgG5SN5hcpF4="
@@ -5568,17 +5635,6 @@
     "err-code" "^2.0.2"
     "retry" "^0.12.0"
 
-"prompt@^1.1.0":
-  "integrity" "sha1-eugpxtObvG+bGSf5hh6awHR0QWc="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/prompt/-/prompt-1.1.0.tgz"
-  "version" "1.1.0"
-  dependencies:
-    "colors" "^1.1.2"
-    "read" "1.0.x"
-    "revalidator" "0.1.x"
-    "utile" "0.3.x"
-    "winston" "2.x"
-
 "proto-list@~1.2.1":
   "integrity" "sha1-IS1b/hMYMGpCD2QCuOJv85ZHqEk="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/proto-list/-/proto-list-1.2.4.tgz"
@@ -5703,13 +5759,6 @@
     "load-json-file" "^2.0.0"
     "normalize-package-data" "^2.3.2"
     "path-type" "^2.0.0"
-
-"read@1.0.x":
-  "integrity" "sha1-s9oZvQUkMal2cdRKQmNK33ELQMQ="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/read/-/read-1.0.7.tgz"
-  "version" "1.0.7"
-  dependencies:
-    "mute-stream" "~0.0.4"
 
 "readable-stream@^2.0.2":
   "integrity" "sha1-Hsoc9xGu+BTAT2IlKjamL2yyO1c="
@@ -5862,9 +5911,9 @@
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/replace-ext/-/replace-ext-1.0.1.tgz"
   "version" "1.0.1"
 
-"replace-in-file@^4.2.0":
+"replace-in-file@^4.3.1":
   "integrity" "sha1-xnySF4s4BSAI43kZfMDYbKkn97A="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/replace-in-file/-/replace-in-file-4.3.1.tgz"
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/replace-in-file/-/replace-in-file-4.3.1.tgz"
   "version" "4.3.1"
   dependencies:
     "chalk" "^2.4.2"
@@ -5924,22 +5973,10 @@
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/reusify/-/reusify-1.0.4.tgz"
   "version" "1.0.4"
 
-"revalidator@0.1.x":
-  "integrity" "sha1-/s5hv6DBtSoga9axgZgYS91SOjs="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/revalidator/-/revalidator-0.1.8.tgz"
-  "version" "0.1.8"
-
 "rimraf@^3.0.0", "rimraf@^3.0.2":
   "integrity" "sha1-8aVAK6YiCtUswSgrrBrjqkn9Bho="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/rimraf/-/rimraf-3.0.2.tgz"
   "version" "3.0.2"
-  dependencies:
-    "glob" "^7.1.3"
-
-"rimraf@2.x.x":
-  "integrity" "sha1-NXl/E6f9rcVmFCwp1PB8ytSD4+w="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/rimraf/-/rimraf-2.7.1.tgz"
-  "version" "2.7.1"
   dependencies:
     "glob" "^7.1.3"
 
@@ -5990,6 +6027,11 @@
   "integrity" "sha1-mR7GnSluAxN0fVm9/St0XDX4go0="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/safe-buffer/-/safe-buffer-5.1.2.tgz"
   "version" "5.1.2"
+
+"safe-stable-stringify@^2.3.1":
+  "integrity" "sha1-q2fL4f59QGA8pkHF52XLlC0E/HM="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/safe-stable-stringify/-/safe-stable-stringify-2.3.1.tgz"
+  "version" "2.3.1"
 
 "safer-buffer@>= 2.1.2 < 3", "safer-buffer@>= 2.1.2 < 3.0.0":
   "integrity" "sha1-RPoWGwGHuVSd2Eu5GAL5vYOFzWo="
@@ -6115,6 +6157,13 @@
   "integrity" "sha1-oUEMLt2PB3sItOJTyOrPyvBXRhw="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/signal-exit/-/signal-exit-3.0.3.tgz"
   "version" "3.0.3"
+
+"simple-swizzle@^0.2.2":
+  "integrity" "sha1-pNprY1/8zMoz9w0Xy5JZLeleVXo="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/simple-swizzle/-/simple-swizzle-0.2.2.tgz"
+  "version" "0.2.2"
+  dependencies:
+    "is-arrayish" "^0.3.1"
 
 "sinon@^10.0.0":
   "integrity" "sha1-DRoT7LhvZY0VmE+EJz5XdFsfTFc="
@@ -6601,6 +6650,11 @@
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/text-extensions/-/text-extensions-1.9.0.tgz"
   "version" "1.9.0"
 
+"text-hex@1.0.x":
+  "integrity" "sha1-adycGxdEbueakr9biEu0uRJ1BvU="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/text-hex/-/text-hex-1.0.0.tgz"
+  "version" "1.0.0"
+
 "text-table@^0.2.0":
   "integrity" "sha1-f17oI66AUgfACvLfSoTsP8+lcLQ="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/text-table/-/text-table-0.2.0.tgz"
@@ -6610,6 +6664,11 @@
   "integrity" "sha1-uQgSC1wb1LueukFCPXWxdgEatoo="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/textextensions/-/textextensions-5.12.0.tgz"
   "version" "5.12.0"
+
+"textextensions@^5.13.0":
+  "integrity" "sha1-S7Mpatb8ERz0s5xYndAo2KqvcGA="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/textextensions/-/textextensions-5.15.0.tgz"
+  "version" "5.15.0"
 
 "through@^2.3.6", "through@^2.3.8", "through@>=2.2.7 <3", "through@2":
   "integrity" "sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU="
@@ -6719,6 +6778,11 @@
   "version" "1.0.0"
   dependencies:
     "escape-string-regexp" "^1.0.2"
+
+"triple-beam@^1.3.0":
+  "integrity" "sha1-pZUhTHKY24M57u7gg+TRC9jLjdk="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/triple-beam/-/triple-beam-1.3.0.tgz"
+  "version" "1.3.0"
 
 "ts-node@^10.0.0":
   "integrity" "sha1-BfELmnFrC2JBKa1E8OoF2shLo74="
@@ -6997,18 +7061,6 @@
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Architecture/_packaging/archetype-node/npm/registry/util-deprecate/-/util-deprecate-1.0.2.tgz"
   "version" "1.0.2"
 
-"utile@0.3.x":
-  "integrity" "sha1-E1LDQOuCDk2N26A5pPv6oy7U7zo="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/utile/-/utile-0.3.0.tgz"
-  "version" "0.3.0"
-  dependencies:
-    "async" "~0.9.0"
-    "deep-equal" "~0.2.1"
-    "i" "0.3.x"
-    "mkdirp" "0.x.x"
-    "ncp" "1.0.x"
-    "rimraf" "2.x.x"
-
 "uuid@^3.3.3":
   "integrity" "sha1-sj5DWK+oogL+ehAK8fX4g/AgB+4="
   "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/uuid/-/uuid-3.4.0.tgz"
@@ -7145,17 +7197,30 @@
   dependencies:
     "string-width" "^4.0.0"
 
-"winston@2.x":
-  "integrity" "sha1-8uQx1WFUxOp2VUX8EAO9NAyVtZo="
-  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/winston/-/winston-2.4.5.tgz"
-  "version" "2.4.5"
+"winston-transport@^4.5.0":
+  "integrity" "sha1-bnsN0E05MXHtXk5JBdsmX3qzhPo="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/winston-transport/-/winston-transport-4.5.0.tgz"
+  "version" "4.5.0"
   dependencies:
-    "async" "~1.0.0"
-    "colors" "1.0.x"
-    "cycle" "1.0.x"
-    "eyes" "0.1.x"
-    "isstream" "0.1.x"
+    "logform" "^2.3.2"
+    "readable-stream" "^3.6.0"
+    "triple-beam" "^1.3.0"
+
+"winston@^3.7.2":
+  "integrity" "sha1-lbTu3b7JArPbFCSTKsY0+IfEALE="
+  "resolved" "https://pkgs.dev.azure.com/SiigoDevOps/Siigo/_packaging/siigo-core/npm/registry/winston/-/winston-3.7.2.tgz"
+  "version" "3.7.2"
+  dependencies:
+    "@dabh/diagnostics" "^2.0.2"
+    "async" "^3.2.3"
+    "is-stream" "^2.0.0"
+    "logform" "^2.4.0"
+    "one-time" "^1.0.0"
+    "readable-stream" "^3.4.0"
+    "safe-stable-stringify" "^2.3.1"
     "stack-trace" "0.0.x"
+    "triple-beam" "^1.3.0"
+    "winston-transport" "^4.5.0"
 
 "word-wrap@^1.2.3":
   "integrity" "sha1-YQY29rH3A4kb00dxzLF/uTtHB5w="

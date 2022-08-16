@@ -8,7 +8,7 @@ import {saveStatistic} from '../../utils/statistics/statistic'
 import _ from "lodash";
 import {TOOLS, toolsRequired} from '../../utils/required-tools'
 import rename = require('gulp-rename');
-const replace = require('replace-in-file');
+import replace = require('replace-in-file');
 
 export default class GolangMSGenerator extends MicroserviceGenerator {
 
@@ -114,10 +114,9 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
           to: '<%= config.nameUpper %>',
         };
 
-        replace.sync(optionsLowwerCase)
-        replace.sync(optionsUpperCase)
-        
-        
+        replace.default.sync(optionsLowwerCase)
+        replace.default.sync(optionsUpperCase)
+
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
         this.queueTransformStream([
             rename((parsetPath) => {
