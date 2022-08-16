@@ -110,14 +110,14 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         this.queueTransformStream([
             rename((parsetPath) => {
 
-                parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.name));
-                parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, _.upperFirst(this.appConfig.name));
+                parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.nameCapitalize));
+                parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameCapitalize));
                 parsetPath.basename = parsetPath.basename.replace(/(microservice)/g, this.appConfig.name);
                 parsetPath.basename = parsetPath.basename.replace(/(contract)/g, this.appConfig.name);
                 parsetPath.basename = parsetPath.basename.replace(/(Siigo)/g, this.appConfig.projectPrefix);
 
-                parsetPath.dirname = parsetPath.dirname.replace(/(Microservice)/g, _.upperFirst(this.appConfig.name));
-                parsetPath.dirname = parsetPath.dirname.replace(/(Contract)/g, _.upperFirst(this.appConfig.name));
+                parsetPath.dirname = parsetPath.dirname.replace(/(Microservice)/g, _.upperFirst(this.appConfig.nameCapitalize));
+                parsetPath.dirname = parsetPath.dirname.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameCapitalize));
                 parsetPath.dirname = parsetPath.dirname.replace(/(contract)/g, this.appConfig.name);
                 parsetPath.dirname = parsetPath.dirname.replace(/(Siigo)/g, this.appConfig.projectPrefix);
 

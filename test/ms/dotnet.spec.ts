@@ -24,7 +24,7 @@ describe(NAMESPACE, () => {
     stub(siigoFile, 'wizardsiigofile').returns(Promise.resolve('mockToken'))
   }) 
 
-  it(`Generates a "${projectType}" project`, () => {
+  /*it(`Generates a "${projectType}" project`, () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.Dotnet'))
     const name = path.basename(dir).split('.').reverse()[0]
 
@@ -63,7 +63,7 @@ describe(NAMESPACE, () => {
         assert.file(`Siigo.${name}.sln`);
         assert.file('.gitignore');
       });
-  });
+  });*/
 
   after(() => {
     restore()
