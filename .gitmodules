@@ -2,7 +2,6 @@
 	path = src/generators/golang/templates
 	branch = master
 	url = ../Siigo.Archetype.Golang.DDD
-        #url = https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Archetype.Golang.DDD
 [submodule "src/generators/dotnet/templates/ddd"]
 	path = src/generators/dotnet/templates/ddd
 	url = ../Siigo.Archetype.Csharp.DDD
