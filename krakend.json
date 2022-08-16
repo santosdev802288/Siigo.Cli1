@@ -1,0 +1,45 @@
+{
+  "version": 2,
+  "name": "siigo-Siigo.Gateway.Payroll Krakend api gateway",
+  "port": "8080",
+  "timeout": "60000ms",
+  "endpoints": [
+    {
+      "endpoint": "/health",
+      "extra_config": {
+        "github.com/devopsfaith/krakend/proxy": {
+          "static": {
+            "data": {
+              "status": "OK - siigo-Siigo.Gateway.Payroll"
+            },
+            "strategy": "always"
+          }
+        }
+      },
+      "backend": [
+        {
+          "url_pattern": "/",
+          "host": ["http://dummy-url"]
+        }
+      ]
+    }
+  ],
+  "extra_config": {
+    "github_com/devopsfaith/krakend-cors": {
+      "allow_origins": ["http*"],
+      "max_age": "12h",
+      "allow_headers": ["*"],
+      "allow_methods": [
+        "GET",
+        "HEAD",
+        "POST",
+        "PUT",
+        "DELETE",
+        "CONNECT",
+        "OPTIONS",
+        "TRACE",
+        "PATCH"
+      ]
+    }
+  }
+}
