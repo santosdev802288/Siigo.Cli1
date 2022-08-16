@@ -243,7 +243,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
 
         const chartFolder = 'ms-' + this.appConfig.name
         this.fs.copyTpl(
-            this.templatePath(),
+            [this.templatePath(), this.templatePath('.docker')],
             this.destinationPath(''),
             {config: this.appConfig},
             {},
