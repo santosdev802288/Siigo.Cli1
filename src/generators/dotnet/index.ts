@@ -5,16 +5,16 @@ import _ from 'lodash'
 
 import { getAllParametersSiigo, wizardsiigofile } from '../../utils/siigoFile';
 import { getChecksums } from '../../utils/checksum';
-import {MicroserviceGenerator} from '../../utils/generator/microservice'
+import { MicroserviceGenerator } from '../../utils/generator/microservice'
 import { saveStatistic } from '../../utils/statistics/statistic';
 import { ServerType } from './enums';
 import shell from "shelljs";
-import {TOOLS, toolsRequired} from "../../utils/required-tools";
+import { TOOLS, toolsRequired } from "../../utils/required-tools";
 
 const ServerTypes = Object.values(ServerType)
 
 export default class DotnetMSGenerator extends MicroserviceGenerator {
-  
+
   appConfig !: {
     name: string;
     nameCapitalize: string;
@@ -24,11 +24,11 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
     userSiigo: string;
     nameDev: string;
   };
-    
+
   constructor(args: any, opt: any) {
     super(args, opt);
 
-    toolsRequired(TOOLS.BUF)(TOOLS.GIT)(TOOLS.TELEPRESENCE)
+    toolsRequired([TOOLS.BUF, TOOLS.GIT, TOOLS.TELEPRESENCE])
 
     this.option('name', {
       description: 'Project name',
@@ -56,7 +56,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         default: ServerTypes.indexOf(ServerType.MICROSERVICE_DDD)
       }
     ])
-    saveStatistic('dotnet', {type: response.type})
+    saveStatistic('dotnet', { type: response.type })
     let tokenf = objParameters.token;
     const updatetoken = this.options['token'];
     if (tokenf == 'pending' || updatetoken != null)
@@ -85,16 +85,16 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         parsetPath.basename = parsetPath.basename.replace(/(Siigo)/g, this.appConfig.projectPrefix);
       })
     ]);
-    this.fs.copyTpl(this.templatePath('base/'), this.destinationPath('.'), { config: this.appConfig }, {}, {globOptions: {dot: true}})
+    this.fs.copyTpl(this.templatePath('base/'), this.destinationPath('.'), { config: this.appConfig }, {}, { globOptions: { dot: true } })
 
-      this.fs.copyTpl(this.templatePath(this.appConfig.type + '/'), this.destinationPath('.'), { config: this.appConfig });
-      this.fs.copyTpl(this.templatePath(this.appConfig.type + '/.*'), this.destinationPath('.'), { config: this.appConfig });
+    this.fs.copyTpl(this.templatePath(this.appConfig.type + '/'), this.destinationPath('.'), { config: this.appConfig });
+    this.fs.copyTpl(this.templatePath(this.appConfig.type + '/.*'), this.destinationPath('.'), { config: this.appConfig });
     const checksums = getChecksums(this.destinationPath());
     this.fs.write(path.join(this.destinationPath(), 'checksums.sha256'), checksums);
 
     shell.exec("buf generate");
   }
-    
+
   end() {
     this.log(siigosay('Project Created!!'));
   }
