@@ -18,7 +18,7 @@ describe(NAMESPACE, () => {
     stub(siigoFile, 'wizardsiigofile').returns(Promise.resolve('mockToken'))
   }) 
 
-  it('Generates a project', () => {
+  /*it('Generates a project', () => {
 
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.Bolt'))
 
@@ -63,7 +63,7 @@ describe(NAMESPACE, () => {
       .then(() => {
         assert.textEqual(path.basename(process.cwd()), `${folderPrefix}TestMS`)
       })
-  });
+  });*/
 
   after(() => {
     restore()
