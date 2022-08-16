@@ -28,7 +28,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
     constructor(args: any, opt: any) {
         super(args, opt);
 
-        toolsRequired(TOOLS.BUF)(TOOLS.GIT)(TOOLS.TELEPRESENCE)
+        toolsRequired([TOOLS.BUF, TOOLS.GIT, TOOLS.TELEPRESENCE])
 
         this.option('name', {
             description: 'Project name',
