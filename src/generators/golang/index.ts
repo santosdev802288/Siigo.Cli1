@@ -141,6 +141,9 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
             })
         ]);
 
+        this.fs.copyTpl(this.templatePath('.gitignore'), this.destinationPath('_gitignore'), { config: this.appConfig });
+
+
         // copy template into current folder
         this.fs.copyTpl(
             [
