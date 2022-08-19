@@ -15,6 +15,7 @@ import {saveStatistic} from '../../utils/statistics/statistic'
 
 import {lastChartVersion, writeChart} from '../../utils/chart'
 import {isTestEnv} from '../../utils/environment/node';
+import {ServerType} from "../dotnet/enums";
 
 
 const prefixRepo = 'Siigo.Microservice.'
@@ -28,7 +29,6 @@ enum TypeEnum {
     NETCORE_3 = 'netcore',
     NODE = 'node',
 }
-
 const TYPE_LIST = Object.keys(TypeEnum).map(k => TypeEnum[k as keyof typeof TypeEnum])
 
 
@@ -172,8 +172,24 @@ export default class CicdGenerator extends Generator<CicdOptions> {
                 message: 'In which Project?',
                 choices: nameProjects,
                 default: 'Siigo',
+            },
+            {
+                type: 'list',
+                name: 'type',
+                message: 'Project type, one of:',
+                choices: TYPE_LIST,
+                default: 'golang',
+            },
+            {
+                type: 'input',
+                name: 'namespace',
+                alias: 'ns',
+                message: '¿In which namespace in kubernetes?'
             }
         ])
+
+        const namespace = response.namespace;
+        const type = response.type;
 
         const message = 'For more information execute yo siigo:cicd --help'
         const notEmptyMessage = 'is required or it should not be empty'
@@ -181,8 +197,8 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         if (!this.options['project-name'] || this.options['project-name'] === 'true')
             throw new Error(`--project-name ${notEmptyMessage}.\n ${message}`)
 
-        if (!this.options['namespace-k8s'] || this.options['namespace-k8s'] === 'true')
-            throw new Error(`--namespace-k8s || --ns ${notEmptyMessage}.\n ${message}`)
+        /*if (!this.options['namespace-k8s'] || this.options['namespace-k8s'] === 'true')
+            throw new Error(`--namespace-k8s || --ns ${notEmptyMessage}.\n ${message}`)*/
 
         if ((this.options['dll'] === 'null' || this.options['dll'] === 'true') && this.options['type'] === 'netcore')
             throw new Error(`--dll ${notEmptyMessage}.\n ${message}`)
@@ -190,9 +206,9 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         if ((this.options['chart-version'] === 'null' || this.options['chart-version'] === 'true'))
             throw new Error(`--chart-version ${notEmptyMessage}. Visit https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags \n ${message}`)
 
-        const {organization, environment, folder, type} = this.options
+        const {organization, environment, folder} = this.options
 
-        const namespace = this.options['namespace-k8s']
+        //const namespace = this.options['namespace-k8s']
 
         const owner = await getParameter('user')
         const tribe = await getParameter('tribe')
@@ -212,7 +228,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             tagTribu: tribe,
             tagGroup: group,
             pod: {
-                healthPath: type === TypeEnum.NETCORE_3 || type === TypeEnum.NET_5 ? '/health' : '/api/health'
+                healthPath: '/health'
             }
         }
 
