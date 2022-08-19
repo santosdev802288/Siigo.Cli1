@@ -604,3 +604,4 @@ Now all the commands with __*yo siigo:(core, node, gateway, cicd, etc.)*__ point
 - [ ] [Compose](https://yeoman.io/authoring/composability.html) generators
 - [ ] Integrate whit TypeScript
 - [ ] [Post production](https://github.com/cirocosta/asciinema-edit) to sample videos 
+
