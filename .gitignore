@@ -1,6 +1,8 @@
 # compiled output
 /dist
 /node_modules
+/src/generators/dotnet/templates/ddd
+/src/generators/golang/templates
 
 # Logs
 logs
