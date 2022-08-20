@@ -9,18 +9,14 @@ resources:
   pipelines:
   - pipeline: Csharp
     source: 'Siigo.Archetype.Csharp.DDD CICD' # Change with the name of the source pipeline microservice
-    project: 'Siigo'
     trigger:
       branches:
-        - refs/heads/dev
         - refs/heads/master
   
   - pipeline: Golang
     source: 'Siigo.Archetype.Golang.DDD CICD' # Change with the name of the source pipeline microservice
-    project: 'Siigo'
     trigger:
       branches:
-        - refs/heads/dev
         - refs/heads/master
   
   repositories:
