@@ -66,6 +66,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
             token: this.options['personal-token'],
         };
         
+ 
 
         // @ts-expect-error ts-migrate(2769) FIXME: No overload matches this call.
         const json = JSON.stringify(this.appConfig, false, '\t')
