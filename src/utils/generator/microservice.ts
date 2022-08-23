@@ -1,9 +1,9 @@
 import Generator = require('yeoman-generator')
 import path from 'path'
-import {req} from '../required-tools'
+import { req } from '../required-tools'
 import _ from 'lodash'
 
-import {verifyNewVersion} from '../notification'
+import { verifyNewVersion } from '../notification'
 
 
 export enum MSPrefix {
@@ -40,12 +40,12 @@ export class MicroserviceGenerator extends Generator {
         this.defaultName = this.createPrefix ? undefined : currentPath.split('.').reverse()[0]
     }
 
-    async _doPrompting() { throw new Error('You have to implement _doPrompting()')}
+    async _doPrompting() { throw new Error('You have to implement _doPrompting()') }
 
     async prompting() {
 
         // Create project folder using prefix
-        if(this.createPrefix){
+        if (this.createPrefix) {
             this.answers = await this.prompt([
                 {
                     type: 'list',
@@ -63,8 +63,10 @@ export class MicroserviceGenerator extends Generator {
                     default: 'TestMS'
                 },
             ]);
+
+            const name = _.upperFirst(this.response.name?.toLowerCase());
             
-            const name = _.upperFirst(this.response.name);
+
             this.options['name'] = name
             this.options['project-name'] = name
             const appPath = path.join(process.cwd(), `${this.answers.prefix}${name}`)
@@ -75,7 +77,7 @@ export class MicroserviceGenerator extends Generator {
         await this._doPrompting()
     }
 
-    _doWriting() { throw new Error('You have to implement _doWriting()')}
+    _doWriting() { throw new Error('You have to implement _doWriting()') }
 
     writing() {
 

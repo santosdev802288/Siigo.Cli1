@@ -62,20 +62,25 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         const updatetoken = this.options['token'];
         if (tokenf == 'pending' || updatetoken != null)
             tokenf = await wizardsiigofile(updatetoken);
+
+        const name = this.options['name'].toLowerCase();
+        const nameCapitalize =  _.upperFirst(name); 
+        
         this.appConfig = {
-            name: _.lowerCase(this.options['name']),
-            nameCapitalize: _.upperFirst(this.options['name']),
+            name: name,
+            nameCapitalize: nameCapitalize,
             type: response.type,
             userSiigo: (objParameters as any).user,
             nameDev: (objParameters as any).name,
             token: _.defaultTo(tokenf, ''),
             projectPrefix: this.options['project-prefix'],
         }
+
     }
 
     _doWriting(): void {
 
-        // replace contract label with ejs templating
+        // replace contract label with ejs template
         const optionsLowwerCase = {
             files: [`${this.templatePath(this.appConfig.type)}/**/*.*`, `${this.templatePath(this.appConfig.type)}/**`],
             from: /contract/g,
@@ -110,14 +115,14 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         this.queueTransformStream([
             rename((parsetPath) => {
 
-                parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, _.upperFirst(this.appConfig.nameCapitalize));
-                parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameCapitalize));
+                parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, this.appConfig.nameCapitalize);
+                parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, this.appConfig.nameCapitalize);
                 parsetPath.basename = parsetPath.basename.replace(/(microservice)/g, this.appConfig.name);
                 parsetPath.basename = parsetPath.basename.replace(/(contract)/g, this.appConfig.name);
                 parsetPath.basename = parsetPath.basename.replace(/(Siigo)/g, this.appConfig.projectPrefix);
 
-                parsetPath.dirname = parsetPath.dirname.replace(/(Microservice)/g, _.upperFirst(this.appConfig.nameCapitalize));
-                parsetPath.dirname = parsetPath.dirname.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameCapitalize));
+                parsetPath.dirname = parsetPath.dirname.replace(/(Microservice)/g, this.appConfig.nameCapitalize);
+                parsetPath.dirname = parsetPath.dirname.replace(/(Contract)/g, this.appConfig.nameCapitalize);
                 parsetPath.dirname = parsetPath.dirname.replace(/(contract)/g, this.appConfig.name);
                 parsetPath.dirname = parsetPath.dirname.replace(/(Siigo)/g, this.appConfig.projectPrefix);
 

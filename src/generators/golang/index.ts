@@ -64,13 +64,16 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
             this.options['personal-token'] = siigoParams.token
         }
 
+        const name = this.options['project-name'].toLowerCase();
+        const nameUpper = _.upperFirst(name);
+
         const { description } = this.options
         this.appConfig = {
             description,
             email: siigoParams.user,
             author: siigoParams.name,
-            name: this.options['project-name'].toLowerCase(),
-            nameUpper: _.upperFirst(this.options['project-name']),
+            name: name,
+            nameUpper: nameUpper,
             token: this.options['personal-token'],
         };
 
@@ -123,8 +126,8 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
                 const prefixChart = 'ms-';
                 parsetPath.dirname = parsetPath.dirname.includes(prefixChart) ?
                     parsetPath.dirname.replace(/(contract)/g, this.appConfig.name) :
-                    parsetPath.dirname.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));
-                parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));
+                    parsetPath.dirname.replace(/(Contract)/g, this.appConfig.nameUpper);
+                parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, this.appConfig.nameUpper);
                 parsetPath.dirname.replace(/(contract)/g, (this.appConfig.name));
             })
         ]);
@@ -135,8 +138,8 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
                 const prefixChart = 'contract';
                 parsetPath.dirname = parsetPath.dirname.includes(prefixChart) ?
                     parsetPath.dirname.replace(/(contract)/g, this.appConfig.name) :
-                    parsetPath.dirname.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));
-                parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, _.upperFirst(this.appConfig.nameUpper));
+                    parsetPath.dirname.replace(/(Contract)/g, this.appConfig.nameUpper);
+                parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, this.appConfig.nameUpper);
                 parsetPath.basename = parsetPath.basename.replace(/(contract)/g, this.appConfig.name);
             })
         ]);
