@@ -177,7 +177,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
     end(): void {
 
         if (/^win/i.test(process.platform)) {
-            this.log(siigosay("Execute 'docker-compose up' to start"))
+            this.log(siigosay("Execute 'docker-compose build and docker-compose up' to start"))
         } else {
             this.log(siigosay("Execute 'make all' to start"))
         }
