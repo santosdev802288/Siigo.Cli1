@@ -2,8 +2,8 @@
 	path = src/generators/golang/templates
 	branch = master
 	url = ../Siigo.Archetype.Golang.DDD
-[submodule "src/generators/dotnet/templates/DDD"]
-	path = src/generators/dotnet/templates/DDD
+[submodule "src/generators/dotnet/templates/ddd"]
+	path = src/generators/dotnet/templates/ddd
 	url = ../Siigo.Archetype.Csharp.DDD
 	branch = master
 [submodule "src/generators/dotnet/templates/microlito"]
