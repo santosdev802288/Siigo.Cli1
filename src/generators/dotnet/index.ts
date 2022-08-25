@@ -24,6 +24,8 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         type: ServerType;
         userSiigo: string;
         nameDev: string;
+        domain: string;
+        domainUpper: string;
     };
 
     constructor(args: any, opt: any) {
@@ -41,6 +43,11 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
             default: 'Siigo',
             type: String
         });
+        this.option('domain', {
+            description: 'Use this option to replace the domain',
+            default: this.defaultName,
+            type: String
+        });
     }
 
     async initializing() {
@@ -56,6 +63,11 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
                 message: '¿what do you want to generate?',
                 choices: ServerTypes,
                 default: ServerTypes.indexOf(ServerType.MICROSERVICE_DDD)
+            },
+            {
+                type: 'string',
+                name: 'domain',
+                message: '¿What is the name of your Domain?',
             }
         ])
         saveStatistic('dotnet', {type: response.type})
@@ -67,6 +79,8 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         const name = this.options['name'].toLowerCase();
         const nameUpper = _.upperFirst(this.options['name'])
         const nameCapitalize =  _.upperFirst(name); 
+        const domain = response.domain.toLowerCase();
+        const domainUpper = _.upperFirst(domain)
         
         this.appConfig = {
             name: name,
@@ -77,6 +91,8 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
             nameDev: (objParameters as any).name,
             token: _.defaultTo(tokenf, ''),
             projectPrefix: this.options['project-prefix'],
+            domain:domain,
+            domainUpper: domainUpper,
         }
 
     }
@@ -87,13 +103,13 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         const optionsLowwerCase = {
             files: [`${this.templatePath(this.appConfig.type)}/**/*.*`, `${this.templatePath(this.appConfig.type)}/**`],
             from: /contract/g,
-            to: '<%= config.name %>',
+            to: '<%= config.domain %>',
         };
 
         const optionsUpperCase = {
             files: [`${this.templatePath(this.appConfig.type)}/**/*.*`, `${this.templatePath(this.appConfig.type)}/**`],
             from: /Contract/g,
-            to: '<%= config.nameCapitalize %>',
+            to: '<%= config.domainUpper %>',
         };
 
         // replace contract label with ejs templating
@@ -119,9 +135,9 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
             rename((parsetPath) => {
 
                 parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, this.appConfig.nameCapitalize);
-                parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, this.appConfig.nameCapitalize);
+                parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, this.appConfig.domainUpper);
                 parsetPath.basename = parsetPath.basename.replace(/(microservice)/g, this.appConfig.name);
-                parsetPath.basename = parsetPath.basename.replace(/(contract)/g, this.appConfig.name);
+                parsetPath.basename = parsetPath.basename.replace(/(contract)/g, this.appConfig.domain);
                 parsetPath.basename = parsetPath.basename.replace(/(Siigo)/g, this.appConfig.projectPrefix);
 
                 parsetPath.dirname = parsetPath.dirname.replace(/(Microservice)/g, this.appConfig.nameUpper);
