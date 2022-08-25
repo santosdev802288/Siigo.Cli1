@@ -64,7 +64,7 @@ export class MicroserviceGenerator extends Generator {
                 },
             ]);
 
-            const name = _.upperFirst(this.response.name?.toLowerCase());
+            const name = _.upperFirst(this.response.name);
             
 
             this.options['name'] = name
