@@ -18,6 +18,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
     appConfig !: {
         name: string;
         nameCapitalize: string;
+        nameUpper: string;
         projectPrefix: string;
         token: string;
         type: ServerType;
@@ -64,10 +65,12 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
             tokenf = await wizardsiigofile(updatetoken);
 
         const name = this.options['name'].toLowerCase();
+        const nameUpper = _.upperFirst(this.options['name'])
         const nameCapitalize =  _.upperFirst(name); 
         
         this.appConfig = {
             name: name,
+            nameUpper: nameUpper,
             nameCapitalize: nameCapitalize,
             type: response.type,
             userSiigo: (objParameters as any).user,
@@ -121,8 +124,8 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
                 parsetPath.basename = parsetPath.basename.replace(/(contract)/g, this.appConfig.name);
                 parsetPath.basename = parsetPath.basename.replace(/(Siigo)/g, this.appConfig.projectPrefix);
 
-                parsetPath.dirname = parsetPath.dirname.replace(/(Microservice)/g, this.appConfig.nameCapitalize);
-                parsetPath.dirname = parsetPath.dirname.replace(/(Contract)/g, this.appConfig.nameCapitalize);
+                parsetPath.dirname = parsetPath.dirname.replace(/(Microservice)/g, this.appConfig.nameUpper);
+                parsetPath.dirname = parsetPath.dirname.replace(/(Contract)/g, this.appConfig.nameUpper);
                 parsetPath.dirname = parsetPath.dirname.replace(/(contract)/g, this.appConfig.name);
                 parsetPath.dirname = parsetPath.dirname.replace(/(Siigo)/g, this.appConfig.projectPrefix);
 

@@ -12,7 +12,7 @@ import {default as replace} from 'replace-in-file';
 
 export default class GolangMSGenerator extends MicroserviceGenerator {
 
-    appConfig: { description?: any; author?: any; name?: any; nameUpper?: any; token?: any; auth?: any; redis?: any; email?: any } = {}
+    appConfig: { description?: any; author?: any; name?: any; nameUpper?: any; token?: any; auth?: any; redis?: any; email?: any; pathtoken?: any;} = {}
 
     constructor(args: any, opt: any) {
 
@@ -66,7 +66,8 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
 
         const name = this.options['project-name'].toLowerCase();
         const nameUpper = _.upperFirst(name);
-
+        const pathtoken = this.options['personal-token'];
+        
         const { description } = this.options
         this.appConfig = {
             description,
@@ -117,8 +118,16 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
             to: '<%= config.nameUpper %>',
         };
 
+        // replace contract label with ejs templating
+        const optionsPat = {
+            files: [`${this.templatePath()}/**/*.*`, `${this.templatePath()}/**`],
+            from: /pathtoken/g,
+            to: '<%= config.token %>',
+        };
+
         replace.sync(optionsLowwerCase)
         replace.sync(optionsUpperCase)
+        replace.sync(optionsPat)
 
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
         this.queueTransformStream([
@@ -129,6 +138,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
                     parsetPath.dirname.replace(/(Contract)/g, this.appConfig.nameUpper);
                 parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, this.appConfig.nameUpper);
                 parsetPath.dirname.replace(/(contract)/g, (this.appConfig.name));
+                parsetPath.basename = parsetPath.basename.replace(/(pathtoken)/g, this.appConfig.pathtoken);
             })
         ]);
 
@@ -141,6 +151,7 @@ export default class GolangMSGenerator extends MicroserviceGenerator {
                     parsetPath.dirname.replace(/(Contract)/g, this.appConfig.nameUpper);
                 parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, this.appConfig.nameUpper);
                 parsetPath.basename = parsetPath.basename.replace(/(contract)/g, this.appConfig.name);
+                parsetPath.basename = parsetPath.basename.replace(/(token)/g, this.appConfig.pathtoken);
             })
         ]);
 
