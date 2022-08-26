@@ -66,5 +66,5 @@ export async function writeChart(token: string, projectName: string, tagOwner: s
 export function lastChartVersion(): string {
   const command = 'git ls-remote --refs --tags --sort=v:refname https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart'
   const resGit = (shell.exec(command, {silent: true}).stdout).split('/').pop()
-  return _.defaultTo(resGit, '0.2.22').replace('\n', '')
+  return _.defaultTo(resGit, '0.2.23').replace('\n', '')
 }
