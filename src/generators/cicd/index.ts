@@ -203,7 +203,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         if ((this.options['dll'] === 'null' || this.options['dll'] === 'true') && this.options['type'] === 'netcore')
             throw new Error(`--dll ${notEmptyMessage}.\n ${message}`)
 
-        if ((this.options['chart-version'] === 'null' || this.options['chart-version'] === 'true'))
+        if (!this.options['chart-version'] || (this.options['chart-version'] === 'null' || this.options['chart-version'] === 'true'))
             throw new Error(`--chart-version ${notEmptyMessage}. Visit https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags \n ${message}`)
 
         const {organization, environment, folder} = this.options
