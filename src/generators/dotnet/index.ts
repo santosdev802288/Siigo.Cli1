@@ -122,7 +122,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         const optionsMicroserviceUpperCase = {
             files: [`${this.templatePath(this.appConfig.type)}/**/*.*`, `${this.templatePath(this.appConfig.type)}/**`],
             from: /Microservice/g,
-            to: '<%= config.nameCapitalize %>',
+            to: '<%= config.nameUpper %>',
         };
 
         replace.sync(optionsLowwerCase)
@@ -134,7 +134,7 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
         this.queueTransformStream([
             rename((parsetPath) => {
 
-                parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, this.appConfig.nameCapitalize);
+                parsetPath.basename = parsetPath.basename.replace(/(Microservice)/g, this.appConfig.nameUpper);
                 parsetPath.basename = parsetPath.basename.replace(/(Contract)/g, this.appConfig.domainUpper);
                 parsetPath.basename = parsetPath.basename.replace(/(microservice)/g, this.appConfig.name);
                 parsetPath.basename = parsetPath.basename.replace(/(contract)/g, this.appConfig.domain);
