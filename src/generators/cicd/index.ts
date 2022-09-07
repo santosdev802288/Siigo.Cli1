@@ -29,6 +29,17 @@ enum TypeEnum {
     NETCORE_3 = 'netcore',
     NODE = 'node',
 }
+
+
+export enum KindMessagesPr {
+    defaultmessage = 'Siigo-cli-autogenerate-',
+    title = 'AutoGenerate-Siigo-Cli-',
+    autocomplete = 'false',
+    sourcebranch =  'siigo-cli-autogenerate-ms-mathi',
+    targetbranch =  'qa',
+    messagecommit =  'AutoGenerate-Siigo-Cli-Ms-Mathi',
+    deletebranch =  'true'
+}
 const TYPE_LIST = Object.keys(TypeEnum).map(k => TypeEnum[k as keyof typeof TypeEnum])
 
 
@@ -83,6 +94,12 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             type: Boolean,
             description: 'Saltar el paso de instalación.',
             default: false,
+        })
+
+        this.option('springcloud', {
+            type: String,
+            description: 'Name of the folder that will contain Spring Cloud Configuration.',
+            default: 'ms-archetype'
         })
 
         this.option('folder', {
@@ -147,6 +164,11 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         })
     }
 
+    async download_repo_spring_cloud(): Promise<void> {
+        console.log('download repo spring cloud')                
+        shell.exec('git clone https://SiigoDevOps@dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.SpringCloud.Config springcloud/repo')                
+    }
+
     async initializing(): Promise<void> {
         this.log(siigosay('Siigo Generator CICD.'))
         this.token = await getParameter('token')
@@ -190,6 +212,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
 
         const namespace = response.namespace;
         const type = response.type;
+        const springcloud = 'ms-' + this.options['project-name'].toLowerCase();
 
         const message = 'For more information execute yo siigo:cicd --help'
         const notEmptyMessage = 'is required or it should not be empty'
@@ -219,6 +242,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             environment,
             namespace,
             folder,
+            springcloud,
             pipelineName: this.options['pipeline-name'],
             mainProject: this.options['dll'],
             name: this.options['project-name'].toLowerCase(),
@@ -254,10 +278,16 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             this.cancelCancellableTasks()
     }
 
+    
+    async copy_template(): Promise<void> {
 
-    async writing(): Promise<void> {
+        console.log('write template')
 
-        const chartFolder = 'ms-' + this.appConfig.name
+        if (this.options['skip-install-step']) {
+            return
+        }
+
+        const chartFolder = this.appConfig.name
         this.fs.copyTpl(
             [this.templatePath(), this.templatePath('.docker')],
             this.destinationPath(''),
@@ -265,18 +295,54 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             {},
             {
                 processDestinationPath: (filePath) => filePath.replace(/(chart)/g, chartFolder),
-                globOptions: {dot: true}
+                globOptions: {dot: true},                
             },
-        )
+        )    
+               
 
         this.fs.commit(async error => {
             if (error) this.log(`Error: ${error}`)
         })
-        await writeChart(this.token, chartFolder, this.appConfig.tagOwner, this.appConfig.tagTribu, this.appConfig.tagGroup, this.appConfig.type)
+
+        if (shell.cp('-R', this.templatePath('springcloud/ms-archetype'), 'springcloud/repo/qa/'+ chartFolder).code !== 0){
+            shell.echo('Error: Copy Folder into spring cloud commit failed')            
+        }       
+    } 
+    
+    async write_pr_spring_cloud(): Promise<void> {
+        var branchauto = KindMessagesPr.defaultmessage + this.appConfig.name
+        console.log('write_pr_spring_cloud')
+        shell.cd('springcloud/repo/qa/')
+        shell.exec('git checkout -b ' + branchauto)
+        shell.exec('git add *')
+        if (shell.exec('git commit -am "Auto-commit Siigo Cli"').code !== 0) {
+            shell.echo('Error: Git commit failed')
+        }
+        if (shell.exec('git push origin ' + branchauto).code !== 0) {
+            shell.echo('Error: Git commit failed')
+        }
+        shell.exec('az login')
+        shell.exec('az repos pr create' + 
+                ' --title ' + KindMessagesPr.title +
+                ' --auto-complete ' + KindMessagesPr.autocomplete + 
+                ' --source-branch ' + KindMessagesPr.sourcebranch + 
+                ' --target-branch ' + KindMessagesPr.targetbranch + 
+                ' --merge-commit-message ' + KindMessagesPr.messagecommit + 
+                ' --delete-source-branch ' + KindMessagesPr.deletebranch 
+                )
+    }
+
+
+
+
+    writing(): void {
+
+       console.log('write chart')
+        //await writeChart(this.token, chartFolder, this.appConfig.tagOwner, this.appConfig.tagTribu, this.appConfig.tagGroup, this.appConfig.type)
 
     }
 
-    install(): void {
+    /*install(): void {
         if (this.options['skip-install-step']) {
             return
         }
@@ -307,7 +373,9 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             console.log(chalk.yellow('WARNING!!! '))
             console.log(chalk.yellow(`The Pipeline ${this.appConfig.pipelineName} is already created!`))
         }
-    }
+    }*/
+
+    
 
     end(): void {
         this.log(siigosay('Enjoy! Dont forget merge cicd branch in dev.'))
