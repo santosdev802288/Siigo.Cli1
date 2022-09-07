@@ -38,7 +38,9 @@ export enum KindMessagesPr {
     sourcebranch =  'siigo-cli-autogenerate-ms-mathi',
     targetbranch =  'qa',
     messagecommit =  'AutoGenerate-Siigo-Cli-Ms-Mathi',
-    deletebranch =  'true'
+    deletebranch =  'true',
+    pathtemplatesource = 'springcloud/ms-archetype',
+    pathtemplatetarget = 'springcloud/repo/qa/',
 }
 const TYPE_LIST = Object.keys(TypeEnum).map(k => TypeEnum[k as keyof typeof TypeEnum])
 
@@ -304,15 +306,15 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             if (error) this.log(`Error: ${error}`)
         })
 
-        if (shell.cp('-R', this.templatePath('springcloud/ms-archetype'), 'springcloud/repo/qa/'+ chartFolder).code !== 0){
+        if (shell.cp('-R', this.templatePath(KindMessagesPr.pathtemplatesource), KindMessagesPr.pathtemplatetarget + chartFolder).code !== 0){
             shell.echo('Error: Copy Folder into spring cloud commit failed')            
         }       
     } 
     
     async write_pr_spring_cloud(): Promise<void> {
-        var branchauto = KindMessagesPr.defaultmessage + this.appConfig.name
+        const branchauto = KindMessagesPr.defaultmessage + this.appConfig.name
         console.log('write_pr_spring_cloud')
-        shell.cd('springcloud/repo/qa/')
+        shell.cd( KindMessagesPr.pathtemplatetarget)
         shell.exec('git checkout -b ' + branchauto)
         shell.exec('git add *')
         if (shell.exec('git commit -am "Auto-commit Siigo Cli"').code !== 0) {
