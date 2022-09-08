@@ -30,17 +30,24 @@ enum TypeEnum {
     NODE = 'node',
 }
 
+enum StatusPr {
+    ABANDONED = 'abandoned',
+    ACTIVE = 'active',
+    ALL = 'all',
+    COMPLETED = 'completed'
+}
 
-export enum KindMessagesPr {
-    defaultmessage = 'Siigo-cli-autogenerate-',
+
+export enum KindMessagesPr {    
     title = 'AutoGenerate-Siigo-Cli-',
     autocomplete = 'false',
-    sourcebranch =  'siigo-cli-autogenerate-ms-mathi',
+    sourcebranch =  'siigo-cli-autogenerate-',
     targetbranch =  'qa',
-    messagecommit =  'AutoGenerate-Siigo-Cli-Ms-Mathi',
+    messagecommit =  'AutoGenerate-Siigo-Cli',
     deletebranch =  'true',
     pathtemplatesource = 'springcloud/ms-archetype',
     pathtemplatetarget = 'springcloud/repo/qa/',
+    company = 'siigo.com',
 }
 const TYPE_LIST = Object.keys(TypeEnum).map(k => TypeEnum[k as keyof typeof TypeEnum])
 
@@ -313,7 +320,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
     } 
     
     async write_pr_spring_cloud(): Promise<void> {
-        const branchauto = KindMessagesPr.defaultmessage + this.appConfig.name
+        const branchauto = KindMessagesPr.sourcebranch + this.appConfig.name
         console.log('write_pr_spring_cloud')
         shell.cd( KindMessagesPr.pathtemplatetarget)
         shell.exec('git checkout -b ' + branchauto)
@@ -328,11 +335,52 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         shell.exec('az repos pr create' + 
                 ' --title ' + KindMessagesPr.title +
                 ' --auto-complete ' + KindMessagesPr.autocomplete + 
-                ' --source-branch ' + KindMessagesPr.sourcebranch + 
+                ' --source-branch ' + branchauto + 
                 ' --target-branch ' + KindMessagesPr.targetbranch + 
-                ' --merge-commit-message ' + KindMessagesPr.messagecommit + 
+                ' --merge-commit-message ' + KindMessagesPr.messagecommit + this.appConfig.name +
                 ' --delete-source-branch ' + KindMessagesPr.deletebranch 
                 )
+
+        const shell_pr = 'az repos pr list --creator carr802565@siigo.com --source-branch siigo-cli-autogenerate-kubytestechthree  --target-branch qa --status active --top 1'
+        const listPrUser = (shell.exec(shell_pr, {silent: true}).stdout).split('\n').filter(value => value.length)
+        let flagStatus = false
+        if (listPrUser != null && !_.isEmpty(listPrUser)) {
+            listPrUser.forEach((branch: string) => {
+                if (branch.includes('cicd')) {
+                    flagStatus = true
+                }
+            })
+        }
+        console.log('STATUS ENCONTRADO');
+    }
+
+    async verify_approbal_pr(): Promise<void> {        
+        const branchauto = KindMessagesPr.sourcebranch + this.appConfig.name
+        const owner = await getParameter('user') + '@' + KindMessagesPr.company
+        const shell_pr = 'az repos pr list' +
+                        ' --creator ' + owner +
+                        ' --source-branch ' + branchauto +
+                        ' --target-branch ' + KindMessagesPr.targetbranch +
+                        ' --status ' + StatusPr.ACTIVE +
+                        ' --status ' + StatusPr.COMPLETED +
+                        ' --top 1'
+        
+        let listPrUser = (shell.exec(shell_pr, {silent: true}).stdout).split('\n').filter(value => value.length)
+        let flagStatus = false
+        
+        console.log(chalk.yellow('WARNING!!! '))
+        console.log(chalk.yellow('Your spring cloud pipeline must be approved in order to continue!'))
+        while (!flagStatus){
+            if (listPrUser != null && !_.isEmpty(listPrUser)) {
+                listPrUser.forEach((items: string) => {                    
+                    if (items.includes('status') && items.includes(StatusPr.COMPLETED)) {
+                        console.log(chalk.green('PIPELINE APPROVED!!! '))
+                        flagStatus = true
+                    }
+                })
+            }
+            listPrUser = (shell.exec(shell_pr, {silent: true}).stdout).split('\n').filter(value => value.length)
+        }             
     }
 
     install(): void {
