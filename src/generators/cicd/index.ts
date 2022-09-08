@@ -341,7 +341,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
                 ' --delete-source-branch ' + KindMessagesPr.deletebranch 
                 )
 
-        const shell_pr = 'az repos pr list --creator carr802565@siigo.com --source-branch siigo-cli-autogenerate-kubytestechthree  --target-branch qa --status active --top 1'
+        /*const shell_pr = 'az repos pr list --creator carr802565@siigo.com --source-branch siigo-cli-autogenerate-kubytestechthree  --target-branch qa --status active --top 1'
         const listPrUser = (shell.exec(shell_pr, {silent: true}).stdout).split('\n').filter(value => value.length)
         let flagStatus = false
         if (listPrUser != null && !_.isEmpty(listPrUser)) {
@@ -351,7 +351,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
                 }
             })
         }
-        console.log('STATUS ENCONTRADO');
+        console.log('STATUS ENCONTRADO');*/
     }
 
     async verify_approbal_pr(): Promise<void> {        
