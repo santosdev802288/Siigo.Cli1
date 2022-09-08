@@ -299,12 +299,13 @@ export default class CicdGenerator extends Generator<CicdOptions> {
                 processDestinationPath: (filePath) => filePath.replace(/(chart)/g, chartFolder),
                 globOptions: {dot: true},                
             },
-        )    
-               
+        )                   
 
         this.fs.commit(async error => {
             if (error) this.log(`Error: ${error}`)
         })
+
+        writeChart(this.token, chartFolder, this.appConfig.tagOwner, this.appConfig.tagTribu, this.appConfig.tagGroup, this.appConfig.type)
 
         if (shell.cp('-R', this.templatePath(KindMessagesPr.pathtemplatesource), KindMessagesPr.pathtemplatetarget + chartFolder).code !== 0){
             shell.echo('Error: Copy Folder into spring cloud commit failed')            
@@ -334,17 +335,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
                 )
     }
 
-
-
-
-    writing(): void {
-
-       console.log('write chart')
-        //await writeChart(this.token, chartFolder, this.appConfig.tagOwner, this.appConfig.tagTribu, this.appConfig.tagGroup, this.appConfig.type)
-
-    }
-
-    /*install(): void {
+    install(): void {
         if (this.options['skip-install-step']) {
             return
         }
@@ -375,7 +366,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             console.log(chalk.yellow('WARNING!!! '))
             console.log(chalk.yellow(`The Pipeline ${this.appConfig.pipelineName} is already created!`))
         }
-    }*/
+    }
 
     
 
