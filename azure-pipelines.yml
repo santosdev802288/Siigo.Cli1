@@ -12,7 +12,14 @@ resources:
     trigger:
       branches:
         - refs/heads/master
-  
+
+  pipelines:
+    - pipeline: Csharp-Microlito
+      source: 'Siigo.Archetype.Csharp.Microlito CICD' # Change with the name of the source pipeline microservice
+      trigger:
+        branches:
+          - refs/heads/master
+          
   - pipeline: Golang
     source: 'Siigo.Archetype.Golang.DDD CICD' # Change with the name of the source pipeline microservice
     trigger:
