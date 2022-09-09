@@ -4,7 +4,8 @@ trigger:
   - master
   - cicd
 
-resources:     
+resources:
+  pipelines:     
   - pipeline: Golang
     source: 'Siigo.Archetype.Golang.DDD CICD' # Change with the name of the source pipeline microservice
     trigger:
