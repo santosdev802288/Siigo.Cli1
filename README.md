@@ -719,6 +719,8 @@ To contribute to the project and make a pull request you must follow these requi
 ### Build 
 
   - clone master branch  
+  - update the submodules to last version
+      > git submodule update --init --remote --recursive
   - create a new branch 
   - install dependencies
   - npm run build:dev
