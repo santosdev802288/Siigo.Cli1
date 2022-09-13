@@ -173,10 +173,11 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
 
         // start project
         shell.cd("Siigo." + this.appConfig.nameCapitalize + ".Api")
-        shell.exec("buf generate")
+
+        if (this.appConfig.type === ServerType.MICROSERVICE_DDD) 
+            shell.exec("buf generate")
+        
         shell.exec("dotnet run")
-
-
     }
 }
 
