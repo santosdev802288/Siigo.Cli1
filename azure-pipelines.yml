@@ -5,16 +5,15 @@ trigger:
   - cicd
 
 resources:
-  
-  pipelines:
-  - pipeline: Csharp
-    source: 'Siigo.Archetype.Csharp.DDD CICD' # Change with the name of the source pipeline microservice
+  pipelines:     
+  - pipeline: Golang
+    source: 'Siigo.Archetype.Golang.DDD CICD' # Change with the name of the source pipeline microservice
     trigger:
       branches:
         - refs/heads/master
   
-  - pipeline: Golang
-    source: 'Siigo.Archetype.Golang.DDD CICD' # Change with the name of the source pipeline microservice
+  - pipeline: Csharp
+    source: 'Siigo.Archetype.Csharp.DDD CICD' # Change with the name of the source pipeline microservice
     trigger:
       branches:
         - refs/heads/master

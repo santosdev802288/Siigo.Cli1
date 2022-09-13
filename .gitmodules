@@ -9,5 +9,5 @@
 [submodule "src/generators/dotnet/templates/microlito"]
 	path = src/generators/dotnet/templates/microlito
 	url = ../Siigo.Archetype.Csharp.Microlito
-	branch = SyncCli
+	branch = master
 	

@@ -30,6 +30,26 @@ enum TypeEnum {
     NETCORE_3 = 'netcore',
     NODE = 'node',
 }
+
+enum StatusPr {
+    ABANDONED = 'abandoned',
+    ACTIVE = 'active',
+    ALL = 'all',
+    COMPLETED = 'completed'
+}
+
+
+export enum KindMessagesPr {    
+    title = 'AutoGenerate-Siigo-Cli-',
+    autocomplete = 'false',
+    sourcebranch =  'siigo-cli-autogenerate-',
+    targetbranch =  'qa',
+    messagecommit =  'AutoGenerate-Siigo-Cli',
+    deletebranch =  'true',
+    pathtemplatesource = 'springcloud/ms-archetype',
+    pathtemplatetarget = 'springcloud/repo/qa/',
+    company = 'siigo.com',
+}
 const TYPE_LIST = Object.keys(TypeEnum).map(k => TypeEnum[k as keyof typeof TypeEnum])
 
 
@@ -84,6 +104,12 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             type: Boolean,
             description: 'Saltar el paso de instalación.',
             default: false,
+        })
+
+        this.option('springcloud', {
+            type: String,
+            description: 'Name of the folder that will contain Spring Cloud Configuration.',
+            default: 'ms-archetype'
         })
 
         this.option('folder', {
@@ -148,6 +174,11 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         })
     }
 
+    async download_repo_spring_cloud(): Promise<void> {
+        console.log('download repo spring cloud')                
+        shell.exec('git clone https://SiigoDevOps@dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.SpringCloud.Config springcloud/repo')                
+    }
+
     async initializing(): Promise<void> {
         this.log(siigosay('Siigo Generator CICD.'))
         this.token = await getParameter('token')
@@ -190,6 +221,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
 
         const namespace = response.namespace;
         const type = response.type;
+        const springcloud = 'ms-' + this.options['project-name'].toLowerCase();
 
         const message = 'For more information execute yo siigo:cicd --help'
         const notEmptyMessage = 'is required or it should not be empty'
@@ -200,10 +232,10 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         if (!namespace)
             throw new Error(`Namespace ${notEmptyMessage}.\n ${message}`)
 
-        if ((this.options['dll'] === 'null' || this.options['dll'] === 'true') && this.options['type'] === 'netcore')
+        if ((this.options['dll'] === 'null' || this.options['dll'] === 'true') && this.options['type'].includes('net'))
             throw new Error(`--dll ${notEmptyMessage}.\n ${message}`)
 
-        if (!this.options['chart-version'] || (this.options['chart-version'] === 'null' || this.options['chart-version'] === 'true' ))
+        if (!this.options['chart-version'] || (this.options['chart-version'] === 'null' || this.options['chart-version'] === 'true'))
             throw new Error(`--chart-version ${notEmptyMessage}. Visit https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags \n ${message}`)
 
         const {organization, environment, folder} = this.options
@@ -219,6 +251,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             environment,
             namespace,
             folder,
+            springcloud,
             pipelineName: this.options['pipeline-name'],
             mainProject: this.options['dll'],
             name: this.options['project-name'].toLowerCase(),
@@ -254,10 +287,16 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             this.cancelCancellableTasks()
     }
 
+    
+    async copy_template(): Promise<void> {
 
-    async writing(): Promise<void> {
+        console.log('write template')
 
-        const chartFolder = 'ms-' + this.appConfig.name
+        if (this.options['skip-install-step']) {
+            return
+        }
+
+        const chartFolder = this.appConfig.name
         this.fs.copyTpl(
             [this.templatePath(), this.templatePath('.docker')],
             this.destinationPath(''),
@@ -265,15 +304,83 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             {},
             {
                 processDestinationPath: (filePath) => filePath.replace(/(chart)/g, chartFolder),
-                globOptions: {dot: true}
+                globOptions: {dot: true},                
             },
-        )
+        )                   
 
         this.fs.commit(async error => {
             if (error) this.log(`Error: ${error}`)
         })
-        await writeChart(this.token, chartFolder, this.appConfig.tagOwner, this.appConfig.tagTribu, this.appConfig.tagGroup, this.appConfig.type)
 
+        writeChart(this.token, chartFolder, this.appConfig.tagOwner, this.appConfig.tagTribu, this.appConfig.tagGroup, this.appConfig.type)
+
+        if (shell.cp('-R', this.templatePath(KindMessagesPr.pathtemplatesource), KindMessagesPr.pathtemplatetarget + chartFolder).code !== 0){
+            shell.echo('Error: Copy Folder into spring cloud commit failed')            
+        }       
+    } 
+    
+    async write_pr_spring_cloud(): Promise<void> {
+        const branchauto = KindMessagesPr.sourcebranch + this.appConfig.name
+        console.log('write_pr_spring_cloud')
+        shell.cd( KindMessagesPr.pathtemplatetarget)
+        shell.exec('git checkout -b ' + branchauto)
+        shell.exec('git add *')
+        if (shell.exec('git commit -am "Auto-commit Siigo Cli"').code !== 0) {
+            shell.echo('Error: Git commit failed')
+        }
+        if (shell.exec('git push origin ' + branchauto).code !== 0) {
+            shell.echo('Error: Git commit failed')
+        }
+        shell.exec('az login')
+        shell.exec('az repos pr create' + 
+                ' --title ' + KindMessagesPr.title +
+                ' --auto-complete ' + KindMessagesPr.autocomplete + 
+                ' --source-branch ' + branchauto + 
+                ' --target-branch ' + KindMessagesPr.targetbranch + 
+                ' --merge-commit-message ' + KindMessagesPr.messagecommit + this.appConfig.name +
+                ' --delete-source-branch ' + KindMessagesPr.deletebranch 
+                )
+
+        /*const shell_pr = 'az repos pr list --creator carr802565@siigo.com --source-branch siigo-cli-autogenerate-kubytestechthree  --target-branch qa --status active --top 1'
+        const listPrUser = (shell.exec(shell_pr, {silent: true}).stdout).split('\n').filter(value => value.length)
+        let flagStatus = false
+        if (listPrUser != null && !_.isEmpty(listPrUser)) {
+            listPrUser.forEach((branch: string) => {
+                if (branch.includes('cicd')) {
+                    flagStatus = true
+                }
+            })
+        }
+        console.log('STATUS ENCONTRADO');*/
+    }
+
+    async verify_approbal_pr(): Promise<void> {        
+        const branchauto = KindMessagesPr.sourcebranch + this.appConfig.name
+        const owner = await getParameter('user') + '@' + KindMessagesPr.company
+        const shell_pr = 'az repos pr list' +
+                        ' --creator ' + owner +
+                        ' --source-branch ' + branchauto +
+                        ' --target-branch ' + KindMessagesPr.targetbranch +
+                        ' --status ' + StatusPr.ACTIVE +
+                        ' --status ' + StatusPr.COMPLETED +
+                        ' --top 1'
+        
+        let listPrUser = (shell.exec(shell_pr, {silent: true}).stdout).split('\n').filter(value => value.length)
+        let flagStatus = false
+        
+        console.log(chalk.yellow('WARNING!!! '))
+        console.log(chalk.yellow('Your spring cloud pipeline must be approved in order to continue!'))
+        while (!flagStatus){
+            if (listPrUser != null && !_.isEmpty(listPrUser)) {
+                listPrUser.forEach((items: string) => {                    
+                    if (items.includes('status') && items.includes(StatusPr.COMPLETED)) {
+                        console.log(chalk.green('PIPELINE APPROVED!!! '))
+                        flagStatus = true
+                    }
+                })
+            }
+            listPrUser = (shell.exec(shell_pr, {silent: true}).stdout).split('\n').filter(value => value.length)
+        }             
     }
 
     install(): void {
@@ -310,6 +417,8 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         open(`${this.appConfig.organization}/${this.appConfig.project}/_build?definitionScope=${this.appConfig.folder}`);
 
     }
+
+    
 
     end(): void {
         this.log(siigosay('Enjoy! Dont forget merge cicd branch in dev.'))
