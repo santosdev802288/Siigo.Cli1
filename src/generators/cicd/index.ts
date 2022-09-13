@@ -16,6 +16,7 @@ import {saveStatistic} from '../../utils/statistics/statistic'
 import {lastChartVersion, writeChart} from '../../utils/chart'
 import {isTestEnv} from '../../utils/environment/node';
 import {ServerType} from "../dotnet/enums";
+import open = require('open');
 
 
 const prefixRepo = 'Siigo.Microservice.'
@@ -143,7 +144,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         this.option('dll', {
             type: String,
             description: 'Project which the microservice starts (Siigo.{Name}.Api). Only for .Net types.',
-            default: paths.length ? paths[0] : null,
+            default: paths.length && paths[0].includes(".Api") ? paths[0] : null,
             alias: 'd'
         })
 
@@ -152,7 +153,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             description: 'Used in Helm chart name, docker image and sonar.',
         })
 
-        this.option('namespace-k8s', {
+        this.option('namespace', {
             type: String,
             description: 'Namespace in kubernetes configured in the environment.',
             alias: 'ns'
@@ -209,7 +210,6 @@ export default class CicdGenerator extends Generator<CicdOptions> {
                 name: 'type',
                 message: 'Project type, one of:',
                 choices: TYPE_LIST,
-                default: 'golang',
             },
             {
                 type: 'input',
@@ -225,14 +225,14 @@ export default class CicdGenerator extends Generator<CicdOptions> {
 
         const message = 'For more information execute yo siigo:cicd --help'
         const notEmptyMessage = 'is required or it should not be empty'
-
+        
         if (!this.options['project-name'] || this.options['project-name'] === 'true')
             throw new Error(`--project-name ${notEmptyMessage}.\n ${message}`)
 
-        /*if (!this.options['namespace-k8s'] || this.options['namespace-k8s'] === 'true')
-            throw new Error(`--namespace-k8s || --ns ${notEmptyMessage}.\n ${message}`)*/
+        if (!namespace)
+            throw new Error(`Namespace ${notEmptyMessage}.\n ${message}`)
 
-        if ((this.options['dll'] === 'null' || this.options['dll'] === 'true') && this.options['type'] === 'netcore')
+        if ((this.options['dll'] === 'null' || this.options['dll'] === 'true') && this.options['type'].includes('net'))
             throw new Error(`--dll ${notEmptyMessage}.\n ${message}`)
 
         if (!this.options['chart-version'] || (this.options['chart-version'] === 'null' || this.options['chart-version'] === 'true'))
@@ -401,8 +401,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             this.spawnCommandSync('git', ['commit', '-m', 'cicd configuration'])
             this.spawnCommandSync('git', ['push', 'origin', 'cicd'])
         } else {
-            console.log(chalk.yellow('WARNING!!! '))
-            console.log(chalk.yellow('The branch cicd is already created!'))
+            console.warn(chalk.yellow('The branch cicd is already created!'))
         }
         const branchsPipeline: any = (shell.exec(`az pipelines list --organization https://dev.azure.com/SiigoDevOps --project "${this.appConfig.project}" --name "${this.appConfig.pipelineName}"`, {silent: true}).stdout)
         if (branchsPipeline.length < 5) {
@@ -411,9 +410,12 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             spawn(`az devops configure --defaults organization='${this.appConfig.organization}' project='${this.appConfig.project}'`)
             this.spawnCommandSync('az', ['pipelines', 'create', '--name', this.appConfig.pipelineName, '--yml-path', 'azure-pipelines.yml', '--folder-path', this.appConfig.folder])
         } else {
-            console.log(chalk.yellow('WARNING!!! '))
-            console.log(chalk.yellow(`The Pipeline ${this.appConfig.pipelineName} is already created!`))
+            console.warn(chalk.yellow(`The Pipeline ${this.appConfig.pipelineName} is already created!`))
         }
+
+        console.log(chalk.blue(`Pipeline: ${this.appConfig.organization}/${this.appConfig.project}/_build?definitionScope=${this.appConfig.folder}`))
+        open(`${this.appConfig.organization}/${this.appConfig.project}/_build?definitionScope=${this.appConfig.folder}`);
+
     }
 
     
