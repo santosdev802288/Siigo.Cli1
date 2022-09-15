@@ -38,7 +38,6 @@ enum StatusPr {
     COMPLETED = 'completed'
 }
 
-
 export enum KindMessagesPr {    
     title = 'AutoGenerate-Siigo-Cli-',
     autocomplete = 'false',
@@ -342,10 +341,11 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         }
     } 
     
-    async write_pr_spring_cloud(): Promise<void> {
+    
+    async write_pr_spring_cloud(): Promise<void> {        
         const branchauto = KindMessagesPr.sourcebranch + this.appConfig.name
-        /*console.log('write_pr_spring_cloud')
-        shell.cd( KindMessagesPr.pathtemplatetarget)
+        console.log('write_pr_spring_cloud')
+        /*shell.cd( KindMessagesPr.pathtemplatetarget)
         shell.exec('git checkout -b ' + branchauto)
         shell.exec('git add *')
         if (shell.exec('git commit -am "Auto-commit Siigo Cli"').code !== 0) {
@@ -354,15 +354,60 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         if (shell.exec('git push origin ' + branchauto).code !== 0) {
             shell.echo('Error: Git commit failed')
         }*/
-        shell.exec('az login')
-        /*shell.exec('az repos pr create' + 
+        
+        /*shell.exec('az login')
+        shell.exec('az repos pr create' + 
                 ' --title ' + KindMessagesPr.title +
                 ' --auto-complete ' + KindMessagesPr.autocomplete + 
                 ' --source-branch ' + branchauto + 
                 ' --target-branch ' + KindMessagesPr.targetbranch + 
                 ' --merge-commit-message ' + KindMessagesPr.messagecommit + this.appConfig.name +
                 ' --delete-source-branch ' + KindMessagesPr.deletebranch 
-                )       */ 
+                )        */
+    }
+
+    async await_for_success_pr() : Promise<void>{
+        console.log('await_for_success_pr')
+        const branchauto = KindMessagesPr.sourcebranch + this.appConfig.name
+        const owner = await getParameter('user') + '@' + KindMessagesPr.company
+        const shell_pr = 'az repos pr list' +
+                        ' --creator ' + owner +
+                        ' --source-branch ' + branchauto +
+                        ' --target-branch ' + KindMessagesPr.targetbranch +
+                        ' --status ' + StatusPr.ACTIVE +
+                        ' --status ' + StatusPr.ABANDONED +
+                        ' --top 1'
+        
+        return new Promise((resolve) => {
+            const process = (count: number) => {                        
+                console.log(chalk.bgYellow('Waiting for PR approval : '+ count+ ' Minutes'))
+                const listPrUser = (shell.exec(shell_pr, {silent: true}).stdout).split('\n').filter(value => value.length)
+                let flagStatus = false
+
+                if (listPrUser != null && !_.isEmpty(listPrUser)) {
+                    listPrUser.forEach((items: string) => {                    
+                        if (items.includes('status') && items.includes(StatusPr.ABANDONED))                     
+                            flagStatus = true                        
+                    })
+                }
+                if (count > 0 && !flagStatus) {
+                    count--;
+                    global.setTimeout(() => process(count), 5000);
+                    return;
+                }
+
+                if (flagStatus)
+                    console.log(chalk.green('PIPELINE APPROVED!!! '))
+                
+                if (count == 0){
+                    console.log(chalk.bgRed('Operation abandoned, wait limit exceeded!!'))
+                    this.cancelCancellableTasks()
+                }
+                resolve();
+            };
+            process(5);
+        });                            
+        
     }
 
     /*async verify_approbal_pr(): Promise<void> {        
@@ -392,9 +437,9 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             }
             listPrUser = (shell.exec(shell_pr, {silent: true}).stdout).split('\n').filter(value => value.length)
         }             
-    }
+    }*/
 
-    install(): void {
+    /*install(): void {
         if (this.options['skip-install-step']) {
             return
         }
@@ -414,7 +459,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         } else {
             console.warn(chalk.yellow('The branch cicd is already created!'))
         }
-        const branchsPipeline: any = (shell.exec(`az pipelines list --organization https://dev.azure.com/SiigoDevOps --project "${this.appConfig.project}" --name "${this.appConfig.pipelineName}"`, {silent: true}).stdout)
+        const branchsPipeline: retryPrSpringCloudany = (shell.exec(`az pipelines list --organization https://dev.azure.com/SiigoDevOps --project "${this.appConfig.project}" --name "${this.appConfig.pipelineName}"`, {silent: true}).stdout)
         if (branchsPipeline.length < 5) {
             this.spawnCommandSync('az', ['login'])
             this.spawnCommandSync('az', ['extension', 'add', '--name', 'azure-devops'])
@@ -431,7 +476,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
 
     
 
-    end(): void {
+    end(){
         this.log(siigosay('Enjoy! Dont forget merge cicd branch in dev.'))
     }
 }
