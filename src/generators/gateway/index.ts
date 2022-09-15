@@ -82,7 +82,7 @@ export default class GatewayGenerator extends Generator {
     this.option('chart-version', {
       type: String,
       description: 'Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags',
-      default: lastChartVersion(),
+      default: lastChartVersion(''),
       alias: 'cv'
     });
         

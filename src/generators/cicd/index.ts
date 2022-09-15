@@ -70,7 +70,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         saveStatistic('cicd')
         req()
 
-        const currentPath = path.basename(process.cwd())
+        const currentPath = path.basename(process.cwd())       
 
         const paths = getDirectoriesRecursive('.')
             .filter(filepath => !filepath.includes('Test'))
@@ -135,8 +135,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
 
         this.option('chart-version', {
             type: String,
-            description: 'Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags',
-            default: lastChartVersion(),
+            description: 'Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags',            
             alias: 'cv'
         })
 
@@ -174,10 +173,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         })
     }
 
-    async download_repo_spring_cloud(): Promise<void> {
-        console.log('download repo spring cloud')                
-        shell.exec('git clone https://SiigoDevOps@dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.SpringCloud.Config springcloud/repo')                
-    }
+   
 
     async initializing(): Promise<void> {
         this.log(siigosay('Siigo Generator CICD.'))
@@ -192,6 +188,8 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         }
         registerAutocomplete(this)
     }
+
+    
 
     async prompting(): Promise<void> {
         // TODO update tribes file
@@ -216,12 +214,27 @@ export default class CicdGenerator extends Generator<CicdOptions> {
                 name: 'namespace',
                 alias: 'ns',
                 message: '¿In which namespace in kubernetes?'
+            },
+            {
+                type: 'confirm',
+                name: 'isSpringCloud',
+                message: 'Do you want to create a Spring Cloud Folder?'
             }
+            
         ])
 
         const namespace = response.namespace;
         const type = response.type;
-        const springcloud = 'ms-' + this.options['project-name'].toLowerCase();
+        const isSpringCloud = response.isSpringCloud;
+
+        //validate spring cloud
+        let springcloud = '';
+        if (isSpringCloud)
+            springcloud = 'ms-' + this.options['project-name'].toLowerCase();
+        else
+            springcloud = 'empty';
+
+        const chartversion =  lastChartVersion(this.token)
 
         const message = 'For more information execute yo siigo:cicd --help'
         const notEmptyMessage = 'is required or it should not be empty'
@@ -235,8 +248,8 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         if ((this.options['dll'] === 'null' || this.options['dll'] === 'true') && this.options['type'].includes('net'))
             throw new Error(`--dll ${notEmptyMessage}.\n ${message}`)
 
-        if (!this.options['chart-version'] || (this.options['chart-version'] === 'null' || this.options['chart-version'] === 'true'))
-            throw new Error(`--chart-version ${notEmptyMessage}. Visit https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags \n ${message}`)
+        if (!chartversion || (chartversion === 'null' || chartversion === 'true'))
+            throw new Error(`--chart-version ${notEmptyMessage}. Visit https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags \n ${message}. \n Please Execute`)
 
         const {organization, environment, folder} = this.options
 
@@ -252,10 +265,11 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             namespace,
             folder,
             springcloud,
+            isSpringCloud,
             pipelineName: this.options['pipeline-name'],
             mainProject: this.options['dll'],
             name: this.options['project-name'].toLowerCase(),
-            chartVersion: this.options['chart-version'],
+            chartVersion: chartversion,
             type,
             tagOwner: owner.split('@')[0],
             tagTribu: tribe,
@@ -287,6 +301,13 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             this.cancelCancellableTasks()
     }
 
+    async download_repo_spring_cloud(): Promise<void> {
+        if (this.appConfig.isSpringCloud){
+            console.log('download repo spring cloud')                
+            shell.exec('git clone https://pat:'+ this.token + '@dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.SpringCloud.Config springcloud/repo')               
+        }        
+    }
+
     
     async copy_template(): Promise<void> {
 
@@ -312,16 +333,18 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             if (error) this.log(`Error: ${error}`)
         })
 
-        writeChart(this.token, chartFolder, this.appConfig.tagOwner, this.appConfig.tagTribu, this.appConfig.tagGroup, this.appConfig.type)
+        //writeChart(this.token, chartFolder, this.appConfig.tagOwner, this.appConfig.tagTribu, this.appConfig.tagGroup, this.appConfig.type)
 
-        if (shell.cp('-R', this.templatePath(KindMessagesPr.pathtemplatesource), KindMessagesPr.pathtemplatetarget + chartFolder).code !== 0){
-            shell.echo('Error: Copy Folder into spring cloud commit failed')            
-        }       
+        if (this.appConfig.isSpringCloud){
+            if (shell.cp('-R', this.templatePath(KindMessagesPr.pathtemplatesource), KindMessagesPr.pathtemplatetarget + chartFolder).code !== 0){
+                shell.echo('Error: Copy Folder into spring cloud commit failed')            
+            }       
+        }
     } 
     
     async write_pr_spring_cloud(): Promise<void> {
         const branchauto = KindMessagesPr.sourcebranch + this.appConfig.name
-        console.log('write_pr_spring_cloud')
+        /*console.log('write_pr_spring_cloud')
         shell.cd( KindMessagesPr.pathtemplatetarget)
         shell.exec('git checkout -b ' + branchauto)
         shell.exec('git add *')
@@ -330,31 +353,19 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         }
         if (shell.exec('git push origin ' + branchauto).code !== 0) {
             shell.echo('Error: Git commit failed')
-        }
+        }*/
         shell.exec('az login')
-        shell.exec('az repos pr create' + 
+        /*shell.exec('az repos pr create' + 
                 ' --title ' + KindMessagesPr.title +
                 ' --auto-complete ' + KindMessagesPr.autocomplete + 
                 ' --source-branch ' + branchauto + 
                 ' --target-branch ' + KindMessagesPr.targetbranch + 
                 ' --merge-commit-message ' + KindMessagesPr.messagecommit + this.appConfig.name +
                 ' --delete-source-branch ' + KindMessagesPr.deletebranch 
-                )
-
-        /*const shell_pr = 'az repos pr list --creator carr802565@siigo.com --source-branch siigo-cli-autogenerate-kubytestechthree  --target-branch qa --status active --top 1'
-        const listPrUser = (shell.exec(shell_pr, {silent: true}).stdout).split('\n').filter(value => value.length)
-        let flagStatus = false
-        if (listPrUser != null && !_.isEmpty(listPrUser)) {
-            listPrUser.forEach((branch: string) => {
-                if (branch.includes('cicd')) {
-                    flagStatus = true
-                }
-            })
-        }
-        console.log('STATUS ENCONTRADO');*/
+                )       */ 
     }
 
-    async verify_approbal_pr(): Promise<void> {        
+    /*async verify_approbal_pr(): Promise<void> {        
         const branchauto = KindMessagesPr.sourcebranch + this.appConfig.name
         const owner = await getParameter('user') + '@' + KindMessagesPr.company
         const shell_pr = 'az repos pr list' +
@@ -416,7 +427,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         console.log(chalk.blue(`Pipeline: ${this.appConfig.organization}/${this.appConfig.project}/_build?definitionScope=${this.appConfig.folder}`))
         open(`${this.appConfig.organization}/${this.appConfig.project}/_build?definitionScope=${this.appConfig.folder}`);
 
-    }
+    }*/
 
     
 
