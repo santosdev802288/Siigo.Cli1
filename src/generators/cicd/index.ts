@@ -332,7 +332,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             if (error) this.log(`Error: ${error}`)
         })
 
-        //writeChart(this.token, chartFolder, this.appConfig.tagOwner, this.appConfig.tagTribu, this.appConfig.tagGroup, this.appConfig.type)
+        writeChart(this.token, chartFolder, this.appConfig.tagOwner, this.appConfig.tagTribu, this.appConfig.tagGroup, this.appConfig.type)
 
         if (this.appConfig.isSpringCloud){
             if (shell.cp('-R', this.templatePath(KindMessagesPr.pathtemplatesource), KindMessagesPr.pathtemplatetarget + chartFolder).code !== 0){
@@ -342,104 +342,79 @@ export default class CicdGenerator extends Generator<CicdOptions> {
     } 
     
     
-    async write_pr_spring_cloud(): Promise<void> {        
-        const branchauto = KindMessagesPr.sourcebranch + this.appConfig.name
-        console.log('write_pr_spring_cloud')
-        /*shell.cd( KindMessagesPr.pathtemplatetarget)
-        shell.exec('git checkout -b ' + branchauto)
-        shell.exec('git add *')
-        if (shell.exec('git commit -am "Auto-commit Siigo Cli"').code !== 0) {
-            shell.echo('Error: Git commit failed')
-        }
-        if (shell.exec('git push origin ' + branchauto).code !== 0) {
-            shell.echo('Error: Git commit failed')
-        }*/
-        
-        /*shell.exec('az login')
-        shell.exec('az repos pr create' + 
-                ' --title ' + KindMessagesPr.title +
-                ' --auto-complete ' + KindMessagesPr.autocomplete + 
-                ' --source-branch ' + branchauto + 
-                ' --target-branch ' + KindMessagesPr.targetbranch + 
-                ' --merge-commit-message ' + KindMessagesPr.messagecommit + this.appConfig.name +
-                ' --delete-source-branch ' + KindMessagesPr.deletebranch 
-                )        */
+    async write_pr_spring_cloud(): Promise<void> {   
+        if (this.appConfig.isSpringCloud){     
+            const branchauto = KindMessagesPr.sourcebranch + this.appConfig.name
+            console.log('write_pr_spring_cloud')
+            shell.cd( KindMessagesPr.pathtemplatetarget)
+            shell.exec('git checkout -b ' + branchauto)
+            shell.exec('git add *')
+            if (shell.exec('git commit -am "Auto-commit Siigo Cli"').code !== 0) {
+                shell.echo('Error: Git commit failed')
+            }
+            if (shell.exec('git push origin ' + branchauto).code !== 0) {
+                shell.echo('Error: Git commit failed')
+            }
+            
+            shell.exec('az login')
+            shell.exec('az repos pr create' + 
+                    ' --title ' + KindMessagesPr.title +
+                    ' --auto-complete ' + KindMessagesPr.autocomplete + 
+                    ' --source-branch ' + branchauto + 
+                    ' --target-branch ' + KindMessagesPr.targetbranch + 
+                    ' --merge-commit-message ' + KindMessagesPr.messagecommit + this.appConfig.name +
+                    ' --delete-source-branch ' + KindMessagesPr.deletebranch 
+                    )   
+        }     
     }
 
     async await_for_success_pr() : Promise<void>{
-        console.log('await_for_success_pr')
-        const branchauto = KindMessagesPr.sourcebranch + this.appConfig.name
-        const owner = await getParameter('user') + '@' + KindMessagesPr.company
-        const shell_pr = 'az repos pr list' +
-                        ' --creator ' + owner +
-                        ' --source-branch ' + branchauto +
-                        ' --target-branch ' + KindMessagesPr.targetbranch +
-                        ' --status ' + StatusPr.ACTIVE +
-                        ' --status ' + StatusPr.ABANDONED +
-                        ' --top 1'
-        
-        return new Promise((resolve) => {
-            const process = (count: number) => {                        
-                console.log(chalk.bgYellow('Waiting for PR approval : '+ count+ ' Minutes'))
-                const listPrUser = (shell.exec(shell_pr, {silent: true}).stdout).split('\n').filter(value => value.length)
-                let flagStatus = false
+        if (this.appConfig.isSpringCloud){
+            console.log('await_for_success_pr')
+            const branchauto = KindMessagesPr.sourcebranch + this.appConfig.name
+            const owner = await getParameter('user') + '@' + KindMessagesPr.company
+            const shell_pr = 'az repos pr list' +
+                            ' --creator ' + owner +
+                            ' --source-branch ' + branchauto +
+                            ' --target-branch ' + KindMessagesPr.targetbranch +
+                            ' --status ' + StatusPr.ACTIVE +
+                            ' --status ' + StatusPr.COMPLETED +
+                            ' --top 1'
+            
+            return new Promise((resolve) => {
+                const process = (count: number) => {                        
+                    console.log(chalk.bgYellow('Waiting for PR approval : '+ count+ ' Minutes'))
+                    const listPrUser = (shell.exec(shell_pr, {silent: true}).stdout).split('\n').filter(value => value.length)
+                    let flagStatus = false
 
-                if (listPrUser != null && !_.isEmpty(listPrUser)) {
-                    listPrUser.forEach((items: string) => {                    
-                        if (items.includes('status') && items.includes(StatusPr.ABANDONED))                     
-                            flagStatus = true                        
-                    })
-                }
-                if (count > 0 && !flagStatus) {
-                    count--;
-                    global.setTimeout(() => process(count), 5000);
-                    return;
-                }
+                    if (listPrUser != null && !_.isEmpty(listPrUser)) {
+                        listPrUser.forEach((items: string) => {                    
+                            if (items.includes('status') && items.includes(StatusPr.COMPLETED))                     
+                                flagStatus = true                        
+                        })
+                    }
+                    if (count > 0 && !flagStatus) {
+                        count--;
+                        global.setTimeout(() => process(count), 60000);
+                        return;
+                    }
 
-                if (flagStatus)
-                    console.log(chalk.green('PIPELINE APPROVED!!! '))
-                
-                if (count == 0){
-                    console.log(chalk.bgRed('Operation abandoned, wait limit exceeded!!'))
-                    this.cancelCancellableTasks()
-                }
-                resolve();
-            };
-            process(5);
-        });                            
+                    if (flagStatus)
+                        console.log(chalk.green('PIPELINE APPROVED!!! '))
+                    
+                    if (count == 0){
+                        console.log(chalk.bgRed('Operation abandoned, wait limit exceeded!!'))
+                        this.cancelCancellableTasks()
+                    }
+                    resolve();
+                };
+                process(10);
+            });  
+        }                          
         
     }
 
-    /*async verify_approbal_pr(): Promise<void> {        
-        const branchauto = KindMessagesPr.sourcebranch + this.appConfig.name
-        const owner = await getParameter('user') + '@' + KindMessagesPr.company
-        const shell_pr = 'az repos pr list' +
-                        ' --creator ' + owner +
-                        ' --source-branch ' + branchauto +
-                        ' --target-branch ' + KindMessagesPr.targetbranch +
-                        ' --status ' + StatusPr.ACTIVE +
-                        ' --status ' + StatusPr.COMPLETED +
-                        ' --top 1'
-        
-        let listPrUser = (shell.exec(shell_pr, {silent: true}).stdout).split('\n').filter(value => value.length)
-        let flagStatus = false
-        
-        console.log(chalk.yellow('WARNING!!! '))
-        console.log(chalk.yellow('Your spring cloud pipeline must be approved in order to continue!'))
-        while (!flagStatus){
-            if (listPrUser != null && !_.isEmpty(listPrUser)) {
-                listPrUser.forEach((items: string) => {                    
-                    if (items.includes('status') && items.includes(StatusPr.COMPLETED)) {
-                        console.log(chalk.green('PIPELINE APPROVED!!! '))
-                        flagStatus = true
-                    }
-                })
-            }
-            listPrUser = (shell.exec(shell_pr, {silent: true}).stdout).split('\n').filter(value => value.length)
-        }             
-    }*/
-
-    /*install(): void {
+    install(): void {
         if (this.options['skip-install-step']) {
             return
         }
@@ -459,7 +434,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         } else {
             console.warn(chalk.yellow('The branch cicd is already created!'))
         }
-        const branchsPipeline: retryPrSpringCloudany = (shell.exec(`az pipelines list --organization https://dev.azure.com/SiigoDevOps --project "${this.appConfig.project}" --name "${this.appConfig.pipelineName}"`, {silent: true}).stdout)
+        const branchsPipeline: any = (shell.exec(`az pipelines list --organization https://dev.azure.com/SiigoDevOps --project "${this.appConfig.project}" --name "${this.appConfig.pipelineName}"`, {silent: true}).stdout)
         if (branchsPipeline.length < 5) {
             this.spawnCommandSync('az', ['login'])
             this.spawnCommandSync('az', ['extension', 'add', '--name', 'azure-devops'])
@@ -472,7 +447,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         console.log(chalk.blue(`Pipeline: ${this.appConfig.organization}/${this.appConfig.project}/_build?definitionScope=${this.appConfig.folder}`))
         open(`${this.appConfig.organization}/${this.appConfig.project}/_build?definitionScope=${this.appConfig.folder}`);
 
-    }*/
+    }
 
     
 
