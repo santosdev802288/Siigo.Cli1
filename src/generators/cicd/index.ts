@@ -226,12 +226,8 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         const type = response.type;
         const isSpringCloud = response.isSpringCloud;
 
-        //validate spring cloud
-        let springcloud = '';
-        if (isSpringCloud)
-            springcloud = 'ms-' + this.options['project-name'].toLowerCase();
-        else
-            springcloud = 'empty';
+        //validate spring cloud        
+        const springCloudFolderName =  (isSpringCloud) ? 'ms-' + this.options['project-name'].toLowerCase() : null         
 
         const chartversion =  lastChartVersion(this.token)
 
@@ -263,7 +259,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             environment,
             namespace,
             folder,
-            springcloud,
+            springCloudFolderName,
             isSpringCloud,
             pipelineName: this.options['pipeline-name'],
             mainProject: this.options['dll'],
