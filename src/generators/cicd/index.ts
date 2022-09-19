@@ -376,35 +376,50 @@ export default class CicdGenerator extends Generator<CicdOptions> {
                             ' --status ' + StatusPr.ACTIVE +
                             ' --status ' + StatusPr.COMPLETED +
                             ' --top 1'
+
             
             return new Promise((resolve) => {
-                const process = (count: number) => {                        
-                    console.log(chalk.bgYellow('Waiting for PR approval : '+ count+ ' Minutes'))
-                    const listPrUser = (shell.exec(shell_pr, {silent: true}).stdout).split('\n').filter(value => value.length)
-                    let flagStatus = false
+                const process = async () => {                        
 
-                    if (listPrUser != null && !_.isEmpty(listPrUser)) {
-                        listPrUser.forEach((items: string) => {                    
-                            if (items.includes('status') && items.includes(StatusPr.COMPLETED))                     
-                                flagStatus = true                        
-                        })
-                    }
-                    if (count > 0 && !flagStatus) {
-                        count--;
-                        global.setTimeout(() => process(count), 60000);
+                    const response = await this.prompt([                    
+                        {
+                            type: 'confirm',
+                            name: 'waitForPr',
+                            default: true,
+                            message: 'if you PR is COMPLETED press enter?'
+                        }                        
+                    ])    
+        
+                    if (response.waitForPr){
+                        console.log(chalk.bgYellow('Checking pipeline '))
+
+                        const listPrUser = (shell.exec(shell_pr, {silent: true}).stdout).split('\n').filter(value => value.length)
+                        let flagStatus = false
+
+                        if (listPrUser != null && !_.isEmpty(listPrUser)) {
+                            listPrUser.forEach((items: string) => {                    
+                                if (items.includes('status') && items.includes(StatusPr.COMPLETED))                     
+                                    flagStatus = true                        
+                            })
+                        }
+                        
+                        if (flagStatus)
+                            console.log(chalk.green('PIPELINE APPROVED!!! '))
+                        else{
+                            console.log(chalk.bgRed('The pipeline is not complete, retrying.'))
+                            global.setTimeout(() => process(), 2000);
+                            return;    
+                        }
+                    } else {
+                        console.log(chalk.bgRed('The pipeline is not complete, retrying'))
+                        global.setTimeout(() => process(), 2000);
                         return;
                     }
 
-                    if (flagStatus)
-                        console.log(chalk.green('PIPELINE APPROVED!!! '))
-                    
-                    if (count == 0){
-                        console.log(chalk.bgRed('Operation abandoned, wait limit exceeded!!'))
-                        this.cancelCancellableTasks()
-                    }
                     resolve();
                 };
-                process(10);
+                
+                process();
             });  
         }                          
         
