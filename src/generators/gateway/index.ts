@@ -35,6 +35,7 @@ interface AppConfig {
 export default class GatewayGenerator extends Generator {
   appConfig: AppConfig = {} as AppConfig;
   answers: any;
+  token = '';
 
   constructor(args: any, opt: any) {
     super(args, opt);
@@ -81,8 +82,7 @@ export default class GatewayGenerator extends Generator {
         
     this.option('chart-version', {
       type: String,
-      description: 'Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags',
-      default: lastChartVersion(),
+      description: 'Siigo helm chart version. https://dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.Chart/tags',      
       alias: 'cv'
     });
         
@@ -107,7 +107,9 @@ export default class GatewayGenerator extends Generator {
     
   async initializing() {
     this.log(siigosay('Siigo Generator Api Gateway.'))
+    this.token = await getParameter('token')
     const message = 'For more information execute yo siigo:gateway --help'
+    const chartversion =  lastChartVersion(this.token)
         
     if (!this.options['project-name'] || this.options['project-name'] === 'true')
       throw new Error('--project-name is required or it should not be empty.\n ' + message)
@@ -115,7 +117,7 @@ export default class GatewayGenerator extends Generator {
       throw new Error('--namespace-k8s || --ns is required or it should not be empty.\n ' + message)
     if (this.options['port'] === 'null' || this.options['port'] === 'true' )
       throw new Error('--port is required or it should not be empty.\n ' + message)
-    if ((this.options['chart-version'] === 'null' || this.options['chart-version'] === 'true'))
+    if (!chartversion || (chartversion === 'null' || chartversion === 'true'))
       throw new Error('--chart-version is required or it should not be empty.\n ' + message)
         
     const {organization, project, environment, folder, port} = this.options
@@ -129,7 +131,7 @@ export default class GatewayGenerator extends Generator {
       port,
       pipelineName: this.options['pipeline-name'],
       name: _.kebabCase(this.options['project-name']),
-      chartVersion: this.options['chart-version'],
+      chartVersion: chartversion,
       owner: {
         user: await getParameter('user'),
         tribe: await getParameter('tribe')
