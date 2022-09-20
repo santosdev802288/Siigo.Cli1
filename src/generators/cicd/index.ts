@@ -296,6 +296,8 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             this.cancelCancellableTasks()
 
         this.spawnCommandSync('az', ['login'])
+        this.spawnCommandSync('az', ['extension', 'add', '--name', 'azure-devops'])
+        spawn(`az devops configure --defaults organization='${this.appConfig.organization}' project='${this.appConfig.project}'`)
     }
 
     async download_repo_spring_cloud(): Promise<void> {
@@ -445,8 +447,6 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         }
         const branchsPipeline: any = (shell.exec(`az pipelines list --organization https://dev.azure.com/SiigoDevOps --project "${this.appConfig.project}" --name "${this.appConfig.pipelineName}"`, {silent: true}).stdout)
         if (branchsPipeline.length < 5) {
-            this.spawnCommandSync('az', ['extension', 'add', '--name', 'azure-devops'])
-            spawn(`az devops configure --defaults organization='${this.appConfig.organization}' project='${this.appConfig.project}'`)
             this.spawnCommandSync('az', ['pipelines', 'create','--open', '--name', this.appConfig.pipelineName, '--yml-path', 'azure-pipelines.yml', '--folder-path', this.appConfig.folder])
         } else {
             console.warn(chalk.yellow(`The Pipeline ${this.appConfig.pipelineName} is already created!`))
