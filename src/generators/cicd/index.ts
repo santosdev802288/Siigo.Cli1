@@ -305,9 +305,6 @@ export default class CicdGenerator extends Generator<CicdOptions> {
 
     
     async copy_template(): Promise<void> {
-
-        console.log('write template')
-
         if (this.options['skip-install-step']) {
             return
         }
@@ -352,8 +349,8 @@ export default class CicdGenerator extends Generator<CicdOptions> {
                 shell.echo('Error: Git commit failed')
             }
             
-            shell.exec('az login')
-            shell.exec('az repos pr create' + 
+            shell.exec(`az devops login ${this.token}`)
+            shell.exec('az repos pr create --open ' + 
                     ' --title ' + KindMessagesPr.title +
                     ' --auto-complete ' + KindMessagesPr.autocomplete + 
                     ' --source-branch ' + branchauto + 
@@ -450,14 +447,12 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             this.spawnCommandSync('az', ['login'])
             this.spawnCommandSync('az', ['extension', 'add', '--name', 'azure-devops'])
             spawn(`az devops configure --defaults organization='${this.appConfig.organization}' project='${this.appConfig.project}'`)
-            this.spawnCommandSync('az', ['pipelines', 'create', '--name', this.appConfig.pipelineName, '--yml-path', 'azure-pipelines.yml', '--folder-path', this.appConfig.folder])
+            this.spawnCommandSync('az', ['pipelines', 'create','--open', '--name', this.appConfig.pipelineName, '--yml-path', 'azure-pipelines.yml', '--folder-path', this.appConfig.folder])
         } else {
             console.warn(chalk.yellow(`The Pipeline ${this.appConfig.pipelineName} is already created!`))
         }
 
         console.log(chalk.blue(`Pipeline: ${this.appConfig.organization}/${this.appConfig.project}/_build?definitionScope=${this.appConfig.folder}`))
-        open(`${this.appConfig.organization}/${this.appConfig.project}/_build?definitionScope=${this.appConfig.folder}`);
-
     }
 
     
