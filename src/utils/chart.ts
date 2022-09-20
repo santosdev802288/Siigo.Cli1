@@ -16,7 +16,7 @@ import {load, dump} from 'js-yaml';
  * @param tagTribu
  * @param tagGroup
  */
-export async function writeChart(token: string, projectName: string, tagOwner: string, tagTribu: string, tagGroup: string, type: string): Promise<void> {
+export async function writeChart(distinationPath: string,token: string, projectName: string, tagOwner: string, tagTribu: string, tagGroup: string, type: string): Promise<void> {
   const b64 = Buffer.from(token.trim() + ':').toString('base64')
   const requestOptions: RequestInit = {
     method: 'GET',
@@ -43,11 +43,11 @@ export async function writeChart(token: string, projectName: string, tagOwner: s
 
   try {
 
-    const valuesPath = path.resolve(`./.docker/${projectName}/values.yaml`)
-    const qaValuesPath = path.resolve('./.docker/envs/qa.yaml')
-    const prodValuesPath = path.resolve('./.docker/envs/prod.yaml')
-    const prodstValuesPath = path.resolve('./.docker/envs/prodst.yaml')
-    const sandboxValuesPath = path.resolve('./.docker/envs/sandbox.yaml')
+    const valuesPath = path.resolve(`${distinationPath}/.docker/${projectName}/values.yaml`)
+    const qaValuesPath = path.resolve(`${distinationPath}/.docker/envs/qa.yaml`)
+    const prodValuesPath = path.resolve(`${distinationPath}/.docker/envs/prod.yaml`)
+    const prodstValuesPath = path.resolve(`${distinationPath}/.docker/envs/prodst.yaml`)
+    const sandboxValuesPath = path.resolve(`${distinationPath}/.docker/envs/sandbox.yaml`)
 
     stringResponse = dump({'siigo-chart': chartValuesAsJson})
 
