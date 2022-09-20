@@ -294,6 +294,8 @@ export default class CicdGenerator extends Generator<CicdOptions> {
 
         if (!this.answers.ready)
             this.cancelCancellableTasks()
+
+        this.spawnCommandSync('az', ['login'])
     }
 
     async download_repo_spring_cloud(): Promise<void> {
@@ -349,7 +351,6 @@ export default class CicdGenerator extends Generator<CicdOptions> {
                 shell.echo('Error: Git commit failed')
             }
             
-            shell.exec(`az devops login ${this.token}`)
             shell.exec('az repos pr create --open ' + 
                     ' --title ' + KindMessagesPr.title +
                     ' --auto-complete ' + KindMessagesPr.autocomplete + 
@@ -444,7 +445,6 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         }
         const branchsPipeline: any = (shell.exec(`az pipelines list --organization https://dev.azure.com/SiigoDevOps --project "${this.appConfig.project}" --name "${this.appConfig.pipelineName}"`, {silent: true}).stdout)
         if (branchsPipeline.length < 5) {
-            this.spawnCommandSync('az', ['login'])
             this.spawnCommandSync('az', ['extension', 'add', '--name', 'azure-devops'])
             spawn(`az devops configure --defaults organization='${this.appConfig.organization}' project='${this.appConfig.project}'`)
             this.spawnCommandSync('az', ['pipelines', 'create','--open', '--name', this.appConfig.pipelineName, '--yml-path', 'azure-pipelines.yml', '--folder-path', this.appConfig.folder])
