@@ -17,6 +17,7 @@ import {lastChartVersion, writeChart} from '../../utils/chart'
 import {isTestEnv} from '../../utils/environment/node';
 import {ServerType} from "../dotnet/enums";
 import open = require('open');
+import {default as replace} from 'replace-in-file';
 
 
 const prefixRepo = 'Siigo.Microservice.'
@@ -45,7 +46,7 @@ export enum KindMessagesPr {
     targetbranch =  'qa',
     messagecommit =  'AutoGenerate-Siigo-Cli',
     deletebranch =  'true',
-    pathtemplatesource = 'springcloud/ms-archetype',
+    pathtemplatesource = 'springcloud/',
     pathtemplatetarget = 'springcloud/repo/qa/',
     company = 'siigo.com',
 }
@@ -310,7 +311,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
     
     async copy_template(): Promise<void> {
 
-        const chartFolder = this.appConfig.name
+        const chartFolder = `ms-${this.appConfig.name}`
         this.fs.copyTpl(
             [this.templatePath(), this.templatePath('.docker')],
             this.destinationPath(''),
@@ -329,9 +330,21 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         writeChart(this.destinationPath(),this.token, chartFolder, this.appConfig.tagOwner, this.appConfig.tagTribu, this.appConfig.tagGroup, this.appConfig.type)
 
         if (this.appConfig.isSpringCloud){
+
+            
+
+            const optionsPat = {
+                files: [`${this.templatePath()}/springcloud/**/*.*`,],
+                from: /ms-archetype/g,
+                to: chartFolder,
+            };
+    
+            replace.sync(optionsPat)
+
             if (shell.cp('-R', this.templatePath(KindMessagesPr.pathtemplatesource), KindMessagesPr.pathtemplatetarget + chartFolder).code !== 0){
                 shell.echo('Error: Copy Folder into spring cloud commit failed')            
-            }       
+            }
+                   
         }
     } 
     
