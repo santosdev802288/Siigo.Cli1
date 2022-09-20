@@ -309,9 +309,6 @@ export default class CicdGenerator extends Generator<CicdOptions> {
 
     
     async copy_template(): Promise<void> {
-        if (this.options['skip-install-step']) {
-            return
-        }
 
         const chartFolder = this.appConfig.name
         this.fs.copyTpl(
@@ -329,7 +326,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             if (error) this.log(`Error: ${error}`)
         })
 
-        writeChart(this.token, chartFolder, this.appConfig.tagOwner, this.appConfig.tagTribu, this.appConfig.tagGroup, this.appConfig.type)
+        writeChart(this.destinationPath(),this.token, chartFolder, this.appConfig.tagOwner, this.appConfig.tagTribu, this.appConfig.tagGroup, this.appConfig.type)
 
         if (this.appConfig.isSpringCloud){
             if (shell.cp('-R', this.templatePath(KindMessagesPr.pathtemplatesource), KindMessagesPr.pathtemplatetarget + chartFolder).code !== 0){
