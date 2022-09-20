@@ -304,7 +304,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         if (this.appConfig.isSpringCloud){
             console.log('download repo spring cloud')                
             shell.exec('git clone https://pat:'+ this.token + '@dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.SpringCloud.Config springcloud/repo')               
-        }        
+        }         
     }
 
     
@@ -352,7 +352,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             if (shell.exec('git push origin ' + branchauto).code !== 0) {
                 shell.echo('Error: Git commit failed')
             }
-            
+             
             shell.exec('az repos pr create --open ' + 
                     ' --title ' + KindMessagesPr.title +
                     ' --auto-complete ' + KindMessagesPr.autocomplete + 
@@ -404,14 +404,14 @@ export default class CicdGenerator extends Generator<CicdOptions> {
                         }
                         
                         if (flagStatus)
-                            console.log(chalk.green('PIPELINE APPROVED!!! '))
+                            console.log(chalk.green('Pull Request APPROVED!!! '))
                         else{
-                            console.log(chalk.bgRed('The pipeline is not complete, retrying.'))
+                            console.log(chalk.bgRed('Pull Request is not complete, retrying.'))
                             global.setTimeout(() => process(), 2000);
                             return;    
                         }
                     } else {
-                        console.log(chalk.bgRed('The pipeline is not complete, retrying'))
+                        console.log(chalk.bgRed('Pull Request is not complete, retrying'))
                         global.setTimeout(() => process(), 2000);
                         return;
                     }
