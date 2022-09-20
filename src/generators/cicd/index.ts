@@ -447,11 +447,12 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         }
         const branchsPipeline: any = (shell.exec(`az pipelines list --organization https://dev.azure.com/SiigoDevOps --project "${this.appConfig.project}" --name "${this.appConfig.pipelineName}"`, {silent: true}).stdout)
         if (branchsPipeline.length < 5) {
-            this.spawnCommandSync('az', ['pipelines', 'create','--open', '--name', this.appConfig.pipelineName, '--yml-path', 'azure-pipelines.yml', '--folder-path', this.appConfig.folder])
+            this.spawnCommandSync('az', ['pipelines', 'create', '--name', this.appConfig.pipelineName, '--yml-path', 'azure-pipelines.yml', '--folder-path', this.appConfig.folder])
         } else {
             console.warn(chalk.yellow(`The Pipeline ${this.appConfig.pipelineName} is already created!`))
         }
-
+        
+        open(`${this.appConfig.organization}/${this.appConfig.project}/_build?definitionScope=${this.appConfig.folder}`);
         console.log(chalk.blue(`Pipeline: ${this.appConfig.organization}/${this.appConfig.project}/_build?definitionScope=${this.appConfig.folder}`))
     }
 
