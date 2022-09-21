@@ -469,6 +469,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
     
 
     end(){
+        shell.rm('-rf', KindMessagesPr.pathtemplatesource)
         this.log(siigosay('Enjoy! Dont forget merge cicd branch in dev.'))
     }
 }
