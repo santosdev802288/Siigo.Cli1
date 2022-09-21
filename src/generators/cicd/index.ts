@@ -17,6 +17,7 @@ import {lastChartVersion, writeChart} from '../../utils/chart'
 import {isTestEnv} from '../../utils/environment/node';
 import {ServerType} from "../dotnet/enums";
 import open = require('open');
+import {default as replace} from 'replace-in-file';
 
 
 const prefixRepo = 'Siigo.Microservice.'
@@ -45,7 +46,7 @@ export enum KindMessagesPr {
     targetbranch =  'qa',
     messagecommit =  'AutoGenerate-Siigo-Cli',
     deletebranch =  'true',
-    pathtemplatesource = 'springcloud/ms-archetype',
+    pathtemplatesource = 'springcloud/',
     pathtemplatetarget = 'springcloud/repo/qa/',
     company = 'siigo.com',
 }
@@ -304,13 +305,13 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         if (this.appConfig.isSpringCloud){
             console.log('download repo spring cloud')                
             shell.exec('git clone https://pat:'+ this.token + '@dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.SpringCloud.Config springcloud/repo')               
-        }        
+        }         
     }
 
     
     async copy_template(): Promise<void> {
 
-        const chartFolder = this.appConfig.name
+        const chartFolder = `ms-${this.appConfig.name}`
         this.fs.copyTpl(
             [this.templatePath(), this.templatePath('.docker')],
             this.destinationPath(''),
@@ -329,9 +330,21 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         writeChart(this.destinationPath(),this.token, chartFolder, this.appConfig.tagOwner, this.appConfig.tagTribu, this.appConfig.tagGroup, this.appConfig.type)
 
         if (this.appConfig.isSpringCloud){
+
+            
+
+            const optionsPat = {
+                files: [`${this.templatePath()}/springcloud/**/*.*`,],
+                from: /ms-archetype/g,
+                to: chartFolder,
+            };
+    
+            replace.sync(optionsPat)
+
             if (shell.cp('-R', this.templatePath(KindMessagesPr.pathtemplatesource), KindMessagesPr.pathtemplatetarget + chartFolder).code !== 0){
                 shell.echo('Error: Copy Folder into spring cloud commit failed')            
-            }       
+            }
+                   
         }
     } 
     
@@ -349,7 +362,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
             if (shell.exec('git push origin ' + branchauto).code !== 0) {
                 shell.echo('Error: Git commit failed')
             }
-            
+             
             shell.exec('az repos pr create --open ' + 
                     ' --title ' + KindMessagesPr.title +
                     ' --auto-complete ' + KindMessagesPr.autocomplete + 
@@ -401,14 +414,14 @@ export default class CicdGenerator extends Generator<CicdOptions> {
                         }
                         
                         if (flagStatus)
-                            console.log(chalk.green('PIPELINE APPROVED!!! '))
+                            console.log(chalk.green('Pull Request APPROVED!!! '))
                         else{
-                            console.log(chalk.bgRed('The pipeline is not complete, retrying.'))
+                            console.log(chalk.bgRed('Pull Request is not complete, retrying.'))
                             global.setTimeout(() => process(), 2000);
                             return;    
                         }
                     } else {
-                        console.log(chalk.bgRed('The pipeline is not complete, retrying'))
+                        console.log(chalk.bgRed('Pull Request is not complete, retrying'))
                         global.setTimeout(() => process(), 2000);
                         return;
                     }
@@ -444,17 +457,19 @@ export default class CicdGenerator extends Generator<CicdOptions> {
         }
         const branchsPipeline: any = (shell.exec(`az pipelines list --organization https://dev.azure.com/SiigoDevOps --project "${this.appConfig.project}" --name "${this.appConfig.pipelineName}"`, {silent: true}).stdout)
         if (branchsPipeline.length < 5) {
-            this.spawnCommandSync('az', ['pipelines', 'create','--open', '--name', this.appConfig.pipelineName, '--yml-path', 'azure-pipelines.yml', '--folder-path', this.appConfig.folder])
+            this.spawnCommandSync('az', ['pipelines', 'create', '--name', this.appConfig.pipelineName, '--yml-path', 'azure-pipelines.yml', '--folder-path', this.appConfig.folder])
         } else {
             console.warn(chalk.yellow(`The Pipeline ${this.appConfig.pipelineName} is already created!`))
         }
-
+        
+        open(`${this.appConfig.organization}/${this.appConfig.project}/_build?definitionScope=${this.appConfig.folder}`);
         console.log(chalk.blue(`Pipeline: ${this.appConfig.organization}/${this.appConfig.project}/_build?definitionScope=${this.appConfig.folder}`))
     }
 
     
 
     end(){
+        shell.rm('-rf', KindMessagesPr.pathtemplatesource)
         this.log(siigosay('Enjoy! Dont forget merge cicd branch in dev.'))
     }
 }
