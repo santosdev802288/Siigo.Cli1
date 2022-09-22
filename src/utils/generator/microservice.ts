@@ -2,7 +2,9 @@ import Generator = require('yeoman-generator')
 import path from 'path'
 import { req } from '../required-tools'
 import _ from 'lodash'
-
+import { IsDifferentLetters } from '../IsDifferentLetters'
+import { Message } from '../Message'
+import colorize from 'json-colorizer'
 import { verifyNewVersion } from '../notification'
 
 
@@ -64,6 +66,19 @@ export class MicroserviceGenerator extends Generator {
                 },
             ]);
 
+            if (IsDifferentLetters(this.response.name)) {
+                this.log(colorize(new Message(true, "Invalid project name", `'${this.response.name}' 👈 is not allowed 😒, use only letters 👌` ).toString(),
+                  {
+                    pretty: true,
+                    colors: {
+                        STRING_KEY: 'red',
+                        STRING_LITERAL: 'magenta.bold',
+                        NUMBER_LITERAL: '#FF0000', 
+                    }
+                }))
+                return process.exit(1);
+            } 
+
             const name = _.upperFirst(this.response.name);
             
 
@@ -82,11 +97,5 @@ export class MicroserviceGenerator extends Generator {
     writing() {
 
         this._doWriting()
-
-        // Rename gitignore
-        /*this.fs.move(
-            this.destinationPath('_gitignore'),
-            this.destinationPath('.gitignore')
-        );*/
     }
 }
