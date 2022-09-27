@@ -304,7 +304,7 @@ export default class CicdGenerator extends Generator<CicdOptions> {
     async download_repo_spring_cloud(): Promise<void> {
         if (this.appConfig.isSpringCloud){
             console.log('download repo spring cloud')                
-            shell.exec('git clone https://pat:'+ this.token + '@dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.SpringCloud.Config springcloud/repo')               
+            shell.exec('git clone https://pat:'+ this.token + '@dev.azure.com/SiigoDevOps/Siigo/_git/Siigo.SpringCloud.Config springcloud/repo  --single-branch --branch qa')               
         }         
     }
 
