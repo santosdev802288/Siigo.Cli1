@@ -125,10 +125,17 @@ export default class DotnetMSGenerator extends MicroserviceGenerator {
             to: '<%= config.nameUpper %>',
         };
 
+        const optionsNugetToken = {
+            files:[`${this.templatePath(this.appConfig.type)}/nuget.config`],
+            from: /<add\s{0,}key="ClearTextPassword"\s{0,}value=".*"\s{0,}\/>/g,
+            to:`<add key="ClearTextPassword" value="${this.appConfig.token}" />`
+        }
+
         replace.sync(optionsLowwerCase)
         replace.sync(optionsUpperCase)
         replace.sync(optionsMicroserviceLowerCase)
         replace.sync(optionsMicroserviceUpperCase)
+        replace.sync(optionsNugetToken)
 
         // @ts-expect-error FIXME: Missing method on @types/yeoman-generator
         this.queueTransformStream([
