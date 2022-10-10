@@ -1,0 +1,28 @@
+trigger:
+  - dev
+  - sandbox
+  - master
+  - cicd
+
+resources:
+  repositories:
+    - repository: Pipelines
+      type: git
+      name: "Siigo/Siigo.Pipeline"
+
+extends:
+  <% if(config.type == 'netcore' || config.type == 'net5' || config.type == 'net6') { %>
+  template: netcore/netcore-pipeline.yaml@Pipelines
+  <% } else { if(config.type == 'golang' ) { %> 
+  template: go/golang-pipeline.yaml@Pipelines
+  <% } if(config.type == 'node' ) { %>
+  template: node/node-pipeline.yaml@Pipelines
+  <% }} %>
+  parameters:
+    projectName: ms-<%= config.name %>
+    environment: <%= config.environment %>
+    namespace: <%= config.namespace %>
+    <% if(config.type == 'golang') { %>
+    golangVersion: 1.18
+    <% } %>
+

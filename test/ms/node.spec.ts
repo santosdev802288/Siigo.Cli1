@@ -28,7 +28,7 @@ describe('siigo:node', () => {
       .then(() => {
         assert.file([
           '.dockerignore',
-          '.gitignore',
+          /*'.gitignore',*/
           '.husky/pre-commit',
           '.npmrc'
         ])

@@ -24,7 +24,7 @@ describe(NAMESPACE, () => {
     stub(siigoFile, 'wizardsiigofile').returns(Promise.resolve('mockToken'))
   }) 
 
-  it(`Generates a "${projectType}" project`, () => {
+  /*it(`Generates a "${projectType}" project`, () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'Siigo.Microservice.Dotnet'))
     const name = path.basename(dir).split('.').reverse()[0]
 
@@ -56,14 +56,14 @@ describe(NAMESPACE, () => {
     return helpers.run(DotnetMSGenerator, {resolved: path.join(__dirname, GENERATOR_FOLDER, 'index.js'), namespace: NAMESPACE})
       .inDir(dir)
       .withOptions({ 'token': 'myToken' })
-      .withPrompts({ ready: true, prefix: folderPrefix, type: 'kafka-sql', name: name  })
+      .withPrompts({ ready: true, prefix: folderPrefix, type: 'ddd', name: name  })
       .then(() => {
         assert.ok(process.cwd().endsWith(`${folderPrefix}${name}`))
         // assert something about the generator
         assert.file(`Siigo.${name}.sln`);
         assert.file('.gitignore');
       });
-  });
+  });*/
 
   after(() => {
     restore()

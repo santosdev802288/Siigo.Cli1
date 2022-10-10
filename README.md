@@ -53,6 +53,8 @@ Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_use
 
 - [Golang](#🔥-golang)
   - [new project](#new-project)
+- [Dotnet](#🔥-dotnet)
+  - [new project](#new-project)
 - [NodeJs](#‍👩‍🏫-nodejs)
   - [new project](#new-project)
   - [basic module](#new-basic-module)
@@ -67,17 +69,45 @@ Generate your own [personal access token](https://dev.azure.com/SiigoDevOps/_use
 
 This command helps automating the creation of microservices with a minimal configuration in it.
 
-### Using
+### Prerequisites
 
-Create a new project with default values
-    
-    yo siigo:bolt --personal-token {YOUR_TOKEN}
+* Install Siigo Cli
 
-#### Example
-In the following [example](https://assetsdoc.blob.core.windows.net/assets/golang.svg), you can see how to create a microservice in golang.
+* Install Docker
 
-#### Flags and descriptions
-Run *_yo siigo:bolt --help_* to see the configuration description, data type and default value for all the parameters.
+* Install Buf
+
+* Install Telepresence
+
+* Install Go
+
+### Generate a New Golang Project
+
+Create a new microservice with your personal token. A token is a security code provided by Azure to facilitate communication and ensure the security of Azure.
+
+Generate your own personal access token because Siigo.CLI will request it only once.
+
+After this, enter the path where you want to create the project by console and execute the following command:
+
+    yo siigo:golang
+
+Once the Project build is complete, you will need to go into the project folder and run the following commands, depending on your OS:
+
+#### Windows
+
+      docker-compose build
+      docker-compose up
+
+#### Ubuntu and IOS
+
+      make all
+
+Once the deployment process is finished, we can enter the service contract from the address: http://localhost:5000
+
+To learn a little more about how the archetype is built, you can access its technical documentation [Golang Documentation](https://alexandria.siigo.com/books/arquitectura/chapter/arquetipo-golang)
+
+### Flags and descriptions
+Run *_yo siigo:golang --help_* to see the configuration description, data type and default value for all the parameters.
     
     ╭━━━╮           ╭╮   ╭╮  ╭╮╭━━━╮
     ┃╭━╮┃           ┃┃   ┃╰╮╭╯┃┃╭━╮┃
@@ -91,7 +121,7 @@ Run *_yo siigo:bolt --help_* to see the configuration description, data type and
     ╰──────────────────────────╯
     
     Usage:
-    yo siigo:bolt [options]
+    yo siigo:golang [options]
     
     Options:
     -h,    --help            # Print the generator's options and usage
@@ -104,6 +134,104 @@ Run *_yo siigo:bolt --help_* to see the configuration description, data type and
     -a,    --author          # Description for author                                                                       Default: juand
     --personal-token  # Personal token. Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens
 
+## 🔥 Dotnet
+
+### New project
+
+This command helps automating the creation of microservices with a minimal configuration in it.
+
+### Prerequisites
+
+* Install Siigo Cli
+
+* Install Buf
+
+### Generate a New Dotnet Project
+
+Create a new microservice with your personal token. A token is a security code provided by Azure to facilitate communication and ensure the security of Azure.
+
+Generate your own personal access token because Siigo.CLI will request it only once.
+
+After this, enter the path where you want to create the project by console and execute the following command:
+
+      yo siigo:dotnet
+
+After executing the command, the different options are displayed:
+
+* What archetype do you want to generate?
+
+  * DDD (Create a basic project with what is described in the structure of the Archetype Archetype .Net )
+  * Microlith (Create a basic project to connect to the Microlith)
+  
+* What is the name of your domain?
+
+
+Each of the options in point 1 creates a microservice on .Net Core with a newly cloned repository.
+
+      yo siigo:dotnet
+      
+      ╭━━━╮           ╭╮   ╭╮  ╭╮╭━━━╮
+      ┃╭━╮┃           ┃┃   ┃╰╮╭╯┃┃╭━╮┃
+      ┃╰━━┳┳┳━━┳━━╮╭━━┫┃╭╮ ╰╮┃┃╭╯╰╯╭╯┃
+      ╰━━╮┣╋┫╭╮┃╭╮┃┃╭━┫┃┣┫  ┃╰╯┃ ╭━╯╭╯
+      ┃╰━╯┃┃┃╰╯┃╰╯┣┫╰━┫╰┫┃  ╰╮╭╯ ┃┃╰━╮
+      ╰━━━┻┻┻━╮┣━━┻┻━━┻━┻╯   ╰╯  ╰━━━╯
+      ╭━╯┃╭──────────────────────────╮
+      ╰━━╯│   Siigo Generator .Net   │
+      │           Core.          │
+      ╰──────────────────────────╯
+      
+      ? Select project prefix Siigo.Microservice.
+      ? Typing the name for the project Bank
+      ? ¿what do you want to generate? ddd
+      ? ¿What is the name of your Domain? CreditCard
+
+Once the archetype generation is finished, it generates the compilation and startup of the project automatically:
+
+      ╭━━━╮           ╭╮   ╭╮  ╭╮╭━━━╮
+      ┃╭━╮┃           ┃┃   ┃╰╮╭╯┃┃╭━╮┃
+      ┃╰━━┳┳┳━━┳━━╮╭━━┫┃╭╮ ╰╮┃┃╭╯╰╯╭╯┃
+      ╰━━╮┣╋┫╭╮┃╭╮┃┃╭━┫┃┣┫  ┃╰╯┃ ╭━╯╭╯
+      ┃╰━╯┃┃┃╰╯┃╰╯┣┫╰━┫╰┫┃  ╰╮╭╯ ┃┃╰━╮
+      ╰━━━┻┻┻━╮┣━━┻┻━━┻━┻╯   ╰╯  ╰━━━╯
+      ╭━╯┃
+      ╰━━╯╭──────────────────────────╮
+      │     Project Created!!    │
+      ╰──────────────────────────╯
+      
+      Starting project...
+
+Once the deployment process is finished, we can enter the service contract from the address: http://localhost:5000/swagger
+
+To learn a little more about how the archetype is built, you can access its technical documentation [Dotnet Documentation](https://alexandria.siigo.com/books/arquitectura/chapter/arquetipo-net)
+
+### Flags and descriptions
+Run *_yo siigo:dotnet --help_* to see the configuration description, data type and default value for all the parameters.
+
+    ╭━━━╮           ╭╮   ╭╮  ╭╮╭━━━╮
+    ┃╭━╮┃           ┃┃   ┃╰╮╭╯┃┃╭━╮┃
+    ┃╰━━┳┳┳━━┳━━╮╭━━┫┃╭╮ ╰╮┃┃╭╯╰╯╭╯┃
+    ╰━━╮┣╋┫╭╮┃╭╮┃┃╭━┫┃┣┫  ┃╰╯┃ ╭━╯╭╯
+    ┃╰━╯┃┃┃╰╯┃╰╯┣┫╰━┫╰┫┃  ╰╮╭╯ ┃┃╰━╮
+    ╰━━━┻┻┻━╮┣━━┻┻━━┻━┻╯   ╰╯  ╰━━━╯
+    ╭━╯┃
+    ╰━━╯╭──────────────────────────╮
+    │  Siigo Generator Dotnet. │
+    ╰──────────────────────────╯
+    
+    Usage:
+    yo siigo:dotnet [options]
+    
+    Options:
+    -h,    --help            # Print the generator's options and usage
+    --skip-cache      # Do not remember prompt answers                                                               Default: false
+    --skip-install    # Do not automatically install dependencies                                                    Default: false
+    --force-install   # Fail on install dependencies error                                                           Default: false
+    --ask-answered    # Show prompts for already configured options                                                  Default: false
+    -pn,   --project-name    # Name project.                                                                                Default: example
+    -d,    --description     # Description project.
+    -a,    --author          # Description for author                                                                       Default: juand
+    --personal-token  # Personal token. Generate your token https://dev.azure.com/SiigoDevOps/_usersSettings/tokens
 
 ## ‍👩‍🏫 NodeJS
 
@@ -591,6 +719,8 @@ To contribute to the project and make a pull request you must follow these requi
 ### Build 
 
   - clone master branch  
+  - update the submodules to last version
+      > git submodule update --init --remote --recursive
   - create a new branch 
   - install dependencies
   - npm run build:dev
@@ -604,3 +734,4 @@ Now all the commands with __*yo siigo:(core, node, gateway, cicd, etc.)*__ point
 - [ ] [Compose](https://yeoman.io/authoring/composability.html) generators
 - [ ] Integrate whit TypeScript
 - [ ] [Post production](https://github.com/cirocosta/asciinema-edit) to sample videos 
+
