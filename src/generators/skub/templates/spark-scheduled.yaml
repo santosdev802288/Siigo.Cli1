@@ -14,7 +14,7 @@ spec:
   template:
     type: Scala
     mode: cluster
-    image: "acraksqa.azurecr.io/siigration:latest"
+    image: "<%= image %>"
     imagePullPolicy: Always
     mainClass: org.siigo.Main
     mainApplicationFile: "local:///job/Siigration-assembly-1.0-SNAPSHOT.jar"
