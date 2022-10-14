@@ -231,12 +231,14 @@ export default class MigrationGenerator extends Generator {
         if (!this.appConfig.cron) {
 
             this.spawnCommandSync("kubectl", ["get", "pods",`${this.appConfig.domain}-driver`, "-n", "default"])
-            this.log(`\n Now you should wait a some time while the containers starts. Check the STATUS column with the following command.`)
+            this.log(`\n Now you should wait a some time while the containers starts. Check the STATUS column with the following command:`)
             this.log(`\n kubectl get pods ${this.appConfig.domain}-driver -n default -w`)
 
-            this.log(`\n When the conteiners are runing, you can see the logs following:`)
+            this.log(`\n When the containers are runing, you can see the logs with the following command:`)
             this.log(`\n kubectl logs ${this.appConfig.domain}-driver -n default -f`)
         }
+
+        
     }
 
 

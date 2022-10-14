@@ -627,9 +627,14 @@ For the use, it consists of two steps mainly:
         -ce,   --cron           # Cron expression
 
 
-    Example:
+    Example in QA:
 
-        yo siigo:skub --dn domainname --fp migration.yaml --context myk8scontext --replicas 3
+        yo siigo:skub --domain domainname --file-path migration.yaml --context myk8scontext --replicas 3 --image acraksqa.azurecr.io/siigration:latest
+
+
+    Example in PROD:
+
+        yo siigo:skub --domain domainname --file-path migration.yaml --context myk8scontext --replicas 10 --image acrakssiigo.azurecr.io/siigration:latest
 
 
     ### Scheduled S-Kub Job
@@ -638,7 +643,7 @@ For the use, it consists of two steps mainly:
 
     Example:
 
-        yo siigo:skub --dn mydomainname --fp migration.yaml --context myk8scontext --replicas 3 --cron "5 4 * * *"
+        yo siigo:skub --domain mydomainname --file-path migration.yaml --context myk8scontext --replicas 3 --cron "5 4 * * *" --replicas 3 --image acraksqa.azurecr.io/siigration:latest
 
     Once this is done you will be shown the configuration options along with the cron expression in human language to confirm
 
