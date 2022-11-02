@@ -13,6 +13,7 @@ interface MigrationOptions {
     context: string,
     replicas: number
     cron: string
+    image: string
 }
 
 interface MigrationYaml {
@@ -52,7 +53,7 @@ export default class MigrationGenerator extends Generator {
 
     constructor(args: any, opt: any) {
         super(args, opt)
-        saveStatistic('migration')
+        saveStatistic('skub')
 
 
         // Domain target name
@@ -98,9 +99,17 @@ export default class MigrationGenerator extends Generator {
             alias: 'ce'
         })
 
+        this.option('image', {
+            type: String,
+            description: "spark docker image. qa: acraksqa.azurecr.io/siigration:latest. production: acrakssiigo.azurecr.io/siigration:latest",
+            default: 'acraksqa.azurecr.io/siigration:latest',
+            alias: 'i'
+        })
+
 
         this.appConfig = {
             domain: this.options.domain || this.options.dn,
+            image: this.options.image|| this.options.i,
             filePath: this.options['file-path'] || this.options.fp,
             context: this.options.context || this.options.c,
             replicas: this.options.replicas || this.options.r,
@@ -171,6 +180,7 @@ export default class MigrationGenerator extends Generator {
 
         const basicConfig = {
             domainName: this.appConfig.domain,
+            image: this.appConfig.image,
             data: this._removeBreakLines(this._escapeQuotes(JSON.stringify(this.dataFile, null, ""))),
             replicas: this.appConfig.replicas,
             name: siigoParams.name,
@@ -219,8 +229,16 @@ export default class MigrationGenerator extends Generator {
         this.log(siigosay(`S-Kub job has been started.`))
 
         if (!this.appConfig.cron) {
-            this.spawnCommandSync("kubectl", ["logs", `${this.appConfig.domain}-driver`, "-f", "-n", "default"])
+
+            this.spawnCommandSync("kubectl", ["get", "pods",`${this.appConfig.domain}-driver`, "-n", "default"])
+            this.log(`\n Now you should wait a some time while the containers starts. Check the STATUS column with the following command:`)
+            this.log(`\n kubectl get pods ${this.appConfig.domain}-driver -n default -w`)
+
+            this.log(`\n When the containers are runing, you can see the logs with the following command:`)
+            this.log(`\n kubectl logs ${this.appConfig.domain}-driver -n default -f`)
         }
+
+        
     }
 
 

@@ -100,7 +100,7 @@ export default class MigrationDelete extends Generator {
         const mandatoryMessage = 'is required or it should not be empty'
 
         if (!this.appConfig.domain || this.appConfig.domain === 'true')
-            throw new Error(`--domain-name || --dn ${mandatoryMessage}.\n ${message}`)
+            throw new Error(`--domain || --dn ${mandatoryMessage}.\n ${message}`)
 
         if (!this.appConfig.context || this.appConfig.context === 'true')
             throw new Error(`--context || --c ${mandatoryMessage}.\n ${message}`)
