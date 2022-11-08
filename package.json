@@ -1,6 +1,6 @@
 {
   "name": "generator-siigo",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Generator archetype siigo",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
