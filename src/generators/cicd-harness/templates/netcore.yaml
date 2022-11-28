@@ -1,0 +1,42 @@
+pipeline:
+  name: "#{pipelineIdentifier}#"
+  identifier: "#{pipelineIdentifier}#"
+  template:
+    templateRef: MSGateway
+    versionLabel: v0.6
+    templateInputs:
+      stages:
+        - stage:
+            identifier: gateway_deploy
+            template:
+              templateInputs:
+                type: Deployment
+                spec:
+                  serviceConfig:
+                    serviceRef: <+input>
+      variables:
+        - name: microserviceName
+          type: String
+          value: "#{microserviceName}#"
+        - name: sonarVersion
+          type: String
+          value: "#{sonarVersion}#"
+        - name: namespace
+          type: String
+          value: "#{namespace}#"
+        - name: repositoryName
+          type: String
+          value: "#{repoName}#"
+        - name: sourceBranch
+          type: String
+          value:  "#{branch}#"
+        - name: serviceType
+          type: String
+          value: "#{serviceType}#"
+      properties:
+        ci:
+          codebase:
+            build: <+input>
+  tags: {}
+  projectIdentifier: "#{projectIdentifier}#"
+  orgIdentifier: "#{orgIdentifier}#"
