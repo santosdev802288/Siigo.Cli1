@@ -83,7 +83,7 @@ module.exports = class extends Generator {
                     type: 'list',
                     name: 'type',
                     message: 'What do you want to update?',
-                    choices: ['token', 'tribe', 'name','group']
+                    choices: ['token', 'tribe', 'name','group','harness-token']
                 }
             ]);
             if(response.type=='tribe') {

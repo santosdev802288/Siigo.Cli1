@@ -12,7 +12,7 @@ import inquirer from 'inquirer';
 const exec = util.promisify(child.exec);
 
 interface SiigoParameter {
-    'token'?: string, 'token64'?: string, 'user'?: string, 'name'?: string, 'tribe'?: string,'group'?: string,
+    'token'?: string, 'token64'?: string, 'user'?: string, 'name'?: string, 'tribe'?: string,'group'?: string,'harness-token'?: string
 }
 
 async function writeSiigoFile(payload: any){
@@ -28,7 +28,7 @@ async function readSiigoFile():Promise<any>{
  * @returns siigoParams
  */
 export async function getAllParametersSiigo(): Promise<SiigoParameter> {
-  const parameters: (keyof SiigoParameter)[] = ['token', 'token64', 'user', 'name', 'tribe','group'];
+  const parameters: (keyof SiigoParameter)[] = ['token', 'token64', 'user', 'name', 'tribe','group','harness-token'];
   const objParameters: SiigoParameter = {};
   await Promise.all(parameters.map(async (element) => {
     try {
@@ -81,7 +81,7 @@ async function setSiigofile(token: string){
     resUser = JSON.parse(shell.exec('az account show', {silent:true}).stdout).user.name
   }
   const { name, tribe, group } = await getInformationUser(resUser)
-  const payload = `token=${token}\ntoken64=${b64}\nuser=${resUser}\nname=${name}\ntribe=${tribe}\ngroup=${group}`
+  const payload = `token=${token}\ntoken64=${b64}\nuser=${resUser}\nname=${name}\ntribe=${tribe}\ngroup=${group}\nharness-token=pending`
   await writeSiigoFile(payload)
 }
 export async function getParameter(parameter: keyof SiigoParameter) {
