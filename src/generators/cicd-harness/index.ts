@@ -35,6 +35,8 @@ export default class HarnessGenerator extends Generator<HarnessOptions> {
     private answers: any
     private appConfig: any
     private defaultPipelineAttrs: any
+    private vuser :string
+    private htoken :string
     constructor(args: any, opt: any) {
         super(args, opt)
         saveStatistic(path.basename(__dirname))
@@ -110,6 +112,8 @@ export default class HarnessGenerator extends Generator<HarnessOptions> {
             createPr:true
 
         }
+        this.htoken= ""
+        this.vuser= ""
     }
 
     async initializing(): Promise<void> {
@@ -119,6 +123,17 @@ export default class HarnessGenerator extends Generator<HarnessOptions> {
 
     // Pompting
     async prompting(): Promise<void> {
+        this.vuser = await getParameter("user")
+        this.htoken =  await getParameter('harness-token')
+        if(this.vuser in ["pending","pendiente"]){
+            throw new Error('User is is not in the session. Please run yo siigo:config and set user')
+            
+        }
+        // console.log("'"+this.vuser+"'")
+        if(!this.htoken.startsWith("pat.")){
+            throw new Error('Harness token is not in the session. Please   run yo siigo:config and set the harness-token')
+            
+        }
         this.appConfig.repoName = this.getRepositoryName()
         this.appConfig.microserviceName = this.getMicroserviceName(this.appConfig.repoName)
         
@@ -226,14 +241,14 @@ export default class HarnessGenerator extends Generator<HarnessOptions> {
           });
         //   console.log(filecontent)
         // url parameter
-        const user = await getParameter("user")
-        const htoken =  await getParameter('harness-token')
+        
+        
         const urlParameters = {
             repoName: templateConfig.repoName,
   
             // filePath: ".harness/"+templateConfig.pipelineIdentifier+".yaml",
             filePath: ".harness/harness-pipeline_"+this.appConfig.country+".yaml",
-            commitMsg: "creating pipeline.\n Author: "+user,
+            commitMsg: "creating pipeline.\n Author: "+ this.vuser,
             
             ...this.defaultPipelineAttrs
 
@@ -245,7 +260,7 @@ export default class HarnessGenerator extends Generator<HarnessOptions> {
             "Sec-Fetch-Mode": "no-cors",
             "Origin":"https://google.com",
             "Sec-Fetch-Site": "cross-site",
-            "x-api-key":htoken,
+            "x-api-key":this.htoken,
             "Content-Type": "application/yaml",
 
         }
@@ -314,30 +329,4 @@ export default class HarnessGenerator extends Generator<HarnessOptions> {
     }
 
 }
-
-
-// [*] Nombramiendo archivos
-    // - pais(3 caracteres)
-    // - siigogatetwaycatalog
-    // -  quitar los caracteres especiales
-    // - 
-// [*] pedir token de harness por flag
-// validar con siigo catalog, gateway
-// {
-    // "repoName": "Siigo.Gateway.Catalog",
-//     "microserviceName": "api-gateway-catalog",
-//     "sonarVersion": "5.5.3",
-//     "namespace": "siigo-catalog",
-//     "branch": "dev",
-//     "serviceType": "gateway"
-//   }
-// pat.kOhYGJcFTVS_qdgJCmgk9w.636ec1fef0e14152326157a9.gKwWqN1OuuZkpGt9au1A
-  
-
-// [* ]Crear nueva rama
-// harness-integration
-// Pull requests
-
-// [*] No pedir la rama base usar `dev`
-// branch as input[] hacer tiket 
 
